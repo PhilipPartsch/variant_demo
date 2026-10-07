@@ -1,7 +1,15 @@
+# exclude agents plans
+.agents/plans/
+
 # ubcode
 _build/
 needs*.json
 needs.parquet
+
+# MACOS
+.DS_Store
+.AppleDouble
+.LSOverride
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

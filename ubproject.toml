@@ -7,7 +7,7 @@ build_tags = ["html"]
 # out of the source set so it is not treated as a document (which would leave it
 # outside every toctree, a "not included in any toctree" warning).
 [source]
-extend_exclude = ["_build", ".agents", ".claude", ".github", "README.md"]
+extend_exclude = ["_build", ".agents", ".claude", ".github", "README.md", "plan"]
 
 # Run with `ubc script <name>` (e.g. `ubc script build`).
 [scripts]
