@@ -1,0 +1,131 @@
+"$schema" = "https://ubcode.useblocks.com/ubproject.schema.json"
+
+# Build-context tags, available as `build_tags` in filter/variant expressions.
+build_tags = ["html"]
+
+# README.md is project build instructions, not a documentation page — keep it
+# out of the source set so it is not treated as a document (which would leave it
+# outside every toctree, a "not included in any toctree" warning). This matches
+# the README.md exclusion already in conf.py's `exclude_patterns`.
+[source]
+extend_exclude = ["README.md"]
+
+# Run with `ubc script <name>` (e.g. `ubc script build`).
+[scripts]
+# Build with ubCode:
+build = "ubc build index ."
+needs = "ubc build needs -o needs.json"
+documents = "ubc build list-documents --parser"
+report = "ubc report needs_overview.html.j2"
+# Build with Sphinx + Sphinx-Needs (requires https://docs.astral.sh/uv).
+# sphinx-needs >= 7 for the dict `[needs.links]` / `[needs.fields]` config; no
+# upper bound so it tracks releases (verified against sphinx-needs 8.x).
+sphinx = "uv run --no-project --with 'sphinx,sphinx-needs>=7,myst-parser' sphinx-build -W -b html . _build"
+rm_build = "rm -rf _build"
+"sphinx:clean" = { chain = ["rm_build", "sphinx"] }
+
+# Mixed authoring: reStructuredText *and* Markdown (MyST) in one project.
+# Declaring parsers switches on "parser mode"; each discovered file is routed to
+# a parser by its include globs (`*.rst` -> RST, `*.md` -> MyST).
+[parse.parsers.rst]
+
+[parse.parsers.md]
+flavour = "myst"
+
+[[needs.types]]
+directive = "req"
+title = "Requirement"
+prefix = "REQ_"
+
+[[needs.types]]
+directive = "spec"
+title = "Specification"
+prefix = "SPEC_"
+
+[[needs.types]]
+directive = "test"
+title = "Test"
+prefix = "TEST_"
+
+[needs]
+# Base "150%" variant data shared by every build (see variants.json), with
+# inline overrides below.
+variant_data_file = "variants.json"
+
+# Traceability links between needs (dict form, the recommended style).
+[needs.links.implements]
+outgoing = "Implements"
+incoming = "Implemented by"
+
+[needs.links.tests]
+outgoing = "Tests"
+incoming = "Tested by"
+
+[needs.variant_data]
+edition = "pro"
+
+# `parse_variants = true` enables `<<...>>` variant functions and
+# `<{ var.* }>` variant-data references in the field's value.
+[needs.fields.status]
+parse_variants = true
+default = ""
+
+[needs.fields.platform_note]
+description = "Note describing the active platform"
+type = "string"
+nullable = true
+default = ""
+parse_variants = true
+# --- [workflow] derived by `ubc agent install --detect` ---
+[workflow]
+exempt_status = []
+release_disallow_status = []
+orphan_exempt_types = []
+
+[[workflow.stages]]
+id = "req"
+produces = "req"
+depends_on = []
+author_skill = "draft-requirement"
+review_skill = "review-requirement"
+trace = []
+optional = false
+
+[workflow.stages.route]
+scope = "stream"
+granularity = "per-root"
+path = "{stream}/req.rst"
+
+[[workflow.stages]]
+id = "spec"
+produces = "spec"
+depends_on = ["req"]
+author_skill = "draft-requirement"
+review_skill = "review-requirement"
+optional = false
+
+[workflow.stages.route]
+scope = "stream"
+granularity = "per-root"
+path = "{stream}/spec.rst"
+
+[[workflow.stages.trace]]
+up = "req"
+link = "implements"
+direction = "both"
+min = 1
+
+[workflow.icons]
+# deferred (auto-resolved): fan-in-parents: test:tests → req
+# deferred (auto-resolved): req: only-a-target — stage or label? (staged by default)
+# deferred (auto-resolved): spec: peripheral metadata source — stage or label? (staged by default)
+# detected, not staged: test
+
+[quality]
+enabled = true
+
+[quality.required]
+parent_fit = 1
+
+[quality.type_configs.req]
+criteria_file = "quality/requirement.toml"
