@@ -3,7 +3,7 @@
 A guided tour of ubCode's main features in one project. It builds with both the
 `ubc` CLI and an upstream Sphinx + Sphinx-Needs build (`ubc script sphinx`).
 Build-variant data (`var.*`) resolves under ubCode today; in Sphinx it needs
-Sphinx-Needs' variant support, which is on `master` but not yet released.
+Sphinx-Needs' variant support.
 
 ## What this project shows
 

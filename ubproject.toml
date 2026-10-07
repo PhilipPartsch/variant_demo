@@ -5,10 +5,9 @@ build_tags = ["html"]
 
 # README.md is project build instructions, not a documentation page — keep it
 # out of the source set so it is not treated as a document (which would leave it
-# outside every toctree, a "not included in any toctree" warning). This matches
-# the README.md exclusion already in conf.py's `exclude_patterns`.
+# outside every toctree, a "not included in any toctree" warning).
 [source]
-extend_exclude = ["README.md"]
+extend_exclude = ["_build", ".agents", ".claude", ".github", "README.md"]
 
 # Run with `ubc script <name>` (e.g. `ubc script build`).
 [scripts]
@@ -76,6 +75,7 @@ type = "string"
 nullable = true
 default = ""
 parse_variants = true
+
 # --- [workflow] derived by `ubc agent install --detect` ---
 [workflow]
 exempt_status = []
@@ -129,3 +129,4 @@ parent_fit = 1
 
 [quality.type_configs.req]
 criteria_file = "quality/requirement.toml"
+

@@ -3,6 +3,8 @@ name: ubc-agent-next
 description: Resolve and act on the single next workflow action, then stop.
 ---
 
+# Next Agent
+
 Run `ubc agent prompt -p <project path>` and follow what it prints. That is the
 instruction for the ONE next action. Do one step, then stop and hand control
 back to the user.
