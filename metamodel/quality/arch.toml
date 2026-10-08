@@ -83,3 +83,61 @@ scoring_guide = """
 1: The element is realisable, but at least one boundary or choice is left loose enough to need a judgement call during implementation.
 2: The element is realisable by a single, clearly bounded implementation."""
 max_score = 2
+
+[[criterion]]
+id = "variant_consistency"
+name = "Variant Consistency"
+description = """
+CV platform (B§7.3): whether the need is gated consistently with the product \
+line. The need is gated by the same or a stronger condition than its parent \
+(`if` blocks with the named variants bev / bus / mcs, variant folders such as \
+subsystems/chg or region/na); variant-specific content uses those named \
+variants and folders, not ad-hoc conditions; product-specific values sit in \
+variant functions of a field; no build-type or build-kit conditions."""
+scoring_guide = """
+0: The need is gated more weakly than its parent (it would exist in a product where its parent does not), or it uses a build-type / kit condition.
+1: The gating is correct but uses an ad-hoc condition instead of a named variant or variant folder, or restates a product-specific value in prose instead of a variant function.
+2: The need is gated by the same or a stronger condition than its parent, using the named variants and folders."""
+max_score = 2
+
+# --- BMS allocation (stage `bms_allocation`, B§7.2/§7.3) -----------------------
+# Quality criteria are per need type and `bms_allocation` reuses `review-arch`,
+# so the allocation criteria live here. For an arch element without
+# `allocates` (stages `archs`), score them 2 (not applicable).
+
+[[criterion]]
+id = "interface_only"
+name = "Interface Only"
+description = """
+Whether every `allocates` target is a BMS interface need (BMS_REQ_* with tag \
+`interface`). Score 2 when the element has no `allocates`."""
+scoring_guide = """
+0: An allocates target is not a BMS interface need.
+1: All targets are interface needs, but one is gated differently from the element (e.g. allocated outside `bev`).
+2: Every allocates target is a BMS interface need, or the element allocates nothing."""
+max_score = 2
+
+[[criterion]]
+id = "allocation_complete"
+name = "Allocation Complete"
+description = """
+Whether every BMS-relevant aspect of the CV requirement the element satisfies \
+is covered by an allocated BMS requirement. Score 2 when the element has no \
+`allocates`."""
+scoring_guide = """
+0: A BMS-relevant obligation of the parent requirement has no allocated BMS requirement.
+1: The obligations are covered, but one only partly or through a loosely related BMS requirement.
+2: Every BMS-relevant obligation is covered by an allocated BMS interface requirement, or the element allocates nothing."""
+max_score = 2
+
+[[criterion]]
+id = "no_value_copy"
+name = "No Value Copy"
+description = """
+Whether BMS values (limits, thresholds, timings) are referenced through the \
+allocated BMS need instead of restated in the CV element."""
+scoring_guide = """
+0: The element restates a BMS value that differs between chemistries or BMS versions.
+1: The element restates a BMS value that is the same in every chemistry.
+2: The element references BMS values only through the allocated needs, or names none."""
+max_score = 2

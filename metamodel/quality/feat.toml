@@ -86,3 +86,19 @@ scoring_guide = """
 1: The title and body are mostly in stakeholder vocabulary but lean on one term a non-implementer might need explained.
 2: The title and body use stakeholder vocabulary a non-implementer could confirm without help."""
 max_score = 2
+
+[[criterion]]
+id = "variant_consistency"
+name = "Variant Consistency"
+description = """
+CV platform (B§7.3): whether the need is gated consistently with the product \
+line. The need is gated by the same or a stronger condition than its parent \
+(`if` blocks with the named variants bev / bus / mcs, variant folders such as \
+subsystems/chg or region/na); variant-specific content uses those named \
+variants and folders, not ad-hoc conditions; product-specific values sit in \
+variant functions of a field; no build-type or build-kit conditions."""
+scoring_guide = """
+0: The need is gated more weakly than its parent (it would exist in a product where its parent does not), or it uses a build-type / kit condition.
+1: The gating is correct but uses an ad-hoc condition instead of a named variant or variant folder, or restates a product-specific value in prose instead of a variant function.
+2: The need is gated by the same or a stronger condition than its parent, using the named variants and folders."""
+max_score = 2
