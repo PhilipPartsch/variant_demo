@@ -1,0 +1,9 @@
+{
+  "current_version": "0.0.0",
+  "project": "bms",
+  "versions": {
+    "0.0.0": {
+      "needs": {}
+    }
+  }
+}
