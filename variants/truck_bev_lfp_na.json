@@ -1,0 +1,25 @@
+{
+  "bms": {
+    "chemistry": "lfp",
+    "enabled": true
+  },
+  "charging": {
+    "mcs": false,
+    "pantograph": false
+  },
+  "hv": {
+    "class": "v800"
+  },
+  "market": {
+    "region": "na"
+  },
+  "meta": {
+    "product": "truck_bev_lfp_na"
+  },
+  "powertrain": {
+    "type": "bev"
+  },
+  "vehicle": {
+    "type": "truck"
+  }
+}

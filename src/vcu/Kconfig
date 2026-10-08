@@ -1,0 +1,5 @@
+menu "VCU options"
+
+# Symbols use the namespace VCU__ (filled with the content, C§5).
+
+endmenu

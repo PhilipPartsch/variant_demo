@@ -1,0 +1,8 @@
+{
+  "cmake.buildDirectory": "${workspaceFolder}/build/cmake/${variant:variant}",
+  "cmake.configureSettings": { "CMAKE_BUILD_TYPE": "Debug" },
+  "cmake.configureOnOpen": true,
+  "cmake.generator": "Ninja",
+  "cmake.copyCompileCommands": "${workspaceFolder}/build/compile_commands.json",
+  "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+}

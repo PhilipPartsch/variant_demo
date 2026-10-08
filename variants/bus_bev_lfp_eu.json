@@ -1,0 +1,25 @@
+{
+  "bms": {
+    "chemistry": "lfp",
+    "enabled": true
+  },
+  "charging": {
+    "mcs": false,
+    "pantograph": true
+  },
+  "hv": {
+    "class": "v400"
+  },
+  "market": {
+    "region": "eu"
+  },
+  "meta": {
+    "product": "bus_bev_lfp_eu"
+  },
+  "powertrain": {
+    "type": "bev"
+  },
+  "vehicle": {
+    "type": "bus"
+  }
+}

@@ -1,132 +1,677 @@
 "$schema" = "https://ubcode.useblocks.com/ubproject.schema.json"
 
-# Build-context tags, available as `build_tags` in filter/variant expressions.
-build_tags = ["html"]
+# CV platform: one configuration for ubCode / ubc, sphinx-needs (docs/conf.py
+# reads this file via needs_from_toml), sphinx-mounts (sources_from_toml),
+# sphinx-codelinks (src_trace_config_from_toml) and the AI workflow.
+#
+# The product is selected in CMake Tools (or `tools/build_product.sh <product>`).
+# Configuring a product writes the active copies in build/active/ that this file
+# points at: variants.json (var.*), autoconf.h (codelinks fallback) and
+# bms.needs.json (BMS needs of the product's chemistry).
 
-# README.md is project build instructions, not a documentation page — keep it
-# out of the source set so it is not treated as a document (which would leave it
-# outside every toctree, a "not included in any toctree" warning).
+[project]
+name = "cv_platform"
+
 [source]
-extend_exclude = ["_build", ".agents", ".claude", ".github", "README.md"]
+dir = "docs"
+extend_exclude = ["_build"]
 
-# Run with `ubc script <name>` (e.g. `ubc script build`).
-[scripts]
-# Build with ubCode:
-build = "ubc build index ."
-needs = "ubc build needs -o needs.json"
-documents = "ubc build list-documents --parser"
-report = "ubc report needs_overview.html.j2"
-# Build with Sphinx + Sphinx-Needs (requires https://docs.astral.sh/uv).
-# sphinx-needs >= 7 for the dict `[needs.links]` / `[needs.fields]` config; no
-# upper bound so it tracks releases (verified against sphinx-needs 8.x).
-sphinx = "uv run --no-project --with 'sphinx,sphinx-needs>=7,myst-parser' sphinx-build -W -b html . _build"
-rm_build = "rm -rf _build"
-"sphinx:clean" = { chain = ["rm_build", "sphinx"] }
-
-# Mixed authoring: reStructuredText *and* Markdown (MyST) in one project.
-# Declaring parsers switches on "parser mode"; each discovered file is routed to
-# a parser by its include globs (`*.rst` -> RST, `*.md` -> MyST).
 [parse.parsers.rst]
 
-[parse.parsers.md]
-flavour = "myst"
+[scripts]
+build-all = "tools/build_all.sh"
+check = "ubc check"
+needs = "ubc build needs -o build/ubc/needs.json"
+html = "ubc build html -o build/ubc/html"
+report = "ubc report needs_overview.html.j2 -o build/ubc/needs_overview.html"
+
+# --- NEEDS: global settings (as in the BMS) ------------------------------------
+[needs]
+id_required = true
+# Also matches the imported, prefixed BMS ids (BMS_REQ_...).
+id_regex = "^[A-Z]+_[A-Z][A-Z0-9_]*$"
+flow_engine = "graphviz"
+schema_definitions_from_json = "metamodel/schemas.json"
+# Active product (written at CMake configure). Only `[needs] variant_data_file`
+# is read by ubc, the ubCode extension and sphinx-needs alike.
+variant_data_file = "build/active/variants.json"
+# Export imported needs too, so the Sphinx needs.json matches the ubc export
+# (sphinx-needs' default "is_external==False" drops them; ubc keeps them).
+builder_filter = ""
+
+# --- BMS import (B§5.3) ---------------------------------------------------------
+# build/active/bms.needs.json is the pinned BMS export of the product's chemistry
+# (third_party/bms/<version>/), or an empty stub for diesel products.
+# base_url: one URL per BMS version; the BMS docs are not published yet
+# (B§5.2.2), per-chemistry URLs are deferred (B§11). Keep the version in sync
+# with cmake/bms.cmake (checked by tools/pin_bms.py --check).
+[[needs.external_needs]]
+json_path = "build/active/bms.needs.json"
+base_url = "https://bms-docs.invalid/0.1.0"
+id_prefix = "BMS_"
+css_class = "external_bms"
+
+# --- Named variants over the generated var.* (B§2.3, M§1.6) ---------------------
+# Conditions compare with == True, never a bare boolean.
+[needs.variants]
+bev = "var.powertrain.type == 'bev'"
+bus = "var.vehicle.type == 'bus'"
+mcs = "var.charging.mcs == True"
+
+# --- File variants (M§6); globs are relative to [source] dir = "docs" -------------
+[[source.variant_sources]]
+if = "var.powertrain.type == 'bev'"
+files = ["subsystems/chg/**", "subsystems/bms/**"]
+
+[[source.variant_sources]]
+if = "var.powertrain.type == 'diesel'"
+files = ["subsystems/eng/**"]
+
+[[source.variant_sources]]
+if = "var.market.region == 'na'"
+files = ["region/na/**"]
+
+[[source.variant_sources]]
+if = "var.market.region == 'eu'"
+files = ["region/eu/**"]
+
+# --- NEED TYPES (taken over from the BMS, incl. colours and styles) -------------
+[[needs.types]]
+directive = "user_story"
+title = "User Story"
+prefix = "US_"
+color = "#FDE68A"
+style = "usecase"
 
 [[needs.types]]
 directive = "req"
 title = "Requirement"
 prefix = "REQ_"
+color = "#FDBA74"
+style = "file"
 
 [[needs.types]]
-directive = "spec"
-title = "Specification"
-prefix = "SPEC_"
+directive = "arch"
+title = "Architecture"
+prefix = "ARCH_"
+color = "#818CF8"
+style = "node"
+
+[[needs.types]]
+directive = "swreq"
+title = "Software Requirement"
+prefix = "SWREQ_"
+color = "#7DD3FC"
+style = "card"
+
+[[needs.types]]
+directive = "impl"
+title = "Implementation"
+prefix = "IMPL_"
+color = "#C084FC"
+style = "component"
 
 [[needs.types]]
 directive = "test"
 title = "Test"
 prefix = "TEST_"
+color = "#BBF7D0"
+style = "hexagon"
 
-[needs]
-# Base "150%" variant data shared by every build (see variants.json), with
-# inline overrides below.
-variant_data_file = "variants.json"
+[[needs.types]]
+directive = "test_result"
+title = "Test Result"
+prefix = "TRES_"
+color = "#4ADE80"
+style = "database"
 
-# Traceability links between needs (dict form, the recommended style).
+[[needs.types]]
+directive = "risk"
+title = "Risk"
+prefix = "RISK_"
+color = "#F87171"
+style = "folder"
+
+[[needs.types]]
+directive = "decision"
+title = "Decision"
+prefix = "DEC_"
+color = "#D1D5DB"
+style = "frame"
+
+[[needs.types]]
+directive = "gap"
+title = "Workflow Gap"
+prefix = "GAP_"
+color = "#EF4444"
+style = "rectangle"
+
+# --- LINKS (taken over from the BMS, plus allocates) ----------------------------
+[needs.links.traces_to]
+incoming = "traces_from"
+outgoing = "traces_to"
+
+[needs.links.satisfies]
+incoming = "satisfied_by"
+outgoing = "satisfies"
+
+[needs.links.refines]
+incoming = "refined_by"
+outgoing = "refines"
+
 [needs.links.implements]
-outgoing = "Implements"
-incoming = "Implemented by"
+incoming = "implements_back"
+outgoing = "implements"
 
-[needs.links.tests]
-outgoing = "Tests"
-incoming = "Tested by"
+[needs.links.verifies]
+incoming = "verifies_back"
+outgoing = "verifies"
 
-[needs.variant_data]
-edition = "pro"
+[needs.links.results_for]
+incoming = "results"
+outgoing = "results_for"
 
-# `parse_variants = true` enables `<<...>>` variant functions and
-# `<{ var.* }>` variant-data references in the field's value.
+[needs.links.affects]
+incoming = "affected_by"
+outgoing = "affects"
+
+[needs.links.motivates]
+incoming = "motivated_by"
+outgoing = "motivates"
+
+[needs.links.mitigates]
+incoming = "mitigated_by"
+outgoing = "mitigates"
+
+[needs.links.gap_for]
+incoming = "gaps"
+outgoing = "gap_for"
+
+# New: CV arch -> BMS interface requirement (external BMS_REQ_*). The only link
+# with variant functions, e.g. `:allocates: <<bev: BMS_REQ_POWER_DERATING>>`.
+[needs.links.allocates]
+incoming = "allocated_from"
+outgoing = "allocates"
+parse_variants = true
+
+# --- FIELDS ---------------------------------------------------------------------
+# Imported BMS needs are dropped (unknown type) or stripped (unknown field)
+# unless the CV project declares the BMS vocabulary, so every BMS field is
+# declared here even where the CV never sets it itself.
+
 [needs.fields.status]
+description = "Lifecycle state of an authored spec need: draft -> review -> approved; `imported` on every pinned BMS need."
+schema = { type = "string", enum = ["draft", "review", "approved", "imported"] }
+
+[needs.fields.value]
+description = "Product-specific value of a vehicle requirement, resolved per product (variant functions)."
+default = ""
+nullable = false
 parse_variants = true
+
+[needs.fields.product]
+description = "Product the evidence (test result, gap) belongs to; one of configs/*_defconfig."
+default = ""
+nullable = false
+schema = { type = "string", enum = ["", "bus_bev_lfp_eu", "truck_bev_lfp_na", "truck_bev_nmc_eu", "truck_diesel_eu"] }
+
+[needs.fields.chemistry]
+description = "BMS: pack cell chemistry a chemistry-specific need is resolved for (NMC or LFP)."
+default = ""
+nullable = false
+schema = { type = "string", enum = ["", "NMC", "LFP"] }
+
+[needs.fields.outcome]
+description = "Recorded outcome of one test case in one run: passed, failed, error or skipped."
+default = ""
+nullable = false
+schema = { type = "string", enum = ["", "passed", "failed", "error", "skipped"] }
+
+[needs.fields.runtime_s]
+description = "Wall-clock runtime of that test case, in seconds, as the report recorded it."
+default = ""
+nullable = false
+
+[needs.fields.test_run_label]
+description = "Identifier of the test run the outcome came from: the report's timestamp, as a label."
+default = ""
+nullable = false
+schema = { type = "string", pattern = "^$|^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}" }
+
+[needs.fields.chain_reqs]
+description = "Requirement ids this test result is evidence for, via test -> swreq -> arch -> req."
+default = ""
+nullable = false
+
+[needs.fields.gap_category]
+description = "Which gate reported this gap: trace_backward, trace_forward, orphan, status_disallowed, ..."
+default = ""
+nullable = false
+
+[needs.fields.gap_link]
+description = "The link name the reporting gate counted, when the gap is a trace gap; empty otherwise."
+default = ""
+nullable = false
+schema = { type = "string", enum = [
+  "",
+  "traces_to",
+  "satisfies",
+  "refines",
+  "implements",
+  "verifies",
+  "results_for",
+  "affects",
+  "motivates",
+  "mitigates",
+  "gap_for",
+  "allocates",
+  "links",
+] }
+
+[needs.fields.gap_shortfall]
+description = "How far short the need fell, as a label: \"<have> of <need>\" links present."
+default = ""
+nullable = false
+schema = { type = "string", pattern = "^$|^[0-9]+ of [0-9]+$" }
+
+[needs.fields.gap_need_id]
+description = "Id of the need the gap is attributed to, as a field a report template can read."
+default = ""
+nullable = false
+schema = { type = "string", pattern = "^$|^[A-Z]+_[A-Z][A-Z0-9_]*$" }
+
+[needs.fields.gap_need_type]
+description = "Type of the need the gap is attributed to, so a report can group gaps by V-model level."
+default = ""
+nullable = false
+schema = { type = "string", enum = [
+  "",
+  "user_story",
+  "req",
+  "arch",
+  "swreq",
+  "impl",
+  "test",
+  "test_result",
+  "risk",
+  "decision",
+  "gap",
+] }
+
+[needs.fields.code_url]
+description = "Remote URL of the code marker (codelinks). Nullable: the BMS export carries null."
 default = ""
 
-[needs.fields.platform_note]
-description = "Note describing the active platform"
-type = "string"
-nullable = true
-default = ""
-parse_variants = true
+# --- CODE ANALYSIS (B§6.2) --------------------------------------------------------
+# One codelinks project per subsystem and tree. The libclang preprocessor drops
+# markers in inactive `#if CONFIG_*` branches: compile_commands.json is the
+# active product's copy (CMake Tools cmake.copyCompileCommands, or
+# tools/build_product.sh); files without a database entry fall back to
+# build/active/autoconf.h. Markers: `// @need: <title>, <ID>, [<SWREQ_ID>, ...]`.
+[codelinks]
+set_local_url = true
+set_remote_url = true
 
-# --- [workflow] derived by `ubc agent install --detect` ---
+[codelinks.projects.vcu]
+remote_url_pattern = "https://github.com/PhilipPartsch/variant_demo/blob/{commit}/{path}#L{line}"
+
+[codelinks.projects.vcu.source_discover]
+src_dir = "src/vcu"
+include = ["**/*.c", "**/*.h"]
+comment_type = "cpp"
+
+[codelinks.projects.vcu.analyse]
+get_oneline_needs = true
+get_need_id_refs = false
+get_rst = false
+
+[codelinks.projects.vcu.analyse.preprocessor]
+compile_commands = "build/compile_commands.json"
+includes = ["build/active", "src/vcu/include"]
+defines = []
+
+[codelinks.projects.vcu.analyse.oneline_comment_style]
+start_sequence = "@need:"
+field_split_char = ","
+needs_fields = [
+  { name = "title", type = "str" },
+  { name = "id", type = "str" },
+  { name = "implements", type = "list[str]", default = [] },
+  { name = "type", type = "str", default = "impl" },
+]
+
+[codelinks.projects.vcu_tests]
+remote_url_pattern = "https://github.com/PhilipPartsch/variant_demo/blob/{commit}/{path}#L{line}"
+
+[codelinks.projects.vcu_tests.source_discover]
+src_dir = "tests/vcu"
+include = ["**/*.c", "**/*.h"]
+comment_type = "cpp"
+
+[codelinks.projects.vcu_tests.analyse]
+get_oneline_needs = true
+get_need_id_refs = false
+get_rst = false
+
+[codelinks.projects.vcu_tests.analyse.preprocessor]
+compile_commands = "build/compile_commands.json"
+includes = ["build/active", "src/vcu/include"]
+defines = []
+
+[codelinks.projects.vcu_tests.analyse.oneline_comment_style]
+start_sequence = "@need:"
+field_split_char = ","
+needs_fields = [
+  { name = "title", type = "str" },
+  { name = "id", type = "str" },
+  { name = "verifies", type = "list[str]", default = [] },
+  { name = "type", type = "str", default = "test" },
+]
+
+[codelinks.projects.chg]
+remote_url_pattern = "https://github.com/PhilipPartsch/variant_demo/blob/{commit}/{path}#L{line}"
+
+[codelinks.projects.chg.source_discover]
+src_dir = "src/chg"
+include = ["**/*.c", "**/*.h"]
+comment_type = "cpp"
+
+[codelinks.projects.chg.analyse]
+get_oneline_needs = true
+get_need_id_refs = false
+get_rst = false
+
+[codelinks.projects.chg.analyse.preprocessor]
+compile_commands = "build/compile_commands.json"
+includes = ["build/active", "src/chg/include"]
+defines = []
+
+[codelinks.projects.chg.analyse.oneline_comment_style]
+start_sequence = "@need:"
+field_split_char = ","
+needs_fields = [
+  { name = "title", type = "str" },
+  { name = "id", type = "str" },
+  { name = "implements", type = "list[str]", default = [] },
+  { name = "type", type = "str", default = "impl" },
+]
+
+[codelinks.projects.chg_tests]
+remote_url_pattern = "https://github.com/PhilipPartsch/variant_demo/blob/{commit}/{path}#L{line}"
+
+[codelinks.projects.chg_tests.source_discover]
+src_dir = "tests/chg"
+include = ["**/*.c", "**/*.h"]
+comment_type = "cpp"
+
+[codelinks.projects.chg_tests.analyse]
+get_oneline_needs = true
+get_need_id_refs = false
+get_rst = false
+
+[codelinks.projects.chg_tests.analyse.preprocessor]
+compile_commands = "build/compile_commands.json"
+includes = ["build/active", "src/chg/include"]
+defines = []
+
+[codelinks.projects.chg_tests.analyse.oneline_comment_style]
+start_sequence = "@need:"
+field_split_char = ","
+needs_fields = [
+  { name = "title", type = "str" },
+  { name = "id", type = "str" },
+  { name = "verifies", type = "list[str]", default = [] },
+  { name = "type", type = "str", default = "test" },
+]
+
+[codelinks.projects.eng]
+remote_url_pattern = "https://github.com/PhilipPartsch/variant_demo/blob/{commit}/{path}#L{line}"
+
+[codelinks.projects.eng.source_discover]
+src_dir = "src/eng"
+include = ["**/*.c", "**/*.h"]
+comment_type = "cpp"
+
+[codelinks.projects.eng.analyse]
+get_oneline_needs = true
+get_need_id_refs = false
+get_rst = false
+
+[codelinks.projects.eng.analyse.preprocessor]
+compile_commands = "build/compile_commands.json"
+includes = ["build/active", "src/eng/include"]
+defines = []
+
+[codelinks.projects.eng.analyse.oneline_comment_style]
+start_sequence = "@need:"
+field_split_char = ","
+needs_fields = [
+  { name = "title", type = "str" },
+  { name = "id", type = "str" },
+  { name = "implements", type = "list[str]", default = [] },
+  { name = "type", type = "str", default = "impl" },
+]
+
+[codelinks.projects.eng_tests]
+remote_url_pattern = "https://github.com/PhilipPartsch/variant_demo/blob/{commit}/{path}#L{line}"
+
+[codelinks.projects.eng_tests.source_discover]
+src_dir = "tests/eng"
+include = ["**/*.c", "**/*.h"]
+comment_type = "cpp"
+
+[codelinks.projects.eng_tests.analyse]
+get_oneline_needs = true
+get_need_id_refs = false
+get_rst = false
+
+[codelinks.projects.eng_tests.analyse.preprocessor]
+compile_commands = "build/compile_commands.json"
+includes = ["build/active", "src/eng/include"]
+defines = []
+
+[codelinks.projects.eng_tests.analyse.oneline_comment_style]
+start_sequence = "@need:"
+field_split_char = ","
+needs_fields = [
+  { name = "title", type = "str" },
+  { name = "id", type = "str" },
+  { name = "verifies", type = "list[str]", default = [] },
+  { name = "type", type = "str", default = "test" },
+]
+
+# --- AI WORKFLOW (B§7) ------------------------------------------------------------
+# Streams are the subsystems (vcu, chg, eng); vehicle-level stages are global.
+# Imported BMS needs (status `imported`) are context, not CV work items.
 [workflow]
-exempt_status = []
-release_disallow_status = []
-orphan_exempt_types = []
+exempt_status = ["imported"]
+orphan_exempt_types = ["user_story", "req", "arch", "swreq", "gap"]
+
+[workflow.diagram]
+enabled = false
+format = "mermaid"
 
 [[workflow.stages]]
-id = "req"
+id = "user_stories"
+produces = "user_story"
+review_skill = "review-feat"
+authoring = "Write vehicle-level user stories, one user-observable capability each. Variant-specific stories are gated with the named variants (bev, bus, mcs); no build-type or kit conditions."
+[workflow.stages.route]
+scope = "global"
+granularity = "single"
+path = "docs/vehicle/user_stories.rst"
+
+[[workflow.stages]]
+id = "reqs"
 produces = "req"
-depends_on = []
+depends_on = ["user_stories"]
 author_skill = "draft-requirement"
 review_skill = "review-requirement"
-trace = []
-optional = false
-
+authoring = "Decompose the user story into the complete set of vehicle requirements it implies — the happy path, the error and edge cases, and the relevant non-functional constraints. Author in the 150% source: gate variant-specific requirements with the named variants (bev, bus, mcs) or the region folders, at least as strongly as their parent; put product-specific values into the `value` field with variant functions; write alternatives as complementary `if` blocks sharing one id."
 [workflow.stages.route]
-scope = "stream"
-granularity = "per-root"
-path = "{stream}/req.rst"
-
-[[workflow.stages]]
-id = "spec"
-produces = "spec"
-depends_on = ["req"]
-author_skill = "draft-requirement"
-review_skill = "review-requirement"
-optional = false
-
-[workflow.stages.route]
-scope = "stream"
-granularity = "per-root"
-path = "{stream}/spec.rst"
-
+scope = "global"
+granularity = "single"
+path = "docs/vehicle/requirements.rst"
 [[workflow.stages.trace]]
-up = "req"
-link = "implements"
+link = "traces_to"
+up = "user_story"
 direction = "both"
 min = 1
 
-[workflow.icons]
-# deferred (auto-resolved): fan-in-parents: test:tests → req
-# deferred (auto-resolved): req: only-a-target — stage or label? (staged by default)
-# deferred (auto-resolved): spec: peripheral metadata source — stage or label? (staged by default)
-# detected, not staged: test
+[[workflow.stages]]
+id = "archs"
+produces = "arch"
+depends_on = ["reqs"]
+author_skill = "draft-arch"
+review_skill = "review-arch"
+authoring = "Produce the architecture elements the requirements need (one per distinct responsibility, enough that every requirement is satisfied by at least one element). Place variant-specific elements in the subsystem folder of their variant (chg: BEV, eng: diesel); gate any other variant-specific content with the named variants, at least as strongly as the parent requirement."
+[workflow.stages.route]
+scope = "stream"
+granularity = "per-root"
+path = "docs/subsystems/{stream}/architecture.rst"
+[[workflow.stages.trace]]
+link = "satisfies"
+up = "req"
+direction = "both"
+min = 1
 
+[[workflow.stages]]
+id = "bms_allocation"
+produces = "arch"
+depends_on = ["reqs"]
+author_skill = "draft-allocation"
+review_skill = "review-arch"
+authoring = "Write one black-box BMS element per CV requirement it serves; it satisfies the CV requirement and allocates only BMS interface needs (BMS_REQ_*, tag interface). The page is BEV only. Reference BMS values, never copy them."
+[workflow.stages.route]
+scope = "global"
+granularity = "single"
+path = "docs/subsystems/bms/architecture.rst"
+[[workflow.stages.trace]]
+link = "satisfies"
+up = "req"
+direction = "both"
+min = 1
+[[workflow.stages.trace]]
+link = "allocates"
+up = "req"
+direction = "outgoing"
+min = 1
+
+[[workflow.stages]]
+id = "swreqs"
+produces = "swreq"
+depends_on = ["archs"]
+author_skill = "draft-requirement"
+review_skill = "review-requirement"
+authoring = "Decompose each architecture element into the software requirements it owes: behaviour, interfaces and signals, error and degraded-mode handling, timing, accuracy and resource bounds. One shall-clause per requirement. Gate each swreq at least as strongly as its parent arch element."
+[workflow.stages.route]
+scope = "stream"
+granularity = "per-root"
+path = "docs/subsystems/{stream}/software_requirements.rst"
+[[workflow.stages.trace]]
+link = "refines"
+up = "arch"
+direction = "both"
+min = 1
+
+[[workflow.stages]]
+id = "code"
+produces = "impl"
+depends_on = ["swreqs"]
+author_skill = "draft-impl"
+authoring = "Author one implementation need per software requirement as a one-line marker `// @need: <title>, IMPL_<...>, [SWREQ_<...>]` in the C source of its subsystem, with real code beneath it. Feature code sits in `#if CONFIG_<...>` blocks; an alternative implementation uses the same need id in `#if` / `#else`."
+[workflow.stages.route]
+scope = "global"
+granularity = "global"
+path = "src"
+[[workflow.stages.trace]]
+link = "implements"
+up = "swreq"
+direction = "both"
+min = 1
+
+[[workflow.stages]]
+id = "tests"
+produces = "test"
+depends_on = ["code"]
+author_skill = "draft-test"
+authoring = "Author one test need per software requirement as a one-line marker `// @need: <title>, TEST_<...>, [SWREQ_<...>]` in the C test source of its subsystem, gated like the code it tests. Every test file is built by CMake."
+[workflow.stages.route]
+scope = "global"
+granularity = "global"
+path = "tests"
+[[workflow.stages.trace]]
+link = "verifies"
+up = "swreq"
+direction = "both"
+min = 1
+
+[[workflow.stages]]
+id = "test_results"
+optional = true
+produces = "test_result"
+[workflow.stages.route]
+scope = "global"
+granularity = "single"
+path = "docs/_global/test_results.rst"
+[[workflow.stages.trace]]
+link = "results_for"
+up = "test"
+direction = "outgoing"
+min = 1
+
+[[workflow.stages]]
+id = "risks"
+optional = true
+produces = "risk"
+[workflow.stages.route]
+scope = "global"
+granularity = "single"
+path = "docs/_global/risks.rst"
+[[workflow.stages.trace]]
+link = "mitigates"
+up = "req"
+direction = "outgoing"
+min = 1
+
+[[workflow.stages]]
+id = "decisions"
+optional = true
+produces = "decision"
+author_skill = "record-decision"
+review_skill = "review-decision"
+[workflow.stages.route]
+scope = "global"
+granularity = "single"
+path = "docs/_global/decisions.rst"
+[[workflow.stages.trace]]
+link = "affects"
+up = "arch"
+direction = "outgoing"
+min = 1
+
+# --- QUALITY (B§7.3) ---------------------------------------------------------------
 [quality]
 enabled = true
 
 [quality.required]
 parent_fit = 1
+variant_consistency = 1
 
 [quality.type_configs.req]
-criteria_file = "quality/requirement.toml"
+criteria_file = "metamodel/quality/requirement.toml"
 
+[quality.type_configs.swreq]
+criteria_file = "metamodel/quality/requirement.toml"
+
+[quality.type_configs.arch]
+criteria_file = "metamodel/quality/arch.toml"
+
+[quality.type_configs.user_story]
+criteria_file = "metamodel/quality/feat.toml"
+
+[quality.type_configs.decision]
+criteria_file = "metamodel/quality/decision.toml"
+
+[quality.type_configs.decision.required]
+context_present = 1

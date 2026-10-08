@@ -1,5 +1,11 @@
-# exclude agents plans
+# exclude agents plans (local working notes)
 .agents/plans/
+
+# CV platform: everything generated goes to build/ (CMake build dirs, active
+# product copies, HTML per product). Committed generated files: variants/*.json,
+# .vscode/cmake-variants.json, the product list in .vscode/tasks.json and the
+# pinned BMS exports third_party/bms/**/*.needs.json (drift-checked).
+build/
 
 # ubcode
 _build/

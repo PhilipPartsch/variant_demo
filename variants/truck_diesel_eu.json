@@ -1,0 +1,25 @@
+{
+  "bms": {
+    "chemistry": "",
+    "enabled": false
+  },
+  "charging": {
+    "mcs": false,
+    "pantograph": false
+  },
+  "hv": {
+    "class": ""
+  },
+  "market": {
+    "region": "eu"
+  },
+  "meta": {
+    "product": "truck_diesel_eu"
+  },
+  "powertrain": {
+    "type": "diesel"
+  },
+  "vehicle": {
+    "type": "truck"
+  }
+}

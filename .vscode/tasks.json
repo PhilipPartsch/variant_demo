@@ -1,0 +1,42 @@
+{
+  "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "product",
+      "type": "pickString",
+      "description": "Product (configs/<product>_defconfig)",
+      "options": [
+        "bus_bev_lfp_eu",
+        "truck_bev_lfp_na",
+        "truck_bev_nmc_eu",
+        "truck_diesel_eu"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "label": "CV: configure product (menuconfig)",
+      "detail": "Edit a product's Kconfig options, then save the minimal defconfig back",
+      "type": "shell",
+      "command": "mkdir -p build && .venv/bin/defconfig --kconfig Kconfig configs/${input:product}_defconfig && .venv/bin/menuconfig Kconfig && .venv/bin/savedefconfig --kconfig Kconfig --out configs/${input:product}_defconfig && .venv/bin/python tools/kconfig2variants.py --all --vscode",
+      "options": {
+        "env": {
+          "KCONFIG_CONFIG": "build/menuconfig.config"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "CV: build product (both HTML outputs)",
+      "type": "shell",
+      "command": "tools/build_product.sh ${input:product}",
+      "problemMatcher": []
+    },
+    {
+      "label": "CV: build all products and checks",
+      "type": "shell",
+      "command": "tools/build_all.sh",
+      "problemMatcher": []
+    }
+  ]
+}

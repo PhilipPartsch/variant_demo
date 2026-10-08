@@ -1,0 +1,36 @@
+{
+  "variant": {
+    "choices": {
+      "bus_bev_lfp_eu": {
+        "long": "Bus, BEV, LFP, 400 V, pantograph, EU",
+        "settings": {
+          "VARIANT": "bus_bev_lfp_eu"
+        },
+        "short": "bus_bev_lfp_eu"
+      },
+      "truck_bev_lfp_na": {
+        "long": "Truck, BEV, LFP, 800 V, NA",
+        "settings": {
+          "VARIANT": "truck_bev_lfp_na"
+        },
+        "short": "truck_bev_lfp_na"
+      },
+      "truck_bev_nmc_eu": {
+        "long": "Truck, BEV, NMC, 800 V, MCS, EU",
+        "settings": {
+          "VARIANT": "truck_bev_nmc_eu"
+        },
+        "short": "truck_bev_nmc_eu"
+      },
+      "truck_diesel_eu": {
+        "long": "Truck, diesel, EU",
+        "settings": {
+          "VARIANT": "truck_diesel_eu"
+        },
+        "short": "truck_diesel_eu"
+      }
+    },
+    "default": "truck_bev_nmc_eu",
+    "description": "Product (configs/<product>_defconfig)"
+  }
+}

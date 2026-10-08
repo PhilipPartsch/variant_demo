@@ -1,0 +1,88 @@
+# CV platform feature model (B§2.1, K§4).
+#
+# Naming: `__` separates namespace levels and becomes nesting in var.* (e.g.
+# POWERTRAIN__TYPE -> var.powertrain.type). Named choices become one lower-case
+# string; disabled symbols are emitted as false / "". Build kit and build type
+# are not part of this model.
+
+mainmenu "CV platform"
+
+choice VEHICLE__TYPE
+    prompt "Vehicle type"
+    default VEHICLE__TYPE__TRUCK
+    help
+      Truck or bus; selects vehicle-specific requirements.
+config VEHICLE__TYPE__TRUCK
+    bool "Truck"
+config VEHICLE__TYPE__BUS
+    bool "Bus"
+endchoice
+
+choice POWERTRAIN__TYPE
+    prompt "Powertrain"
+    default POWERTRAIN__TYPE__DIESEL
+    help
+      Diesel or battery-electric; decides BMS, charging controller and engine interface.
+config POWERTRAIN__TYPE__DIESEL
+    bool "Diesel"
+config POWERTRAIN__TYPE__BEV
+    bool "Battery-electric"
+endchoice
+
+config BMS__ENABLED
+    bool
+    default y if POWERTRAIN__TYPE__BEV
+    help
+      The vehicle uses the BMS product (derived, not user-visible).
+
+choice BMS__CHEMISTRY
+    prompt "Cell chemistry"
+    depends on BMS__ENABLED
+    default BMS__CHEMISTRY__NMC
+    help
+      Selects the BMS variant whose needs are imported.
+config BMS__CHEMISTRY__NMC
+    bool "NMC"
+config BMS__CHEMISTRY__LFP
+    bool "LFP"
+endchoice
+
+choice HV__CLASS
+    prompt "High-voltage class"
+    depends on POWERTRAIN__TYPE__BEV
+    default HV__CLASS__V400
+    help
+      Traction voltage class; decides charging capability and isolation context.
+config HV__CLASS__V400
+    bool "400 V"
+config HV__CLASS__V800
+    bool "800 V"
+endchoice
+
+config CHARGING__MCS
+    bool "Megawatt charging (MCS)"
+    depends on HV__CLASS__V800
+    help
+      Megawatt charging for trucks; requires 800 V.
+
+config CHARGING__PANTOGRAPH
+    bool "Pantograph opportunity charging"
+    depends on VEHICLE__TYPE__BUS && POWERTRAIN__TYPE__BEV
+    help
+      Roof pantograph for city buses.
+
+choice MARKET__REGION
+    prompt "Market"
+    default MARKET__REGION__EU
+    help
+      Target market; selects regulations and charging standard.
+config MARKET__REGION__EU
+    bool "Europe"
+config MARKET__REGION__NA
+    bool "North America"
+endchoice
+
+# Subsystem options live with their code (B§3.1).
+rsource "src/vcu/Kconfig"
+rsource "src/chg/Kconfig"
+rsource "src/eng/Kconfig"

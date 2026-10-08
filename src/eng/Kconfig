@@ -1,0 +1,5 @@
+menu "ENG options"
+
+# Symbols use the namespace ENG__ (filled with the content, C§5).
+
+endmenu

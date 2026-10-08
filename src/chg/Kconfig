@@ -1,0 +1,5 @@
+menu "CHG options"
+
+# Symbols use the namespace CHG__ (filled with the content, C§5).
+
+endmenu
