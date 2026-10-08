@@ -1,5 +1,5 @@
 # exclude agents plans (local working notes)
-.agents/plans/
+#.agents/plans/
 
 # CV platform: everything generated goes to build/ (CMake build dirs, active
 # product copies, HTML per product). Committed generated files: variants/*.json,
