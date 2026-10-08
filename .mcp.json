@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ubcode": {
+      "command": "ubc",
+      "args": ["serve", "mcp", "--default-config", "ubproject.toml"]
+    }
+  }
+}
