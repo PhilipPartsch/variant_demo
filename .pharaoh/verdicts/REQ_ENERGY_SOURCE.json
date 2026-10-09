@@ -1,0 +1,40 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "atomicity": {
+      "reason": "One obligation: display remaining energy as the fuel tank level.",
+      "score": 2
+    },
+    "comprehensibility": {
+      "reason": "Self-contained and plain language.",
+      "score": 2
+    },
+    "feasibility": {
+      "reason": "Standard fuel gauge; contradicts nothing.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "Directly covers the 'know the remaining energy' half of US_RANGE_AWARENESS for a diesel vehicle by displaying the fuel tank level.",
+      "score": 2
+    },
+    "unambiguity": {
+      "reason": "Single reading: the remaining-energy indication is the fuel tank level.",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "Gated by spelled-out not (var.powertrain.type == 'bev'), stronger than its ungated parent and exactly complementary to the BEV block of the same id.",
+      "score": 2
+    },
+    "verifiability": {
+      "reason": "Testable by comparing displayed and actual tank level, but unit/resolution and accuracy tolerance are not specified.",
+      "score": 1,
+      "suggestion": "State the unit (e.g. % of tank or litres), resolution and the allowed deviation from the actual fuel level."
+    }
+  },
+  "criteria": "requirement",
+  "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
+  "model": "claude-opus-5-5",
+  "need": "REQ_ENERGY_SOURCE",
+  "reviewed_fingerprint": "799de64368e181089b94399ec76e4ef46b53a180069687af43700dd23167f763",
+  "schema": 2
+}

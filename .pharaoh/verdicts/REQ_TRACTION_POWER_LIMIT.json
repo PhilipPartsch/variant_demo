@@ -1,0 +1,42 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "atomicity": {
+      "reason": "Bundles two bounds (do not exceed the announced limit; never exceed the value) that are related facets of one power-limit obligation.",
+      "score": 1,
+      "suggestion": "Split into 'shall not exceed the announced limit' and 'maximum traction power shall not exceed <value>'."
+    },
+    "comprehensibility": {
+      "reason": "Readable on its own; 'the value of this requirement' refers to the need's own value field, a project convention.",
+      "score": 2
+    },
+    "feasibility": {
+      "reason": "450 kW truck / 250 kW bus traction limits are realistic and implementable.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "The parent asks that the driver be told IN ADVANCE when traction power is limited; this requirement only enforces compliance with an announced limit plus a cap, it does not require the advance announcement itself.",
+      "score": 1,
+      "suggestion": "Add (or split into) a requirement that the vehicle shall announce a traction power limitation to the driver at least <t> s before it takes effect."
+    },
+    "unambiguity": {
+      "reason": "The trailing 'at most the value of this requirement' attaches ambiguously: it can cap the announced limit or the delivered power directly.",
+      "score": 1,
+      "suggestion": "Rephrase: 'The traction power shall not exceed the limit announced to the driver, and never the value of this requirement.'"
+    },
+    "variant_consistency": {
+      "reason": "Ungated like its parent; product-specific limit sits in a variant function <<bus: 250 kW, 450 kW>> rather than in prose.",
+      "score": 2
+    },
+    "verifiability": {
+      "reason": "Measurable: delivered traction power <= min(announced limit, value) with a concrete kW value resolved per product (450 kW truck / 250 kW bus).",
+      "score": 2
+    }
+  },
+  "criteria": "requirement",
+  "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
+  "model": "claude-opus-5-5",
+  "need": "REQ_TRACTION_POWER_LIMIT",
+  "reviewed_fingerprint": "70502232234eccd8c1e9d0d9efb4aaec443f519ff0a44c74667a73dea8cb9e03",
+  "schema": 2
+}

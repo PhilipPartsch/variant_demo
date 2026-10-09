@@ -1,0 +1,40 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "atomicity": {
+      "reason": "One obligation: CCS2 inlet.",
+      "score": 2
+    },
+    "comprehensibility": {
+      "reason": "Abbreviation expanded in place.",
+      "score": 2
+    },
+    "feasibility": {
+      "reason": "CCS2 is the EU standard; feasible.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "Names the EU public-infrastructure inlet, directly serving US_MARKET_CHARGING.",
+      "score": 2
+    },
+    "unambiguity": {
+      "reason": "'shall charge through a CCS2 inlet' can be read as the exclusive inlet, which would clash with REQ_MCS_CHARGING in MCS products, or as 'at least'.",
+      "score": 1,
+      "suggestion": "Rephrase as 'shall provide a CCS2 inlet for public charging' so it does not exclude additional inlets such as MCS."
+    },
+    "variant_consistency": {
+      "reason": "Gated by the region/eu variant folder plus spelled-out bev condition - stronger than its bev-gated parent.",
+      "score": 2
+    },
+    "verifiability": {
+      "reason": "Inspectable/testable against the CCS2 standard (IEC 62196-3).",
+      "score": 2
+    }
+  },
+  "criteria": "requirement",
+  "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
+  "model": "claude-opus-5-5",
+  "need": "REQ_EU_CHARGING_STANDARD",
+  "reviewed_fingerprint": "60efce677852b0ac5a6d3022b1610d42d2e1883596ef02faaa6f5088f816b3cb",
+  "schema": 2
+}

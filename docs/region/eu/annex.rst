@@ -12,5 +12,5 @@ requirement inside it only in battery-electric ones (combined gating).
       :status: draft
       :traces_to: US_MARKET_CHARGING
 
-      The vehicle shall charge through a CCS2 (Combined Charging System, type 2)
-      inlet.
+      The vehicle shall provide a CCS2 (Combined Charging System, type 2)
+      charging inlet according to IEC 62196-3.

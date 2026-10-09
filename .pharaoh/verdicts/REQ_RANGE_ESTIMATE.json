@@ -1,0 +1,41 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "atomicity": {
+      "reason": "One obligation: display an estimated remaining range; the calculation basis is a facet of it.",
+      "score": 2
+    },
+    "comprehensibility": {
+      "reason": "'remaining energy of its energy source' leans on REQ_ENERGY_SOURCE for its meaning, and the inline :variant:`powertrain.type` renders a raw variant token ('bev'/'diesel') rather than stakeholder wording.",
+      "score": 1,
+      "suggestion": "Name the source explicitly (battery state of charge / fuel level) or drop the variant token, e.g. 'calculated from the displayed remaining energy'."
+    },
+    "feasibility": {
+      "reason": "Standard range-estimation function; contradicts nothing.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "Directly covers the 'know the range' half of US_RANGE_AWARENESS.",
+      "score": 2
+    },
+    "unambiguity": {
+      "reason": "Core meaning is clear: show remaining range derived from the remaining energy of the active energy source.",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "Ungated like its parent; the product-specific word is resolved by a variant role, not restated literally.",
+      "score": 2
+    },
+    "verifiability": {
+      "reason": "Presence of a range display is testable, but no accuracy, unit or consumption basis for 'estimated' is given, so correctness of the estimate cannot be judged objectively.",
+      "score": 1,
+      "suggestion": "Specify the unit (km/mi), the consumption basis (e.g. average over the last N km) and an accuracy tolerance."
+    }
+  },
+  "criteria": "requirement",
+  "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
+  "model": "claude-opus-5-5",
+  "need": "REQ_RANGE_ESTIMATE",
+  "reviewed_fingerprint": "923ac32725360991675584b492b2dc33e403f59d618f3be90e0fbb4801fa3fc1",
+  "schema": 2
+}

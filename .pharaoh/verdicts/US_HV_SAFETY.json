@@ -2,29 +2,29 @@
   "agent": "claude-code",
   "axes": {
     "naming_clarity": {
-      "reason": "'High-voltage hazards' is understandable stakeholder vocabulary for drivers and technicians.",
+      "reason": "'high-voltage' is spelled out and familiar to BEV drivers.",
       "score": 2
     },
     "no_mechanism_leak": {
-      "reason": "No implementation constructs named.",
+      "reason": "No implementation constructs.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "User story is the root of the V; no parent to trace to.",
+      "reason": "Root of the V; no upstream parent.",
       "score": 2
     },
     "single_user_capability": {
-      "reason": "One safety goal, but it bundles two audiences and situations (driver in operation, technician during service) whose protections could ship independently.",
+      "reason": "Centred on HV safety but folds in two aspects - making the system safe and warning the driver - that could ship separately.",
       "score": 1,
-      "suggestion": "Consider separate stories for driver protection in operation and technician protection during service, or state the shared capability explicitly."
+      "suggestion": "Keep the safe-state as the capability and phrase the warning as how the driver experiences it, or split into two stories."
     },
     "user_observable": {
-      "reason": "Protection is a user-relevant outcome, but the body states no effect the user actually observes (e.g. warning, safe de-energised state), so it is hard to confirm directly.",
+      "reason": "The warning is observable, but 'making its high-voltage system safe' is an internal effect a driver cannot directly observe.",
       "score": 1,
-      "suggestion": "Name what the driver/technician observes, e.g. 'the vehicle warns me and makes the high-voltage system safe before I can touch it'."
+      "suggestion": "Express the safe state in driver terms, e.g. 'the vehicle stops providing high voltage and tells me it is safe/unsafe to continue'."
     },
     "variant_consistency": {
-      "reason": "Gated by the spelled-out bev condition; HV exists only in BEV products, so diesel correctly lacks the story.",
+      "reason": "Gated by spelled-out bev condition (var.powertrain.type == 'bev'); root, no parent.",
       "score": 2
     }
   },
@@ -32,7 +32,6 @@
   "criteria_fingerprint": "93247fd50e1c2de110b36e7f5d97505609f74d8dc8014fd8e96f5eb55d1a1b51",
   "model": "claude-opus-5-5",
   "need": "US_HV_SAFETY",
-  "reviewed_fingerprint": "174e4ab75e4049990df366f110c2b04872ac4070275d23b7d1326c2605c4af9d",
-  "schema": 2,
-  "summary": "Below max: single_user_capability, user_observable"
+  "reviewed_fingerprint": "1716a156a5f87b86aa709aea3466990f3d8908d4382b88a0f121664115d554b9",
+  "schema": 2
 }

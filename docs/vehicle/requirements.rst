@@ -18,7 +18,8 @@ Energy and range
       :traces_to: US_RANGE_AWARENESS
 
       The vehicle shall display the remaining energy as the state of charge
-      reported by the battery management system.
+      reported by the battery management system, in percent with a resolution
+      of 1 %.
 
 .. if:: not (var.powertrain.type == 'bev')
 
@@ -27,15 +28,17 @@ Energy and range
       :status: draft
       :traces_to: US_RANGE_AWARENESS
 
-      The vehicle shall display the remaining energy as the fuel tank level.
+      The vehicle shall display the remaining energy as the fuel tank level, in
+      percent of the tank capacity with a resolution of 1 %.
 
 .. req:: Range estimate
    :id: REQ_RANGE_ESTIMATE
    :status: draft
    :traces_to: US_RANGE_AWARENESS
 
-   The vehicle shall display the estimated remaining range, calculated from the
-   remaining energy of its energy source (:variant:`powertrain.type`).
+   The vehicle shall display the estimated remaining range in kilometres,
+   calculated from the remaining energy and the average consumption of the last
+   50 km. Energy source of this product: :variant:`powertrain.type`.
 
 Traction power
 --------------
@@ -46,8 +49,8 @@ Traction power
    :traces_to: US_PREDICTABLE_POWER
    :value: <<bus: 250 kW, 450 kW>>
 
-   The vehicle shall not deliver more traction power than the limit announced
-   to the driver, at most the value of this requirement.
+   The vehicle shall limit the delivered traction power to the value of this
+   requirement.
 
 Charging and high voltage
 -------------------------
@@ -60,16 +63,16 @@ Charging and high voltage
       :traces_to: US_FAST_DEPOT_CHARGING
       :value: <<mcs: 1000 kW, 350 kW>>
 
-      The vehicle shall accept charging power up to the value of this
-      requirement.
+      The vehicle shall accept a sustained charging power up to the value of this
+      requirement between 20 % and 80 % state of charge.
 
    .. req:: High-voltage shutdown on isolation fault
       :id: REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT
       :status: draft
       :traces_to: US_HV_SAFETY
 
-      The vehicle shall disconnect the high-voltage battery and warn the driver
-      when an isolation fault is detected.
+      The vehicle shall disconnect the high-voltage battery within 100 ms after
+      the insulation resistance drops below 100 Ω/V.
 
 .. if:: var.charging.mcs == True
 
@@ -79,7 +82,7 @@ Charging and high voltage
       :traces_to: US_FAST_DEPOT_CHARGING
 
       The vehicle shall support charging sessions with the Megawatt Charging
-      System (MCS).
+      System (MCS) according to IEC 63379.
 
 .. if:: var.charging.pantograph == True
 
@@ -89,7 +92,7 @@ Charging and high voltage
       :traces_to: US_OPPORTUNITY_CHARGING
 
       The vehicle shall support opportunity charging through a roof-mounted
-      pantograph at terminal stops.
+      pantograph according to SAE J3105.
 
 Passenger safety
 ----------------
@@ -101,4 +104,5 @@ Passenger safety
       :status: draft
       :traces_to: US_PASSENGER_DOOR_SAFETY
 
-      The vehicle shall inhibit traction while a passenger door is open.
+      The vehicle shall inhibit traction while a passenger door is not detected
+      as closed and locked.

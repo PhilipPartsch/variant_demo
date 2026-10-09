@@ -1,0 +1,40 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "atomicity": {
+      "reason": "One obligation: CCS1 inlet.",
+      "score": 2
+    },
+    "comprehensibility": {
+      "reason": "Abbreviation expanded in place.",
+      "score": 2
+    },
+    "feasibility": {
+      "reason": "CCS1 is an established North American DC charging standard; implementable and contradicts nothing.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "Names the North American public-infrastructure inlet, directly serving US_MARKET_CHARGING.",
+      "score": 2
+    },
+    "unambiguity": {
+      "reason": "'shall charge through a CCS1 inlet' can be read as exclusive or as 'at least one'; with NACS/SAE J3400 increasingly common in NA the intended scope is unclear.",
+      "score": 1,
+      "suggestion": "Rephrase as 'shall provide a CCS1 inlet for public charging' and state whether other inlets (e.g. J3400) are allowed."
+    },
+    "variant_consistency": {
+      "reason": "Gated by the region/na variant folder plus spelled-out bev condition - stronger than its bev-gated parent.",
+      "score": 2
+    },
+    "verifiability": {
+      "reason": "Inspectable/testable against the CCS1 standard (SAE J1772 combo).",
+      "score": 2
+    }
+  },
+  "criteria": "requirement",
+  "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
+  "model": "claude-opus-5-5",
+  "need": "REQ_NA_CHARGING_STANDARD",
+  "reviewed_fingerprint": "77dc885fefe0458897514802c7e47f5975bd34a1d808d396105f1e52da9f64a2",
+  "schema": 2
+}

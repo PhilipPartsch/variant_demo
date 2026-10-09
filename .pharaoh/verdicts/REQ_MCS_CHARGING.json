@@ -1,0 +1,40 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "atomicity": {
+      "reason": "One obligation: support MCS charging sessions.",
+      "score": 2
+    },
+    "comprehensibility": {
+      "reason": "Abbreviation expanded in place.",
+      "score": 2
+    },
+    "feasibility": {
+      "reason": "MCS hardware exists for heavy trucks.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "MCS enables megawatt-level depot charging within a driver break (US_FAST_DEPOT_CHARGING).",
+      "score": 2
+    },
+    "unambiguity": {
+      "reason": "Single reading: the vehicle can conduct MCS charging sessions.",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "Gated by spelled-out mcs condition (var.charging.mcs == True); in the product data MCS only occurs with bev, so it is never present without its bev-gated parent. Note it is not nested in the bev block, so this relies on that data invariant.",
+      "score": 2
+    },
+    "verifiability": {
+      "reason": "Testable as an MCS session, but no standard reference/version (e.g. IEC 63379 / SAE J3271) defines the pass criteria.",
+      "score": 1,
+      "suggestion": "Reference the MCS standard and edition the vehicle shall conform to."
+    }
+  },
+  "criteria": "requirement",
+  "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
+  "model": "claude-opus-5-5",
+  "need": "REQ_MCS_CHARGING",
+  "reviewed_fingerprint": "cdaaf42f6be1931f0e49065b65cb939129c383aa408d294cdf9d179ec58d4acb",
+  "schema": 2
+}
