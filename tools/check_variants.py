@@ -37,6 +37,7 @@ INLINE_COND = re.compile(r"<<\[([^\]]+)\]")
 MARKER = re.compile(r"//\s*@need:\s*[^,]*,\s*([A-Z]+_[A-Z][A-Z0-9_]*)")
 CODE_IF = re.compile(r"^\s*#\s*(?:el)?if\b(.*)$", re.M)
 CONFIG = re.compile(r"\bCONFIG_([A-Z0-9_]+)")
+INLINE_LITERAL = re.compile(r"``.+?``", re.S)
 
 
 def ns(obj):
@@ -70,7 +71,7 @@ def main() -> int:
     conditions += [(f"mount {m.get('path', m)}", m["if"]) for m in cfg.get("source", {}).get("mounts", []) if "if" in m]
     rst_files = sorted(docs_dir.rglob("*.rst"))
     for f in rst_files:
-        text = f.read_text()
+        text = INLINE_LITERAL.sub("", f.read_text())  # ``<<[cond]: a, b>>`` in prose is an example, not a condition
         rel = f.relative_to(ROOT)
         conditions += [(f"{rel} .. if::", c.strip()) for c in IF_DIRECTIVE.findall(text)]
         conditions += [(f"{rel} <<[...]>>", c.strip()) for c in INLINE_COND.findall(text)]
