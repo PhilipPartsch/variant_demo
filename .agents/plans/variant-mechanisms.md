@@ -90,6 +90,14 @@ config file passes a schema check.
 - **Rules:**
   - Conditions see **only `var.*`**, not need fields or IDs, because they are
     evaluated at parse time.
+  - **Named variants are not resolved by `if`** (V§5 #1): `.. if:: mcs` fails
+    with "Unknown variant key: var.mcs" (ubc warning `if.invalid_expression`).
+    Spell the condition out — `.. if:: var.charging.mcs == True` — and keep
+    named variants for `<<name: a, b>>` variant functions. "`if bev`" in the
+    plans is shorthand for `.. if:: var.powertrain.type == 'bev'`.
+  - No `var.*` level may be a Python keyword: sphinx-needs evaluates conditions
+    as Python, so `var.hv.class` is a syntax error there (ubc accepts it;
+    V§5 #2). The generator rejects such symbol names.
   - Content in a branch that isn't selected is never parsed. Its needs don't
     exist, and links to them dangle (see the link rule).
   - Alternative branches in a `choose` may reuse the same need ID: one ID,

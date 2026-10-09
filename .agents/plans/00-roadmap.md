@@ -13,6 +13,11 @@ diesel / battery-electric, using the BMS from `rollout-demo-bms`) is built in
 | 5 | [05-test.md](05-test.md) | `T§` | tests for tooling, mechanisms, content and IDE behaviour | `test/*` → `main` |
 | 6 | [06-automation.md](06-automation.md) | `A§` | CI for builds and tests; GitHub Pages with sphinx-needs and ubCode output side by side for all products | `ci/*` → `main` |
 
+Bug list (not a step): [99-tool-bugs.md](99-tool-bugs.md) — bugs and gaps in
+the **useblocks tools** (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks,
+sphinx-mounts, ubc-action), each with a `branch@commit` marker, input, wrong
+output and two solution options. Every plan adds its new findings there.
+
 Concept references (not steps):
 
 | Document | Abbrev. | Content |
@@ -70,3 +75,7 @@ Plans live in `.agents/plans/` — local only, gitignored, kept for now.
    build type is always `Debug` and not offered as a choice.
 3. Every product is built with **both** ubc and Sphinx; their results must
    agree.
+4. Every bug or gap found in a **useblocks tool** is recorded in
+   [99-tool-bugs.md](99-tool-bugs.md) (summary, `branch@commit` marker on a
+   pushed branch, input, wrong output, two solutions) — in every plan, in the
+   same session the finding is made.

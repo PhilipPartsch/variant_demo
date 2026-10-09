@@ -51,7 +51,7 @@ covered (§1.1).
 | `docs/subsystems/vcu/` | VCU architecture, swreqs, code trace | `if` inside (VCU exists everywhere) |
 | `docs/subsystems/chg/` | CHG architecture, swreqs, code trace | whole folder BEV-only (file variant) |
 | `docs/subsystems/eng/` | ENG architecture, swreqs, code trace | whole folder diesel-only (file variant) |
-| `docs/subsystems/bms/` | BMS black-box architecture with `allocates`, integration page | whole folder BEV-only (file variant) |
+| `docs/subsystems/bms/` | BMS black boxes (`bms_block`) with `allocates`, integration page | whole folder BEV-only (file variant) |
 | `docs/region/{eu,na}/` | market annex requirements | file variant per region, `if bev` inside |
 | `docs/_global/` | risks, decisions (authored); test results, gaps (imported) | `if` where a risk / decision is variant-specific |
 | `docs/reports/` | report pages (§7) | per product build |
@@ -102,7 +102,7 @@ review; each item is one or two sentences. IDs are proposals; the workflow (§6)
 | `REQ_ENERGY_SOURCE` | display remaining energy: state of charge (BEV) / fuel level (diesel) | `US_RANGE_AWARENESS` | all | **alternatives** (showcase A, §4.1) |
 | `REQ_RANGE_ESTIMATE` | estimate remaining range from the energy source | `US_RANGE_AWARENESS` | all | `<{ var.powertrain.type }>` in text |
 | `REQ_TRACTION_POWER_LIMIT` | never exceed the announced traction power limit | `US_PREDICTABLE_POWER` | all | field `value: <<[bus]: 250 kW, 450 kW>>` |
-| `REQ_MAX_CHARGE_POWER` | accept charging up to the rated power | `US_FAST_DEPOT_CHARGING` | BEV | `if bev`; field `value: <<[mcs]: 1000 kW, 350 kW>>` |
+| `REQ_MAX_CHARGE_POWER` | accept charging up to the rated power | `US_FAST_DEPOT_CHARGING` | BEV | `if bev`; field `value: <<mcs: 1000 kW, 350 kW>>` |
 | `REQ_MCS_CHARGING` | support megawatt charging sessions | `US_FAST_DEPOT_CHARGING` | MCS trucks | `if mcs` |
 | `REQ_PANTOGRAPH_CHARGING` | support roof-pantograph opportunity charging | `US_OPPORTUNITY_CHARGING` | bus with pantograph | `if` |
 | `REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT` | open the HV system on an isolation fault | `US_HV_SAFETY` | BEV | `if bev` |
@@ -126,10 +126,10 @@ EU annex, but no charging requirement).
 | `ARCH_CHG_SESSION_CONTROL` | CHG | `REQ_MAX_CHARGE_POWER`, `REQ_EU_/NA_CHARGING_STANDARD` | BEV | links to region reqs gated like the targets |
 | `ARCH_ENG_FUEL_LEVEL` | ENG | `REQ_ENERGY_SOURCE` | diesel | file variant |
 | `ARCH_ENG_TORQUE_INTERFACE` | ENG | `REQ_TRACTION_POWER_LIMIT` | diesel | file variant |
-| `ARCH_BMS_ENERGY_STATE` | BMS | `REQ_ENERGY_SOURCE`, `REQ_RANGE_ESTIMATE` | BEV | allocation (§3) |
-| `ARCH_BMS_POWER_LIMITS` | BMS | `REQ_TRACTION_POWER_LIMIT` | BEV | allocation (§3) |
-| `ARCH_BMS_HV_PROTECTION` | BMS | `REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT` | BEV | allocation (§3) |
-| `ARCH_BMS_CHARGE_LIMITS` | BMS | `REQ_MAX_CHARGE_POWER` | BEV | allocation (§3) |
+| `BB_ENERGY_STATE` | BMS | `REQ_ENERGY_SOURCE`, `REQ_RANGE_ESTIMATE` | BEV | allocation (§3) |
+| `BB_POWER_LIMITS` | BMS | `REQ_TRACTION_POWER_LIMIT` | BEV | allocation (§3) |
+| `BB_HV_PROTECTION` | BMS | `REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT` | BEV | allocation (§3) |
+| `BB_CHARGE_LIMITS` | BMS | `REQ_MAX_CHARGE_POWER` | BEV | allocation (§3) |
 
 ### 2.4 Software requirements (`docs/subsystems/<x>/software_requirements.rst`)
 
@@ -154,7 +154,7 @@ Each swreq gets one `impl` and at least one `test` marker (§5).
 |---|---|---|---|
 | `RISK_HV_EXPOSURE` | risk | `mitigates` → `REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT` | BEV |
 | `RISK_DOOR_TRAP` | risk | `mitigates` → `REQ_DOOR_DRIVE_INTERLOCK` | bus |
-| `DEC_BMS_AS_EXTERNAL_PRODUCT` | decision | `affects` → `ARCH_BMS_*` (why import, not mount — B§5.1) | BEV |
+| `DEC_BMS_AS_EXTERNAL_PRODUCT` | decision | `affects` → a CV `arch` (`affects` targets `arch`; `BB_*` black boxes are not `arch`) (why import, not mount — B§5.1) | BEV |
 | `DEC_CHARGING_INLET_PRIORITY` | decision | `affects` → `ARCH_CHG_INLET` (branch order of showcase B) | BEV |
 
 ### 2.6 Expected size
@@ -171,14 +171,17 @@ Each swreq gets one `impl` and at least one `test` marker (§5).
 ## 3. BMS allocation content
 
 `docs/subsystems/bms/architecture.rst`, authored through the `bms_allocation`
-stage (B§7.2):
+stage (B§7.2). Each black box satisfies the vehicle req **and** the req keeps a
+CV `arch` of its own (the `archs` gate needs one; a black box does not count).
 
-| CV arch | Allocates (imported, `BMS_` prefix) | Why |
+
+
+| BMS black box (`bms_block`) | Allocates (imported, `BMS_` prefix) | Why |
 |---|---|---|
-| `ARCH_BMS_ENERGY_STATE` | `BMS_REQ_SOC_ACCURACY`, `BMS_REQ_SOC_INVALID_FLAG` | range estimation and display |
-| `ARCH_BMS_POWER_LIMITS` | `BMS_REQ_POWER_DERATING`, `BMS_REQ_PACK_OVERCURRENT` | VCU power management |
-| `ARCH_BMS_HV_PROTECTION` | `BMS_REQ_ISOLATION_FAULT`, `BMS_REQ_FAULT_REACTION_TIME` | HV shutdown, safety timing |
-| `ARCH_BMS_CHARGE_LIMITS` | `BMS_REQ_CELL_VOLTAGE_LIMITS`, `BMS_REQ_HEATING_REQUEST`, `BMS_REQ_COOLING_REQUEST` | charging limits (chemistry-specific values) |
+| `BB_ENERGY_STATE` | `BMS_REQ_SOC_ACCURACY`, `BMS_REQ_SOC_INVALID_FLAG` | range estimation and display |
+| `BB_POWER_LIMITS` | `BMS_REQ_POWER_DERATING`, `BMS_REQ_PACK_OVERCURRENT` | VCU power management |
+| `BB_HV_PROTECTION` | `BMS_REQ_ISOLATION_FAULT`, `BMS_REQ_FAULT_REACTION_TIME` | HV shutdown, safety timing |
+| `BB_CHARGE_LIMITS` | `BMS_REQ_CELL_VOLTAGE_LIMITS`, `BMS_REQ_HEATING_REQUEST`, `BMS_REQ_COOLING_REQUEST` | charging limits (chemistry-specific values) |
 
 Linking rules:
 
@@ -202,7 +205,7 @@ BMS version and chemistry (`<{ var.bms.chemistry }>`).
 |---|---|
 | Field `<<>>` | `REQ_TRACTION_POWER_LIMIT.value`, `REQ_MAX_CHARGE_POWER.value` |
 | Field `<{ }>` | `REQ_RANGE_ESTIMATE` text, BMS integration page, landing page |
-| Named variants | `bev`, `bus`, `mcs` (B§2.3) in all `<<>>` and `if` conditions |
+| Named variants | `bev`, `bus`, `mcs` (B§2.3) in `<<name: a, b>>` variant functions; `if` needs the spelled-out condition (`if bev` in the tables = `.. if:: var.powertrain.type == 'bev'`, M§5) |
 | Link variant | `ARCH_VCU_POWER_MGMT` `allocates` `BMS_REQ_POWER_DERATING` only if BEV |
 | `if` | BEV / bus / MCS / pantograph needs (§2.1–§2.5) |
 | Alternatives — `choose` (**not released yet**; interim complementary `if` blocks, M§5.1) | showcases A and B (§4.1) |
@@ -436,13 +439,19 @@ verdicts land in `.pharaoh/verdicts/`.
    write allocations; never edit or review them; never copy their values.
 6. **No build-type or kit conditions** anywhere (K§0 P3).
 7. **Code markers** follow the coding rules of §5.
+8. **Warning-free** (decision 2026-10-09): `ubc check` passes **without
+   warnings** for every product, and there are no lint ignores. Backward
+   coverage (`coverage-*-back`) is a warning, so a change is only green when
+   its stream is complete down the V (req → arch → swreq → impl + test); author
+   in complete slices. Sphinx suppresses only the backward-coverage subtype
+   (`docs/conf.py`), `ubc check` does not.
 
 ## 7. Reports (`docs/reports/`)
 
 Per product build:
 
 1. **Vehicle → subsystem coverage:** every vehicle `req` is satisfied by a CV
-   `arch`; every BMS black-box `arch` `allocates` ≥1 BMS interface need.
+   `arch`; every BMS black box (`bms_block`) `allocates` ≥1 BMS interface need.
 2. **BMS usage report:** which BMS interface needs the CV platform uses, per
    chemistry; unused interface needs listed.
 3. **Cross-product needflow:** user story → CV req → CV arch → BMS req (external,
@@ -490,6 +499,8 @@ follow the same switch.
 8. Report pages (§7).
 9. Demo readiness: `choose` pin and migration (§8.2), dry run of §8.1.
 10. Afterwards: [05-test.md](05-test.md) and [06-automation.md](06-automation.md).
+
+**Tool findings → plan 99:** every bug or gap found in a useblocks tool (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks, sphinx-mounts, ubc-action, ubTrace, ubConnect, Sphinx-Test-Reports) is added to [99-tool-bugs.md](99-tool-bugs.md) in the same session: summary, marker `branch@commit` + file:line on a pushed branch, input, wrong output, workaround, two solutions.
 
 ## 10. Later options
 

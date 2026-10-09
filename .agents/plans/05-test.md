@@ -165,6 +165,11 @@ reviewed.
 - L8 checklist passed on at least one OS.
 - Release-gated tests (DOC-06) skipped only while the pinned sphinx-needs has
   no `choose`; mandatory after the pin is raised.
+- Every test that fails because of a useblocks tool (not our content or
+  tooling) has an entry in [99-tool-bugs.md](99-tool-bugs.md), and the test
+  references its id (e.g. `xfail` reason "PH-01").
+
+**Tool findings → plan 99:** every bug or gap found in a useblocks tool (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks, sphinx-mounts, ubc-action, ubTrace, ubConnect, Sphinx-Test-Reports) is added to [99-tool-bugs.md](99-tool-bugs.md) in the same session: summary, marker `branch@commit` + file:line on a pushed branch, input, wrong output, workaround, two solutions.
 
 ## 11. Rollout
 

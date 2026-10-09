@@ -180,6 +180,8 @@ field / link values — from the two `needs.json` files. Empty diff = parity
 7. (no eval job: `eval/*` branches stay local, T§ L7 runs locally.)
 8. `nightly.yml`.
 
+**Tool findings → plan 99:** every bug or gap found in a useblocks tool (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks, sphinx-mounts, ubc-action, ubTrace, ubConnect, Sphinx-Test-Reports) is added to [99-tool-bugs.md](99-tool-bugs.md) in the same session: summary, marker `branch@commit` + file:line on a pushed branch, input, wrong output, workaround, two solutions. CI-specific findings (e.g. ubc-action, Linux libclang, Pages) use a marker to the workflow file and the run URL.
+
 ## 6. Open points and risks
 
 - **ubCode HTML under a sub-path and in an iframe** (E§ G2, G5). Fallback:
