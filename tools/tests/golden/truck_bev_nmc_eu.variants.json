@@ -1,0 +1,25 @@
+{
+  "bms": {
+    "chemistry": "nmc",
+    "enabled": true
+  },
+  "charging": {
+    "mcs": true,
+    "pantograph": false
+  },
+  "hv": {
+    "voltage": "v800"
+  },
+  "market": {
+    "region": "eu"
+  },
+  "meta": {
+    "product": "truck_bev_nmc_eu"
+  },
+  "powertrain": {
+    "type": "bev"
+  },
+  "vehicle": {
+    "type": "truck"
+  }
+}

@@ -1,0 +1,496 @@
+{
+ "ARCH_CHG_INLET": {
+  "content": "There is no additional high-power interface: the vehicle charges with\nthe power of REQ_MAX_CHARGE_POWER through the CCS inlet, which is locked\nduring the session.",
+  "id": "ARCH_CHG_INLET",
+  "satisfies": [
+   "REQ_MAX_CHARGE_POWER"
+  ],
+  "status": "draft",
+  "title": "High-power charging interface",
+  "type": "arch"
+ },
+ "ARCH_CHG_SESSION_CONTROL": {
+  "content": "The CCS inlet is a CCS1 vehicle inlet (SAE J1772). The charging session\ncontrol runs the session with the charger over ISO 15118-2 and sets the\ncharging current limit from the BMS cell limits.",
+  "id": "ARCH_CHG_SESSION_CONTROL",
+  "satisfies": [
+   "REQ_NA_CHARGING_STANDARD"
+  ],
+  "status": "draft",
+  "title": "CCS inlet and charging session",
+  "type": "arch"
+ },
+ "ARCH_VCU_ENERGY_DISPLAY": {
+  "content": "The VCU energy display manager reads the remaining energy in percent from the\nenergy source of the product (BMS state of charge or ENG fuel level), derives\nthe remaining range from it and the average consumption of the last 50 km,\nand sends both to the instrument cluster once per second.",
+  "id": "ARCH_VCU_ENERGY_DISPLAY",
+  "satisfies": [
+   "REQ_ENERGY_SOURCE",
+   "REQ_RANGE_ESTIMATE"
+  ],
+  "status": "draft",
+  "title": "Energy display manager",
+  "type": "arch"
+ },
+ "ARCH_VCU_HV_SHUTDOWN": {
+  "content": "The VCU high-voltage shutdown coordinator receives the isolation fault\nfrom the BMS, requests the BMS to open the main contactors, switches off\nthe high-voltage consumers, shows the warning to the driver and checks\nwithin 100 ms that both poles are open.",
+  "id": "ARCH_VCU_HV_SHUTDOWN",
+  "satisfies": [
+   "REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT"
+  ],
+  "status": "draft",
+  "title": "High-voltage shutdown coordinator",
+  "type": "arch"
+ },
+ "ARCH_VCU_POWER_MGMT": {
+  "allocates": [
+   "BMS_REQ_POWER_DERATING"
+  ],
+  "content": "The VCU traction power manager limits the torque request to the power limit\ndivided by the current motor speed. The power limit is the vehicle limit; in\nbattery-electric products it is the lower of the vehicle limit and the\npermitted discharge power published by the BMS.",
+  "id": "ARCH_VCU_POWER_MGMT",
+  "satisfies": [
+   "REQ_TRACTION_POWER_LIMIT"
+  ],
+  "status": "draft",
+  "title": "Traction power manager",
+  "type": "arch"
+ },
+ "BB_CHARGE_LIMITS": {
+  "allocates": [
+   "BMS_REQ_CELL_VOLTAGE_LIMITS",
+   "BMS_REQ_COOLING_REQUEST",
+   "BMS_REQ_HEATING_REQUEST"
+  ],
+  "content": "The BMS keeps every cell inside the voltage window of its chemistry and\nrequests heating or cooling, so that charging power is accepted only within\nsafe cell limits. Open point for the BMS team: no BMS interface requirement\npublishes a permitted charging power yet.",
+  "id": "BB_CHARGE_LIMITS",
+  "satisfies": [
+   "REQ_MAX_CHARGE_POWER"
+  ],
+  "status": "draft",
+  "title": "Battery charging limits",
+  "type": "bms_block"
+ },
+ "BB_ENERGY_STATE": {
+  "allocates": [
+   "BMS_REQ_SOC_ACCURACY",
+   "BMS_REQ_SOC_INVALID_FLAG"
+  ],
+  "content": "The BMS provides the state of charge shown to the driver, with its accuracy\nand a flag when the value is unreliable.",
+  "id": "BB_ENERGY_STATE",
+  "satisfies": [
+   "REQ_ENERGY_SOURCE"
+  ],
+  "status": "draft",
+  "title": "Battery energy state",
+  "type": "bms_block"
+ },
+ "BB_HV_PROTECTION": {
+  "allocates": [
+   "BMS_REQ_FAULT_REACTION_TIME",
+   "BMS_REQ_ISOLATION_FAULT"
+  ],
+  "content": "The BMS detects the isolation fault that triggers the high-voltage shutdown\nand opens the main contactors on request of the VCU. Open point for the BMS\nteam: no BMS requirement bounds the isolation-fault reaction time yet.",
+  "id": "BB_HV_PROTECTION",
+  "satisfies": [
+   "REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT"
+  ],
+  "status": "draft",
+  "title": "Battery isolation protection",
+  "type": "bms_block"
+ },
+ "BB_POWER_LIMITS": {
+  "allocates": [
+   "BMS_REQ_PACK_OVERCURRENT",
+   "BMS_REQ_POWER_DERATING"
+  ],
+  "content": "The BMS publishes the permitted discharge power that the VCU applies as a\ntraction power limit, and protects the pack against overcurrent as the last\nline of defence.",
+  "id": "BB_POWER_LIMITS",
+  "satisfies": [
+   "REQ_TRACTION_POWER_LIMIT"
+  ],
+  "status": "draft",
+  "title": "Battery power limits",
+  "type": "bms_block"
+ },
+ "DEC_BMS_AS_EXTERNAL_PRODUCT": {
+  "affects": [
+   "ARCH_VCU_POWER_MGMT"
+  ],
+  "content": "**Context:** The battery-electric products need the battery management\nsystem (BMS), which is developed as a separate product with its own\nrequirements, variants (cell chemistry) and releases.\n\n**Alternatives:** (1) Import the released BMS needs per chemistry as\nexternal needs. (2) Mount the BMS documentation sources into the CV build.\n(3) Copy the relevant BMS requirements into the CV documentation.\n\n**Consequences:** The CV platform links to BMS interface needs only,\npins a BMS release and selects the chemistry per product; the traction\npower manager allocates the BMS power derating. BMS pages are not part of\nthe CV documentation.\n\n**Rationale:** Alternative 1 keeps the BMS independent and needs no BMS\nconfiguration in the CV project; mounting would require the BMS\nmetamodel and variant data, copying would drift from the BMS.",
+  "id": "DEC_BMS_AS_EXTERNAL_PRODUCT",
+  "status": "draft",
+  "title": "Use the BMS as an external product",
+  "type": "decision"
+ },
+ "DEC_CHARGING_INLET_PRIORITY": {
+  "affects": [
+   "ARCH_CHG_INLET"
+  ],
+  "content": "**Context:** The Kconfig model allows a product with both megawatt\ncharging (MCS) and a roof pantograph, but the vehicle has room for one\nhigh-power charging interface.\n\n**Alternatives:** (1) MCS first. (2) Pantograph first. (3) Forbid the\ncombination in Kconfig.\n\n**Consequences:** The high-power charging interface is selected in the\norder MCS, pantograph, none; a product with both features gets the MCS\ninterface and no pantograph requirement is satisfied.\n\n**Rationale:** MCS serves long-haul trucks, the main BEV use case; the\norder keeps the Kconfig model open for a future pantograph truck.",
+  "id": "DEC_CHARGING_INLET_PRIORITY",
+  "status": "draft",
+  "title": "MCS takes priority over the pantograph",
+  "type": "decision"
+ },
+ "GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_BEV_LFP_NA": {
+  "content": "``ubc agent gaps`` reports ARCH_VCU_ENERGY_DISPLAY (arch) in truck_bev_lfp_na.",
+  "gap_category": "review",
+  "gap_for": [
+   "ARCH_VCU_ENERGY_DISPLAY"
+  ],
+  "gap_need_id": "ARCH_VCU_ENERGY_DISPLAY",
+  "gap_need_type": "arch",
+  "gap_shortfall": "0 of 1",
+  "id": "GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_BEV_LFP_NA",
+  "product": "truck_bev_lfp_na",
+  "title": "ARCH_VCU_ENERGY_DISPLAY: review review",
+  "type": "gap"
+ },
+ "GAP_REQ_ENERGY_SOURCE_REVIEW__TRUCK_BEV_LFP_NA": {
+  "content": "``ubc agent gaps`` reports REQ_ENERGY_SOURCE (req) in truck_bev_lfp_na.",
+  "gap_category": "review",
+  "gap_for": [
+   "REQ_ENERGY_SOURCE"
+  ],
+  "gap_need_id": "REQ_ENERGY_SOURCE",
+  "gap_need_type": "req",
+  "gap_shortfall": "0 of 1",
+  "id": "GAP_REQ_ENERGY_SOURCE_REVIEW__TRUCK_BEV_LFP_NA",
+  "product": "truck_bev_lfp_na",
+  "title": "REQ_ENERGY_SOURCE: review review",
+  "type": "gap"
+ },
+ "IMPL_CHG_CURRENT_LIMIT": {
+  "id": "IMPL_CHG_CURRENT_LIMIT",
+  "implements": [
+   "SWREQ_CHG_CURRENT_LIMIT"
+  ],
+  "title": "Charging current from power and pack voltage",
+  "type": "impl"
+ },
+ "IMPL_CHG_INTERFACE_DERATING": {
+  "id": "IMPL_CHG_INTERFACE_DERATING",
+  "implements": [
+   "SWREQ_CHG_INTERFACE_DERATING"
+  ],
+  "title": "Halve current on hot contacts",
+  "type": "impl"
+ },
+ "IMPL_CHG_SESSION_START": {
+  "id": "IMPL_CHG_SESSION_START",
+  "implements": [
+   "SWREQ_CHG_SESSION_START"
+  ],
+  "title": "Start session only with locked inlet",
+  "type": "impl"
+ },
+ "IMPL_VCU_ENERGY_DISPLAY": {
+  "id": "IMPL_VCU_ENERGY_DISPLAY",
+  "implements": [
+   "SWREQ_VCU_ENERGY_DISPLAY"
+  ],
+  "title": "Show remaining energy (state of charge)",
+  "type": "impl"
+ },
+ "IMPL_VCU_HV_SHUTDOWN": {
+  "id": "IMPL_VCU_HV_SHUTDOWN",
+  "implements": [
+   "SWREQ_VCU_HV_SHUTDOWN"
+  ],
+  "title": "Request contactor opening on isolation fault",
+  "type": "impl"
+ },
+ "IMPL_VCU_POWER_LIMIT_APPLY": {
+  "id": "IMPL_VCU_POWER_LIMIT_APPLY",
+  "implements": [
+   "SWREQ_VCU_POWER_LIMIT_APPLY"
+  ],
+  "title": "Apply traction power limit",
+  "type": "impl"
+ },
+ "REQ_ENERGY_SOURCE": {
+  "content": "The vehicle shall display the remaining energy as the state of charge\nreported by the battery management system, in percent with a resolution\nof 1 %.",
+  "id": "REQ_ENERGY_SOURCE",
+  "status": "draft",
+  "title": "Remaining energy display",
+  "traces_to": [
+   "US_RANGE_AWARENESS"
+  ],
+  "type": "req"
+ },
+ "REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT": {
+  "content": "The vehicle shall open both poles of the high-voltage battery connection\nwithin 100 ms after the battery management system sets the isolation\nfault.",
+  "id": "REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT",
+  "status": "draft",
+  "title": "High-voltage shutdown on isolation fault",
+  "traces_to": [
+   "US_HV_SAFETY"
+  ],
+  "type": "req"
+ },
+ "REQ_MAX_CHARGE_POWER": {
+  "content": "The vehicle shall accept an average charging power of at least the value of\nthis requirement while charging from 20 % to 80 % state of charge at a\nbattery temperature of 25 °C.",
+  "id": "REQ_MAX_CHARGE_POWER",
+  "status": "draft",
+  "title": "Maximum charging power",
+  "traces_to": [
+   "US_FAST_DEPOT_CHARGING"
+  ],
+  "type": "req",
+  "value": "350 kW"
+ },
+ "REQ_NA_CHARGING_STANDARD": {
+  "content": "The vehicle shall provide a CCS1 (Combined Charging System, type 1)\ncharging inlet according to SAE J1772.",
+  "id": "REQ_NA_CHARGING_STANDARD",
+  "status": "draft",
+  "title": "North American charging standard",
+  "traces_to": [
+   "US_MARKET_CHARGING"
+  ],
+  "type": "req"
+ },
+ "REQ_RANGE_ESTIMATE": {
+  "content": "The vehicle shall display the estimated remaining range in kilometres with a\nresolution of 1 km, calculated from the remaining energy and the average\nconsumption of the last 50 km (the nominal consumption until 50 km are\ndriven). Energy source of this product: :variant:`powertrain.type`.",
+  "id": "REQ_RANGE_ESTIMATE",
+  "status": "draft",
+  "title": "Range estimate",
+  "traces_to": [
+   "US_RANGE_AWARENESS"
+  ],
+  "type": "req"
+ },
+ "REQ_TRACTION_POWER_LIMIT": {
+  "content": "The vehicle shall limit the traction power measured at the drive axle to the\nvalue of this requirement, with a tolerance of 5 %.",
+  "id": "REQ_TRACTION_POWER_LIMIT",
+  "status": "draft",
+  "title": "Traction power limit",
+  "traces_to": [
+   "US_PREDICTABLE_POWER"
+  ],
+  "type": "req",
+  "value": "450 kW"
+ },
+ "RISK_HV_EXPOSURE": {
+  "content": "A failed insulation of the high-voltage system can expose the driver or a\nworkshop technician to a dangerous touch voltage.",
+  "id": "RISK_HV_EXPOSURE",
+  "mitigates": [
+   "REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT"
+  ],
+  "status": "draft",
+  "title": "Electric shock after an insulation failure",
+  "type": "risk"
+ },
+ "SWREQ_CHG_CURRENT_LIMIT": {
+  "content": "The CHG software shall request a charging current of at most the maximum\ncharging power divided by the nominal pack voltage of the product.",
+  "id": "SWREQ_CHG_CURRENT_LIMIT",
+  "refines": [
+   "ARCH_CHG_SESSION_CONTROL"
+  ],
+  "status": "draft",
+  "title": "Limit charging current",
+  "type": "swreq"
+ },
+ "SWREQ_CHG_INTERFACE_DERATING": {
+  "content": "The CHG software shall halve the requested charging current while the\ncontact temperature of the charging interface exceeds 90 °C.",
+  "id": "SWREQ_CHG_INTERFACE_DERATING",
+  "refines": [
+   "ARCH_CHG_INLET"
+  ],
+  "status": "draft",
+  "title": "Derate on hot charging contacts",
+  "type": "swreq"
+ },
+ "SWREQ_CHG_SESSION_START": {
+  "content": "The CHG software shall start a charging session only while the CCS inlet is\nreported as locked.",
+  "id": "SWREQ_CHG_SESSION_START",
+  "refines": [
+   "ARCH_CHG_SESSION_CONTROL"
+  ],
+  "status": "draft",
+  "title": "Start session only with locked inlet",
+  "type": "swreq"
+ },
+ "SWREQ_VCU_ENERGY_DISPLAY": {
+  "content": "The VCU software shall send the remaining energy of the energy source to the\ninstrument cluster in percent, rounded to 1 %, once per second.",
+  "id": "SWREQ_VCU_ENERGY_DISPLAY",
+  "refines": [
+   "ARCH_VCU_ENERGY_DISPLAY"
+  ],
+  "status": "draft",
+  "title": "Send remaining energy",
+  "type": "swreq"
+ },
+ "SWREQ_VCU_HV_SHUTDOWN": {
+  "content": "The VCU software shall send the contactor-open request to the BMS within\n10 ms after receiving the isolation fault.",
+  "id": "SWREQ_VCU_HV_SHUTDOWN",
+  "refines": [
+   "ARCH_VCU_HV_SHUTDOWN"
+  ],
+  "status": "draft",
+  "title": "Request contactor opening on isolation fault",
+  "type": "swreq"
+ },
+ "SWREQ_VCU_POWER_LIMIT_APPLY": {
+  "content": "The VCU software shall limit the torque request to the active power limit\ndivided by the current motor speed.",
+  "id": "SWREQ_VCU_POWER_LIMIT_APPLY",
+  "refines": [
+   "ARCH_VCU_POWER_MGMT"
+  ],
+  "status": "draft",
+  "title": "Apply traction power limit",
+  "type": "swreq"
+ },
+ "TEST_CHG_CURRENT_LIMIT": {
+  "id": "TEST_CHG_CURRENT_LIMIT",
+  "title": "Charging current follows the pack voltage",
+  "type": "test",
+  "verifies": [
+   "SWREQ_CHG_CURRENT_LIMIT"
+  ]
+ },
+ "TEST_CHG_INTERFACE_DERATING": {
+  "id": "TEST_CHG_INTERFACE_DERATING",
+  "title": "Hot contacts halve the current",
+  "type": "test",
+  "verifies": [
+   "SWREQ_CHG_INTERFACE_DERATING"
+  ]
+ },
+ "TEST_CHG_SESSION_START": {
+  "id": "TEST_CHG_SESSION_START",
+  "title": "Session starts only with locked inlet",
+  "type": "test",
+  "verifies": [
+   "SWREQ_CHG_SESSION_START"
+  ]
+ },
+ "TEST_VCU_ENERGY_DISPLAY": {
+  "id": "TEST_VCU_ENERGY_DISPLAY",
+  "title": "Remaining energy is rounded to percent",
+  "type": "test",
+  "verifies": [
+   "SWREQ_VCU_ENERGY_DISPLAY"
+  ]
+ },
+ "TEST_VCU_HV_SHUTDOWN": {
+  "id": "TEST_VCU_HV_SHUTDOWN",
+  "title": "Isolation fault requests contactor opening",
+  "type": "test",
+  "verifies": [
+   "SWREQ_VCU_HV_SHUTDOWN"
+  ]
+ },
+ "TEST_VCU_POWER_LIMIT_APPLY": {
+  "id": "TEST_VCU_POWER_LIMIT_APPLY",
+  "title": "Torque is limited by the power limit",
+  "type": "test",
+  "verifies": [
+   "SWREQ_VCU_POWER_LIMIT_APPLY"
+  ]
+ },
+ "TRES_CHG_CURRENT_LIMIT__TRUCK_BEV_LFP_NA": {
+  "chain_reqs": "REQ_NA_CHARGING_STANDARD",
+  "content": "``test_chg`` reported PASS for TEST_CHG_CURRENT_LIMIT.",
+  "id": "TRES_CHG_CURRENT_LIMIT__TRUCK_BEV_LFP_NA",
+  "outcome": "passed",
+  "product": "truck_bev_lfp_na",
+  "results_for": [
+   "TEST_CHG_CURRENT_LIMIT"
+  ],
+  "title": "Charging current follows the pack voltage (truck_bev_lfp_na)",
+  "type": "test_result"
+ },
+ "TRES_CHG_INTERFACE_DERATING__TRUCK_BEV_LFP_NA": {
+  "chain_reqs": "REQ_MAX_CHARGE_POWER",
+  "content": "``test_chg`` reported PASS for TEST_CHG_INTERFACE_DERATING.",
+  "id": "TRES_CHG_INTERFACE_DERATING__TRUCK_BEV_LFP_NA",
+  "outcome": "passed",
+  "product": "truck_bev_lfp_na",
+  "results_for": [
+   "TEST_CHG_INTERFACE_DERATING"
+  ],
+  "title": "Hot contacts halve the current (truck_bev_lfp_na)",
+  "type": "test_result"
+ },
+ "TRES_CHG_SESSION_START__TRUCK_BEV_LFP_NA": {
+  "chain_reqs": "REQ_NA_CHARGING_STANDARD",
+  "content": "``test_chg`` reported PASS for TEST_CHG_SESSION_START.",
+  "id": "TRES_CHG_SESSION_START__TRUCK_BEV_LFP_NA",
+  "outcome": "passed",
+  "product": "truck_bev_lfp_na",
+  "results_for": [
+   "TEST_CHG_SESSION_START"
+  ],
+  "title": "Session starts only with locked inlet (truck_bev_lfp_na)",
+  "type": "test_result"
+ },
+ "TRES_VCU_ENERGY_DISPLAY__TRUCK_BEV_LFP_NA": {
+  "chain_reqs": "REQ_ENERGY_SOURCE, REQ_RANGE_ESTIMATE",
+  "content": "``test_vcu`` reported PASS for TEST_VCU_ENERGY_DISPLAY.",
+  "id": "TRES_VCU_ENERGY_DISPLAY__TRUCK_BEV_LFP_NA",
+  "outcome": "passed",
+  "product": "truck_bev_lfp_na",
+  "results_for": [
+   "TEST_VCU_ENERGY_DISPLAY"
+  ],
+  "title": "Remaining energy is rounded to percent (truck_bev_lfp_na)",
+  "type": "test_result"
+ },
+ "TRES_VCU_HV_SHUTDOWN__TRUCK_BEV_LFP_NA": {
+  "chain_reqs": "REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT",
+  "content": "``test_vcu`` reported PASS for TEST_VCU_HV_SHUTDOWN.",
+  "id": "TRES_VCU_HV_SHUTDOWN__TRUCK_BEV_LFP_NA",
+  "outcome": "passed",
+  "product": "truck_bev_lfp_na",
+  "results_for": [
+   "TEST_VCU_HV_SHUTDOWN"
+  ],
+  "title": "Isolation fault requests contactor opening (truck_bev_lfp_na)",
+  "type": "test_result"
+ },
+ "TRES_VCU_POWER_LIMIT_APPLY__TRUCK_BEV_LFP_NA": {
+  "chain_reqs": "REQ_TRACTION_POWER_LIMIT",
+  "content": "``test_vcu`` reported PASS for TEST_VCU_POWER_LIMIT_APPLY.",
+  "id": "TRES_VCU_POWER_LIMIT_APPLY__TRUCK_BEV_LFP_NA",
+  "outcome": "passed",
+  "product": "truck_bev_lfp_na",
+  "results_for": [
+   "TEST_VCU_POWER_LIMIT_APPLY"
+  ],
+  "title": "Torque is limited by the power limit (truck_bev_lfp_na)",
+  "type": "test_result"
+ },
+ "US_FAST_DEPOT_CHARGING": {
+  "content": "As a fleet operator, I recharge a vehicle within a driver break.",
+  "id": "US_FAST_DEPOT_CHARGING",
+  "status": "draft",
+  "title": "Fast depot charging",
+  "type": "user_story"
+ },
+ "US_HV_SAFETY": {
+  "content": "As a driver, I see the high-voltage system switched off and a warning when\nits insulation fails, so I am not exposed to electric shock.",
+  "id": "US_HV_SAFETY",
+  "status": "draft",
+  "title": "High-voltage safety",
+  "type": "user_story"
+ },
+ "US_MARKET_CHARGING": {
+  "content": "As a fleet operator, I charge the vehicle at the public charging\ninfrastructure of its market.",
+  "id": "US_MARKET_CHARGING",
+  "status": "draft",
+  "title": "Charging in the home market",
+  "type": "user_story"
+ },
+ "US_PREDICTABLE_POWER": {
+  "content": "As a driver, I can rely on a known maximum traction power of my vehicle.",
+  "id": "US_PREDICTABLE_POWER",
+  "status": "draft",
+  "title": "Predictable traction power",
+  "type": "user_story"
+ },
+ "US_RANGE_AWARENESS": {
+  "content": "As a driver, I know the remaining energy and range of my vehicle.",
+  "id": "US_RANGE_AWARENESS",
+  "status": "draft",
+  "title": "Range awareness",
+  "type": "user_story"
+ }
+}

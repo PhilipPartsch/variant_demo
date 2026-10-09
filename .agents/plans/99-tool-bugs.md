@@ -67,6 +67,8 @@ documentation, convenience.
 | SN-03 | Sphinx-Needs | low | `needs.json` drops external needs by default (`builder_filter`), unlike ubc |
 | SN-04 | — | — | moved to CL-06 |
 | SN-05 | Sphinx-Needs | low | schema `contains` on a list field rejected without `items` (ubc accepts) |
+| SN-06 | Sphinx-Needs | medium | `id_prefix` rewrites ids inside the text of imported needs (plain `str.replace`): literals changed, ids corrupted (`BMS_SWBMS_…`) |
+| SN-07 | Sphinx-Needs | low | `style` of imported needs dropped (ubc keeps it) |
 | CL-01 | Sphinx-Codelinks | medium | fails in a git worktree (`.git` must be a directory) |
 | CL-02 | Sphinx-Codelinks | medium | `.c` file without compile-database entry silently skipped |
 | CL-03 | Sphinx-Codelinks + ubc | low | `remote-url` / `local-url` mean different things in the two exports (path vs URL, local path) |
@@ -488,6 +490,52 @@ warning); the abort comes from Sphinx-Codelinks — see CL-06.
 - **Wrong output:** sphinx-needs rejects the schema; ubc validates it. Expected: same acceptance (valid JSON Schema).
 - **Solution A:** accept `contains` without `items`.
 - **Solution B:** ubc applies the same restriction and reports it.
+
+### SN-06 `id_prefix` rewrites ids inside the text of imported needs
+
+- **Tool:** Sphinx-Needs 8.5.0 (`needs_external_needs` with `id_prefix`); ubc 0.35.0 keeps the text
+- **Marker:** `content/cv-platform@25b77bd`, product `truck_bev_nmc_eu`,
+  `BMS_GAP_REQ_CELL_BALANCING_WINDOW_NO_SATISFIES_BACK` in
+  `build/site/truck_bev_nmc_eu/{ubc,sphinx}.needs.json`; corruption shown with
+  the synthetic input below. Found 2026-10-10 by test DOC-10 (plan 5).
+- **Summary:** `utils.py` `import_prefix_link_edit()` prefixes not only the
+  links but also every occurrence of every imported id in `content` /
+  `description`, with a plain `str.replace` (code comment: `# ToDo: Use regex
+  for better matches.`). It rewrites code literals, and an id contained in
+  another id (13 such pairs in the BMS, e.g. `REQ_FAULT_RECORD` in
+  `SWREQ_FAULT_RECORD_WRITE`) corrupts the longer one.
+- **Input:** external needs file, `id_prefix = "BMS_"`:
+  ```json
+  "REQ_FAULT_RECORD":         {"content": "Refined by SWREQ_FAULT_RECORD_WRITE; run `ubc agent next --id REQ_FAULT_RECORD`."},
+  "SWREQ_FAULT_RECORD_WRITE": {"content": "Refines REQ_FAULT_RECORD."}
+  ```
+- **Wrong output (Sphinx `needs.json`):**
+  ```
+  BMS_REQ_FAULT_RECORD | Refined by BMS_SWBMS_REQ_FAULT_RECORD_WRITE; run `ubc agent next --id BMS_REQ_FAULT_RECORD`.
+  ```
+  In the CV build: ``` ``ubc agent next --id BMS_REQ_CELL_BALANCING_WINDOW`` ```
+  (a command for the BMS project, now with the CV prefix). ubc exports the
+  text unchanged. Expected: ids replaced only as whole words, not in literals —
+  or the text left alone (links are already prefixed).
+- **Workaround:** none; parity test DOC-10 ignores `content` of imported needs.
+- **Solution A:** replace with a word-boundary regex over all ids at once
+  (longest match first) and skip literals / roles; same rule in ubc.
+- **Solution B:** leave `content` untouched and rewrite only `:need:` references
+  (and links); document the behaviour of both tools.
+
+### SN-07 `style` of imported needs dropped
+
+- **Tool:** Sphinx-Needs 8.5.0; ubc 0.35.0 keeps it
+- **Marker:** `content/cv-platform@25b77bd`, product `truck_bev_nmc_eu`,
+  `BMS_GAP_REQ_CELL_BALANCING_WINDOW_NO_SATISFIES_BACK` (`style = "red_bar"` in
+  `third_party/bms/0.1.0/nmc.needs.json`). Found 2026-10-10 by DOC-10.
+- **Summary:** `external_needs.py` removes core fields marked `exclude_external`
+  (including `style`) from imported needs; ubc imports them. The same need
+  renders differently in the two outputs.
+- **Wrong output:** Sphinx `style = None`, ubc `style = "red_bar"`.
+- **Workaround:** DOC-10 ignores `style` of imported needs.
+- **Solution A:** align both tools (import `style`, or drop it in ubc too) and document it.
+- **Solution B:** a per-source option in `[[needs.external_needs]]` (e.g. `keep_fields = ["style"]`).
 
 ## 6. Sphinx-Codelinks
 

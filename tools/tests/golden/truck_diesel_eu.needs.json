@@ -1,0 +1,240 @@
+{
+ "ARCH_ENG_FUEL_LEVEL": {
+  "content": "The engine interface fuel level provider reads the analogue tank level\nsensor every 100 ms, averages it over 10 s against fuel slosh and provides\nthe fuel level in percent of the tank capacity (1 % resolution) to the VCU.",
+  "id": "ARCH_ENG_FUEL_LEVEL",
+  "satisfies": [
+   "REQ_ENERGY_SOURCE"
+  ],
+  "status": "draft",
+  "title": "Fuel level provider",
+  "type": "arch"
+ },
+ "ARCH_ENG_TORQUE_INTERFACE": {
+  "content": "The engine torque interface converts the VCU traction power limit into a\ntorque limit at the current engine speed and sends it to the engine control\nunit as an SAE J1939 torque/speed control (TSC1) message.",
+  "id": "ARCH_ENG_TORQUE_INTERFACE",
+  "satisfies": [
+   "REQ_TRACTION_POWER_LIMIT"
+  ],
+  "status": "draft",
+  "title": "Engine torque interface",
+  "type": "arch"
+ },
+ "ARCH_VCU_ENERGY_DISPLAY": {
+  "content": "The VCU energy display manager reads the remaining energy in percent from the\nenergy source of the product (BMS state of charge or ENG fuel level), derives\nthe remaining range from it and the average consumption of the last 50 km,\nand sends both to the instrument cluster once per second.",
+  "id": "ARCH_VCU_ENERGY_DISPLAY",
+  "satisfies": [
+   "REQ_ENERGY_SOURCE",
+   "REQ_RANGE_ESTIMATE"
+  ],
+  "status": "draft",
+  "title": "Energy display manager",
+  "type": "arch"
+ },
+ "ARCH_VCU_POWER_MGMT": {
+  "content": "The VCU traction power manager limits the torque request to the power limit\ndivided by the current motor speed. The power limit is the vehicle limit; in\nbattery-electric products it is the lower of the vehicle limit and the\npermitted discharge power published by the BMS.",
+  "id": "ARCH_VCU_POWER_MGMT",
+  "satisfies": [
+   "REQ_TRACTION_POWER_LIMIT"
+  ],
+  "status": "draft",
+  "title": "Traction power manager",
+  "type": "arch"
+ },
+ "IMPL_ENG_FUEL_LEVEL_REPORT": {
+  "id": "IMPL_ENG_FUEL_LEVEL_REPORT",
+  "implements": [
+   "SWREQ_ENG_FUEL_LEVEL_REPORT"
+  ],
+  "title": "Report filtered fuel level",
+  "type": "impl"
+ },
+ "IMPL_ENG_TORQUE_LIMIT": {
+  "id": "IMPL_ENG_TORQUE_LIMIT",
+  "implements": [
+   "SWREQ_ENG_TORQUE_LIMIT"
+  ],
+  "title": "Torque limit from the traction power limit",
+  "type": "impl"
+ },
+ "IMPL_VCU_ENERGY_DISPLAY": {
+  "id": "IMPL_VCU_ENERGY_DISPLAY",
+  "implements": [
+   "SWREQ_VCU_ENERGY_DISPLAY"
+  ],
+  "title": "Show remaining energy (fuel level)",
+  "type": "impl"
+ },
+ "IMPL_VCU_POWER_LIMIT_APPLY": {
+  "id": "IMPL_VCU_POWER_LIMIT_APPLY",
+  "implements": [
+   "SWREQ_VCU_POWER_LIMIT_APPLY"
+  ],
+  "title": "Apply traction power limit",
+  "type": "impl"
+ },
+ "REQ_ENERGY_SOURCE": {
+  "content": "The vehicle shall display the remaining energy as the fuel tank level, in\npercent of the tank capacity with a resolution of 1 %.",
+  "id": "REQ_ENERGY_SOURCE",
+  "status": "draft",
+  "title": "Remaining energy display",
+  "traces_to": [
+   "US_RANGE_AWARENESS"
+  ],
+  "type": "req"
+ },
+ "REQ_RANGE_ESTIMATE": {
+  "content": "The vehicle shall display the estimated remaining range in kilometres with a\nresolution of 1 km, calculated from the remaining energy and the average\nconsumption of the last 50 km (the nominal consumption until 50 km are\ndriven). Energy source of this product: :variant:`powertrain.type`.",
+  "id": "REQ_RANGE_ESTIMATE",
+  "status": "draft",
+  "title": "Range estimate",
+  "traces_to": [
+   "US_RANGE_AWARENESS"
+  ],
+  "type": "req"
+ },
+ "REQ_TRACTION_POWER_LIMIT": {
+  "content": "The vehicle shall limit the traction power measured at the drive axle to the\nvalue of this requirement, with a tolerance of 5 %.",
+  "id": "REQ_TRACTION_POWER_LIMIT",
+  "status": "draft",
+  "title": "Traction power limit",
+  "traces_to": [
+   "US_PREDICTABLE_POWER"
+  ],
+  "type": "req",
+  "value": "450 kW"
+ },
+ "SWREQ_ENG_FUEL_LEVEL_REPORT": {
+  "content": "The ENG software shall report the fuel level as the 10 s average of the tank\nlevel sensor in percent of the tank capacity, rounded to 1 %.",
+  "id": "SWREQ_ENG_FUEL_LEVEL_REPORT",
+  "refines": [
+   "ARCH_ENG_FUEL_LEVEL"
+  ],
+  "status": "draft",
+  "title": "Report filtered fuel level",
+  "type": "swreq"
+ },
+ "SWREQ_ENG_TORQUE_LIMIT": {
+  "content": "The ENG software shall send the torque limit, calculated as the traction\npower limit divided by the current engine speed, in a TSC1 message every\n10 ms.",
+  "id": "SWREQ_ENG_TORQUE_LIMIT",
+  "refines": [
+   "ARCH_ENG_TORQUE_INTERFACE"
+  ],
+  "status": "draft",
+  "title": "Send engine torque limit",
+  "type": "swreq"
+ },
+ "SWREQ_VCU_ENERGY_DISPLAY": {
+  "content": "The VCU software shall send the remaining energy of the energy source to the\ninstrument cluster in percent, rounded to 1 %, once per second.",
+  "id": "SWREQ_VCU_ENERGY_DISPLAY",
+  "refines": [
+   "ARCH_VCU_ENERGY_DISPLAY"
+  ],
+  "status": "draft",
+  "title": "Send remaining energy",
+  "type": "swreq"
+ },
+ "SWREQ_VCU_POWER_LIMIT_APPLY": {
+  "content": "The VCU software shall limit the torque request to the active power limit\ndivided by the current motor speed.",
+  "id": "SWREQ_VCU_POWER_LIMIT_APPLY",
+  "refines": [
+   "ARCH_VCU_POWER_MGMT"
+  ],
+  "status": "draft",
+  "title": "Apply traction power limit",
+  "type": "swreq"
+ },
+ "TEST_ENG_FUEL_LEVEL_REPORT": {
+  "id": "TEST_ENG_FUEL_LEVEL_REPORT",
+  "title": "Fuel level is the averaged sensor value",
+  "type": "test",
+  "verifies": [
+   "SWREQ_ENG_FUEL_LEVEL_REPORT"
+  ]
+ },
+ "TEST_ENG_TORQUE_LIMIT": {
+  "id": "TEST_ENG_TORQUE_LIMIT",
+  "title": "Engine torque limit follows the power limit",
+  "type": "test",
+  "verifies": [
+   "SWREQ_ENG_TORQUE_LIMIT"
+  ]
+ },
+ "TEST_VCU_ENERGY_DISPLAY": {
+  "id": "TEST_VCU_ENERGY_DISPLAY",
+  "title": "Remaining energy is rounded to percent",
+  "type": "test",
+  "verifies": [
+   "SWREQ_VCU_ENERGY_DISPLAY"
+  ]
+ },
+ "TEST_VCU_POWER_LIMIT_APPLY": {
+  "id": "TEST_VCU_POWER_LIMIT_APPLY",
+  "title": "Torque is limited by the power limit",
+  "type": "test",
+  "verifies": [
+   "SWREQ_VCU_POWER_LIMIT_APPLY"
+  ]
+ },
+ "TRES_ENG_FUEL_LEVEL_REPORT__TRUCK_DIESEL_EU": {
+  "chain_reqs": "REQ_ENERGY_SOURCE",
+  "content": "``test_eng`` reported PASS for TEST_ENG_FUEL_LEVEL_REPORT.",
+  "id": "TRES_ENG_FUEL_LEVEL_REPORT__TRUCK_DIESEL_EU",
+  "outcome": "passed",
+  "product": "truck_diesel_eu",
+  "results_for": [
+   "TEST_ENG_FUEL_LEVEL_REPORT"
+  ],
+  "title": "Fuel level is the averaged sensor value (truck_diesel_eu)",
+  "type": "test_result"
+ },
+ "TRES_ENG_TORQUE_LIMIT__TRUCK_DIESEL_EU": {
+  "chain_reqs": "REQ_TRACTION_POWER_LIMIT",
+  "content": "``test_eng`` reported PASS for TEST_ENG_TORQUE_LIMIT.",
+  "id": "TRES_ENG_TORQUE_LIMIT__TRUCK_DIESEL_EU",
+  "outcome": "passed",
+  "product": "truck_diesel_eu",
+  "results_for": [
+   "TEST_ENG_TORQUE_LIMIT"
+  ],
+  "title": "Engine torque limit follows the power limit (truck_diesel_eu)",
+  "type": "test_result"
+ },
+ "TRES_VCU_ENERGY_DISPLAY__TRUCK_DIESEL_EU": {
+  "chain_reqs": "REQ_ENERGY_SOURCE, REQ_RANGE_ESTIMATE",
+  "content": "``test_vcu`` reported PASS for TEST_VCU_ENERGY_DISPLAY.",
+  "id": "TRES_VCU_ENERGY_DISPLAY__TRUCK_DIESEL_EU",
+  "outcome": "passed",
+  "product": "truck_diesel_eu",
+  "results_for": [
+   "TEST_VCU_ENERGY_DISPLAY"
+  ],
+  "title": "Remaining energy is rounded to percent (truck_diesel_eu)",
+  "type": "test_result"
+ },
+ "TRES_VCU_POWER_LIMIT_APPLY__TRUCK_DIESEL_EU": {
+  "chain_reqs": "REQ_TRACTION_POWER_LIMIT",
+  "content": "``test_vcu`` reported PASS for TEST_VCU_POWER_LIMIT_APPLY.",
+  "id": "TRES_VCU_POWER_LIMIT_APPLY__TRUCK_DIESEL_EU",
+  "outcome": "passed",
+  "product": "truck_diesel_eu",
+  "results_for": [
+   "TEST_VCU_POWER_LIMIT_APPLY"
+  ],
+  "title": "Torque is limited by the power limit (truck_diesel_eu)",
+  "type": "test_result"
+ },
+ "US_PREDICTABLE_POWER": {
+  "content": "As a driver, I can rely on a known maximum traction power of my vehicle.",
+  "id": "US_PREDICTABLE_POWER",
+  "status": "draft",
+  "title": "Predictable traction power",
+  "type": "user_story"
+ },
+ "US_RANGE_AWARENESS": {
+  "content": "As a driver, I know the remaining energy and range of my vehicle.",
+  "id": "US_RANGE_AWARENESS",
+  "status": "draft",
+  "title": "Range awareness",
+  "type": "user_story"
+ }
+}
