@@ -500,7 +500,7 @@ follow the same switch.
 - **Second BMS consumer** (e.g. a stationary storage product) to show reuse of
   one BMS across product lines.
 - **Feed CV configuration back to the BMS:** a BMS voltage-class axis, so
-  `HV__CLASS` selects BMS variants too (today the BMS varies by chemistry only).
+  `HV__VOLTAGE` selects BMS variants too (today the BMS varies by chemistry only).
 
 ## 11. Open points and risks
 
@@ -509,7 +509,7 @@ follow the same switch.
   **Verify** the release version and ubc support.
 - **Link variant syntax** for `allocates`: answered — per item,
   `<<bev: BMS_REQ_POWER_DERATING>>` (E-R B1).
-- **BMS variant axis mismatch:** CV has `HV__CLASS`, the BMS does not; until the
+- **BMS variant axis mismatch:** CV has `HV__VOLTAGE`, the BMS does not; until the
   BMS supports it, HV-class differences live only in CV needs.
 - **Version skew:** CV pins a BMS version; the BMS may change interface IDs —
   handled by the pin and interface rules (B§5.2.3, B§9) and the

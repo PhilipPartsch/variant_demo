@@ -91,8 +91,8 @@ CV code is written in **C** (built with CMake), so the codelinks preprocessor
 | `POWERTRAIN__TYPE` | choice: `DIESEL`, `BEV` | — | decides BMS / CHG / ENG |
 | `BMS__ENABLED` | bool (hidden) | `default y if POWERTRAIN__TYPE__BEV` | single switch "uses the BMS" |
 | `BMS__CHEMISTRY` | choice: `NMC`, `LFP` | `depends on BMS__ENABLED` | selects the BMS variant |
-| `HV__CLASS` | choice: `V400`, `V800` | `depends on POWERTRAIN__TYPE__BEV` | charging capability, isolation context |
-| `CHARGING__MCS` | bool | `depends on HV__CLASS__V800` | megawatt charging (trucks) |
+| `HV__VOLTAGE` | choice: `V400`, `V800` | `depends on POWERTRAIN__TYPE__BEV` | charging capability, isolation context |
+| `CHARGING__MCS` | bool | `depends on HV__VOLTAGE__V800` | megawatt charging (trucks) |
 | `CHARGING__PANTOGRAPH` | bool | `depends on VEHICLE__TYPE__BUS` | opportunity charging (city bus) |
 | `MARKET__REGION` | choice: `EU`, `NA` | — | regulations, charging standard |
 
@@ -100,7 +100,7 @@ Subsystem fragments (`src/<x>/Kconfig`, namespaces `VCU__`, `CHG__`, `ENG__`)
 start empty and are filled with the content (C§5).
 
 Generated `var.*` (K§4.3): `var.vehicle.type`, `var.powertrain.type`,
-`var.bms.enabled`, `var.bms.chemistry`, `var.hv.class`, `var.charging.mcs`,
+`var.bms.enabled`, `var.bms.chemistry`, `var.hv.voltage`, `var.charging.mcs`,
 `var.charging.pantograph`, `var.market.region`, `var.meta.product`.
 
 Build kit / build type are **not** in the model (K§0 P3). The build type is

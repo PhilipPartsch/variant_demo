@@ -47,21 +47,21 @@ config BMS__CHEMISTRY__LFP
     bool "LFP"
 endchoice
 
-choice HV__CLASS
+choice HV__VOLTAGE
     prompt "High-voltage class"
     depends on POWERTRAIN__TYPE__BEV
-    default HV__CLASS__V400
+    default HV__VOLTAGE__V400
     help
       Traction voltage class; decides charging capability and isolation context.
-config HV__CLASS__V400
+config HV__VOLTAGE__V400
     bool "400 V"
-config HV__CLASS__V800
+config HV__VOLTAGE__V800
     bool "800 V"
 endchoice
 
 config CHARGING__MCS
     bool "Megawatt charging (MCS)"
-    depends on HV__CLASS__V800
+    depends on HV__VOLTAGE__V800
     help
       Megawatt charging for trucks; requires 800 V.
 

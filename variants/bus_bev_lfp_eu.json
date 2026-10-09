@@ -8,7 +8,7 @@
     "pantograph": true
   },
   "hv": {
-    "class": "v400"
+    "voltage": "v400"
   },
   "market": {
     "region": "eu"

@@ -11,7 +11,7 @@ Usage:
       fails if a committed file differs from what would be generated, or if
       the `product` field enum in ubproject.toml does not list every product.
 
-Conventions (K§4): `__` nests, named choices become lower-case strings,
+Conventions (K§4): `__` nests (no level may be a Python keyword), named choices become lower-case strings,
 disabled symbols are emitted with a typed "off" value (false / ""),
 `meta.product` = defconfig name. Any Kconfig warning fails the run, including
 an assignment kconfiglib cannot honour (unmet `depends on`).
@@ -19,6 +19,7 @@ an assignment kconfiglib cannot honour (unmet `depends on`).
 
 import argparse
 import json
+import keyword
 import sys
 import tomllib
 from pathlib import Path
@@ -30,6 +31,11 @@ ROOT = Path(__file__).resolve().parent.parent
 
 def nest(target: dict, name: str, value) -> None:
     parts = name.lower().split("__")
+    # sphinx-needs evaluates conditions as Python: `var.hv.class` is a syntax
+    # error there (ubc accepts it), so no level may be a Python keyword.
+    bad = [p for p in parts if keyword.iskeyword(p)]
+    if bad:
+        raise SystemExit(f"kconfig2variants: {name}: {bad} is a Python keyword, unusable in var.* conditions")
     for part in parts[:-1]:
         target = target.setdefault(part, {})
     target[parts[-1]] = value
@@ -116,7 +122,7 @@ def describe(d: dict) -> str:
     parts = [d["vehicle"]["type"].capitalize(), d["powertrain"]["type"].upper() if d["powertrain"]["type"] == "bev" else "diesel"]
     if d["bms"]["enabled"]:
         parts.append(d["bms"]["chemistry"].upper())
-        parts.append(d["hv"]["class"].removeprefix("v") + " V")
+        parts.append(d["hv"]["voltage"].removeprefix("v") + " V")
     if d["charging"]["mcs"]:
         parts.append("MCS")
     if d["charging"]["pantograph"]:

@@ -85,7 +85,7 @@ Products (B§2.2): **D** = `truck_diesel_eu`, **N** = `truck_bev_nmc_eu`
 | ID | Mechanism | Generic element | Expected D / N / B / A | Ref |
 |---|---|---|---|---|
 | V01 | Field `<<>>` with named variant | `REQ_EVAL_FIELD.value: <<bus: bus-value, truck-value>>` | truck / truck / bus / truck | M§3 |
-| V02 | Field `<<>>` with inline condition | `REQ_EVAL_INLINE.value: <<[var.hv.class == "v800"]: 800, 400>>`; diesel has `hv.class` disabled | 400 / 800 / 400 / 800 | M§3, K§4.6 |
+| V02 | Field `<<>>` with inline condition | `REQ_EVAL_INLINE.value: <<[var.hv.voltage == "v800"]: 800, 400>>`; diesel has `hv.voltage` disabled | 400 / 800 / 400 / 800 | M§3, K§4.6 |
 | V03 | Data reference `<{ }>` | `REQ_EVAL_DATA` text: `<{ var.meta.product }>`, `<{ var.bms.chemistry }>` | product name each; chemistry "" / nmc / lfp / lfp | M§3 |
 | V04 | `if` | `REQ_EVAL_IF` inside `if mcs` | – / ✓ / – / – | M§5 |
 | V05 | Alternatives (complementary `if`, same ID) | `REQ_EVAL_ALT` in three blocks: MCS / pantograph / otherwise | otherwise / MCS / pantograph / otherwise | M§5.1 |
@@ -101,7 +101,7 @@ Products (B§2.2): **D** = `truck_diesel_eu`, **N** = `truck_bev_nmc_eu`
 | ID | Mechanism | Check | Expected | Ref |
 |---|---|---|---|---|
 | V14 | Kconfig generator | generated `variants/*.json`: nesting, choices as strings, disabled symbols `false` / `""`, `var.meta.product` | matches K§4 for all four products; drift check clean | K§4, K§6 |
-| V15 | Kconfig constraints | temporary probe: `CHARGING__MCS=y` in the bus defconfig with `HV__CLASS__V400` | generator fails with the dependency message | K§6 |
+| V15 | Kconfig constraints | temporary probe: `CHARGING__MCS=y` in the bus defconfig with `HV__VOLTAGE__V400` | generator fails with the dependency message | K§6 |
 | V16 | CMake Tools switching | switch D → N → B → A in the status bar | `build/active/*` and the ubCode view follow each switch | K§8, E§ D1/D2 |
 | V17 | Build settings outside the variant model | CMake Tools offers only the product (no build type); every build dir has `CMAKE_BUILD_TYPE=Debug`; same product built with another kit (e.g. Clang vs GCC) | identical `variants.json` and `needs.json` | K§0 P3 |
 | V18 | Local entry points | `tools/build_all.sh` | all products, both HTML outputs in `build/site/<product>/` | B§8 |
