@@ -28,6 +28,7 @@ echo "== once-per-repo checks"
 check() { local name="$1"; shift; if "$@"; then :; else failed+=("$name"); fi; }
 check drift "$PYTHON" tools/kconfig2variants.py --all --vscode --check
 check variants "$PYTHON" tools/check_variants.py
+check kconfig "$PYTHON" tools/check_kconfig.py
 check bms-pin "$PYTHON" tools/pin_bms.py --check
 check skills "$PYTHON" tools/check_skill_mirrors.py
 
