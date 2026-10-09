@@ -54,6 +54,7 @@ has a fallback ready:
 | E§ E5 | `sphinx-codelinks[libclang]` on `ubuntu-latest`; the preprocessor yields the same `IMPL_*` per product as on macOS | identical code needs to the local run | pin a libclang wheel / use a container image |
 | E§ G4 | `pages` job pushes the variant folders and `.nojekyll` to `gh-pages`; Pages (branch source, already enabled) rebuilds | `…/variant_demo/<product>/sphinx/` and `…/<product>/ubcode/` reachable, `_static/` served | Pages source "GitHub Actions" (artifact deploy) |
 | E§ G5 | open `…/<product>/compare.html` in a browser | both panes load | two links per product instead of iframes |
+| 99 UB-14, CL-03 | no machine path in the published site: `grep -r 'file:///' gh-pages/` (ubCode HTML shows `local-url` as text, ubc `needs.json` carries it) | no match | `tools/make_site.py` strips / rewrites `local-url` in the ubCode HTML and the published `needs.json`, or `set_local_url = false` (see §6) |
 
 Results are added to [01-evaluation-result.md](01-evaluation-result.md).
 
@@ -193,5 +194,15 @@ field / link values — from the two `needs.json` files. Empty diff = parity
 - **Branch growth:** every deploy adds HTML for four variants × two
   toolchains; squash job if needed (§3.1).
 - **Jekyll:** without `.nojekyll`, Sphinx assets under `_static/` are not served.
+- **Local paths in the published site** (plan 99 UB-14, CL-03): ubCode HTML
+  renders the codelinks `local-url` as plain text with the absolute path of
+  the build machine (in CI: the runner's path), and ubc's `needs.json` exports
+  it. Options: (1) `set_local_url = false` in `ubproject.toml` for everyone —
+  simple, but Sphinx then loses the links to its generated source pages;
+  (2) a CI-only override `-c 'codelinks.set_local_url = false'` — check first
+  that it does not replace the whole `[codelinks]` table (UB-05); (3)
+  `tools/make_site.py` removes / rewrites `local-url` in the published ubCode
+  HTML and `needs.json` and fails the deploy if any `file://` remains. Decide
+  with the first CI run (§1.1); the `file://` check stays in any case.
 - **Build time:** four products × two toolchains × libclang analysis; use the
   matrix, caching (`uv`, compiler cache) and `fail-fast: false`.
