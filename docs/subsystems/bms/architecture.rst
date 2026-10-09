@@ -22,9 +22,9 @@ through the allocated needs, never copied.
    :satisfies: REQ_TRACTION_POWER_LIMIT
    :allocates: BMS_REQ_POWER_DERATING, BMS_REQ_PACK_OVERCURRENT
 
-   The BMS publishes the permitted discharge power and protects the pack
-   against overcurrent; the traction power limit of the vehicle never exceeds
-   them.
+   The BMS publishes the permitted discharge power that the VCU applies as a
+   traction power limit, and protects the pack against overcurrent as the last
+   line of defence.
 
 .. bms_block:: Battery isolation protection
    :id: BB_HV_PROTECTION
@@ -33,7 +33,8 @@ through the allocated needs, never copied.
    :allocates: BMS_REQ_ISOLATION_FAULT, BMS_REQ_FAULT_REACTION_TIME
 
    The BMS detects the isolation fault that triggers the high-voltage shutdown
-   and opens the contactors within its own reaction time.
+   and opens the main contactors on request of the VCU. Open point for the BMS
+   team: no BMS requirement bounds the isolation-fault reaction time yet.
 
 .. bms_block:: Battery charging limits
    :id: BB_CHARGE_LIMITS
@@ -43,4 +44,5 @@ through the allocated needs, never copied.
 
    The BMS keeps every cell inside the voltage window of its chemistry and
    requests heating or cooling, so that charging power is accepted only within
-   safe cell limits.
+   safe cell limits. Open point for the BMS team: no BMS interface requirement
+   publishes a permitted charging power yet.

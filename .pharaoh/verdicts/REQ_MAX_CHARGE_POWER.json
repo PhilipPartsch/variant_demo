@@ -2,40 +2,41 @@
   "agent": "claude-code",
   "axes": {
     "atomicity": {
-      "reason": "One obligation: accept charging power up to the value.",
+      "reason": "One obligation: accept the sustained charging power in the SoC window.",
       "score": 2
     },
     "comprehensibility": {
-      "reason": "Readable on its own; the value is the need's own variant-resolved field.",
+      "reason": "Value is held in the value field; self-contained.",
       "score": 2
     },
     "feasibility": {
-      "reason": "1000 kW (MCS) and 350 kW (CCS) are achievable with current charging technology.",
-      "score": 2
+      "reason": "MCS variant: 1000 kW sustained across 20-80 % SoC (about 1250 A at 800 V) without any temperature condition pushes against cell thermal and voltage limits the BMS enforces.",
+      "score": 1,
+      "suggestion": "Add the battery temperature conditions under which the sustained power applies."
     },
     "parent_fit": {
-      "reason": "Charging power acceptance is the key enabler of recharging within a driver break (US_FAST_DEPOT_CHARGING).",
+      "reason": "A defined sustained charging power over 20-80 % SoC is what makes recharging within a driver break possible (US_FAST_DEPOT_CHARGING).",
       "score": 2
     },
     "unambiguity": {
-      "reason": "'accept charging power up to' can be read as peak capability or as a sustained charging rate; edge conditions (SoC, temperature) are open.",
+      "reason": "'Sustained ... up to the value' can be read as a peak capability or as an average over the window.",
       "score": 1,
-      "suggestion": "Define the operating window and whether the value is peak or continuous."
+      "suggestion": "Phrase as the minimum average power over the 20-80 % window."
     },
     "variant_consistency": {
-      "reason": "Gated by spelled-out bev condition, same as parent US_FAST_DEPOT_CHARGING; value via variant function <<mcs: 1000 kW, 350 kW>>.",
+      "reason": "Gated bev like the parent; product-specific value in a variant function <<mcs: 1000 kW, 350 kW>>.",
       "score": 2
     },
     "verifiability": {
-      "reason": "Directionally testable against the resolved kW value, but it is unspecified whether this is peak or sustained power and over which SoC/temperature window.",
+      "reason": "'Sustained' has no duration or tolerance, and the ambient / battery temperature conditions of the test are not given.",
       "score": 1,
-      "suggestion": "State peak vs sustained, the SoC window (e.g. 10-80 %) and the ambient/battery temperature conditions."
+      "suggestion": "State the test conditions (battery temperature range, ambient) and what 'sustained' means (e.g. average power >= value -x % over the whole 20-80 % window)."
     }
   },
   "criteria": "requirement",
   "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
   "model": "claude-opus-5-5",
   "need": "REQ_MAX_CHARGE_POWER",
-  "reviewed_fingerprint": "8fc7b0a58f5b33b1050fafcd5bab7088613dbebfa106f58cbd97c9f2d05141f2",
+  "reviewed_fingerprint": "e70c7655651161807f9411974a5d06068b9c44b08cf7c5b3151db9ae0e212948",
   "schema": 2
 }

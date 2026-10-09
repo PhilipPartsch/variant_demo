@@ -6,11 +6,11 @@
       "score": 2
     },
     "comprehensibility": {
-      "reason": "Abbreviation expanded in place.",
+      "reason": "Abbreviation expanded.",
       "score": 2
     },
     "feasibility": {
-      "reason": "MCS hardware exists for heavy trucks.",
+      "reason": "MCS is available technology for 800 V trucks.",
       "score": 2
     },
     "parent_fit": {
@@ -18,23 +18,24 @@
       "score": 2
     },
     "unambiguity": {
-      "reason": "Single reading: the vehicle can conduct MCS charging sessions.",
-      "score": 2
+      "reason": "IEC 63379 primarily specifies the MCS vehicle coupler; whether the requirement also covers the session communication (ISO 15118-20 / IEC 61851-23-3) is open.",
+      "score": 1,
+      "suggestion": "Name the standards for both the coupler and the session communication."
     },
     "variant_consistency": {
-      "reason": "Gated by spelled-out mcs condition (var.charging.mcs == True); in the product data MCS only occurs with bev, so it is never present without its bev-gated parent. Note it is not nested in the bev block, so this relies on that data invariant.",
+      "reason": "Gated var.charging.mcs == True; MCS requires 800 V and exists only in BEV products, so it is stronger than the bev-gated parent.",
       "score": 2
     },
     "verifiability": {
-      "reason": "Testable as an MCS session, but no standard reference/version (e.g. IEC 63379 / SAE J3271) defines the pass criteria.",
+      "reason": "'Support charging sessions' gives no success condition beyond the standard reference (which session functions, which power class/current must be achieved).",
       "score": 1,
-      "suggestion": "Reference the MCS standard and edition the vehicle shall conform to."
+      "suggestion": "State the verified scope, e.g. completes an MCS session to IEC 63379 / ISO 15118-20 at the rated current."
     }
   },
   "criteria": "requirement",
   "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
   "model": "claude-opus-5-5",
   "need": "REQ_MCS_CHARGING",
-  "reviewed_fingerprint": "cdaaf42f6be1931f0e49065b65cb939129c383aa408d294cdf9d179ec58d4acb",
+  "reviewed_fingerprint": "b1d8f73091f297503a0960a42f77034a7df7261c2f3abec824245253db02a6f9",
   "schema": 2
 }

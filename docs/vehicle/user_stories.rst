@@ -28,8 +28,8 @@ each. Workflow stage ``user_stories``.
       :id: US_HV_SAFETY
       :status: draft
 
-      As a driver, I am protected from electric shock when the high-voltage
-      insulation of the vehicle fails.
+      As a driver, I see the high-voltage system switched off and a warning when
+      its insulation fails, so I am not exposed to electric shock.
 
    .. user_story:: Charging in the home market
       :id: US_MARKET_CHARGING

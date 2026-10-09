@@ -1,0 +1,50 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "allocation_complete": {
+      "reason": "The element has no allocates link.",
+      "score": 2
+    },
+    "completeness": {
+      "reason": "The vehicle power-limit obligation is covered only indirectly (via forwarding the already-capped VCU request).",
+      "score": 1,
+      "suggestion": "Describe how the delivered power stays within the value on the engine side."
+    },
+    "consistency": {
+      "reason": "Complements sibling ARCH_VCU_POWER_MGMT (VCU caps to the vehicle limit, ENG to the engine curve); no contradiction.",
+      "score": 2
+    },
+    "design_clarity": {
+      "reason": "Names forwarding and limiting but not the interface to the engine control unit (e.g. J1939 torque/speed control message) nor where the torque curve comes from.",
+      "score": 1,
+      "suggestion": "Name the ECU interface/message and the torque-curve source."
+    },
+    "implementability": {
+      "reason": "One bounded interface function.",
+      "score": 2
+    },
+    "interface_only": {
+      "reason": "The element has no allocates link.",
+      "score": 2
+    },
+    "no_value_copy": {
+      "reason": "No BMS value (limit, threshold, timing) is named.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "REQ_TRACTION_POWER_LIMIT asks to limit delivered traction power to the product value; limiting to the engine torque curve is a different (engine capability) concern, and the vehicle limit itself is applied by ARCH_VCU_POWER_MGMT, so this element engages the parent only tangentially.",
+      "score": 1,
+      "suggestion": "State that the interface enforces the vehicle power limit at the ECU (e.g. torque limit derived from the vehicle limit and engine speed), or trace it to the requirement it really serves."
+    },
+    "variant_consistency": {
+      "reason": "eng folder (diesel) is stronger than the ungated REQ_TRACTION_POWER_LIMIT.",
+      "score": 2
+    }
+  },
+  "criteria": "arch",
+  "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
+  "model": "claude-opus-5-5",
+  "need": "ARCH_ENG_TORQUE_INTERFACE",
+  "reviewed_fingerprint": "62351e52aaca6731e841dc1f4d205de6648931a49f0ade7c84fac71b581d69ec",
+  "schema": 2
+}

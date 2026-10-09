@@ -1,0 +1,31 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "allocation_complete": {
+      "reason": "The BMS-side contribution (permitted discharge power, pack overcurrent protection) is covered by the two allocated requirements.",
+      "score": 2
+    },
+    "interface_only": {
+      "reason": "BMS_REQ_POWER_DERATING and BMS_REQ_PACK_OVERCURRENT are tagged interface and exist only in BEV products like the element.",
+      "score": 2
+    },
+    "no_value_copy": {
+      "reason": "No derating temperatures or 350 A / 100 ms value is restated.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "Publishes the permitted discharge power the vehicle traction limit must respect, a distinct BMS part of REQ_TRACTION_POWER_LIMIT.",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "bms folder (bev) is stronger than the ungated REQ_TRACTION_POWER_LIMIT.",
+      "score": 2
+    }
+  },
+  "criteria": "allocation",
+  "criteria_fingerprint": "c0a29379d136468eef83684354596f4c522f1824eb474257848660fc3021c97e",
+  "model": "claude-opus-5-5",
+  "need": "BB_POWER_LIMITS",
+  "reviewed_fingerprint": "d97fec92a66bf76081af1f9c42b5f96f0eb0f027283e6e2f82817b3c5f65dc9a",
+  "schema": 2
+}

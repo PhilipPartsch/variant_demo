@@ -1,0 +1,51 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "allocation_complete": {
+      "reason": "The element has no allocates link.",
+      "score": 2
+    },
+    "completeness": {
+      "reason": "The 100 ms disconnect deadline of the parent is not addressed anywhere in the element.",
+      "score": 1,
+      "suggestion": "Add the 100 ms deadline and how the coordinator meets it."
+    },
+    "consistency": {
+      "reason": "Sibling BB_HV_PROTECTION (same parent) says the BMS 'opens the contactors within its own reaction time', while this element says the VCU commands the contactors open; ownership of the contactor-open command is unreconciled.",
+      "score": 1,
+      "suggestion": "Decide who commands the contactors on an isolation fault (VCU or BMS) and align both elements."
+    },
+    "design_clarity": {
+      "reason": "Names the reaction (command main contactors open) but not the input channel (signal/message) nor how the 100 ms budget is split between reception, decision and contactor actuation.",
+      "score": 1,
+      "suggestion": "Name the isolation-fault signal path and the VCU timing budget (e.g. reaction <= x ms of the 100 ms)."
+    },
+    "implementability": {
+      "reason": "Realisable, but because contactor ownership is split with the BMS black box the implementer must decide whether the VCU command is primary or redundant.",
+      "score": 1,
+      "suggestion": "Resolve the contactor ownership and state it."
+    },
+    "interface_only": {
+      "reason": "The element has no allocates link.",
+      "score": 2
+    },
+    "no_value_copy": {
+      "reason": "No BMS value (limit, threshold, timing) is named.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "Receives the BMS isolation fault and commands the main contactors open, i.e. disconnects the HV battery as REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT asks.",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "Gated var.powertrain.type == 'bev', same as REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT.",
+      "score": 2
+    }
+  },
+  "criteria": "arch",
+  "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
+  "model": "claude-opus-5-5",
+  "need": "ARCH_VCU_HV_SHUTDOWN",
+  "reviewed_fingerprint": "9c707bbe8f3a699eaf556c734270484f566398c0b588ede64baaa4c6b18ce8b3",
+  "schema": 2
+}

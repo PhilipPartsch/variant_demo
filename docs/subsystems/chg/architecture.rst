@@ -11,53 +11,57 @@ The whole folder exists only in battery-electric products.
 
 .. if:: var.charging.mcs == True
 
-   .. arch:: Charging inlet
+   .. arch:: High-power charging interface
       :id: ARCH_CHG_INLET
       :status: draft
       :satisfies: REQ_MAX_CHARGE_POWER, REQ_MCS_CHARGING
 
-      The charging inlet is a Megawatt Charging System inlet for up to 1000 kW
-      at 800 V, with connector lock and temperature monitoring.
+      The high-power charging interface is an MCS vehicle inlet (IEC 63379)
+      next to the CCS inlet, rated for the charging power of
+      REQ_MAX_CHARGE_POWER, with connector lock and pin temperature monitoring.
 
 .. if:: var.charging.pantograph == True and not (var.charging.mcs == True)
 
-   .. arch:: Charging inlet
+   .. arch:: High-power charging interface
       :id: ARCH_CHG_INLET
       :status: draft
       :satisfies: REQ_MAX_CHARGE_POWER, REQ_PANTOGRAPH_CHARGING
 
-      The charging inlet is a roof pantograph contact rail for opportunity
-      charging plus a plug-in inlet for depot charging.
+      The high-power charging interface is a vehicle-mounted roof pantograph
+      (SAE J3105-2) that is raised at the charging stop, rated for the charging
+      power of REQ_MAX_CHARGE_POWER.
 
 .. if:: not (var.charging.mcs == True) and not (var.charging.pantograph == True)
 
-   .. arch:: Charging inlet
+   .. arch:: High-power charging interface
       :id: ARCH_CHG_INLET
       :status: draft
       :satisfies: REQ_MAX_CHARGE_POWER
 
-      The charging inlet is a single plug-in inlet with connector lock and
-      temperature monitoring.
+      There is no additional high-power interface: the vehicle charges with
+      the power of REQ_MAX_CHARGE_POWER through the CCS inlet, which is locked
+      during the session.
 
-.. Alternatives per market: the session control follows the charging standard
-   of the market.
+.. Alternatives per market: the CCS inlet type follows the market.
 
 .. if:: var.market.region == 'eu'
 
-   .. arch:: Charging session control
+   .. arch:: CCS inlet and charging session
       :id: ARCH_CHG_SESSION_CONTROL
       :status: draft
       :satisfies: REQ_EU_CHARGING_STANDARD
 
-      The charging session control runs the CCS2 charging session with the
-      charger (ISO 15118 communication) and sets the charging current limit.
+      The CCS inlet is a CCS2 vehicle inlet (IEC 62196-3). The charging session
+      control runs the session with the charger over ISO 15118-2 and sets the
+      charging current limit from the BMS cell limits.
 
 .. if:: var.market.region == 'na'
 
-   .. arch:: Charging session control
+   .. arch:: CCS inlet and charging session
       :id: ARCH_CHG_SESSION_CONTROL
       :status: draft
       :satisfies: REQ_NA_CHARGING_STANDARD
 
-      The charging session control runs the CCS1 charging session with the
-      charger (ISO 15118 communication) and sets the charging current limit.
+      The CCS inlet is a CCS1 vehicle inlet (SAE J1772). The charging session
+      control runs the session with the charger over ISO 15118-2 and sets the
+      charging current limit from the BMS cell limits.

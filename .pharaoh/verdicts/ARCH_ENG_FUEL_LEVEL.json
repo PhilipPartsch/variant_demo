@@ -1,0 +1,49 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "allocation_complete": {
+      "reason": "The element has no allocates link.",
+      "score": 2
+    },
+    "completeness": {
+      "reason": "The 1 % resolution of the displayed value is not reflected in the provided signal.",
+      "score": 1,
+      "suggestion": "State the output resolution (<= 1 %)."
+    },
+    "consistency": {
+      "reason": "Consistent with sibling ARCH_VCU_ENERGY_DISPLAY, which consumes the level.",
+      "score": 2
+    },
+    "design_clarity": {
+      "reason": "Names the source (tank level sensor) and output (percent to the VCU) but not the sensor/signal interface or the filtering of sloshing that a displayed level needs.",
+      "score": 1,
+      "suggestion": "Name the sensor interface and the filtering (e.g. moving average over x s) and the output resolution."
+    },
+    "implementability": {
+      "reason": "One bounded ENG function.",
+      "score": 2
+    },
+    "interface_only": {
+      "reason": "The element has no allocates link.",
+      "score": 2
+    },
+    "no_value_copy": {
+      "reason": "No BMS value (limit, threshold, timing) is named.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "Provides the fuel level in percent of tank capacity, which is the quantity REQ_ENERGY_SOURCE (diesel) displays.",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "eng folder (var.powertrain.type == 'diesel') is the same as or stronger than the parent's not-bev gate.",
+      "score": 2
+    }
+  },
+  "criteria": "arch",
+  "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
+  "model": "claude-opus-5-5",
+  "need": "ARCH_ENG_FUEL_LEVEL",
+  "reviewed_fingerprint": "6ec188abbe556d0f6d9e3227532a07ee9d46d48424389a083648bae96ec37ce6",
+  "schema": 2
+}

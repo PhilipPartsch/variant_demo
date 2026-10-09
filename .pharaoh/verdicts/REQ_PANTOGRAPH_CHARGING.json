@@ -2,7 +2,7 @@
   "agent": "claude-code",
   "axes": {
     "atomicity": {
-      "reason": "One obligation: pantograph opportunity charging.",
+      "reason": "One obligation: support pantograph opportunity charging.",
       "score": 2
     },
     "comprehensibility": {
@@ -10,31 +10,32 @@
       "score": 2
     },
     "feasibility": {
-      "reason": "Roof pantograph charging is in service on city buses.",
+      "reason": "Established technology for city buses.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Directly realises opportunity charging at terminal stops (US_OPPORTUNITY_CHARGING).",
+      "reason": "Pantograph charging is the means for topping up at terminal stops (US_OPPORTUNITY_CHARGING).",
       "score": 2
     },
     "unambiguity": {
-      "reason": "Single reading.",
-      "score": 2
+      "reason": "SAE J3105 has distinct parts (J3105/1 infrastructure-mounted pantograph with roof rails, J3105/2 vehicle-mounted pantograph); 'roof-mounted pantograph' plus the bare standard number leaves the configuration open, and ARCH_CHG_INLET already reads it differently (contact rail).",
+      "score": 1,
+      "suggestion": "Name the J3105 part (e.g. J3105/1 or /2)."
     },
     "variant_consistency": {
-      "reason": "Gated by var.charging.pantograph == True, identical to its parent US_OPPORTUNITY_CHARGING.",
+      "reason": "Gated var.charging.pantograph == True, same as US_OPPORTUNITY_CHARGING.",
       "score": 2
     },
     "verifiability": {
-      "reason": "Testable as a pantograph session, but no interface standard (e.g. SAE J3105 / EN 50696) or power level is given.",
+      "reason": "'Support opportunity charging' has no success condition (power, contact time) beyond the standard reference.",
       "score": 1,
-      "suggestion": "Reference the pantograph interface standard and the charging power."
+      "suggestion": "Add the verified scope, e.g. power or energy per stop of a given duration."
     }
   },
   "criteria": "requirement",
   "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
   "model": "claude-opus-5-5",
   "need": "REQ_PANTOGRAPH_CHARGING",
-  "reviewed_fingerprint": "bcea3cbfb9b3b8cdc42956ea3b0a0763fec32cc0b14ac5feab067ec48904bf73",
+  "reviewed_fingerprint": "c161b275bcd504749641e30eb20b936531303f522796c97a2ac4e67dcc1feeb3",
   "schema": 2
 }

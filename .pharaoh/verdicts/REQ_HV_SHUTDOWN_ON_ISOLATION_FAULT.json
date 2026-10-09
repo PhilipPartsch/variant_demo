@@ -2,41 +2,39 @@
   "agent": "claude-code",
   "axes": {
     "atomicity": {
-      "reason": "'disconnect the HV battery AND warn the driver' conjoins two independent obligations; either clause alone is a complete, separately testable requirement.",
-      "score": 0,
-      "suggestion": "Split into REQ_HV_DISCONNECT_ON_ISOLATION_FAULT and REQ_HV_ISOLATION_FAULT_WARNING."
+      "reason": "One obligation: disconnect within 100 ms after the fault report.",
+      "score": 2
     },
     "comprehensibility": {
-      "reason": "Self-contained; HV terminology is standard.",
+      "reason": "Self-contained.",
       "score": 2
     },
     "feasibility": {
-      "reason": "Isolation monitoring and contactor opening are established technology.",
+      "reason": "Contactor opening within 100 ms is common practice.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Addresses a distinct part of US_HV_SAFETY: making the HV system safe and warning the driver for the isolation-fault case.",
+      "reason": "Disconnecting the HV battery on an isolation fault protects the driver from electric shock (US_HV_SAFETY).",
       "score": 2
     },
     "unambiguity": {
-      "reason": "Underspecified edge case: whether disconnection is immediate also while driving or deferred until standstill is open.",
+      "reason": "The start point 'reports' (fault set in the BMS vs. received by the vehicle) and whether 'disconnect' means both HV poles open are not pinned down.",
       "score": 1,
-      "suggestion": "State the driving-state condition for disconnection (e.g. immediately at standstill, after a safe stop while driving)."
+      "suggestion": "Define the time reference (e.g. reception of the isolation-fault signal on the vehicle bus) and 'disconnect' (both main contactors open)."
     },
     "variant_consistency": {
-      "reason": "Gated by spelled-out bev condition, same as parent US_HV_SAFETY.",
+      "reason": "Gated bev, same as US_HV_SAFETY.",
       "score": 2
     },
     "verifiability": {
-      "reason": "Testable in principle, but the isolation-fault threshold (e.g. ohm/V) and the reaction time are not stated.",
-      "score": 1,
-      "suggestion": "Specify the isolation resistance threshold and the maximum time from detection to disconnection and warning."
+      "reason": "Measurable: time from the BMS isolation-fault report to contactors open <= 100 ms.",
+      "score": 2
     }
   },
   "criteria": "requirement",
   "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
   "model": "claude-opus-5-5",
   "need": "REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT",
-  "reviewed_fingerprint": "774b67c1c27e47c7bdee672edb169b878e4ad8d093c6d60e654f76d39e2dbe56",
+  "reviewed_fingerprint": "7d3eb1988abea2e908618305f0fd6c8e171b68a499580654eef922193b51f967",
   "schema": 2
 }

@@ -2,7 +2,7 @@
   "agent": "claude-code",
   "axes": {
     "atomicity": {
-      "reason": "One obligation: inhibit traction while a passenger door is open.",
+      "reason": "One obligation: inhibit traction while a door is not closed and locked.",
       "score": 2
     },
     "comprehensibility": {
@@ -14,20 +14,20 @@
       "score": 2
     },
     "parent_fit": {
-      "reason": "Directly realises 'the bus does not move off while I board or leave through an open door'.",
+      "reason": "Inhibiting traction while a door is open prevents the bus moving off during boarding (US_PASSENGER_DOOR_SAFETY).",
       "score": 2
     },
     "unambiguity": {
-      "reason": "'open' is not defined (fully closed and locked vs. not fully closed), an edge case that matters for an interlock.",
+      "reason": "Whether 'inhibit traction' only blocks moving off from standstill or also cuts traction when a door opens while driving is not stated.",
       "score": 1,
-      "suggestion": "Define door state as 'not detected closed and locked'."
+      "suggestion": "Clarify the behaviour while the vehicle is moving."
     },
     "variant_consistency": {
-      "reason": "Gated by spelled-out bus condition (var.vehicle.type == 'bus'), same as its parent.",
+      "reason": "Gated var.vehicle.type == 'bus', same as its parent.",
       "score": 2
     },
     "verifiability": {
-      "reason": "Concrete test: open any passenger door and confirm no traction torque is delivered.",
+      "reason": "Testable: with any door not closed and locked, a traction demand produces no traction.",
       "score": 2
     }
   },
@@ -35,6 +35,6 @@
   "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
   "model": "claude-opus-5-5",
   "need": "REQ_DOOR_DRIVE_INTERLOCK",
-  "reviewed_fingerprint": "098d9ea1124b277036d6975a8d2108a1cad60cadac6e638b8e24439f981470b4",
+  "reviewed_fingerprint": "1d42a2bc658d2880c1d310e233c5f9592f0e58f2f04506908a62312b0ffeb014",
   "schema": 2
 }

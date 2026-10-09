@@ -2,40 +2,39 @@
   "agent": "claude-code",
   "axes": {
     "atomicity": {
-      "reason": "One obligation: display an estimated remaining range; the calculation basis is a facet of it.",
+      "reason": "One obligation (display the range); the calculation basis is a facet of it.",
       "score": 2
     },
     "comprehensibility": {
-      "reason": "'remaining energy of its energy source' leans on REQ_ENERGY_SOURCE for its meaning, and the inline :variant:`powertrain.type` renders a raw variant token ('bev'/'diesel') rather than stakeholder wording.",
-      "score": 1,
-      "suggestion": "Name the source explicitly (battery state of charge / fuel level) or drop the variant token, e.g. 'calculated from the displayed remaining energy'."
+      "reason": "Self-contained; the inline variant value names the energy source.",
+      "score": 2
     },
     "feasibility": {
-      "reason": "Standard range-estimation function; contradicts nothing.",
+      "reason": "Common instrument function.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Directly covers the 'know the range' half of US_RANGE_AWARENESS.",
+      "reason": "Displaying the estimated range addresses the range half of US_RANGE_AWARENESS.",
       "score": 2
     },
     "unambiguity": {
-      "reason": "Core meaning is clear: show remaining range derived from the remaining energy of the active energy source.",
+      "reason": "Calculation basis is defined (remaining energy / average consumption over the last 50 km).",
       "score": 2
     },
     "variant_consistency": {
-      "reason": "Ungated like its parent; the product-specific word is resolved by a variant role, not restated literally.",
+      "reason": "Ungated like its ungated parent; product-specific text through :variant:.",
       "score": 2
     },
     "verifiability": {
-      "reason": "Presence of a range display is testable, but no accuracy, unit or consumption basis for 'estimated' is given, so correctness of the estimate cannot be judged objectively.",
+      "reason": "Display resolution and the behaviour before 50 km of history exist (after reset/new vehicle) are unspecified.",
       "score": 1,
-      "suggestion": "Specify the unit (km/mi), the consumption basis (e.g. average over the last N km) and an accuracy tolerance."
+      "suggestion": "Add a display resolution (e.g. 1 km) and the start-up behaviour."
     }
   },
   "criteria": "requirement",
   "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
   "model": "claude-opus-5-5",
   "need": "REQ_RANGE_ESTIMATE",
-  "reviewed_fingerprint": "923ac32725360991675584b492b2dc33e403f59d618f3be90e0fbb4801fa3fc1",
+  "reviewed_fingerprint": "3773be8e9a0a190a61bd4773ac99b4461817657e28f2fdf7678d34cf983a5c01",
   "schema": 2
 }

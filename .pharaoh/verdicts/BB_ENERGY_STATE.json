@@ -1,0 +1,31 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "allocation_complete": {
+      "reason": "The BMS-relevant obligation (BMS reports the SoC) is covered by BMS_REQ_SOC_ACCURACY (report SoC with accuracy) and its validity by BMS_REQ_SOC_INVALID_FLAG.",
+      "score": 2
+    },
+    "interface_only": {
+      "reason": "BMS_REQ_SOC_ACCURACY and BMS_REQ_SOC_INVALID_FLAG are both tagged interface; both exist exactly where the black box does (BEV).",
+      "score": 2
+    },
+    "no_value_copy": {
+      "reason": "Neither the 3 % accuracy nor the 5 s timeout is restated.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "The BMS provides the SoC that REQ_ENERGY_SOURCE (BEV) displays.",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "Lives in the bev-only bms folder; parent REQ_ENERGY_SOURCE BEV alternative is gated bev: same condition.",
+      "score": 2
+    }
+  },
+  "criteria": "allocation",
+  "criteria_fingerprint": "c0a29379d136468eef83684354596f4c522f1824eb474257848660fc3021c97e",
+  "model": "claude-opus-5-5",
+  "need": "BB_ENERGY_STATE",
+  "reviewed_fingerprint": "be44bd212d90768bdfda1eacfd2e74dc726875b0e53aa609093e573ca8ed4c1e",
+  "schema": 2
+}

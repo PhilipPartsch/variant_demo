@@ -9,9 +9,10 @@ satisfying vehicle requirements. Workflow stage ``archs``, stream ``vcu``.
    :status: draft
    :satisfies: REQ_ENERGY_SOURCE, REQ_RANGE_ESTIMATE
 
-   The VCU energy display manager reads the remaining energy from the energy
-   source of the product (battery state of charge or fuel tank level), derives
-   the remaining range and sends both to the instrument cluster.
+   The VCU energy display manager reads the remaining energy in percent from the
+   energy source of the product (BMS state of charge or ENG fuel level), derives
+   the remaining range from it and the average consumption of the last 50 km,
+   and sends both to the instrument cluster once per second.
 
 .. arch:: Traction power manager
    :id: ARCH_VCU_POWER_MGMT
@@ -19,9 +20,10 @@ satisfying vehicle requirements. Workflow stage ``archs``, stream ``vcu``.
    :satisfies: REQ_TRACTION_POWER_LIMIT
    :allocates: <<bev: BMS_REQ_POWER_DERATING>>
 
-   The VCU traction power manager caps the torque request so that the
-   delivered traction power stays within the vehicle limit; in battery-electric
-   products it also applies the power derating reported by the BMS.
+   The VCU traction power manager limits the torque request to the power limit
+   divided by the current motor speed. The power limit is the vehicle limit; in
+   battery-electric products it is the lower of the vehicle limit and the
+   permitted discharge power published by the BMS.
 
 .. if:: var.powertrain.type == 'bev'
 
@@ -31,7 +33,9 @@ satisfying vehicle requirements. Workflow stage ``archs``, stream ``vcu``.
       :satisfies: REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT
 
       The VCU high-voltage shutdown coordinator receives the isolation fault
-      from the BMS and commands the main contactors open.
+      from the BMS, requests the BMS to open the main contactors, switches off
+      the high-voltage consumers, shows the warning to the driver and checks
+      within 100 ms that both poles are open.
 
 .. if:: var.vehicle.type == 'bus'
 

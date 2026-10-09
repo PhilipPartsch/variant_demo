@@ -1,0 +1,49 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "allocation_complete": {
+      "reason": "The element has no allocates link.",
+      "score": 2
+    },
+    "completeness": {
+      "reason": "REQ_MAX_CHARGE_POWER asks for sustained power between 20 % and 80 % SoC, which an inlet rating alone does not cover; REQ_MCS_CHARGING asks for MCS charging sessions, but session communication for MCS is covered by no element (ARCH_CHG_SESSION_CONTROL only runs CCS2).",
+      "score": 1,
+      "suggestion": "Cover the MCS session (IEC 63379 / ISO 15118-20) either here or in ARCH_CHG_SESSION_CONTROL, and state how sustained 20-80 % power is ensured (thermal monitoring derates when?)."
+    },
+    "consistency": {
+      "reason": "Consistent with sibling BB_CHARGE_LIMITS (BMS bounds cell limits); no conflicting responsibility for the inlet.",
+      "score": 2
+    },
+    "design_clarity": {
+      "reason": "Concrete choice: MCS inlet, 1000 kW at 800 V, with connector lock and temperature monitoring.",
+      "score": 2
+    },
+    "implementability": {
+      "reason": "One bounded inlet assembly with named rating and functions.",
+      "score": 2
+    },
+    "interface_only": {
+      "reason": "The element has no allocates link.",
+      "score": 2
+    },
+    "no_value_copy": {
+      "reason": "No BMS value (limit, threshold, timing) is named.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "MCS variant: an MCS inlet rated for 1000 kW addresses both REQ_MAX_CHARGE_POWER and REQ_MCS_CHARGING.",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "Gating is correct (mcs inside the bev-only chg folder: stronger than REQ_MAX_CHARGE_POWER (bev) and equal to REQ_MCS_CHARGING (mcs)), but the body restates the product-specific values 1000 kW and 800 V in prose instead of referencing REQ_MAX_CHARGE_POWER's value / hv.voltage.",
+      "score": 1,
+      "suggestion": "Reference the charging power through REQ_MAX_CHARGE_POWER (or :variant:) instead of copying 1000 kW / 800 V."
+    }
+  },
+  "criteria": "arch",
+  "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
+  "model": "claude-opus-5-5",
+  "need": "ARCH_CHG_INLET",
+  "reviewed_fingerprint": "55c46e7758beea20fd1bad0a028f7be96e45ca422fff198a8b12f01f24c5cc81",
+  "schema": 2
+}

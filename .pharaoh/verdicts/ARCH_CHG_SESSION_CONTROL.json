@@ -1,0 +1,51 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "allocation_complete": {
+      "reason": "The element has no allocates link.",
+      "score": 2
+    },
+    "completeness": {
+      "reason": "The parent's obligation is to provide a CCS2 inlet; no part of this element provides one, and in MCS products ARCH_CHG_INLET is an MCS inlet only, so the CCS2 inlet is covered nowhere.",
+      "score": 0,
+      "suggestion": "Add the CCS2 inlet (e.g. in the plain/MCS ARCH_CHG_INLET variants) or an inlet element satisfying REQ_EU_CHARGING_STANDARD."
+    },
+    "consistency": {
+      "reason": "Sole element satisfying REQ_EU_CHARGING_STANDARD; no sibling to contradict.",
+      "score": 2
+    },
+    "design_clarity": {
+      "reason": "Names CCS2 and ISO 15118 but not the part/version (ISO 15118-2 vs -20, DIN 70121 fallback) nor where the charging current limit comes from (BMS limits).",
+      "score": 1,
+      "suggestion": "Name the ISO 15118 edition(s) supported and the source of the current limit."
+    },
+    "implementability": {
+      "reason": "Realisable, but the protocol edition and the current-limit source are judgement calls for the implementer.",
+      "score": 1,
+      "suggestion": "Fix the protocol edition and current-limit source."
+    },
+    "interface_only": {
+      "reason": "The element has no allocates link.",
+      "score": 2
+    },
+    "no_value_copy": {
+      "reason": "No BMS value (limit, threshold, timing) is named.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "REQ_EU_CHARGING_STANDARD asks for a CCS2 inlet per IEC 62196-3 (the physical coupler); this element runs the CCS2 session and sets the current limit, which engages the parent only tangentially.",
+      "score": 1,
+      "suggestion": "Satisfy the inlet obligation with an inlet element (CCS2 inlet), and trace the session control to a requirement on charging communication."
+    },
+    "variant_consistency": {
+      "reason": "EU variant: gated var.market.region == 'eu' inside the bev-only chg folder, equal to REQ_EU_CHARGING_STANDARD (region/eu folder + bev).",
+      "score": 2
+    }
+  },
+  "criteria": "arch",
+  "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
+  "model": "claude-opus-5-5",
+  "need": "ARCH_CHG_SESSION_CONTROL",
+  "reviewed_fingerprint": "a1b4e9e8fad62e76e6ebe3919bbd54b6656b96a7de71e13b33015162b8e6739f",
+  "schema": 2
+}
