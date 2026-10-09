@@ -2,41 +2,38 @@
   "agent": "claude-code",
   "axes": {
     "atomicity": {
-      "reason": "One obligation: accept the sustained charging power in the SoC window.",
+      "reason": "Exactly one shall-obligation.",
       "score": 2
     },
     "comprehensibility": {
-      "reason": "Value is held in the value field; self-contained.",
+      "reason": "Self-contained; terms are standard domain vocabulary.",
       "score": 2
     },
     "feasibility": {
-      "reason": "MCS variant: 1000 kW sustained across 20-80 % SoC (about 1250 A at 800 V) without any temperature condition pushes against cell thermal and voltage limits the BMS enforces.",
-      "score": 1,
-      "suggestion": "Add the battery temperature conditions under which the sustained power applies."
+      "reason": "1000 kW (MCS) / 350 kW (CCS) are within current technology.",
+      "score": 2
     },
     "parent_fit": {
-      "reason": "A defined sustained charging power over 20-80 % SoC is what makes recharging within a driver break possible (US_FAST_DEPOT_CHARGING).",
+      "reason": "Quantifies the charging power that makes 'recharge within a driver break' achievable.",
       "score": 2
     },
     "unambiguity": {
-      "reason": "'Sustained ... up to the value' can be read as a peak capability or as an average over the window.",
-      "score": 1,
-      "suggestion": "Phrase as the minimum average power over the 20-80 % window."
+      "reason": "Value, SoC window and temperature condition are explicit.",
+      "score": 2
     },
     "variant_consistency": {
-      "reason": "Gated bev like the parent; product-specific value in a variant function <<mcs: 1000 kW, 350 kW>>.",
+      "reason": "Gated bev like its parent; the product-specific value sits in `<<mcs: 1000 kW, 350 kW>>`.",
       "score": 2
     },
     "verifiability": {
-      "reason": "'Sustained' has no duration or tolerance, and the ambient / battery temperature conditions of the test are not given.",
-      "score": 1,
-      "suggestion": "State the test conditions (battery temperature range, ambient) and what 'sustained' means (e.g. average power >= value -x % over the whole 20-80 % window)."
+      "reason": "Average power over 20-80 % SoC at 25 °C is a defined test.",
+      "score": 2
     }
   },
   "criteria": "requirement",
   "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
   "model": "claude-opus-5-5",
   "need": "REQ_MAX_CHARGE_POWER",
-  "reviewed_fingerprint": "e70c7655651161807f9411974a5d06068b9c44b08cf7c5b3151db9ae0e212948",
+  "reviewed_fingerprint": "f2b2b6423ee4dad00161bcc99f591e3251a1753648b345c6bcd64d5dd1443305",
   "schema": 2
 }

@@ -2,41 +2,39 @@
   "agent": "claude-code",
   "axes": {
     "allocation_complete": {
-      "reason": "The element has no allocates link.",
+      "reason": "The element has no `allocates`, so this axis is met by definition.",
       "score": 2
     },
     "completeness": {
-      "reason": "The 1 % resolution of the displayed value is not reflected in the provided signal.",
-      "score": 1,
-      "suggestion": "State the output resolution (<= 1 %)."
+      "reason": "Percent of tank capacity and 1 % resolution covered; display is left to the VCU.",
+      "score": 2
     },
     "consistency": {
-      "reason": "Consistent with sibling ARCH_VCU_ENERGY_DISPLAY, which consumes the level.",
+      "reason": "Consistent with ARCH_VCU_ENERGY_DISPLAY, which reads the ENG fuel level.",
       "score": 2
     },
     "design_clarity": {
-      "reason": "Names the source (tank level sensor) and output (percent to the VCU) but not the sensor/signal interface or the filtering of sloshing that a displayed level needs.",
-      "score": 1,
-      "suggestion": "Name the sensor interface and the filtering (e.g. moving average over x s) and the output resolution."
+      "reason": "Concrete: analogue sensor, 100 ms sampling, 10 s averaging against slosh.",
+      "score": 2
     },
     "implementability": {
-      "reason": "One bounded ENG function.",
+      "reason": "Single bounded provider.",
       "score": 2
     },
     "interface_only": {
-      "reason": "The element has no allocates link.",
+      "reason": "The element has no `allocates`, so this axis is met by definition.",
       "score": 2
     },
     "no_value_copy": {
-      "reason": "No BMS value (limit, threshold, timing) is named.",
+      "reason": "Names no BMS limit, threshold or timing.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Provides the fuel level in percent of tank capacity, which is the quantity REQ_ENERGY_SOURCE (diesel) displays.",
+      "reason": "Provides the fuel level in percent with 1 % resolution that REQ_ENERGY_SOURCE displays.",
       "score": 2
     },
     "variant_consistency": {
-      "reason": "eng folder (var.powertrain.type == 'diesel') is the same as or stronger than the parent's not-bev gate.",
+      "reason": "Lives in subsystems/eng (diesel-only folder); its parent is gated the same (`not bev`) or ungated, so it never exists without its parent.",
       "score": 2
     }
   },
@@ -44,6 +42,6 @@
   "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
   "model": "claude-opus-5-5",
   "need": "ARCH_ENG_FUEL_LEVEL",
-  "reviewed_fingerprint": "6ec188abbe556d0f6d9e3227532a07ee9d46d48424389a083648bae96ec37ce6",
+  "reviewed_fingerprint": "55b5bd7709acdf325f0d7415878ca9dcfc6e7c97e572bf6704e9a319f4a3a766",
   "schema": 2
 }

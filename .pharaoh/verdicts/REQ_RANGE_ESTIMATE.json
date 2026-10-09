@@ -2,39 +2,40 @@
   "agent": "claude-code",
   "axes": {
     "atomicity": {
-      "reason": "One obligation (display the range); the calculation basis is a facet of it.",
-      "score": 2
+      "reason": "Display obligation plus calculation rule (50 km average, nominal fallback) are bundled; closely related facets.",
+      "score": 1,
+      "suggestion": "Keep the display obligation here and move the estimation rule to the architecture or a child requirement."
     },
     "comprehensibility": {
-      "reason": "Self-contained; the inline variant value names the energy source.",
+      "reason": "Understandable on its own; the `:variant:` role names the energy source.",
       "score": 2
     },
     "feasibility": {
-      "reason": "Common instrument function.",
+      "reason": "Implementable with known automotive technology; contradicts nothing stated.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Displaying the estimated range addresses the range half of US_RANGE_AWARENESS.",
+      "reason": "Directly delivers the 'range' half of US_RANGE_AWARENESS.",
       "score": 2
     },
     "unambiguity": {
-      "reason": "Calculation basis is defined (remaining energy / average consumption over the last 50 km).",
+      "reason": "One reading of the formula and resolution.",
       "score": 2
     },
     "variant_consistency": {
-      "reason": "Ungated like its ungated parent; product-specific text through :variant:.",
+      "reason": "Ungated like US_RANGE_AWARENESS; energy source referenced through `:variant:` instead of prose.",
       "score": 2
     },
     "verifiability": {
-      "reason": "Display resolution and the behaviour before 50 km of history exist (after reset/new vehicle) are unspecified.",
+      "reason": "'the nominal consumption' has no value or source, so the first 50 km cannot be verified.",
       "score": 1,
-      "suggestion": "Add a display resolution (e.g. 1 km) and the start-up behaviour."
+      "suggestion": "Give the nominal consumption as a product value via a field variant function."
     }
   },
   "criteria": "requirement",
   "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
   "model": "claude-opus-5-5",
   "need": "REQ_RANGE_ESTIMATE",
-  "reviewed_fingerprint": "3773be8e9a0a190a61bd4773ac99b4461817657e28f2fdf7678d34cf983a5c01",
+  "reviewed_fingerprint": "3000eb27adc30029588d664bbc900181550e172e241cda1564890ad7da962f2c",
   "schema": 2
 }

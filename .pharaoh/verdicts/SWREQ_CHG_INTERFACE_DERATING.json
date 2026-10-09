@@ -1,0 +1,41 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "atomicity": {
+      "reason": "Exactly one shall-obligation.",
+      "score": 2
+    },
+    "comprehensibility": {
+      "reason": "Self-contained; terms are standard domain vocabulary.",
+      "score": 2
+    },
+    "feasibility": {
+      "reason": "Implementable with known automotive technology; contradicts nothing stated.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "In this CCS-only product the parent ARCH_CHG_INLET alternative mentions no contact temperature monitoring, so the derating engages only tangentially with it.",
+      "score": 1,
+      "suggestion": "Add contact temperature monitoring to every ARCH_CHG_INLET alternative, or refine the derating from the element that owns the temperature sensing."
+    },
+    "unambiguity": {
+      "reason": "No release condition: leaving the derated state at exactly 90 °C is unspecified (chattering).",
+      "score": 1,
+      "suggestion": "Add a release threshold (hysteresis)."
+    },
+    "variant_consistency": {
+      "reason": "Lives in subsystems/chg (bev-only folder); every alternative of the parent is also inside bev and the market/inlet alternatives are exhaustive (Kconfig: region eu|na; mcs needs v800 needs bev), so the need never exists without a parent.",
+      "score": 2
+    },
+    "verifiability": {
+      "reason": "Threshold (90 °C) and reaction (halve) are measurable.",
+      "score": 2
+    }
+  },
+  "criteria": "requirement",
+  "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
+  "model": "claude-opus-5-5",
+  "need": "SWREQ_CHG_INTERFACE_DERATING",
+  "reviewed_fingerprint": "de409e3783c8fad17756b2dd7b57932f673a9e6aedbe6f15c5be1a739f41f23b",
+  "schema": 2
+}

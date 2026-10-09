@@ -14,26 +14,26 @@
       "score": 2
     },
     "parent_fit": {
-      "reason": "Diesel alternative: shows remaining energy as fuel level, the 'remaining energy' half of US_RANGE_AWARENESS.",
+      "reason": "Constrains contactor closing of the MCS inlet of ARCH_CHG_INLET to the ISO 15118-20 session (from REQ_MCS_CHARGING).",
       "score": 2
     },
     "unambiguity": {
-      "reason": "Single reading.",
+      "reason": "'session setup' maps to the defined ISO 15118-20 SessionSetup exchange.",
       "score": 2
     },
     "variant_consistency": {
-      "reason": "Gated `not (var.powertrain.type == 'bev')`, the spelled-out complement of the bev alternative; parent is ungated.",
+      "reason": "Gated `var.charging.mcs == True` inside the bev chg folder, identical to the MCS alternative of ARCH_CHG_INLET.",
       "score": 2
     },
     "verifiability": {
-      "reason": "Percent of tank capacity with 1 % resolution is measurable.",
+      "reason": "Test: contactor close command never precedes completion of session setup.",
       "score": 2
     }
   },
   "criteria": "requirement",
   "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
   "model": "claude-opus-5-5",
-  "need": "REQ_ENERGY_SOURCE",
-  "reviewed_fingerprint": "86f2681df5d252ac1d6619272de75de6414a646792f8900664446c1ec04dc8c9",
+  "need": "SWREQ_CHG_MCS_HANDSHAKE",
+  "reviewed_fingerprint": "3c607169519eb628dc13dfc3b37970f04660d76b6e17a4f42ac752ffbb11d323",
   "schema": 2
 }

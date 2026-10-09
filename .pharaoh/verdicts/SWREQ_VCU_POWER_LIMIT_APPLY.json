@@ -1,0 +1,41 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "atomicity": {
+      "reason": "Exactly one shall-obligation.",
+      "score": 2
+    },
+    "comprehensibility": {
+      "reason": "Relies on the parent for what the 'active power limit' is; 'motor speed' reads BEV-specific although the need is ungated (diesel uses engine speed).",
+      "score": 1,
+      "suggestion": "Use 'traction motor or engine speed' or reference the speed signal used per powertrain."
+    },
+    "feasibility": {
+      "reason": "Implementable with known automotive technology; contradicts nothing stated.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "Directly implements the torque = power limit / speed rule of ARCH_VCU_POWER_MGMT.",
+      "score": 2
+    },
+    "unambiguity": {
+      "reason": "'active power limit' is not defined here (vehicle limit vs. min with BMS discharge power) and the zero-speed case (division by zero at standstill) is unspecified.",
+      "score": 1,
+      "suggestion": "Define the active power limit (lower of REQ_TRACTION_POWER_LIMIT value and, in bev, BMS permitted discharge power) and state the behaviour below a minimum speed."
+    },
+    "variant_consistency": {
+      "reason": "Ungated like its ungated parent ARCH_VCU_POWER_MGMT; no product value restated.",
+      "score": 2
+    },
+    "verifiability": {
+      "reason": "A test can compare the torque request against power limit / speed at given operating points.",
+      "score": 2
+    }
+  },
+  "criteria": "requirement",
+  "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
+  "model": "claude-opus-5-5",
+  "need": "SWREQ_VCU_POWER_LIMIT_APPLY",
+  "reviewed_fingerprint": "cda4ba3841b33aaf70d9888fe0e453bb9fd37f4651bdd314e3781d076da06015",
+  "schema": 2
+}

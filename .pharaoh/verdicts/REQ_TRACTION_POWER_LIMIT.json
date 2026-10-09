@@ -2,40 +2,38 @@
   "agent": "claude-code",
   "axes": {
     "atomicity": {
-      "reason": "One obligation: cap delivered traction power at the value.",
+      "reason": "Exactly one shall-obligation.",
       "score": 2
     },
     "comprehensibility": {
-      "reason": "Value is in the value field; self-contained.",
+      "reason": "Self-contained; terms are standard domain vocabulary.",
       "score": 2
     },
     "feasibility": {
-      "reason": "450 kW / 250 kW caps are realisable in both powertrains.",
+      "reason": "Implementable with known automotive technology; contradicts nothing stated.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "A fixed traction power limit gives the driver a known maximum traction power (US_PREDICTABLE_POWER).",
+      "reason": "A fixed, measured power limit is what makes traction power predictable.",
       "score": 2
     },
     "unambiguity": {
-      "reason": "'Delivered traction power' has several plausible reference points.",
-      "score": 1,
-      "suggestion": "Define the reference point (e.g. electrical power at the inverter DC input / mechanical at the wheels)."
+      "reason": "Single reading.",
+      "score": 2
     },
     "variant_consistency": {
-      "reason": "Ungated like its parent; value as variant function <<bus: 250 kW, 450 kW>>.",
+      "reason": "Ungated like its parent; product value in `<<bus: 250 kW, 450 kW>>`.",
       "score": 2
     },
     "verifiability": {
-      "reason": "Where 'delivered traction power' is measured (wheel, motor shaft, DC link) and with which tolerance is not stated.",
-      "score": 1,
-      "suggestion": "Name the measurement point and tolerance."
+      "reason": "Axle power against value with 5 % tolerance is measurable.",
+      "score": 2
     }
   },
   "criteria": "requirement",
   "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
   "model": "claude-opus-5-5",
   "need": "REQ_TRACTION_POWER_LIMIT",
-  "reviewed_fingerprint": "6deb07d0a573032f60537d9a38d4b554cae7b500eaff8376d788c057eb1b1880",
+  "reviewed_fingerprint": "43c708a1f85565b29e37aaf2da4d1ba780575dc8025ed40ce547c78c87f325c5",
   "schema": 2
 }

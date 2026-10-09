@@ -2,7 +2,7 @@
   "agent": "claude-code",
   "axes": {
     "naming_clarity": {
-      "reason": "'High-voltage insulation' is stakeholder vocabulary for an EV.",
+      "reason": "'high-voltage system' and 'insulation' are known to drivers of electric vehicles.",
       "score": 2
     },
     "no_mechanism_leak": {
@@ -10,20 +10,20 @@
       "score": 2
     },
     "parent_fit": {
-      "reason": "Root of the V; no parent to trace to.",
+      "reason": "Root of the V; no parent.",
       "score": 2
     },
     "single_user_capability": {
-      "reason": "One capability: protection from electric shock on insulation failure.",
-      "score": 2
+      "reason": "Combines the protective switch-off with a driver warning; one safety goal, but the warning could ship separately.",
+      "score": 1,
+      "suggestion": "Keep one capability (protection from shock on insulation failure) and treat the warning as a facet in the requirement level."
     },
     "user_observable": {
-      "reason": "The effect is an absence of harm; what the driver actually observes (vehicle de-energises, warning shown) is not described.",
-      "score": 1,
-      "suggestion": "Phrase the observable effect, e.g. the vehicle switches off its high voltage and warns me when insulation fails."
+      "reason": "Switch-off and warning are directly visible to the driver.",
+      "score": 2
     },
     "variant_consistency": {
-      "reason": "Gated bev; root need, consistent with the product line (HV only in BEV).",
+      "reason": "Gated `var.powertrain.type == 'bev'`; root need, no parent to be weaker than.",
       "score": 2
     }
   },
@@ -31,6 +31,6 @@
   "criteria_fingerprint": "93247fd50e1c2de110b36e7f5d97505609f74d8dc8014fd8e96f5eb55d1a1b51",
   "model": "claude-opus-5-5",
   "need": "US_HV_SAFETY",
-  "reviewed_fingerprint": "79af592be5f10fbe50cbc9dd44c971fde8f7fe8b40f5fc818940ae2a67da7e77",
+  "reviewed_fingerprint": "003f5317f688cdebf3da97389fe14cc67b62ab5ebccdd979fc90dbd2a92a3e43",
   "schema": 2
 }

@@ -1,0 +1,40 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "atomicity": {
+      "reason": "Exactly one shall-obligation.",
+      "score": 2
+    },
+    "comprehensibility": {
+      "reason": "'the energy source' assumes the reader knows from the parent that it is BMS SoC or ENG fuel level.",
+      "score": 1,
+      "suggestion": "Name the source inline, e.g. 'the remaining energy reported by the product's energy source (BMS state of charge or ENG fuel level)'."
+    },
+    "feasibility": {
+      "reason": "Implementable with known automotive technology; contradicts nothing stated.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "Covers the energy-percentage output of ARCH_VCU_ENERGY_DISPLAY (a distinct part; the range output is left to another requirement).",
+      "score": 2
+    },
+    "unambiguity": {
+      "reason": "One reading: the energy-source value in percent, rounded to 1 %, every second.",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "Ungated in the ungated vcu folder, same as its ungated parent ARCH_VCU_ENERGY_DISPLAY; product-neutral wording.",
+      "score": 2
+    },
+    "verifiability": {
+      "reason": "Unit (percent), resolution (1 %) and period (1 s) are all stated and measurable on the cluster bus.",
+      "score": 2
+    }
+  },
+  "criteria": "requirement",
+  "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
+  "model": "claude-opus-5-5",
+  "need": "SWREQ_VCU_ENERGY_DISPLAY",
+  "reviewed_fingerprint": "20b5c8b7cb0798400d8e84d839bbf96b361220df511176ebdac03353e33abb10",
+  "schema": 2
+}

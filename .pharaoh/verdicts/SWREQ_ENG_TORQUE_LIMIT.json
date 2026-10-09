@@ -1,0 +1,41 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "atomicity": {
+      "reason": "Calculation rule, message type and period are bundled; closely related facets of one obligation.",
+      "score": 1,
+      "suggestion": "Optionally separate the calculation from the cyclic transmission."
+    },
+    "comprehensibility": {
+      "reason": "Self-contained; terms are standard domain vocabulary.",
+      "score": 2
+    },
+    "feasibility": {
+      "reason": "Implementable with known automotive technology; contradicts nothing stated.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "Implements the torque conversion and TSC1 transmission of ARCH_ENG_TORQUE_INTERFACE.",
+      "score": 2
+    },
+    "unambiguity": {
+      "reason": "Units are left open: P / n needs speed in rad/s (not rpm), and TSC1 carries torque as percent of reference torque, a conversion not stated.",
+      "score": 1,
+      "suggestion": "State units and the conversion to the TSC1 percent-of-reference-torque encoding."
+    },
+    "variant_consistency": {
+      "reason": "Lives in subsystems/eng (diesel-only folder); its parent is gated the same (`not bev`) or ungated, so it never exists without its parent.",
+      "score": 2
+    },
+    "verifiability": {
+      "reason": "Value and 10 ms period are checkable on the J1939 bus.",
+      "score": 2
+    }
+  },
+  "criteria": "requirement",
+  "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
+  "model": "claude-opus-5-5",
+  "need": "SWREQ_ENG_TORQUE_LIMIT",
+  "reviewed_fingerprint": "86eabc9e2274db3158e37aa8be03c49f70e14156ef7255a505e7b449a98c3a14",
+  "schema": 2
+}

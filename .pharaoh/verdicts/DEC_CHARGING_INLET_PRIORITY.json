@@ -1,0 +1,29 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "alternatives_listed": {
+      "reason": "Three distinct alternatives.",
+      "score": 2
+    },
+    "consequences_present": {
+      "reason": "What changes and the trade-off (pantograph requirement unsatisfied) are stated; no follow-on work.",
+      "score": 1,
+      "suggestion": "Name follow-on work, e.g. a check that flags products with both features."
+    },
+    "context_present": {
+      "reason": "Problem (both features possible) and constraint (room for one interface) are explicit.",
+      "score": 2
+    },
+    "rationale_quality": {
+      "reason": "Against alternative 3 it argues 'keeps Kconfig open for a future pantograph truck', but forbidding only the MCS+pantograph combination would not block a pantograph truck; also assumes a both-feature product is a truck.",
+      "score": 1,
+      "suggestion": "Explain why the combination must stay configurable, and why MCS wins for a bus with both features."
+    }
+  },
+  "criteria": "decision",
+  "criteria_fingerprint": "acde53ac62d0cfe944e6386d68e527c7fa5d3bb77a28dbc43b53d9f34a092293",
+  "model": "claude-opus-5-5",
+  "need": "DEC_CHARGING_INLET_PRIORITY",
+  "reviewed_fingerprint": "1eda90a048a3af46f12a9db28efd47e7e3ecb5e6f1e61b40ac2879b30100bfe3",
+  "schema": 2
+}

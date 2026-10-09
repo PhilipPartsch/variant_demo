@@ -2,41 +2,41 @@
   "agent": "claude-code",
   "axes": {
     "allocation_complete": {
-      "reason": "The BMS-relevant aspect of the traction power limit (permitted discharge power) is covered by BMS_REQ_POWER_DERATING.",
+      "reason": "The BMS-relevant part (permitted discharge power) is covered by BMS_REQ_POWER_DERATING.",
       "score": 2
     },
     "completeness": {
-      "reason": "The single obligation (limit delivered traction power to the product value) is addressed.",
+      "reason": "The limit and its BEV refinement are addressed.",
       "score": 2
     },
     "consistency": {
-      "reason": "Sibling BB_POWER_LIMITS states the vehicle traction power never exceeds the BMS discharge power AND the pack overcurrent limit, but this element only applies the derating; who keeps the vehicle below BMS_REQ_PACK_OVERCURRENT is not reconciled.",
+      "reason": "In diesel products the sibling ARCH_ENG_TORQUE_INTERFACE also converts the traction power limit into a torque limit at engine speed; which element owns the conversion is not reconciled (this text speaks of 'motor speed').",
       "score": 1,
-      "suggestion": "Either have the power manager also respect the overcurrent limit (and allocate BMS_REQ_PACK_OVERCURRENT under bev) or narrow BB_POWER_LIMITS' wording to BMS-internal protection."
+      "suggestion": "State that in diesel products the VCU passes the power limit to ENG, which owns the conversion."
     },
     "design_clarity": {
-      "reason": "The torque-domain cap is a concrete choice, but how the power limit is converted into a torque limit (speed-dependent P/omega, which speed signal) and how the BMS derating is combined (minimum of both) is left open.",
-      "score": 1,
-      "suggestion": "Specify torque_max = min(P_vehicle, P_BMS_derated) / motor speed (with the speed source and low-speed handling)."
-    },
-    "implementability": {
-      "reason": "A single bounded VCU function; the BEV-only derating input is resolved per product.",
+      "reason": "Chooses torque = power limit / speed and min(vehicle, BMS) in bev.",
       "score": 2
     },
+    "implementability": {
+      "reason": "Zero/low speed (division by zero at standstill) is not bounded.",
+      "score": 1,
+      "suggestion": "Define a minimum speed or a torque ceiling for standstill."
+    },
     "interface_only": {
-      "reason": "Sole allocates target BMS_REQ_POWER_DERATING is a BMS interface need (tag interface); the link is gated bev, matching where BMS needs exist.",
+      "reason": "BMS_REQ_POWER_DERATING is a BMS interface need and allocated only under bev.",
       "score": 2
     },
     "no_value_copy": {
-      "reason": "The 55/60 degC derating values are not restated; only 'the power derating reported by the BMS'.",
+      "reason": "Refers to 'the permitted discharge power published by the BMS' without copying any BMS value.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Caps the torque request so delivered traction power stays within the vehicle limit, which is exactly REQ_TRACTION_POWER_LIMIT's obligation.",
+      "reason": "Implements the traction power limit by torque limiting.",
       "score": 2
     },
     "variant_consistency": {
-      "reason": "Ungated like REQ_TRACTION_POWER_LIMIT; the BMS link is a link variant <<bev: ...>> so it exists only where BMS needs exist.",
+      "reason": "Ungated like REQ_TRACTION_POWER_LIMIT; the BMS allocation is a `<<bev: ...>>` variant function.",
       "score": 2
     }
   },
@@ -44,6 +44,6 @@
   "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
   "model": "claude-opus-5-5",
   "need": "ARCH_VCU_POWER_MGMT",
-  "reviewed_fingerprint": "1a5da4fca7b8b7f70a329536197abb6dc7617f5c569a192d76dc8dc86f7d146f",
+  "reviewed_fingerprint": "1715b219d57961e2684ca98e9689a551c7ba709881ab5be7e1b14abbd318189e",
   "schema": 2
 }

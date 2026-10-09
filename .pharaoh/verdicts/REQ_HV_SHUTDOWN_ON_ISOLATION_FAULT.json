@@ -2,32 +2,31 @@
   "agent": "claude-code",
   "axes": {
     "atomicity": {
-      "reason": "One obligation: disconnect within 100 ms after the fault report.",
+      "reason": "Exactly one shall-obligation.",
       "score": 2
     },
     "comprehensibility": {
-      "reason": "Self-contained.",
+      "reason": "Self-contained; terms are standard domain vocabulary.",
       "score": 2
     },
     "feasibility": {
-      "reason": "Contactor opening within 100 ms is common practice.",
+      "reason": "10 ms VCU request plus contactor opening fits in 100 ms.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Disconnecting the HV battery on an isolation fault protects the driver from electric shock (US_HV_SAFETY).",
+      "reason": "Realises the 'high-voltage system switched off' part of US_HV_SAFETY (the warning part is a separate concern).",
       "score": 2
     },
     "unambiguity": {
-      "reason": "The start point 'reports' (fault set in the BMS vs. received by the vehicle) and whether 'disconnect' means both HV poles open are not pinned down.",
-      "score": 1,
-      "suggestion": "Define the time reference (e.g. reception of the isolation-fault signal on the vehicle bus) and 'disconnect' (both main contactors open)."
+      "reason": "Trigger, action and deadline are unique.",
+      "score": 2
     },
     "variant_consistency": {
-      "reason": "Gated bev, same as US_HV_SAFETY.",
+      "reason": "Gated `var.powertrain.type == 'bev'`, same as US_HV_SAFETY.",
       "score": 2
     },
     "verifiability": {
-      "reason": "Measurable: time from the BMS isolation-fault report to contactors open <= 100 ms.",
+      "reason": "Both poles open within 100 ms after the BMS fault flag: measurable.",
       "score": 2
     }
   },
@@ -35,6 +34,6 @@
   "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
   "model": "claude-opus-5-5",
   "need": "REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT",
-  "reviewed_fingerprint": "7d3eb1988abea2e908618305f0fd6c8e171b68a499580654eef922193b51f967",
+  "reviewed_fingerprint": "ce56127a6f0afdec9af39ee7e6a6e8c5ba3dacb7a4231a82fa92245a1d5474a5",
   "schema": 2
 }

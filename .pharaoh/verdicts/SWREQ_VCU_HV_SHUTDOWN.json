@@ -10,30 +10,30 @@
       "score": 2
     },
     "feasibility": {
-      "reason": "Implementable with known automotive technology; contradicts nothing stated.",
+      "reason": "10 ms fits within the 100 ms vehicle budget.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Diesel alternative: shows remaining energy as fuel level, the 'remaining energy' half of US_RANGE_AWARENESS.",
+      "reason": "Implements the 'request the BMS to open the main contactors' step of ARCH_VCU_HV_SHUTDOWN.",
       "score": 2
     },
     "unambiguity": {
-      "reason": "Single reading.",
+      "reason": "Single reading; trigger and output are both named.",
       "score": 2
     },
     "variant_consistency": {
-      "reason": "Gated `not (var.powertrain.type == 'bev')`, the spelled-out complement of the bev alternative; parent is ungated.",
+      "reason": "Gated `var.powertrain.type == 'bev'`, identical to its parent ARCH_VCU_HV_SHUTDOWN.",
       "score": 2
     },
     "verifiability": {
-      "reason": "Percent of tank capacity with 1 % resolution is measurable.",
+      "reason": "10 ms latency from fault reception to request is directly measurable on the bus.",
       "score": 2
     }
   },
   "criteria": "requirement",
   "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
   "model": "claude-opus-5-5",
-  "need": "REQ_ENERGY_SOURCE",
-  "reviewed_fingerprint": "86f2681df5d252ac1d6619272de75de6414a646792f8900664446c1ec04dc8c9",
+  "need": "SWREQ_VCU_HV_SHUTDOWN",
+  "reviewed_fingerprint": "2810da7ee0a7d770d8be74ae3f5e9897f8bded1c12edd9f229b400ddadeef33b",
   "schema": 2
 }

@@ -2,23 +2,24 @@
   "agent": "claude-code",
   "axes": {
     "allocation_complete": {
-      "reason": "The BMS-side contribution (permitted discharge power, pack overcurrent protection) is covered by the two allocated requirements.",
+      "reason": "The BMS-relevant aspect (permitted discharge power) is covered by BMS_REQ_POWER_DERATING; overcurrent by BMS_REQ_PACK_OVERCURRENT.",
       "score": 2
     },
     "interface_only": {
-      "reason": "BMS_REQ_POWER_DERATING and BMS_REQ_PACK_OVERCURRENT are tagged interface and exist only in BEV products like the element.",
+      "reason": "All allocates targets are BMS_REQ_* needs tagged `interface`, imported only in bev products like the element.",
       "score": 2
     },
     "no_value_copy": {
-      "reason": "No derating temperatures or 350 A / 100 ms value is restated.",
+      "reason": "No BMS value restated.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Publishes the permitted discharge power the vehicle traction limit must respect, a distinct BMS part of REQ_TRACTION_POWER_LIMIT.",
-      "score": 2
+      "reason": "REQ_TRACTION_POWER_LIMIT caps traction power at a fixed vehicle value; the BMS discharge-power limit and overcurrent protection are additional battery protections, tangential to that obligation.",
+      "score": 1,
+      "suggestion": "Trace the block to a requirement about battery-limited power, or state how the BMS limit contributes to the vehicle limit."
     },
     "variant_consistency": {
-      "reason": "bms folder (bev) is stronger than the ungated REQ_TRACTION_POWER_LIMIT.",
+      "reason": "In subsystems/bms (bev-only folder); parent is gated the same or weaker.",
       "score": 2
     }
   },
@@ -26,6 +27,6 @@
   "criteria_fingerprint": "c0a29379d136468eef83684354596f4c522f1824eb474257848660fc3021c97e",
   "model": "claude-opus-5-5",
   "need": "BB_POWER_LIMITS",
-  "reviewed_fingerprint": "d97fec92a66bf76081af1f9c42b5f96f0eb0f027283e6e2f82817b3c5f65dc9a",
+  "reviewed_fingerprint": "37bd41f74cbdd1248c57798506244c40f0e66afe6e66f8d833b0e782d7d194b6",
   "schema": 2
 }

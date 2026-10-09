@@ -2,42 +2,40 @@
   "agent": "claude-code",
   "axes": {
     "allocation_complete": {
-      "reason": "The element has no allocates link.",
+      "reason": "The element has no `allocates`, so this axis is met by definition.",
       "score": 2
     },
     "completeness": {
-      "reason": "The vehicle power-limit obligation is covered only indirectly (via forwarding the already-capped VCU request).",
-      "score": 1,
-      "suggestion": "Describe how the delivered power stays within the value on the engine side."
-    },
-    "consistency": {
-      "reason": "Complements sibling ARCH_VCU_POWER_MGMT (VCU caps to the vehicle limit, ENG to the engine curve); no contradiction.",
+      "reason": "The limit is enforced; engine-side limiting keeps axle power below the value.",
       "score": 2
     },
-    "design_clarity": {
-      "reason": "Names forwarding and limiting but not the interface to the engine control unit (e.g. J1939 torque/speed control message) nor where the torque curve comes from.",
+    "consistency": {
+      "reason": "ARCH_VCU_POWER_MGMT (same parent) also limits the torque request to power limit / speed; in diesel products which element owns the conversion is not reconciled.",
       "score": 1,
-      "suggestion": "Name the ECU interface/message and the torque-curve source."
+      "suggestion": "State that the VCU only provides the power limit and ENG owns the torque conversion in diesel products (or vice versa)."
+    },
+    "design_clarity": {
+      "reason": "Concrete: torque at current engine speed, sent as SAE J1939 TSC1.",
+      "score": 2
     },
     "implementability": {
-      "reason": "One bounded interface function.",
+      "reason": "Bounded J1939 interface.",
       "score": 2
     },
     "interface_only": {
-      "reason": "The element has no allocates link.",
+      "reason": "The element has no `allocates`, so this axis is met by definition.",
       "score": 2
     },
     "no_value_copy": {
-      "reason": "No BMS value (limit, threshold, timing) is named.",
+      "reason": "Names no BMS limit, threshold or timing.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "REQ_TRACTION_POWER_LIMIT asks to limit delivered traction power to the product value; limiting to the engine torque curve is a different (engine capability) concern, and the vehicle limit itself is applied by ARCH_VCU_POWER_MGMT, so this element engages the parent only tangentially.",
-      "score": 1,
-      "suggestion": "State that the interface enforces the vehicle power limit at the ECU (e.g. torque limit derived from the vehicle limit and engine speed), or trace it to the requirement it really serves."
+      "reason": "Enforces the traction power limit at the engine in diesel products.",
+      "score": 2
     },
     "variant_consistency": {
-      "reason": "eng folder (diesel) is stronger than the ungated REQ_TRACTION_POWER_LIMIT.",
+      "reason": "Lives in subsystems/eng (diesel-only folder); its parent is gated the same (`not bev`) or ungated, so it never exists without its parent.",
       "score": 2
     }
   },
@@ -45,6 +43,6 @@
   "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
   "model": "claude-opus-5-5",
   "need": "ARCH_ENG_TORQUE_INTERFACE",
-  "reviewed_fingerprint": "62351e52aaca6731e841dc1f4d205de6648931a49f0ade7c84fac71b581d69ec",
+  "reviewed_fingerprint": "47efce971a931dd20701a7c07ca39df3b2016f40bd8c0799c7f69727d33e8db4",
   "schema": 2
 }

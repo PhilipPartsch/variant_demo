@@ -2,40 +2,38 @@
   "agent": "claude-code",
   "axes": {
     "atomicity": {
-      "reason": "One obligation: support pantograph opportunity charging.",
+      "reason": "Exactly one shall-obligation.",
       "score": 2
     },
     "comprehensibility": {
-      "reason": "Self-contained.",
+      "reason": "Self-contained; terms are standard domain vocabulary.",
       "score": 2
     },
     "feasibility": {
-      "reason": "Established technology for city buses.",
+      "reason": "Implementable with known automotive technology; contradicts nothing stated.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Pantograph charging is the means for topping up at terminal stops (US_OPPORTUNITY_CHARGING).",
+      "reason": "Pantograph charging is the means to top up at terminal stops.",
       "score": 2
     },
     "unambiguity": {
-      "reason": "SAE J3105 has distinct parts (J3105/1 infrastructure-mounted pantograph with roof rails, J3105/2 vehicle-mounted pantograph); 'roof-mounted pantograph' plus the bare standard number leaves the configuration open, and ARCH_CHG_INLET already reads it differently (contact rail).",
-      "score": 1,
-      "suggestion": "Name the J3105 part (e.g. J3105/1 or /2)."
+      "reason": "Single reading; the standard part is named.",
+      "score": 2
     },
     "variant_consistency": {
-      "reason": "Gated var.charging.pantograph == True, same as US_OPPORTUNITY_CHARGING.",
+      "reason": "Gated `var.charging.pantograph == True`, same as US_OPPORTUNITY_CHARGING.",
       "score": 2
     },
     "verifiability": {
-      "reason": "'Support opportunity charging' has no success condition (power, contact time) beyond the standard reference.",
-      "score": 1,
-      "suggestion": "Add the verified scope, e.g. power or energy per stop of a given duration."
+      "reason": "Conformance to SAE J3105-2 is testable.",
+      "score": 2
     }
   },
   "criteria": "requirement",
   "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
   "model": "claude-opus-5-5",
   "need": "REQ_PANTOGRAPH_CHARGING",
-  "reviewed_fingerprint": "c161b275bcd504749641e30eb20b936531303f522796c97a2ac4e67dcc1feeb3",
+  "reviewed_fingerprint": "a49e83fb679bcd36ca258609fd61567cbd8538f6b3e73393f713a198f1c3ed49",
   "schema": 2
 }

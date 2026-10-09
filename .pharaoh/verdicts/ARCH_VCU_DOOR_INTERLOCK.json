@@ -2,39 +2,39 @@
   "agent": "claude-code",
   "axes": {
     "allocation_complete": {
-      "reason": "The element has no allocates link.",
+      "reason": "The element has no `allocates`, so this axis is met by definition.",
       "score": 2
     },
     "completeness": {
-      "reason": "The single obligation (inhibit traction unless all doors are detected closed and locked) is addressed, including the fail-safe 'not detected' case.",
+      "reason": "Covers standstill and moving, as the requirement asks.",
       "score": 2
     },
     "consistency": {
-      "reason": "Sole element satisfying REQ_DOOR_DRIVE_INTERLOCK.",
+      "reason": "No sibling shares REQ_DOOR_DRIVE_INTERLOCK.",
       "score": 2
     },
     "design_clarity": {
-      "reason": "Concrete choice: read the closed-and-locked signals of all passenger doors, torque request = 0 while any is not closed and locked.",
+      "reason": "Names inputs (closed-and-locked signals of all doors) and the action (zero torque request).",
       "score": 2
     },
     "implementability": {
-      "reason": "One bounded VCU function with defined inputs and output.",
+      "reason": "Single bounded function.",
       "score": 2
     },
     "interface_only": {
-      "reason": "The element has no allocates link.",
+      "reason": "The element has no `allocates`, so this axis is met by definition.",
       "score": 2
     },
     "no_value_copy": {
-      "reason": "No BMS value (limit, threshold, timing) is named.",
+      "reason": "Names no BMS limit, threshold or timing.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Zeroing the traction torque request while any door is not closed and locked inhibits traction as REQ_DOOR_DRIVE_INTERLOCK requires.",
+      "reason": "Zeroes the torque request while any door is not closed and locked, which inhibits traction as required.",
       "score": 2
     },
     "variant_consistency": {
-      "reason": "Gated var.vehicle.type == 'bus', same as REQ_DOOR_DRIVE_INTERLOCK.",
+      "reason": "Gated `var.vehicle.type == 'bus'`, same as its parent.",
       "score": 2
     }
   },
@@ -42,6 +42,6 @@
   "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
   "model": "claude-opus-5-5",
   "need": "ARCH_VCU_DOOR_INTERLOCK",
-  "reviewed_fingerprint": "6af0427a53fd667173233df5e6253407380ea9a62d759f4d2b5b5fa40672c742",
+  "reviewed_fingerprint": "bb3f33d03c121b172c3de012fca040057e7d4d752904cd5522f49e76dc46a9eb",
   "schema": 2
 }

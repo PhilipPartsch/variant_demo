@@ -14,26 +14,26 @@
       "score": 2
     },
     "parent_fit": {
-      "reason": "Diesel alternative: shows remaining energy as fuel level, the 'remaining energy' half of US_RANGE_AWARENESS.",
+      "reason": "Specifies the start condition of the charging session that ARCH_CHG_SESSION_CONTROL runs (a distinct part of the session control).",
       "score": 2
     },
     "unambiguity": {
-      "reason": "Single reading.",
+      "reason": "One reading; 'CCS inlet' is product-neutral across CCS1/CCS2.",
       "score": 2
     },
     "variant_consistency": {
-      "reason": "Gated `not (var.powertrain.type == 'bev')`, the spelled-out complement of the bev alternative; parent is ungated.",
+      "reason": "Lives in subsystems/chg (bev-only folder); every alternative of the parent is also inside bev and the market/inlet alternatives are exhaustive (Kconfig: region eu|na; mcs needs v800 needs bev), so the need never exists without a parent.",
       "score": 2
     },
     "verifiability": {
-      "reason": "Percent of tank capacity with 1 % resolution is measurable.",
+      "reason": "Test: unlocked inlet -> no session start; locked -> session may start.",
       "score": 2
     }
   },
   "criteria": "requirement",
   "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
   "model": "claude-opus-5-5",
-  "need": "REQ_ENERGY_SOURCE",
-  "reviewed_fingerprint": "86f2681df5d252ac1d6619272de75de6414a646792f8900664446c1ec04dc8c9",
+  "need": "SWREQ_CHG_SESSION_START",
+  "reviewed_fingerprint": "26bd6972367ef15d5bf958c75732e6e0e1cb854f9c4704285f29a501f0cf6840",
   "schema": 2
 }

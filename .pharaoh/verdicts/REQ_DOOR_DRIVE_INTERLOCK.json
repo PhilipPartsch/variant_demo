@@ -2,32 +2,31 @@
   "agent": "claude-code",
   "axes": {
     "atomicity": {
-      "reason": "One obligation: inhibit traction while a door is not closed and locked.",
+      "reason": "Exactly one shall-obligation.",
       "score": 2
     },
     "comprehensibility": {
-      "reason": "Self-contained.",
+      "reason": "Self-contained; terms are standard domain vocabulary.",
       "score": 2
     },
     "feasibility": {
-      "reason": "Standard bus door interlock.",
+      "reason": "Implementable with known automotive technology; contradicts nothing stated.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Inhibiting traction while a door is open prevents the bus moving off during boarding (US_PASSENGER_DOOR_SAFETY).",
+      "reason": "Directly prevents the bus from moving off while a door is open.",
       "score": 2
     },
     "unambiguity": {
-      "reason": "Whether 'inhibit traction' only blocks moving off from standstill or also cuts traction when a door opens while driving is not stated.",
-      "score": 1,
-      "suggestion": "Clarify the behaviour while the vehicle is moving."
+      "reason": "Single reading.",
+      "score": 2
     },
     "variant_consistency": {
-      "reason": "Gated var.vehicle.type == 'bus', same as its parent.",
+      "reason": "Gated `var.vehicle.type == 'bus'`, same as US_PASSENGER_DOOR_SAFETY.",
       "score": 2
     },
     "verifiability": {
-      "reason": "Testable: with any door not closed and locked, a traction demand produces no traction.",
+      "reason": "Open/unlocked door -> no traction, testable at standstill and in motion.",
       "score": 2
     }
   },
@@ -35,6 +34,6 @@
   "criteria_fingerprint": "140694e8d332a9741e8714936bc6c41338ac10893c3bcc7fefb3b2b14f2da3a5",
   "model": "claude-opus-5-5",
   "need": "REQ_DOOR_DRIVE_INTERLOCK",
-  "reviewed_fingerprint": "1d42a2bc658d2880c1d310e233c5f9592f0e58f2f04506908a62312b0ffeb014",
+  "reviewed_fingerprint": "76ac5dbc579861b0dc6562f30f90d6da78034ab41b74611ffb926ca92e4bdcb2",
   "schema": 2
 }
