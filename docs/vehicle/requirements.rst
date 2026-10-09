@@ -72,7 +72,7 @@ Charging and high voltage
       :traces_to: US_HV_SAFETY
 
       The vehicle shall disconnect the high-voltage battery within 100 ms after
-      the insulation resistance drops below 100 Ω/V.
+      the battery management system reports an isolation fault.
 
 .. if:: var.charging.mcs == True
 
