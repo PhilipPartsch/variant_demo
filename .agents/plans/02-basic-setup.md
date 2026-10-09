@@ -306,7 +306,7 @@ State read with `gh api` on 2026-10-08, target, and how to get there:
 | R8 | Default workflow token | `read`, cannot approve PRs | keep `read`; only the `pages` job requests `permissions: contents: write` in the workflow file | `gh api repos/PhilipPartsch/variant_demo/actions/permissions/workflow` |
 | R9 | Branch protection `main` | none | ruleset: pull request required, required status checks = `checks` + every `build (<product>)` job, block force pushes and deletion | Settings → Rules → Rulesets → New branch ruleset (target `main`) |
 | R10 | Branch protection `gh-pages` | none | ruleset: block deletion; force pushes allowed (for the squash job, A§3.1) | ruleset with target `gh-pages` |
-| R11 | Delete head branches on merge | off | **on** — keeps `origin` to `main` + `gh-pages` | Settings → General → Pull Requests; `--jq .delete_branch_on_merge` → `true` |
+| R11 | Delete head branches on merge | off | **off** (decision 2026-10-09: user keeps merged branches; delete manually) | Settings → General → Pull Requests; `--jq .delete_branch_on_merge` → `true` |
 | R12 | Secrets | none | none (no ubc licence for a public OSI-licensed project, E-R G3) | Settings → Secrets and variables → Actions is empty |
 | R13 | About / homepage | — | description "CV platform: variant management with Kconfig, sphinx-needs, sphinx-mounts and ubCode"; website = the Pages URL; topics `sphinx-needs`, `ubcode`, `kconfig`, `variant-management` | Settings → General / About |
 | R14 | `.gitignore` | `_build/`, `build/`, `.venv`, `.agents/plans/` | add `build/` explicitly if missing; keep `.agents/plans/` ignored (plans are local) | `git check-ignore -v build/x .venv/x .agents/plans/x` |
@@ -824,7 +824,7 @@ folder layout of the `gh-pages` branch, one folder per variant (A§3.1).
       `git push -u origin setup/cv-platform`.
    4. Open a pull request to `main` of `PhilipPartsch/variant_demo`; merge when
       `tools/build_all.sh` passes for all four products (CI follows with A§).
-   5. The merged `setup/cv-platform` branch is deleted automatically (R11).
+   5. Merged work branches are not deleted automatically (R11 off); delete them manually when no longer needed.
    6. Optionally tag the merge commit (`setup-done`) as the starting point of
       the content plan.
 11. Handover: start [03-mechanism-evaluation.md](03-mechanism-evaluation.md) (side branch) and [04-content.md](04-content.md).

@@ -4,8 +4,8 @@ Outcome of [02-basic-setup.md](02-basic-setup.md) (`B§`), executed 2026-10-08
 on the local branch `setup/cv-platform` (from `main` `6ef4c49`). Reused the
 working parts of `eval/open-questions` (plan 1).
 
-**Status: done locally — D1–D7 met; D8 (push, PR, merge) and the GitHub
-settings wait for your OK** (see "Decisions needed" below).
+**Status: done — D1–D8 met.** Merged to `main` by fast-forward and pushed
+2026-10-09 (`origin/main` = `241dd1f`, tag `pre-cv-platform`); see §8.
 
 ## 1. Definition of done
 
@@ -18,7 +18,7 @@ settings wait for your OK** (see "Decisions needed" below).
 | D5 | codelinks analyses the code of every built component | ✓ stubs analysed (no markers yet). Temporary probe (reverted): ENG marker only in D, `#if CONFIG_CHARGING__MCS` marker only in N, same-ID VCU marker from `#else` in D and `#if` in N/B |
 | D6 | `ubc agent next` names `user_stories` | ✓ **for the diesel product**; on BEV products it reports `done` because the imported BMS needs are counted as stage output — finding F-14 |
 | D7 | local entry point runs D1–D5 + checks | ✓ `tools/build_all.sh` green, also on a fresh clone of the branch |
-| D8 | pushed and merged | **open** — needs your OK |
+| D8 | pushed and merged | ✓ fast-forward merge, pushed 2026-10-09 (no PR: merged locally on request) |
 
 ubc/Sphinx parity per product: identical sets of need IDs (205/205 for BEV, 0/0 for diesel).
 
@@ -100,3 +100,17 @@ current; `--detect` would have derived a workflow from the (empty) graph.
 - Plan 4: importers (§5), real BMS `base_url` once published.
 - Plan 6: CI calls `tools/build_product.sh <product>` per matrix job and the
   once-per-repo checks of `build_all.sh`; set `UBC` to the action's ubc.
+
+## 8. Decisions taken (2026-10-09)
+
+| Item | Decision |
+|---|---|
+| BMS content public | yes — `third_party/bms/0.1.0/*.needs.json` committed and pushed |
+| Plans | un-ignored and committed by the user (`241dd1f`); now tracked on `main` |
+| Merge | `main` fast-forwarded to `setup/cv-platform`; branch kept (local and on `origin`) |
+| Push | `main` + tag `pre-cv-platform` pushed, no AI trailers |
+| R7 | **set**: GitHub-owned actions + `useblocks/ubc-action@*` + `astral-sh/setup-uv@*`, SHA pinning required, verified creators not allowed |
+| R8 | unchanged (`read`) |
+| R11 | **not set** — merged branches are kept |
+| R13 | **set**: description and topics `kconfig`, `sphinx-needs`, `ubcode`, `variant-management`; homepage already the Pages URL |
+| R9, R10 | with plan 6 (CI checks must exist first) |
