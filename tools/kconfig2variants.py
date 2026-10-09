@@ -43,6 +43,7 @@ def nest(target: dict, name: str, value) -> None:
 
 def load(kconfig: Path, defconfig: Path) -> kconfiglib.Kconfig:
     kconf = kconfiglib.Kconfig(str(kconfig), warn_to_stderr=False)
+    kconf.warn_assign_undef = True  # a misspelt symbol in a defconfig is an error, not ignored
     kconf.load_config(str(defconfig))
     for sym in kconf.unique_defined_syms:
         if sym.user_value is not None:
@@ -68,7 +69,7 @@ def variant_data(kconf: kconfiglib.Kconfig, product: str) -> dict:
             continue
         if "__" not in sym.name:
             raise SystemExit(f"kconfig2variants: symbol without namespace: {sym.name}")
-        if sym.type == kconfiglib.TRISTATE:
+        if sym.orig_type == kconfiglib.TRISTATE:  # `type` reports bool without `modules`
             raise SystemExit(f"kconfig2variants: tristate not allowed: {sym.name}")
         if sym.type == kconfiglib.BOOL:
             value = sym.str_value == "y"

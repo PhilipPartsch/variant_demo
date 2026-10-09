@@ -1,6 +1,7 @@
-# Docs toolchain of the CV platform (pinned to the evaluated versions).
+# Docs toolchain and tests of the CV platform (pinned to the evaluated versions).
 sphinx==8.2.3
 sphinx-needs==8.5.0
 sphinx-mounts==0.2.0
 sphinx-codelinks[libclang]==1.4.0
 kconfiglib==14.1.0
+pytest==8.4.2

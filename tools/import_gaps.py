@@ -68,7 +68,7 @@ def main() -> int:
         if block:
             out += ["", f".. if:: var.meta.product == '{product}'", *block]
     args.output.write_text("\n".join(out) + "\n")
-    print(f"import_gaps: {total} gaps written to {args.output.relative_to(ROOT)}")
+    print(f"import_gaps: {total} gaps written to {args.output}")
     return 0
 
 

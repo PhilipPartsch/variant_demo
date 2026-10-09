@@ -98,7 +98,7 @@ def main() -> int:
     if errors:
         return 1
     args.output.write_text("\n".join(out) + "\n")
-    print(f"import_test_results: wrote {args.output.relative_to(ROOT)}")
+    print(f"import_test_results: wrote {args.output}")
     return 0
 
 
