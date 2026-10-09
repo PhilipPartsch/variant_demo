@@ -557,10 +557,12 @@ authoring = "Write one black-box BMS element per CV requirement it serves; it sa
 scope = "global"
 granularity = "single"
 path = "docs/subsystems/bms/architecture.rst"
+# outgoing only: a black box must satisfy a req, but a req does not need a
+# black box (with "both", every req would owe one — even in diesel products).
 [[workflow.stages.trace]]
 link = "satisfies"
 up = "req"
-direction = "both"
+direction = "outgoing"
 min = 1
 [[workflow.stages.trace]]
 link = "allocates"
