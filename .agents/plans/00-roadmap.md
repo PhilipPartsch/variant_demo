@@ -38,17 +38,39 @@ Concept references (not steps):
       │                          ├──► 3 eval/mechanisms (side branch, rebased on main)
       │                          │         └── findings ──────────┘
       │                          │
-      └──────────────────────────┼──► 4 content ──► main
-                                 ├──► 5 tests   ──► main
-                                 └──► 6 automation ─► main ─► GitHub Pages
+      │                          └──► 4 content/cv-platform ──► 5 test/cv-platform (on top of 4)
+      │                                                                 │
+      │                     7 reviews: M-01 content, M-03 golden files, M-04 xfail
+      │                                                                 │
+      └────────────────────────────────── main ◄── merge test/cv-platform (content + tests)
+                                           │
+                                           └──► 6 ci/* (from main, PR) ──► main ──► GitHub Pages
 ```
+
+Execution order (decision 2026-10-10, "way A"):
+
+| # | Step | Branch | Done when |
+|---|---|---|---|
+| 1 | plan 1 evaluation | `eval/open-questions` (local) | ✓ |
+| 2 | plan 2 basic setup | `setup/cv-platform` → `main` | ✓ |
+| 3 | plan 3 mechanism evaluation | `eval/mechanisms` (local) | ✓ |
+| 4 | plan 4 content | `content/cv-platform` | ✓ (not merged) |
+| 5 | plan 5 tests | `test/cv-platform` on top of the content | ✓ (not merged) |
+| 6 | **plan 7 reviews** M-01, M-03, M-04 | — | your OK |
+| 7 | merge `test/cv-platform` (content + tests) into `main`, push | `main` | `tools/test_all.sh` green on `main` |
+| 8 | plan 6 automation | `ci/*` from `main`, pull request | first CI run on `main` green (A§1.1) |
+| 9 | plan 7 after the deploy: M-07, M-08, M-09 | — | |
+
+The remaining manual steps of plan 7 (M-05 IDE session, M-02, M-06, M-10 …
+M-13) do not block this order.
 
 - Step 1 decides **how** things are configured; nothing of it lands on `main`
   directly — working snippets are copied into step 2.
 - Step 3 runs on top of `main`. A bug in the basic setup is **fixed on
   `main`** (branch `fix/*`, PR), then `eval/mechanisms` is rebased.
-- Step 6 can start with a minimal CI as soon as step 2 is on `main`; this plan
-  completes it. Tests from step 5 are wired into it as they appear.
+- Step 6 starts only after content and tests are merged into `main` (row 7
+  of the execution order), so the first CI run checks exactly the reviewed
+  state and can call `tools/test_all.sh` from the start.
 
 ## Branch and commit rules
 

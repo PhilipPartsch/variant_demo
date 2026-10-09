@@ -20,8 +20,8 @@ that owns the step.
 |---|---|---|---|---|---|
 | M-01 | review + decision | review `content/cv-platform`, merge into `main` | plan 5 entry (T§10) | — | open |
 | M-02 | decision | apply the open review points of plan 4 (C-R §6) now or later | plan 4 close-out | M-01 | open |
-| M-03 | review | approve the golden files | T§2, DOC-11 | T§11 step 3 | open |
-| M-04 | decision | CNT-05 as `xfail` with reason PH-01 (plan 99) | T§6 CNT-05 | — | open |
+| M-03 | review | approve the golden files | T§2, DOC-11 | T§11 step 3 | ready for review (branch `test/cv-platform`, `tools/tests/golden/`) |
+| M-04 | decision | CNT-05 as `xfail` with reason PH-01 (plan 99) | T§6 CNT-05 | — | implemented as proposed, awaiting your OK |
 | M-05 | IDE | IDE checklist IDE-01 … IDE-07 (includes V16 / V17 deferred from plan 3) | T§ L8, V§ V16 / V17 | M-01 | open |
 | M-06 | decision | Windows in L9 (platform tests) or not | T§ L9 | — | open |
 | M-07 | browser | side-by-side compare page per product (includes V22 deferred from plan 3) | A§1.1 G5, V§ V22 | first CI deploy | open |
@@ -32,8 +32,10 @@ that owns the step.
 | M-12 | decision | hand plan 99 to the useblocks teams (which entries, which channel) | plan 99 | — | open |
 | M-13 | decision | open points for the BMS team (`BB_CHARGE_LIMITS`, `BB_HV_PROTECTION`, interface tags, release artifacts) | C§3, B§5.2 | — | open |
 
-Suggested order: M-01 → M-04 → M-06 → M-05 (one VS Code session) → M-03 →
-M-09 → M-07 / M-08 (after the first deploy) → M-02, M-11, M-12, M-13.
+Order (roadmap, way A): **M-01, M-03, M-04 block the merge of
+`test/cv-platform` into `main` and therefore plan 6.** Then M-06 and M-05
+(one VS Code session, any time after the merge), M-09 and M-07 / M-08 after
+the first CI deploy, and M-02, M-11, M-12, M-13 whenever convenient.
 
 ## 1. Decisions and reviews
 

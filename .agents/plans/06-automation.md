@@ -34,8 +34,16 @@ plan 2; this plan completes it.
 
 ## 1. Prerequisites
 
+**Order (roadmap, way A):** plan 6 starts after the reviews of plan 7 (M-01
+content, M-03 golden files, M-04 `xfail`) and after `test/cv-platform`
+(content + tests) is merged into `main`. Work happens on a `ci/*` branch from
+that `main`, as a pull request; the `build` jobs call `tools/build_product.sh`,
+the `checks` job calls `tools/test_all.sh` (with `SKIP_BUILD=1` after the
+matrix, or its own build).
+
 | Item | Action |
 |---|---|
+| Content + tests on `main` | `test/cv-platform` merged (roadmap execution order, row 7) |
 | ubc in CI | `useblocks/ubc-action` (pinned SHA, **Linux only**) with `UBC_VERSION = "0.35.0"` pinned (the version the evaluation used). Free for public projects **with an OSI licence file** — add `LICENSE` first (E-R G3, U1). **No license secrets**: this repository is open source and needs no ubCode license (confirmed early by E§ G3; the private BMS repo is different). Fallback only if G3 fails: secrets as in the BMS demo |
 | GitHub Pages | **Branch-based**: the branch `gh-pages` exists (empty orphan commit `ce0f2fc`, pushed 2026-10-08). Settings → Pages → Build and deployment → Source: **Deploy from a branch** → `gh-pages`, folder `/ (root)` — **enabled 2026-10-08** (status `built`, HTTPS enforced). The branch is written **only by CI**, never by hand. All repository settings: B§3.4 |
 | Tool versions | Python via `.python-version`, dependencies via `uv` lock; sphinx-needs, sphinx-mounts, sphinx-codelinks[libclang] pinned (E§ A7) |

@@ -117,7 +117,7 @@ Each test runs for D, N, B, A, with ubc **and** Sphinx.
 | NEG-01 | ungated link to a BEV-only need | `-W` build fails for D |
 | NEG-02 | `variant_sources` rule with unknown `var.foo` | `mounts.variant_rule_unevaluable` → fail |
 | NEG-03 | condition with key not in the generated data | condition registry fails |
-| NEG-04 | Kconfig symbol used nowhere | dead-symbol check fails |
+| NEG-04 | Kconfig symbol used nowhere | dead-symbol check fails (`tools/check_kconfig.py`) |
 | NEG-05 | condition true in all products | branch-coverage check fails |
 | NEG-06 | `BUILD__DEBUG` symbol / `var.build.*` | build-configuration check fails |
 | NEG-07 | symbol without `help` / `tristate` / no prefix | Kconfig hygiene fails |
@@ -128,7 +128,7 @@ Each test runs for D, N, B, A, with ubc **and** Sphinx.
 | NEG-12 | BMS pin points to a version without an allocated ID | dangling external link fails |
 | NEG-13 | missing `variant_data_file` | sanity check fails (no silent empty values) |
 | NEG-14 | bare boolean `var.x` in a `variant_sources` rule | rejected → fail |
-| NEG-15 | marker inside `#if CONFIG_CHARGING__MCS` implementing an ungated swreq | gating-consistency check fails |
+| NEG-15 | MCS marker **outside** its `#if CONFIG_CHARGING__MCS` (code need gated more weakly than its MCS-only swreq) | `ubc check` fails in the non-MCS products (dangling `implements`) — corrected 2026-10-10: a marker inside `#if MCS` linking an ungated swreq is allowed by C§5 rule 3 |
 | NEG-16 | the two `IMPL_VCU_ENERGY_DISPLAY` markers without `#if` / `#else` (both active) | duplicate ID: ubc `needs.duplicate`, Sphinx `duplicate_id` |
 
 ## 8. L6 — C code
