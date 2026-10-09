@@ -54,8 +54,10 @@ has a fallback ready:
 | E§ E5 | `sphinx-codelinks[libclang]` on `ubuntu-latest`; the preprocessor yields the same `IMPL_*` per product as on macOS | identical code needs to the local run | pin a libclang wheel / use a container image |
 | E§ G4 | `pages` job pushes the variant folders and `.nojekyll` to `gh-pages`; Pages (branch source, already enabled) rebuilds | `…/variant_demo/<product>/sphinx/` and `…/<product>/ubcode/` reachable, `_static/` served | Pages source "GitHub Actions" (artifact deploy) |
 | E§ G5 | open `…/<product>/compare.html` in a browser | both panes load | two links per product instead of iframes |
+| 99 UB-14, CL-03 | no machine path in the published site: `grep -r 'file:///' gh-pages/` (ubCode HTML shows `local-url` as text, ubc `needs.json` carries it) | no match | `tools/make_site.py` strips / rewrites `local-url` in the ubCode HTML and the published `needs.json`, or `set_local_url = false` (see §6) |
 
-Results are added to [01-evaluation-result.md](01-evaluation-result.md).
+Results are added to [01-evaluation-result.md](01-evaluation-result.md). The browser checks (G4, G5, UB-14) are
+manual: [07-manual-steps.md](07-manual-steps.md) §3 (M-07, M-08).
 
 ## 2. Workflows
 
@@ -172,13 +174,15 @@ field / link values — from the two `needs.json` files. Empty diff = parity
 
 1. Prerequisites (§1): `LICENSE` (MIT) pushed on `main`, `gh-pages` branch and Pages source (both done), repository settings B§3.4 R7, R8, R11, pinned versions (no licence secrets).
 2. `checks` + `build` matrix (minimal CI, may already exist from plan 2); the first run on `main` verifies §1.1.
-2a. Branch rulesets B§3.4 R9, R10 once the required checks exist.
+2a. Branch rulesets B§3.4 R9, R10 once the required checks exist ([07-manual-steps.md](07-manual-steps.md) M-09).
 3. Tests of T§ wired into `checks` and `build` as they become available.
 4. `report` job summary.
 5. Site assembly (`tools/make_site.py`), landing page, compare page, needs diff.
 6. `pages` job: deploy from `main` into the variant folders of `gh-pages` (§3.1).
 7. (no eval job: `eval/*` branches stay local, T§ L7 runs locally.)
 8. `nightly.yml`.
+
+**Tool findings → plan 99:** every bug or gap found in a useblocks tool (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks, sphinx-mounts, ubc-action, ubTrace, ubConnect, Sphinx-Test-Reports) is added to [99-tool-bugs.md](99-tool-bugs.md) in the same session: summary, marker `branch@commit` + file:line on a pushed branch, input, wrong output, workaround, two solutions. CI-specific findings (e.g. ubc-action, Linux libclang, Pages) use a marker to the workflow file and the run URL.
 
 ## 6. Open points and risks
 
@@ -191,5 +195,15 @@ field / link values — from the two `needs.json` files. Empty diff = parity
 - **Branch growth:** every deploy adds HTML for four variants × two
   toolchains; squash job if needed (§3.1).
 - **Jekyll:** without `.nojekyll`, Sphinx assets under `_static/` are not served.
+- **Local paths in the published site** (plan 99 UB-14, CL-03): ubCode HTML
+  renders the codelinks `local-url` as plain text with the absolute path of
+  the build machine (in CI: the runner's path), and ubc's `needs.json` exports
+  it. Options: (1) `set_local_url = false` in `ubproject.toml` for everyone —
+  simple, but Sphinx then loses the links to its generated source pages;
+  (2) a CI-only override `-c 'codelinks.set_local_url = false'` — check first
+  that it does not replace the whole `[codelinks]` table (UB-05); (3)
+  `tools/make_site.py` removes / rewrites `local-url` in the published ubCode
+  HTML and `needs.json` and fails the deploy if any `file://` remains. Decide
+  with the first CI run (§1.1); the `file://` check stays in any case.
 - **Build time:** four products × two toolchains × libclang analysis; use the
   matrix, caching (`uv`, compiler cache) and `fail-fast: false`.

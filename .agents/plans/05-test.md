@@ -142,29 +142,28 @@ Each test runs for D, N, B, A, with ubc **and** Sphinx.
 
 ## 9. L8 — IDE checklist (manual)
 
-| ID | Steps | Expected |
-|---|---|---|
-| IDE-01 | fresh clone, open folder | CMake Tools configures the default product; ubCode shows it |
-| IDE-02 | switch D → N → B → A | ubCode values, BMS needs and code needs follow each switch |
-| IDE-03 | status bar | CMake Tools offers only the product, no build type; switching the kit changes nothing in the ubCode view |
-| IDE-04 | IntelliSense | `#if CONFIG_*` blocks greyed per product |
-| IDE-05 | configurator task + save variant | minimal defconfig written, reconfigure |
-| IDE-06 | broken defconfig | visible error; no stale values |
-| IDE-07 | `docs` / `docs_ubc` targets from CMake Tools | both HTML outputs for the active product |
+Manual; moved to [07-manual-steps.md](07-manual-steps.md) §2 (M-05,
+IDE-01 … IDE-07). Other manual steps of this plan: M-03 (approve the golden
+files), M-04 (CNT-05 as `xfail`), M-06 (Windows in L9).
 
 ## 10. Entry and exit criteria
 
-**Entry:** plan 4 content merged for the items under test; golden files
-reviewed.
+**Entry:** plan 4 content merged for the items under test (M-01); golden files
+reviewed (M-03, [07-manual-steps.md](07-manual-steps.md)).
 
 **Exit:**
 
 - L1–L6 green for all four products, both toolchains, on Linux.
 - Every NEG test fails as expected (a check that never fails is not a check).
 - L7 green on `eval/mechanisms` rebased on the current `main`.
-- L8 checklist passed on at least one OS.
+- L8 checklist passed on at least one OS ([07-manual-steps.md](07-manual-steps.md) M-05).
 - Release-gated tests (DOC-06) skipped only while the pinned sphinx-needs has
   no `choose`; mandatory after the pin is raised.
+- Every test that fails because of a useblocks tool (not our content or
+  tooling) has an entry in [99-tool-bugs.md](99-tool-bugs.md), and the test
+  references its id (e.g. `xfail` reason "PH-01").
+
+**Tool findings → plan 99:** every bug or gap found in a useblocks tool (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks, sphinx-mounts, ubc-action, ubTrace, ubConnect, Sphinx-Test-Reports) is added to [99-tool-bugs.md](99-tool-bugs.md) in the same session: summary, marker `branch@commit` + file:line on a pushed branch, input, wrong output, workaround, two solutions.
 
 ## 11. Rollout
 

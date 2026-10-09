@@ -338,7 +338,8 @@ schema_definitions_from_json = "metamodel/schemas.json"
 |---|---|---|---|---|
 | `user_story` | `US_` | yes | vehicle-level user stories | `docs/vehicle/user_stories.rst` |
 | `req` | `REQ_` | yes | vehicle / system requirements | `docs/vehicle/requirements.rst` |
-| `arch` | `ARCH_` | yes | system architecture elements, one or more per subsystem; for the BMS a black-box element | `docs/subsystems/<x>/architecture.rst` |
+| `arch` | `ARCH_` | yes | system architecture elements of the CV-owned subsystems (VCU, CHG, ENG), one or more per subsystem | `docs/subsystems/{vcu,chg,eng}/architecture.rst` |
+| **`bms_block`** | **`BB_`** | **new** | black-box view of the BMS: satisfies a CV req, allocates BMS interface needs; not refined by CV swreqs (own type because workflow traces apply per type, V§5 #8) | `docs/subsystems/bms/architecture.rst` |
 | `swreq` | `SWREQ_` | yes | software requirements of CV-owned subsystems (VCU, CHG, ENG) | `docs/subsystems/<x>/software_requirements.rst` |
 | `impl` | `IMPL_` | yes | one-line marker in C source | `src/<x>/**` |
 | `test` | `TEST_` | yes | one-line marker in C test source | `tests/<x>/**` |
@@ -367,7 +368,7 @@ same.
 | `affects` | decision → arch | `affected_by` | yes | no |
 | `motivates` | (declared, unused) | `motivated_by` | yes | no |
 | `gap_for` | gap → any need | `gaps` | yes | no |
-| **`allocates`** | CV `arch` → BMS `req` (external, `BMS_REQ_*`) | `allocated_from` | **new** | **yes** |
+| **`allocates`** | `bms_block` (and CV `arch`, e.g. via a link variant) → BMS `req` (external, `BMS_REQ_*`) | `allocated_from` | **new** | **yes** |
 
 ```
 user_story ◄─traces_to── req ◄─satisfies── arch ◄─refines── swreq ◄─implements── impl
@@ -430,7 +431,7 @@ Same structure and severity split as the BMS:
 |---|---|---|
 | `violation` | `allocates` targets match `^BMS_REQ_` | only BMS requirements can be allocated |
 | `violation` | `allocates` targets are BMS interface needs (tag `interface`) | §5.2.3 — `validate.network` on `allocates`; sphinx-needs requires the array form with `items`: `{"type":"array","items":{"type":"string"},"contains":{"type":"string","const":"interface"}}` (E-R C5) |
-| `violation` | every BMS `arch` element (`docs/subsystems/bms/`) has ≥1 `allocates` | the black box must say what it expects from the BMS |
+| `violation` | every `bms_block` has ≥1 `allocates` (rule `bms_block-allocates`) | the black box must say what it expects from the BMS |
 | — | all CV rules `select` only local needs (`is_external == False`) | imported BMS needs are validated by the BMS, not re-validated here |
 
 **Variant-aware evaluation:** schemas run **per product** (§8 locally, CI matrix in A§); a
@@ -672,7 +673,7 @@ are global.
 | `user_stories` | user_story | — | — | `review-feat` | — | single, `docs/vehicle/user_stories.rst` |
 | `reqs` | req | user_stories | `draft-requirement` | `review-requirement` | `traces_to` → user_story | single, `docs/vehicle/requirements.rst` |
 | `archs` | arch | reqs | `draft-arch` | `review-arch` | `satisfies` → req | per-root, `docs/subsystems/{stream}/architecture.rst` (`vcu`, `chg`, `eng`) |
-| **`bms_allocation`** | arch | reqs | **`draft-allocation`** (project skill) | `review-arch` | `satisfies` → req; `allocates` → req (external `BMS_REQ_*`, outgoing) | single, `docs/subsystems/bms/architecture.rst` |
+| **`bms_allocation`** | **bms_block** | reqs | **`draft-allocation`** (project skill) | `review-arch` | `satisfies` → req; `allocates` → req (external `BMS_REQ_*`, outgoing) | single, `docs/subsystems/bms/architecture.rst` |
 | `swreqs` | swreq | archs | `draft-requirement` | `review-requirement` | `refines` → arch | per-root, `docs/subsystems/{stream}/software_requirements.rst` |
 | `code` | impl | swreqs | `draft-impl` | — | `implements` → swreq | global, `src` |
 | `tests` | test | code | `draft-test` | — | `verifies` → swreq | global, `tests` |
@@ -694,10 +695,12 @@ Two stages producing the same type with different routes, and a trace entry
 targeting external needs, pass `ubc agent config-validate` (E-R F1).
 **Author skills resolve per stage**, **review skills per need type** (E-R F4):
 with two stages producing `arch`, one review skill reviews all `arch` needs.
-Therefore `bms_allocation` gets its own author skill `draft-allocation` and is
-reviewed by `review-arch`, whose criteria file `arch.toml` contains the
-allocation criteria. A separate review skill would require a dedicated need
-type (`bms_ifc`).
+Therefore `bms_allocation` gets its own author skill `draft-allocation`, and
+(since V§5 #8, 2026-10-09) **its own need type `bms_block`**: workflow traces
+apply per type, so as an `arch` every black box would owe a refining swreq.
+It is reviewed by `review-arch` with the criteria file `allocation.toml`
+(`[quality.type_configs.bms_block]`). Note: the `archs` stage still requires
+a CV `arch` for every vehicle req — a black box alone does not close it.
 
 ### 7.3 Quality criteria (`metamodel/quality/`)
 
@@ -707,7 +710,7 @@ type (`bms_ifc`).
 | `arch.toml` | arch | BMS criteria (parent_fit, design_clarity, completeness, consistency, implementability) **+ variant_consistency** |
 | `feat.toml` | user_story | BMS criteria (parent_fit, single_user_capability, user_observable, no_mechanism_leak, naming_clarity) **+ variant_consistency** |
 | `decision.toml` | decision | BMS criteria (context_present required, …) |
-| ~~`allocation.toml`~~ → folded into `arch.toml` (quality criteria are per type; `bms_allocation` reuses `review-arch`, E-R F4) | arch in `bms_allocation` | parent_fit, **interface_only** (targets are BMS interface needs), **allocation_complete** (every BMS-relevant aspect of the CV req is covered by an allocated BMS req), **no_value_copy** (BMS values referenced, not restated), variant_consistency |
+| `allocation.toml` (since V§5 #8; `arch.toml` keeps the allocation criteria for CV `arch` with `allocates`) | bms_block | parent_fit, **interface_only** (targets are BMS interface needs), **allocation_complete** (every BMS-relevant aspect of the CV req is covered by an allocated BMS req), **no_value_copy** (BMS values referenced, not restated), variant_consistency |
 
 **`variant_consistency`** (new, all types): the need is gated by the **same or
 a stronger** condition than its parent; variant-specific content uses the
@@ -721,7 +724,7 @@ named variants / folders of §2.3; no build-type or kit conditions (K§0 P3).
 |---|---|
 | Install | `ubc agent install --detect` → `.agents/skills/`, `.github/agents/`, `.pharaoh/agent/` |
 | MCP | `.mcp.json`: `ubc serve mcp --default-config ubproject.toml` |
-| Project skill `draft-allocation` | authors the BMS black-box arch elements (§7.2). Like every skill it exists in **three host locations with identical content**: `.claude/skills/draft-allocation/SKILL.md` (Claude Code — the copy `ubc agent doctor` checks), `.agents/skills/draft-allocation/SKILL.md` (agents-standard hosts), `.github/agents/draft-allocation.agent.md` (GitHub Copilot). Not in the install manifest, so `ubc agent update` does not touch it |
+| Project skill `draft-allocation` | authors the BMS black boxes (`bms_block`, §7.2). Like every skill it exists in **three host locations with identical content**: `.claude/skills/draft-allocation/SKILL.md` (Claude Code — the copy `ubc agent doctor` checks), `.agents/skills/draft-allocation/SKILL.md` (agents-standard hosts), `.github/agents/draft-allocation.agent.md` (GitHub Copilot). Not in the install manifest, so `ubc agent update` does not touch it |
 | Skill mirror check | `tools/check_skill_mirrors.py`: every skill identical in all three locations; doctor only checks mirrors of manifest-owned skills (E-R F-12). Runs in `build_all.sh` and CI |
 | Review briefings | `ubc agent review-brief` also lists imported `BMS_*` needs (ignores `exempt_status`); the gate `verdict-check` excludes them. Reviewers skip `BMS_*` (E-R F-13) |
 | MCP context | `ubc serve mcp` exposes the imported `BMS_*` needs of the active product (`query_cypher`, E-R F3) |

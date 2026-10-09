@@ -55,6 +55,8 @@ run V-item ──► result ≠ expectation ──► classify
 
 Every finding is logged in §5 with its class, fix location and commit / PR.
 
+**Tool findings → plan 99:** every bug or gap found in a useblocks tool (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks, sphinx-mounts, ubc-action, ubTrace, ubConnect, Sphinx-Test-Reports) is added to [99-tool-bugs.md](99-tool-bugs.md) in the same session: summary, marker `branch@commit` + file:line on a pushed branch, input, wrong output, workaround, two solutions.
+
 ## 2. Generic elements
 
 Product-neutral content ("generic element demonstrating …"), using the Kconfig
@@ -87,7 +89,7 @@ Products (B§2.2): **D** = `truck_diesel_eu`, **N** = `truck_bev_nmc_eu`
 | V01 | Field `<<>>` with named variant | `REQ_EVAL_FIELD.value: <<bus: bus-value, truck-value>>` | truck / truck / bus / truck | M§3 |
 | V02 | Field `<<>>` with inline condition | `REQ_EVAL_INLINE.value: <<[var.hv.voltage == "v800"]: 800, 400>>`; diesel has `hv.voltage` disabled | 400 / 800 / 400 / 800 | M§3, K§4.6 |
 | V03 | Data reference `<{ }>` | `REQ_EVAL_DATA` text: `<{ var.meta.product }>`, `<{ var.bms.chemistry }>` | product name each; chemistry "" / nmc / lfp / lfp | M§3 |
-| V04 | `if` | `REQ_EVAL_IF` inside `if mcs` | – / ✓ / – / – | M§5 |
+| V04 | `if` | `REQ_EVAL_IF` inside `.. if:: var.charging.mcs == True` (named variants are not resolved by `if`, §5 #1) | – / ✓ / – / – | M§5 |
 | V05 | Alternatives (complementary `if`, same ID) | `REQ_EVAL_ALT` in three blocks: MCS / pantograph / otherwise | otherwise / MCS / pantograph / otherwise | M§5.1 |
 | V06 | `choose` (**release-gated**) | `REQ_EVAL_CHOOSE`, same three branches as V05 | same as V05 — skipped until the pinned sphinx-needs has `choose` | M§5, M§5.2 |
 | V07 | Link variant | `ARCH_EVAL_LINK` `allocates: <<bev: BMS_REQ_POWER_DERATING>>` | no link / link / link / link | M§4 |
@@ -147,7 +149,16 @@ V17 → V19 → V20 → V21 → V22; V06 when `choose` is released.
 
 | # | V-item | Observation | Class | Fixed in (branch / PR / commit) | Plans updated |
 |---|---|---|---|---|---|
-| 1 | … | … | basic-setup bug / tool bug / plan error / element error / expectation | … | … |
+| 1 | V04 | `.. if:: mcs` → "Unknown variant key: var.mcs"; `if` does not resolve named variants (ubc `if.invalid_expression`) | plan error | eval elements use spelled-out conditions | M§5, C§4, V04 |
+| 2 | V02 | `var.hv.class` cannot be evaluated by sphinx-needs (`class` is a Python keyword); ubc accepts it | basic-setup bug | `fix/hv-voltage-and-schema-warnings` `07806d7` → `main`: `HV__CLASS` → `HV__VOLTAGE`, generator rejects keywords | B§2.1, V02, C§, K§ |
+| 3 | all | Sphinx turns warning-severity schema results (backward coverage) into warnings → `-W` fails while a V is incomplete | basic-setup bug | same commit: `docs/conf.py` suppresses `sn_schema_warning.network_contains_too_few` (as the BMS) | — |
+| 4 | all | `ubc check` exits 1 on the same backward-coverage warnings | expectation | decision 2026-10-09: stays warning-free (no `--deny error`, no lint ignore on `main`); eval branch keeps its `_EVAL_` ignore | C§6.2 rule 8 |
+| 5 | V03 | `check_variants.py` read ``` ``<<[condition]: a, b>>`` ``` in prose as a condition | basic-setup bug | `fix/check-variants-inline-code` `37257e1` → `main` | — |
+| 6 | V07 / V21 | ubc omits empty link lists in `needs.json`; Sphinx writes `[]` | expectation | checker normalises; T§ DOC-10 must normalise | T§ |
+| 7 | V19 | `agent status` stage counts include imported needs (F-14); `agent gaps` excludes them correctly | tool bug (minor) | none needed for gates | — |
+| 8 | V20 | every `arch` owes `refines` (swreqs stage, per type) → BMS black-box elements get a permanent gap (F-18); no per-stage filter in the schema | plan error | `fix/bms-block-type` `e744d72` → `main`: type `bms_block` (`BB_`), `allocation.toml`; V20 element `BB_EVAL` | B§4, B§7, C§2.3, C§3 |
+| 9 | V21 | ubc writes `local-url` as absolute `file://` path and applies `remote_url_pattern`; Sphinx writes relative paths for both | tool difference | A§: strip / accept before publishing | A§ |
+| 10 | — | sphinx-codelinks fails in a git worktree ("git root is not found": needs a `.git` directory) | tool bug | build in the main checkout | — |
 
 ## 6. Exit criteria
 
