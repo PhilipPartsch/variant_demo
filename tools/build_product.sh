@@ -2,7 +2,8 @@
 # Build one product end to end (B§8) — the same command locally and in CI:
 #   CMake configure (variant data, BMS needs, compile database) + build + CTest
 #   -> ubc check -> ubc build needs -> ubCode HTML -> sphinx-needs HTML (-W)
-# Output: build/site/<product>/{ubcode,sphinx}/, {ubc,sphinx}.needs.json, logs.
+# Output: build/site/<product>/{ubcode,sphinx}/, {ubc,sphinx}.needs.json, junit.xml,
+# gaps.json, logs.
 #
 # Usage: tools/build_product.sh <product>      (configs/<product>_defconfig)
 # The build writes build/active/ for this product; tools/build_all.sh restores
@@ -28,10 +29,11 @@ step() { # step <name> <command...>: run, log, stop on failure with the log tail
 echo "== $p"
 step configure cmake -S . -B "build/cmake/$p" -G Ninja -DVARIANT="$p" -DCMAKE_BUILD_TYPE=Debug
 step build cmake --build "build/cmake/$p"
-step ctest ctest --test-dir "build/cmake/$p" --output-on-failure
+step ctest ctest --test-dir "build/cmake/$p" --output-on-failure --output-junit "$ROOT/$site/junit.xml"
 # What CMake Tools does with cmake.copyCompileCommands: codelinks reads the active copy.
 cp "build/cmake/$p/compile_commands.json" build/compile_commands.json
 step ubc-check "$UBC" check
+"$UBC" agent gaps -p . >"$site/gaps.json" 2>"$logs/ubc-gaps.log" || true   # evidence for tools/import_gaps.py (exits non-zero when gaps exist)
 step ubc-needs "$UBC" build needs -o "$site/ubc.needs.json"
 step ubc-html "$UBC" build html -o "$site/ubcode"
 step sphinx "$SPHINX" -E -W --keep-going -b html docs "$site/sphinx"
