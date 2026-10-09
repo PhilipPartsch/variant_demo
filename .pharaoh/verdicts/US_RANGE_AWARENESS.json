@@ -1,0 +1,36 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "naming_clarity": {
+      "reason": "Plain stakeholder vocabulary (remaining energy, range).",
+      "score": 2
+    },
+    "no_mechanism_leak": {
+      "reason": "No implementation constructs named.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "User story is the root of the V; no parent to trace to.",
+      "score": 2
+    },
+    "single_user_capability": {
+      "reason": "One capability: the driver knows how far the vehicle can still go; remaining energy and range are two views of the same information.",
+      "score": 2
+    },
+    "user_observable": {
+      "reason": "The driver directly sees remaining energy and range.",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "Ungated, which fits: range awareness applies to every product incl. diesel; no product-specific values in prose.",
+      "score": 2
+    }
+  },
+  "criteria": "feat",
+  "criteria_fingerprint": "93247fd50e1c2de110b36e7f5d97505609f74d8dc8014fd8e96f5eb55d1a1b51",
+  "model": "claude-opus-5-5",
+  "need": "US_RANGE_AWARENESS",
+  "reviewed_fingerprint": "7703e856062ef5f43c978e1de6d886116e1f8717c47b542dbf14f07eb6974364",
+  "schema": 2,
+  "summary": "All axes at max."
+}

@@ -1,0 +1,37 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "naming_clarity": {
+      "reason": "Stakeholder vocabulary (top up, terminal stops).",
+      "score": 2
+    },
+    "no_mechanism_leak": {
+      "reason": "Body names no mechanism (the pantograph appears only in the gating condition, not the story).",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "User story is the root of the V; no parent to trace to.",
+      "score": 2
+    },
+    "single_user_capability": {
+      "reason": "One capability: top up the battery at terminal stops.",
+      "score": 2
+    },
+    "user_observable": {
+      "reason": "Bus operator directly observes top-up charging at terminal stops.",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "Gated by var.charging.pantograph == True, a var.* key of the variant data with == True; present only in the bus product. Note the body says 'bus operator' while the gate is the pantograph feature, which is consistent with today's variants.",
+      "score": 2,
+      "suggestion": "Optional: if pantograph trucks are ever added, reword the role to 'fleet operator' or also gate on the bus condition."
+    }
+  },
+  "criteria": "feat",
+  "criteria_fingerprint": "93247fd50e1c2de110b36e7f5d97505609f74d8dc8014fd8e96f5eb55d1a1b51",
+  "model": "claude-opus-5-5",
+  "need": "US_OPPORTUNITY_CHARGING",
+  "reviewed_fingerprint": "c562c8eca424178e86e4e17590fc6807ef824da66e5fd7fc6dd5b62a5d48f28a",
+  "schema": 2,
+  "summary": "All axes at max."
+}

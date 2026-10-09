@@ -1,0 +1,36 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "naming_clarity": {
+      "reason": "Stakeholder vocabulary (depot, driver break, recharge).",
+      "score": 2
+    },
+    "no_mechanism_leak": {
+      "reason": "No charging standard, power level or component named.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "User story is the root of the V; no parent to trace to.",
+      "score": 2
+    },
+    "single_user_capability": {
+      "reason": "Exactly one capability: recharge within a driver break.",
+      "score": 2
+    },
+    "user_observable": {
+      "reason": "Fleet operator directly observes whether the vehicle is recharged within the break.",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "Gated by the spelled-out bev condition var.powertrain.type == 'bev'; charging only exists for BEV products; no product-specific value in prose.",
+      "score": 2
+    }
+  },
+  "criteria": "feat",
+  "criteria_fingerprint": "93247fd50e1c2de110b36e7f5d97505609f74d8dc8014fd8e96f5eb55d1a1b51",
+  "model": "claude-opus-5-5",
+  "need": "US_FAST_DEPOT_CHARGING",
+  "reviewed_fingerprint": "5935fe77033564721ba4238481685ff2a06bac11e87d8d68b9b55ed9a76942b7",
+  "schema": 2,
+  "summary": "All axes at max."
+}

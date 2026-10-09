@@ -10,11 +10,11 @@ each. Workflow stage ``user_stories``.
 
    As a driver, I know the remaining energy and range of my vehicle.
 
-.. user_story:: Predictable traction power
+.. user_story:: Announced traction power limits
    :id: US_PREDICTABLE_POWER
    :status: draft
 
-   As a driver, I get predictable traction power, and limits are announced to me.
+   As a driver, I am told in advance when the available traction power is limited.
 
 .. if:: var.powertrain.type == 'bev'
 
@@ -28,7 +28,8 @@ each. Workflow stage ``user_stories``.
       :id: US_HV_SAFETY
       :status: draft
 
-      As a driver or workshop technician, I am protected from high-voltage hazards.
+      As a driver, I can rely on the vehicle making its high-voltage system safe
+      and warning me when it detects a high-voltage fault.
 
    .. user_story:: Charging in the home market
       :id: US_MARKET_CHARGING
@@ -51,4 +52,5 @@ each. Workflow stage ``user_stories``.
       :id: US_PASSENGER_DOOR_SAFETY
       :status: draft
 
-      As a bus passenger, I am safe while boarding and leaving through the doors.
+      As a bus passenger, the bus does not move off while I board or leave
+      through an open door.
