@@ -1,6 +1,6 @@
 # Roadmap: CV platform with variant management
 
-Six steps, one plan each. The CV platform (commercial vehicle: truck / bus,
+Six steps, one plan each, plus plan 7 with all manual steps. The CV platform (commercial vehicle: truck / bus,
 diesel / battery-electric, using the BMS from `rollout-demo-bms`) is built in
 **this repository** (`origin` = `https://github.com/PhilipPartsch/variant_demo`).
 
@@ -12,6 +12,7 @@ diesel / battery-electric, using the BMS from `rollout-demo-bms`) is built in
 | 4 | [04-content.md](04-content.md) | `C§` | small, short CV content covering everything | `content/*` → `main` |
 | 5 | [05-test.md](05-test.md) | `T§` | tests for tooling, mechanisms, content and IDE behaviour | `test/*` → `main` |
 | 6 | [06-automation.md](06-automation.md) | `A§` | CI for builds and tests; GitHub Pages with sphinx-needs and ubCode output side by side for all products | `ci/*` → `main` |
+| 7 | [07-manual-steps.md](07-manual-steps.md) | `MS§` | all manual steps of plans 3–6 and 99 (decisions, reviews, IDE session, browser checks, settings) — the other plans point here | — |
 
 Bug list (not a step): [99-tool-bugs.md](99-tool-bugs.md) — bugs and gaps in
 the **useblocks tools** (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks,

@@ -64,6 +64,8 @@ and `fix/bms-block-type` are merged (fast-forward) into `main` and kept;
 
 ## 3. Deferred checks (IDE, visual)
 
+Now part of [07-manual-steps.md](07-manual-steps.md): V16 / V17 → M-05 (IDE-01 … IDE-03), V22 → M-07 (WEB-02).
+
 Risk accepted 2026-10-09: IDE / display only, no effect on build, content,
 CI or Pages. With `eval/mechanisms` checked out:
 
