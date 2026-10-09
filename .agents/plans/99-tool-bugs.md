@@ -49,7 +49,6 @@ documentation, convenience.
 | UB-08 | ubc | low | `needs.builder_filter` ignored |
 | UB-09 | ubc | medium | `:variant:` role text stays unresolved in the exported `content` |
 | UB-10 | ubc | low | info `variant_sources_sphinx_unsupported` is outdated / misleading |
-| UB-11 | ubCode | low | Needs Index lags behind a variant switch |
 | UB-12 | ubc + Sphinx-Needs | medium | `if` does not resolve named variants (`[needs.variants]`) |
 | UB-13 | ubc + Sphinx-Needs | medium | imported needs of an undeclared type dropped, undeclared fields stripped, silently |
 | PH-01 | Pharaoh | **high** | verdicts stored per need id only: alternatives with one id overwrite each other |
@@ -219,17 +218,6 @@ documentation, convenience.
 - **Workaround:** ignored.
 - **Solution A:** detect `sphinx_mounts` (version) in `conf.py` and drop the info.
 - **Solution B:** word it as "requires sphinx-mounts ≥ 0.2.0" and show it once (`ubc check --explain`), not on every run.
-
-### UB-11 Needs Index lags behind a variant switch
-
-- **Tool:** ubCode extension 0.35.0
-- **Marker:** `content/cv-platform@25b77bd` `src/vcu/energy_display.c:8/17` (first seen in plan 1, E-R E3).
-- **Summary:** after a CMake Tools variant switch the `code_trace.rst` preview shows the new product's code needs at once, the Needs Index still the old ones.
-- **Input:** switch `truck_bev_nmc_eu` → `truck_diesel_eu` (new `build/compile_commands.json`, `build/active/*`).
-- **Wrong output:** Needs Index: `IMPL_VCU_ENERGY_DISPLAY` still at line 8 (SoC). Expected: line 17 (fuel) as in the preview.
-- **Workaround:** run **CMake: Configure** once more.
-- **Solution A:** watch the `compile_commands` file(s) of every codelinks project and re-analyse on change.
-- **Solution B:** a command "ubCode: Re-index" plus re-index on `variant_data_file` change.
 
 ### UB-12 `if` does not resolve named variants
 
