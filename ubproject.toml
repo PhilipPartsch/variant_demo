@@ -97,6 +97,16 @@ prefix = "ARCH_"
 color = "#818CF8"
 style = "node"
 
+# CV: black-box view of the BMS (stage bms_allocation). Own type, because
+# workflow traces apply per type: an `arch` owes a refining swreq, a black box
+# does not — it is realised by the BMS through `allocates`.
+[[needs.types]]
+directive = "bms_block"
+title = "BMS Black Box"
+prefix = "BB_"
+color = "#A5B4FC"
+style = "node"
+
 [[needs.types]]
 directive = "swreq"
 title = "Software Requirement"
@@ -187,8 +197,8 @@ outgoing = "mitigates"
 incoming = "gaps"
 outgoing = "gap_for"
 
-# New: CV arch -> BMS interface requirement (external BMS_REQ_*). The only link
-# with variant functions, e.g. `:allocates: <<bev: BMS_REQ_POWER_DERATING>>`.
+# New: CV arch / bms_block -> BMS interface requirement (external BMS_REQ_*).
+# The only link with variant functions, e.g. `:allocates: <<bev: BMS_REQ_POWER_DERATING>>`.
 [needs.links.allocates]
 incoming = "allocated_from"
 outgoing = "allocates"
@@ -289,6 +299,7 @@ schema = { type = "string", enum = [
   "user_story",
   "req",
   "arch",
+  "bms_block",
   "swreq",
   "impl",
   "test",
@@ -485,7 +496,7 @@ needs_fields = [
 # Imported BMS needs (status `imported`) are context, not CV work items.
 [workflow]
 exempt_status = ["imported"]
-orphan_exempt_types = ["user_story", "req", "arch", "swreq", "gap"]
+orphan_exempt_types = ["user_story", "req", "arch", "bms_block", "swreq", "gap"]
 
 [workflow.diagram]
 enabled = false
@@ -537,7 +548,7 @@ min = 1
 
 [[workflow.stages]]
 id = "bms_allocation"
-produces = "arch"
+produces = "bms_block"
 depends_on = ["reqs"]
 author_skill = "draft-allocation"
 review_skill = "review-arch"
@@ -666,6 +677,9 @@ criteria_file = "metamodel/quality/requirement.toml"
 
 [quality.type_configs.arch]
 criteria_file = "metamodel/quality/arch.toml"
+
+[quality.type_configs.bms_block]
+criteria_file = "metamodel/quality/allocation.toml"
 
 [quality.type_configs.user_story]
 criteria_file = "metamodel/quality/feat.toml"

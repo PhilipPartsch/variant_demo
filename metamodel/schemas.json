@@ -19,7 +19,10 @@
     "  * allocates (CV arch -> BMS requirement) targets BMS interface needs only.",
     "",
     "sphinx-needs needs the array form with `items` for `contains` on list",
-    "fields such as `tags` (E-R C5)."
+    "fields such as `tags` (E-R C5).",
+    "  * the BMS black-box elements have their own type `bms_block` (produced by",
+    "    stage bms_allocation): they satisfy a req and allocate BMS interface needs",
+    "    and are not refined by CV swreqs (V\u00a75 #8)."
    ]
   },
   "type-user_story": {
@@ -89,9 +92,33 @@
       "user_story",
       "req",
       "arch",
+      "bms_block",
       "swreq",
       "risk",
       "decision"
+     ]
+    },
+    "is_external": {
+     "const": false
+    }
+   }
+  },
+  "type-bms_block": {
+   "properties": {
+    "type": {
+     "const": "bms_block"
+    },
+    "is_external": {
+     "const": false
+    }
+   }
+  },
+  "type-arch-or-bms_block": {
+   "properties": {
+    "type": {
+     "enum": [
+      "arch",
+      "bms_block"
      ]
     },
     "is_external": {
@@ -147,6 +174,23 @@
      "properties": {
       "id": {
        "pattern": "^ARCH_"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "id-prefix-bms_block",
+   "severity": "violation",
+   "message": "DECLARED: [[needs.types]] gives bms_block the prefix BB_.",
+   "select": {
+    "$ref": "#/$defs/type-bms_block"
+   },
+   "validate": {
+    "local": {
+     "properties": {
+      "id": {
+       "pattern": "^BB_"
       }
      }
     }
@@ -334,6 +378,35 @@
    "message": "DECLARED (stage `archs`, trace link=satisfies min=1 up=req): every arch must satisfy at least one req. OBSERVED in the BMS, fan-out 1..4 -- the upper end is left unbounded, an observed maximum is not a rule.",
    "select": {
     "$ref": "#/$defs/type-arch"
+   },
+   "validate": {
+    "local": {
+     "properties": {
+      "satisfies": {
+       "minItems": 1
+      }
+     },
+     "required": [
+      "satisfies"
+     ]
+    },
+    "network": {
+     "satisfies": {
+      "items": {
+       "local": {
+        "$ref": "#/$defs/type-req"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "trace-bms_block-satisfies",
+   "severity": "violation",
+   "message": "DECLARED (stage `bms_allocation`, trace link=satisfies min=1 up=req): every BMS black box must satisfy at least one req.",
+   "select": {
+    "$ref": "#/$defs/type-bms_block"
    },
    "validate": {
     "local": {
@@ -604,23 +677,9 @@
   {
    "id": "coverage-arch-refines-back",
    "severity": "warning",
-   "message": "DECLARED (stage `swreqs`, direction=both): every arch must be refined by at least one swreq, so no component is left without stated behaviour. OBSERVED in the BMS, fan-in 1..4. BACKWARD, so `warning`, not `violation`: this is owed by a later stage and is unmet by construction while that stage is pending -- see the FORWARD IS A VIOLATION, BACKWARD IS A WARNING note in $defs._readme. CV: only the CV-owned subsystems (vcu, chg, eng); the BMS black-box elements (subsystems/bms/) are realised by the BMS through `allocates`, not refined by CV swreqs.",
+   "message": "DECLARED (stage `swreqs`, direction=both): every arch must be refined by at least one swreq, so no component is left without stated behaviour. OBSERVED in the BMS, fan-in 1..4. BACKWARD, so `warning`, not `violation`: this is owed by a later stage and is unmet by construction while that stage is pending -- see the FORWARD IS A VIOLATION, BACKWARD IS A WARNING note in $defs._readme.",
    "select": {
-    "properties": {
-     "type": {
-      "const": "arch"
-     },
-     "is_external": {
-      "const": false
-     },
-     "docname": {
-      "type": "string",
-      "pattern": "^subsystems/(vcu|chg|eng)/"
-     }
-    },
-    "required": [
-     "docname"
-    ]
+    "$ref": "#/$defs/type-arch"
    },
    "validate": {
     "network_back": {
@@ -678,7 +737,7 @@
   {
    "id": "coverage-req-satisfies-back",
    "severity": "warning",
-   "message": "DECLARED (stage `archs`, direction=both): every req should be satisfied by at least one arch. BACKWARD, so `warning`, not `violation`: this is owed by the `archs` stage, which by construction runs after `reqs`, so a req authored before its architecture exists is exactly where the workflow expects it to be -- see the FORWARD IS A VIOLATION, BACKWARD IS A WARNING note in $defs._readme. The finding is `ubc agent gaps`'s to own; it reports it as a tracked gap need and points `ubc agent next` at the stage that owes the work. Not carved out by id either: a carve-out would need `not` in `select`, which sphinx-needs rejects, and an id-free carve-out would silently stop checking whole streams.",
+   "message": "DECLARED (stage `archs`, direction=both): every req should be satisfied by at least one arch. BACKWARD, so `warning`, not `violation`: this is owed by the `archs` stage, which by construction runs after `reqs`, so a req authored before its architecture exists is exactly where the workflow expects it to be -- see the FORWARD IS A VIOLATION, BACKWARD IS A WARNING note in $defs._readme. The finding is `ubc agent gaps`'s to own; it reports it as a tracked gap need and points `ubc agent next` at the stage that owes the work. Not carved out by id either: a carve-out would need `not` in `select`, which sphinx-needs rejects, and an id-free carve-out would silently stop checking whole streams. CV: a BMS black box (bms_block) satisfies a req as well.",
    "select": {
     "$ref": "#/$defs/type-req"
    },
@@ -687,7 +746,7 @@
      "satisfies": {
       "contains": {
        "local": {
-        "$ref": "#/$defs/type-arch"
+        "$ref": "#/$defs/type-arch-or-bms_block"
        }
       },
       "minContains": 1
@@ -902,7 +961,7 @@
    "severity": "violation",
    "message": "CV (B\u00a74.4): allocates may only target BMS requirements (BMS_REQ_*).",
    "select": {
-    "$ref": "#/$defs/type-arch"
+    "$ref": "#/$defs/type-arch-or-bms_block"
    },
    "validate": {
     "local": {
@@ -921,7 +980,7 @@
    "severity": "violation",
    "message": "CV (B\u00a74.4, B\u00a75.2.3): allocates may only target BMS interface needs (tag `interface`).",
    "select": {
-    "$ref": "#/$defs/type-arch"
+    "$ref": "#/$defs/type-arch-or-bms_block"
    },
    "validate": {
     "network": {
@@ -950,25 +1009,11 @@
    }
   },
   {
-   "id": "bms-arch-allocates",
+   "id": "bms_block-allocates",
    "severity": "violation",
-   "message": "CV (B\u00a74.4): every BMS black-box arch element (docs/subsystems/bms/) allocates at least one BMS interface need.",
+   "message": "CV (B\u00a74.4): every BMS black box (bms_block) allocates at least one BMS interface need.",
    "select": {
-    "properties": {
-     "type": {
-      "const": "arch"
-     },
-     "is_external": {
-      "const": false
-     },
-     "docname": {
-      "type": "string",
-      "pattern": "^subsystems/bms/"
-     }
-    },
-    "required": [
-     "docname"
-    ]
+    "$ref": "#/$defs/type-bms_block"
    },
    "validate": {
     "local": {

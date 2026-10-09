@@ -1,0 +1,95 @@
+# Criteria pack for the BMS black boxes (`bms_block`, stage `bms_allocation`),
+# reviewed with `review-arch` (review skills resolve per type; the criteria come
+# from `[quality.type_configs.bms_block]`). A black box states what the CV
+# platform expects from the BMS: it satisfies a CV requirement and allocates
+# BMS interface needs; it is not refined by CV software requirements.
+#
+# Every axis is JUDGMENT-ONLY and scored 0..2 (2 = fully meets, 1 = partial,
+# 0 = the FAIL condition).
+
+guidance = """
+- Fail closed: when genuinely uncertain whether an axis is met, score it 0 \
+rather than giving the benefit of the doubt, and explain the uncertainty in \
+your reasoning.
+- Be lenient with domain-specific terminology, technology names, and \
+abbreviations — assume they are defined elsewhere in the project (e.g. a \
+glossary) rather than penalizing the element for using them without a local \
+definition.
+- A short, clear black box is not inherently deficient — judge \
+substance, not length; a crisp element can score full marks on every axis.
+- If the element's body is empty or unreadable, score every axis 0 and say \
+so — there is nothing else to judge."""
+
+[[criterion]]
+id = "parent_fit"
+name = "Parent Fit"
+description = """
+Whether the black box substantively addresses the obligation of \
+the requirement(s) it traces to, not merely links to them. The structural \
+trace gate already confirms the link exists; this axis judges whether the \
+element's allocation actually engages with what its parent \
+requirement asks for."""
+scoring_guide = """
+0: The element's content does not address its parent requirement's obligation at all, or addresses a materially different concern — the link is present but the substance is not.
+1: The element addresses only part of its parent requirement's obligation, or engages with it tangentially.
+2: The element substantively and clearly addresses (a distinct part of) its parent requirement's obligation."""
+max_score = 2
+
+
+[[criterion]]
+id = "interface_only"
+name = "Interface Only"
+description = """
+Whether every `allocates` target is a BMS interface need (BMS_REQ_* with tag \
+`interface`)."""
+scoring_guide = """
+0: An allocates target is not a BMS interface need.
+1: All targets are interface needs, but one is gated differently from the element (e.g. allocated outside `bev`).
+2: Every allocates target is a BMS interface need."""
+max_score = 2
+
+[[criterion]]
+id = "allocation_complete"
+name = "Allocation Complete"
+description = """
+Whether every BMS-relevant aspect of the CV requirement the element satisfies \
+is covered by an allocated BMS requirement. A black box \
+without `allocates` scores 0."""
+scoring_guide = """
+0: A BMS-relevant obligation of the parent requirement has no allocated BMS requirement.
+1: The obligations are covered, but one only partly or through a loosely related BMS requirement.
+2: Every BMS-relevant obligation is covered by an allocated BMS interface requirement."""
+max_score = 2
+
+[[criterion]]
+id = "no_value_copy"
+name = "No Value Copy"
+description = """
+Whether BMS values (limits, thresholds, timings) are referenced through the \
+allocated BMS need instead of restated in the CV element."""
+scoring_guide = """
+0: The element restates a BMS value that differs between chemistries or BMS versions.
+1: The element restates a BMS value that is the same in every chemistry.
+2: The element references BMS values only through the allocated needs, or names none."""
+max_score = 2
+
+[[criterion]]
+id = "variant_consistency"
+name = "Variant Consistency"
+description = """
+CV platform (B§7.3): whether the need is gated consistently with the product \
+line. The need is gated by the same or a stronger condition than its parent \
+(`if` blocks with the named variants bev / bus / mcs, variant folders such as \
+subsystems/chg or region/na); variant-specific content uses those named \
+variants and folders, not ad-hoc conditions; product-specific values sit in \
+variant functions of a field; no build-type or build-kit conditions."""
+scoring_guide = """
+0: The need is gated more weakly than its parent (it would exist in a product where its parent does not), or it uses a build-type / kit condition.
+1: The gating is correct but uses an ad-hoc condition instead of a named variant or variant folder, or restates a product-specific value in prose instead of a variant function.
+2: The need is gated by the same or a stronger condition than its parent, using the named variants and folders."""
+max_score = 2
+
+# --- BMS allocation (stage `bms_allocation`, B§7.2/§7.3) -----------------------
+# Quality criteria are per need type and `bms_allocation` reuses `review-arch`,
+# so the allocation criteria live here. For an arch element without
+# `allocates` (stages `archs`), score them 2 (not applicable).
