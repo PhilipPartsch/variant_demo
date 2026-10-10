@@ -88,7 +88,10 @@ documentation, convenience.
 - **Summary:** the needs export has no `docname`; instead every need carries a
   `__source__` block and codelinks needs a `local-url`, both with absolute
   paths of the exporting machine.
-- **Input:** `cd rollout-demo-bms/docs && ubc build needs --source-maps -o nmc.json`
+- **Input:** `cd rollout-demo-bms/docs && ubc build needs --source-maps -o nmc.json`;
+  also **without** `--source-maps`: `ubc build needs -o build/x.json` in this repo
+  (`main@1cb05e9`, any product) writes `__source__.path` with the absolute path
+  for every local need (checked 2026-10-10, plan 6 site assembly).
 - **Wrong output:**
   ```json
   "REQ_CELL_VOLTAGE_LIMITS": { "__source__": {"path": "/Users/<user>/…/docs/specs/cell-protection/requirements.rst", …} }
