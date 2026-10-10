@@ -497,7 +497,7 @@ follow the same switch.
 6. Code and tests with markers and `#if CONFIG_*` (§5).
 7. Risks and decisions (§2.5).
 8. Report pages (§7).
-9. Demo readiness: `choose` pin and migration (§8.2), dry run of §8.1 — manual, [07-manual-steps.md](07-manual-steps.md) M-10, M-11.
+9. Demo readiness: `choose` pin and migration (§8.2 → [20-choose-migration.md](20-choose-migration.md)), dry run of §8.1 — manual, [07-manual-steps.md](07-manual-steps.md) M-10, M-11.
 10. Afterwards: [05-test.md](05-test.md) and [06-automation.md](06-automation.md).
 
 **Tool findings → plan 99:** every bug or gap found in a useblocks tool (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks, sphinx-mounts, ubc-action, ubTrace, ubConnect, Sphinx-Test-Reports) is added to [99-tool-bugs.md](99-tool-bugs.md) in the same session: summary, marker `branch@commit` + file:line on a pushed branch, input, wrong output, workaround, two solutions.

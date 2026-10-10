@@ -3,7 +3,7 @@ import json
 
 import pytest
 
-from conftest import A, B, BEV, D, N, PRODUCTS, ROOT, SITE, local
+from conftest import A, B, BEV, D, N, PRODUCTS, ROOT, SITE, authored, local
 from normalize import normalize
 from oracle import (ALLOCATES, ALTERNATIVE, BMS_CHEMISTRY, ENERGY_IMPL_TITLE, PAGES, PRESENT, VALUE)
 
@@ -52,7 +52,7 @@ def test_doc05_alternatives(site, tool):
 
 
 def test_doc06_choose():
-    pytest.skip("release-gated: sphinx-needs 8.5.0 has no `choose` (C§8.2, plan 7 M-10)")
+    pytest.skip("release-gated: sphinx-needs 8.5.0 has no `choose` (migration: plan 20)")
 
 
 @pytest.mark.parametrize("product", PRODUCTS)
@@ -106,8 +106,8 @@ def test_doc10_parity(site, product):
 def test_doc11_golden(site, product):
     golden = GOLDEN / f"{product}.needs.json"
     if not golden.exists():
-        pytest.fail(f"no golden file {golden.name}: run tools/tests/update_golden.py and review it (plan 7 M-03)")
-    current = {i: normalize(n) for i, n in sorted(local(site[product]["ubc"]).items())}
+        pytest.fail(f"no golden file {golden.name}: run tools/tests/update_golden.py and review the result")
+    current = {i: normalize(n) for i, n in sorted(authored(local(site[product]["ubc"])).items())}
     assert current == json.loads(golden.read_text())
     assert json.loads((GOLDEN / f"{product}.variants.json").read_text()) == \
            json.loads((ROOT / f"variants/{product}.json").read_text())

@@ -61,6 +61,14 @@ def local(needs: dict) -> dict:
     return {i: n for i, n in needs.items() if not i.startswith("BMS_")}
 
 
+EVIDENCE = ("test_result", "gap")
+
+
+def authored(needs: dict) -> dict:
+    """Without the generated evidence (test results, workflow gaps)."""
+    return {i: n for i, n in needs.items() if n["type"] not in EVIDENCE}
+
+
 class Repo:
     """A throw-away copy of the working tree (a git repository of its own, so
     sphinx-codelinks finds a loose ref and the origin URL)."""
@@ -99,8 +107,7 @@ class Repo:
         return run([PYTHON, *args], cwd=self.path)
 
 
-@pytest.fixture
-def repo(tmp_path):
+def make_repo(tmp_path: Path) -> Repo:
     files = run(["git", "ls-files", "-co", "--exclude-standard"], check=True).out.split()
     dst = tmp_path / "repo"
     for rel in files:
@@ -113,3 +120,8 @@ def repo(tmp_path):
     run(["git", "-c", "user.name=test", "-c", "user.email=test@example.invalid", "commit", "-q", "-m", "copy"], cwd=dst, check=True)
     run(["git", "remote", "add", "origin", "https://github.com/PhilipPartsch/variant_demo"], cwd=dst, check=True)
     return Repo(dst)
+
+
+@pytest.fixture
+def repo(tmp_path):
+    return make_repo(tmp_path)

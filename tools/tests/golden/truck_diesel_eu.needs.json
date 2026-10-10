@@ -175,54 +175,6 @@
    "SWREQ_VCU_POWER_LIMIT_APPLY"
   ]
  },
- "TRES_ENG_FUEL_LEVEL_REPORT__TRUCK_DIESEL_EU": {
-  "chain_reqs": "REQ_ENERGY_SOURCE",
-  "content": "``test_eng`` reported PASS for TEST_ENG_FUEL_LEVEL_REPORT.",
-  "id": "TRES_ENG_FUEL_LEVEL_REPORT__TRUCK_DIESEL_EU",
-  "outcome": "passed",
-  "product": "truck_diesel_eu",
-  "results_for": [
-   "TEST_ENG_FUEL_LEVEL_REPORT"
-  ],
-  "title": "Fuel level is the averaged sensor value (truck_diesel_eu)",
-  "type": "test_result"
- },
- "TRES_ENG_TORQUE_LIMIT__TRUCK_DIESEL_EU": {
-  "chain_reqs": "REQ_TRACTION_POWER_LIMIT",
-  "content": "``test_eng`` reported PASS for TEST_ENG_TORQUE_LIMIT.",
-  "id": "TRES_ENG_TORQUE_LIMIT__TRUCK_DIESEL_EU",
-  "outcome": "passed",
-  "product": "truck_diesel_eu",
-  "results_for": [
-   "TEST_ENG_TORQUE_LIMIT"
-  ],
-  "title": "Engine torque limit follows the power limit (truck_diesel_eu)",
-  "type": "test_result"
- },
- "TRES_VCU_ENERGY_DISPLAY__TRUCK_DIESEL_EU": {
-  "chain_reqs": "REQ_ENERGY_SOURCE, REQ_RANGE_ESTIMATE",
-  "content": "``test_vcu`` reported PASS for TEST_VCU_ENERGY_DISPLAY.",
-  "id": "TRES_VCU_ENERGY_DISPLAY__TRUCK_DIESEL_EU",
-  "outcome": "passed",
-  "product": "truck_diesel_eu",
-  "results_for": [
-   "TEST_VCU_ENERGY_DISPLAY"
-  ],
-  "title": "Remaining energy is rounded to percent (truck_diesel_eu)",
-  "type": "test_result"
- },
- "TRES_VCU_POWER_LIMIT_APPLY__TRUCK_DIESEL_EU": {
-  "chain_reqs": "REQ_TRACTION_POWER_LIMIT",
-  "content": "``test_vcu`` reported PASS for TEST_VCU_POWER_LIMIT_APPLY.",
-  "id": "TRES_VCU_POWER_LIMIT_APPLY__TRUCK_DIESEL_EU",
-  "outcome": "passed",
-  "product": "truck_diesel_eu",
-  "results_for": [
-   "TEST_VCU_POWER_LIMIT_APPLY"
-  ],
-  "title": "Torque is limited by the power limit (truck_diesel_eu)",
-  "type": "test_result"
- },
  "US_PREDICTABLE_POWER": {
   "content": "As a driver, I can rely on a known maximum traction power of my vehicle.",
   "id": "US_PREDICTABLE_POWER",

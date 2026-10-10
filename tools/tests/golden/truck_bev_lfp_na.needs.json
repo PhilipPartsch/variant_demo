@@ -130,34 +130,6 @@
   "title": "MCS takes priority over the pantograph",
   "type": "decision"
  },
- "GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_BEV_LFP_NA": {
-  "content": "``ubc agent gaps`` reports ARCH_VCU_ENERGY_DISPLAY (arch) in truck_bev_lfp_na.",
-  "gap_category": "review",
-  "gap_for": [
-   "ARCH_VCU_ENERGY_DISPLAY"
-  ],
-  "gap_need_id": "ARCH_VCU_ENERGY_DISPLAY",
-  "gap_need_type": "arch",
-  "gap_shortfall": "0 of 1",
-  "id": "GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_BEV_LFP_NA",
-  "product": "truck_bev_lfp_na",
-  "title": "ARCH_VCU_ENERGY_DISPLAY: review review",
-  "type": "gap"
- },
- "GAP_REQ_ENERGY_SOURCE_REVIEW__TRUCK_BEV_LFP_NA": {
-  "content": "``ubc agent gaps`` reports REQ_ENERGY_SOURCE (req) in truck_bev_lfp_na.",
-  "gap_category": "review",
-  "gap_for": [
-   "REQ_ENERGY_SOURCE"
-  ],
-  "gap_need_id": "REQ_ENERGY_SOURCE",
-  "gap_need_type": "req",
-  "gap_shortfall": "0 of 1",
-  "id": "GAP_REQ_ENERGY_SOURCE_REVIEW__TRUCK_BEV_LFP_NA",
-  "product": "truck_bev_lfp_na",
-  "title": "REQ_ENERGY_SOURCE: review review",
-  "type": "gap"
- },
  "IMPL_CHG_CURRENT_LIMIT": {
   "id": "IMPL_CHG_CURRENT_LIMIT",
   "implements": [
@@ -385,78 +357,6 @@
   "verifies": [
    "SWREQ_VCU_POWER_LIMIT_APPLY"
   ]
- },
- "TRES_CHG_CURRENT_LIMIT__TRUCK_BEV_LFP_NA": {
-  "chain_reqs": "REQ_NA_CHARGING_STANDARD",
-  "content": "``test_chg`` reported PASS for TEST_CHG_CURRENT_LIMIT.",
-  "id": "TRES_CHG_CURRENT_LIMIT__TRUCK_BEV_LFP_NA",
-  "outcome": "passed",
-  "product": "truck_bev_lfp_na",
-  "results_for": [
-   "TEST_CHG_CURRENT_LIMIT"
-  ],
-  "title": "Charging current follows the pack voltage (truck_bev_lfp_na)",
-  "type": "test_result"
- },
- "TRES_CHG_INTERFACE_DERATING__TRUCK_BEV_LFP_NA": {
-  "chain_reqs": "REQ_MAX_CHARGE_POWER",
-  "content": "``test_chg`` reported PASS for TEST_CHG_INTERFACE_DERATING.",
-  "id": "TRES_CHG_INTERFACE_DERATING__TRUCK_BEV_LFP_NA",
-  "outcome": "passed",
-  "product": "truck_bev_lfp_na",
-  "results_for": [
-   "TEST_CHG_INTERFACE_DERATING"
-  ],
-  "title": "Hot contacts halve the current (truck_bev_lfp_na)",
-  "type": "test_result"
- },
- "TRES_CHG_SESSION_START__TRUCK_BEV_LFP_NA": {
-  "chain_reqs": "REQ_NA_CHARGING_STANDARD",
-  "content": "``test_chg`` reported PASS for TEST_CHG_SESSION_START.",
-  "id": "TRES_CHG_SESSION_START__TRUCK_BEV_LFP_NA",
-  "outcome": "passed",
-  "product": "truck_bev_lfp_na",
-  "results_for": [
-   "TEST_CHG_SESSION_START"
-  ],
-  "title": "Session starts only with locked inlet (truck_bev_lfp_na)",
-  "type": "test_result"
- },
- "TRES_VCU_ENERGY_DISPLAY__TRUCK_BEV_LFP_NA": {
-  "chain_reqs": "REQ_ENERGY_SOURCE, REQ_RANGE_ESTIMATE",
-  "content": "``test_vcu`` reported PASS for TEST_VCU_ENERGY_DISPLAY.",
-  "id": "TRES_VCU_ENERGY_DISPLAY__TRUCK_BEV_LFP_NA",
-  "outcome": "passed",
-  "product": "truck_bev_lfp_na",
-  "results_for": [
-   "TEST_VCU_ENERGY_DISPLAY"
-  ],
-  "title": "Remaining energy is rounded to percent (truck_bev_lfp_na)",
-  "type": "test_result"
- },
- "TRES_VCU_HV_SHUTDOWN__TRUCK_BEV_LFP_NA": {
-  "chain_reqs": "REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT",
-  "content": "``test_vcu`` reported PASS for TEST_VCU_HV_SHUTDOWN.",
-  "id": "TRES_VCU_HV_SHUTDOWN__TRUCK_BEV_LFP_NA",
-  "outcome": "passed",
-  "product": "truck_bev_lfp_na",
-  "results_for": [
-   "TEST_VCU_HV_SHUTDOWN"
-  ],
-  "title": "Isolation fault requests contactor opening (truck_bev_lfp_na)",
-  "type": "test_result"
- },
- "TRES_VCU_POWER_LIMIT_APPLY__TRUCK_BEV_LFP_NA": {
-  "chain_reqs": "REQ_TRACTION_POWER_LIMIT",
-  "content": "``test_vcu`` reported PASS for TEST_VCU_POWER_LIMIT_APPLY.",
-  "id": "TRES_VCU_POWER_LIMIT_APPLY__TRUCK_BEV_LFP_NA",
-  "outcome": "passed",
-  "product": "truck_bev_lfp_na",
-  "results_for": [
-   "TEST_VCU_POWER_LIMIT_APPLY"
-  ],
-  "title": "Torque is limited by the power limit (truck_bev_lfp_na)",
-  "type": "test_result"
  },
  "US_FAST_DEPOT_CHARGING": {
   "content": "As a fleet operator, I recharge a vehicle within a driver break.",

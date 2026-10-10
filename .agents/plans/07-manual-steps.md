@@ -18,16 +18,16 @@ that owns the step.
 
 | ID | Kind | Step | Needed for | Prerequisite | Status |
 |---|---|---|---|---|---|
-| M-01 | review + decision | review `content/cv-platform`, merge into `main` | plan 5 entry (T§10) | — | open |
-| M-02 | decision | apply the open review points of plan 4 (C-R §6) now or later | plan 4 close-out | M-01 | open |
-| M-03 | review | approve the golden files | T§2, DOC-11 | T§11 step 3 | ready for review (branch `test/cv-platform`, `tools/tests/golden/`) |
-| M-04 | decision | CNT-05 as `xfail` with reason PH-01 (plan 99) | T§6 CNT-05 | — | implemented as proposed, awaiting your OK |
+| M-01 | review + decision | review `content/cv-platform`, merge into `main` | plan 5 entry (T§10) | — | **done 2026-10-10:** all 8 chunks accepted as they are; merge approved |
+| M-02 | decision | apply the open review points of plan 4 (C-R §6) now or later | plan 4 close-out | M-01 | **decided 2026-10-10: later** — points stay in `04-content-result.md` §6 |
+| M-03 | review | approve the golden files | T§2, DOC-11 | T§11 step 3 | **done 2026-10-10:** approved; authored content only (no test results / gaps): D 21, N 45, B 53, A 41 needs |
+| M-04 | decision | CNT-05 and PH-01 (plan 99) | T§6 CNT-05 | — | **done 2026-10-10: option b** — affected ids excluded by name (`PH01_EXCLUDED` in `tools/tests/test_l4_content.py`), each must be fresh in ≥ 1 product |
 | M-05 | IDE | IDE checklist IDE-01 … IDE-07 (includes V16 / V17 deferred from plan 3) | T§ L8, V§ V16 / V17 | M-01 | open |
 | M-06 | decision | Windows in L9 (platform tests) or not | T§ L9 | — | open |
 | M-07 | browser | side-by-side compare page per product (includes V22 deferred from plan 3) | A§1.1 G5, V§ V22 | first CI deploy | open |
 | M-08 | browser | published site: variant folders, `_static/` served, no local paths | A§1.1 G4, UB-14 | first CI deploy | open |
 | M-09 | settings | branch rulesets R9 (`main`) and R10 (`gh-pages`) | B§3.4, A§5 step 2a | CI checks exist | open |
-| M-10 | decision | `choose` released: migrate the showcases (C§8.2) | C§8.2 | sphinx-needs release with `choose` | waiting |
+| M-10 | decision | `choose` supported by all useblocks tools: start [plan 20](20-choose-migration.md) (incl. its IDE check, step 9) | C§8.2, plan 20 | gate of plan 20 §1 | waiting |
 | M-11 | decision | demo dry run of the walk-through C§8.1 | C§8.1 | M-01, ideally M-10 | open |
 | M-12 | decision | hand plan 99 to the useblocks teams (which entries, which channel) | plan 99 | — | open |
 | M-13 | decision | open points for the BMS team (`BB_CHARGE_LIMITS`, `BB_HV_PROTECTION`, interface tags, release artifacts) | C§3, B§5.2 | — | open |

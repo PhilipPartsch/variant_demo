@@ -14,6 +14,11 @@ diesel / battery-electric, using the BMS from `rollout-demo-bms`) is built in
 | 6 | [06-automation.md](06-automation.md) | `A§` | CI for builds and tests; GitHub Pages with sphinx-needs and ubCode output side by side for all products | `ci/*` → `main` |
 | 7 | [07-manual-steps.md](07-manual-steps.md) | `MS§` | all manual steps of plans 3–6 and 99 (decisions, reviews, IDE session, browser checks, settings) — the other plans point here | — |
 
+Triggered plan (not in the execution order): [20-choose-migration.md](20-choose-migration.md)
+— migrate the alternatives from complementary `if` blocks to `choose` / `when`
+/ `otherwise` as soon as Sphinx-Needs (≥ 8.6.0) **and** ubc / ubCode support it
+(gate checked 2026-10-10: neither does yet).
+
 Bug list (not a step): [99-tool-bugs.md](99-tool-bugs.md) — bugs and gaps in
 the **useblocks tools** (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks,
 sphinx-mounts, ubc-action), each with a `branch@commit` marker, input, wrong

@@ -7,7 +7,7 @@ import warnings
 
 import pytest
 
-from conftest import BEV, PRODUCTS, ROOT, SITE, UBC, local, run
+from conftest import BEV, PRODUCTS, ROOT, SITE, UBC, local, make_repo, run
 from oracle import ALTERNATIVE, PAGES
 
 CONFIG = tomllib.loads((ROOT / "ubproject.toml").read_text())
@@ -56,29 +56,51 @@ def test_cnt04_allocations_target_interfaces(site, tool):
                 assert t.startswith("BMS_REQ_") and "interface" in needs[t].get("tags", []), (p, i, t)
 
 
-def flipping_ids(site) -> set:
-    """Alternatives with one id and the needs whose fingerprint follows them
-    (plan 99 PH-01, PH-03): their verdict can be fresh in one product only."""
-    alt = set(ALTERNATIVE) | {"IMPL_VCU_ENERGY_DISPLAY"}
-    out = set(alt)
-    for p in PRODUCTS:
-        for i, n in local(site[p]["ubc"]).items():
-            if any(t in alt for l in LINKS for t in (n.get(l) or [])):
-                out.add(i)
+# Needs whose verdict can be fresh in one product only (plan 99 PH-01: one
+# verdict per id). The alternatives with one id, and the needs whose review
+# fingerprint follows such a parent (PH-03). Excluded from the per-product
+# freshness check by name (decision 2026-10-10).
+PH01_EXCLUDED = {
+    "REQ_ENERGY_SOURCE": "alternative (BEV / diesel)",
+    "ARCH_CHG_INLET": "alternative (MCS / pantograph / none)",
+    "ARCH_CHG_SESSION_CONTROL": "alternative (EU / NA)",
+    "ARCH_VCU_ENERGY_DISPLAY": "satisfies REQ_ENERGY_SOURCE",
+    "DEC_CHARGING_INLET_PRIORITY": "affects ARCH_CHG_INLET",
+    "SWREQ_CHG_INTERFACE_DERATING": "refines ARCH_CHG_INLET",
+    "SWREQ_CHG_SESSION_START": "refines ARCH_CHG_SESSION_CONTROL",
+    "SWREQ_CHG_CURRENT_LIMIT": "refines ARCH_CHG_SESSION_CONTROL",
+}
+
+
+@pytest.fixture(scope="module")
+def verdicts(tmp_path_factory):
+    """verdict-check per product, in one copy of the repository."""
+    repo = make_repo(tmp_path_factory.mktemp("verdicts"))
+    out = {}
+    for product in PRODUCTS:
+        repo.configure(product)
+        p = run([UBC, "agent", "verdict-check", "-p", "."], cwd=repo.path)
+        out[product] = json.loads(p.out[p.out.index("{"):])
     return out
 
 
+
 @pytest.mark.parametrize("product", PRODUCTS)
-def test_cnt05_review_verdicts(site, repo, product):
-    repo.configure(product)
-    p = run([UBC, "agent", "verdict-check", "-p", "."], cwd=repo.path)
-    result = json.loads(p.out[p.out.index("{"):])
+def test_cnt05_review_verdicts(verdicts, product):
+    result = verdicts[product]
     assert not result["missing"] and not result["failing"] and not result["malformed"], result
     outdated = set(result["outdated"]) | set(result.get("unverifiable", []))
-    unexpected = outdated - flipping_ids(site)
-    assert not unexpected, f"outdated verdicts not explained by PH-01: {sorted(unexpected)}"
-    if outdated:
-        pytest.xfail(f"plan 99 PH-01 (verdict per id): {sorted(outdated)} outdated in {product}")
+    unexpected = outdated - set(PH01_EXCLUDED)
+    assert not unexpected, f"outdated verdicts in {product}: {sorted(unexpected)}"
+
+
+def test_cnt05_excluded_ids_reviewed_somewhere(site, verdicts):
+    """Every excluded id has a fresh verdict in at least one product that contains it."""
+    for nid, reason in PH01_EXCLUDED.items():
+        present = [p for p in PRODUCTS if nid in site[p]["ubc"]]
+        assert present, f"{nid} ({reason}) exists in no product: remove it from PH01_EXCLUDED"
+        fresh = [p for p in present if nid not in verdicts[p]["outdated"]]
+        assert fresh, f"{nid} ({reason}) has no fresh verdict in any product"
 
 
 def test_cnt06_brevity(site):
