@@ -1,0 +1,140 @@
+# CI of the CV platform (plan 6): every product with both toolchains, the tests
+# of plan 5, the assembled site, and on main the deploy to the gh-pages branch.
+# The jobs call the same scripts developers run locally (tools/*.sh).
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  products:
+    runs-on: ubuntu-latest
+    outputs:
+      list: ${{ steps.list.outputs.list }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - id: list
+        run: |
+          list=$(ls configs/*_defconfig | xargs -n1 basename | sed 's/_defconfig$//' | jq -R . | jq -sc .)
+          echo "list=$list" >> "$GITHUB_OUTPUT"; echo "$list"
+
+  build:
+    needs: products
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        product: ${{ fromJson(needs.products.outputs.list) }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup
+      - name: Build ${{ matrix.product }} (configure, CTest, ubc check, ubCode + sphinx-needs HTML, parity)
+        run: tools/build_product.sh "${{ matrix.product }}"
+      - name: Upload build
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: site-${{ matrix.product }}
+          path: build/site/${{ matrix.product }}
+          include-hidden-files: true
+          retention-days: 14
+
+  checks:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup
+      - name: Download the product builds
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: site-*
+          path: build/site
+      - name: Arrange build/site/<product>
+        run: for d in build/site/site-*; do mv "$d" "build/site/${d#build/site/site-}"; done; ls build/site
+      - name: Once-per-repo checks
+        run: tools/check_all.sh
+      - name: Tests L1-L6
+        run: SKIP_BUILD=1 tools/test_all.sh
+      - name: ubc agent doctor
+        run: ubc agent doctor -p .
+
+  site:
+    needs: [build, checks]
+    if: always() && needs.build.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: site-*
+          path: build/site
+      - run: for d in build/site/site-*; do mv "$d" "build/site/${d#build/site/site-}"; done
+      - name: Assemble the site (landing page, side by side, needs diff, tests)
+        run: .venv/bin/python tools/make_site.py --src build/site --out build/pages --repo-root "$GITHUB_WORKSPACE"
+      - name: Job summary
+        run: |
+          .venv/bin/python - >> "$GITHUB_STEP_SUMMARY" <<'PY'
+          import json
+          m = json.load(open("build/pages/products.json"))
+          print(f"### CV platform — commit `{m['commit'][:12]}`, BMS {m['bms']}\n")
+          print("| Product | Configuration | Needs ubc ↔ Sphinx | Tests |\n|---|---|---|---|")
+          for p in m["products"]:
+              diff = "identical" if p["needs_diff"] == 0 else f"{p['needs_diff']} differences"
+              print(f"| `{p['name']}` | {p['configuration']} | {diff} | {p['tests'][0]}/{p['tests'][1]} |")
+          print("\n" + " · ".join(f"{k} {v}" for k, v in m["tools"].items()))
+          PY
+      - name: Upload the site (preview)
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: site
+          path: build/pages
+          include-hidden-files: true
+          retention-days: 14
+
+  pages:
+    needs: [site, checks]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.checks.result == 'success' && needs.site.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    concurrency:
+      group: gh-pages
+      cancel-in-progress: false
+    steps:
+      - name: Check out gh-pages
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: gh-pages
+          path: pages
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: site
+          path: site
+      - name: Replace the site (every variant folder; retired products removed)
+        run: rsync -a --delete --exclude .git site/ pages/
+      - name: Commit and push
+        working-directory: pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "no changes"; exit 0; fi
+          git commit -q -m "site: ${GITHUB_SHA}"
+          git push origin gh-pages

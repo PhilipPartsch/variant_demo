@@ -1,0 +1,33 @@
+name: Set up the CV platform toolchain
+description: CMake / Ninja / graphviz, Python venv with the pinned docs toolchain, ubc.
+runs:
+  using: composite
+  steps:
+    - name: System packages
+      shell: bash
+      run: sudo apt-get update -q && sudo apt-get install -y -q ninja-build graphviz
+    - name: uv
+      uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+    - name: Python venv (.venv) with requirements.txt
+      shell: bash
+      run: |
+        uv venv .venv --python 3.12
+        uv pip install --python .venv/bin/python -r requirements.txt
+    # ubc is downloaded directly instead of with useblocks/ubc-action: the action
+    # uses actions/cache@v4 by tag, which this repository's SHA-pinning policy
+    # blocks (plan 99 UA-02). Same URL as the action, plus a checksum.
+    - name: ubc
+      shell: bash
+      env:
+        UBC_VERSION: "0.35.0"
+        UBC_SHA256: 210a464476f535bfd75cd12cbe77eb8a21cbaa36d6a76f74ff2d6b5eb24e45ea
+      run: |
+        dir="$RUNNER_TEMP/ubc-$UBC_VERSION"; mkdir -p "$dir"
+        curl -sSfL -o "$dir/ubc" "https://download.useblocks.com/ubc/$UBC_VERSION/ubc-linux-x64-$UBC_VERSION"
+        echo "$UBC_SHA256  $dir/ubc" | sha256sum -c -
+        chmod +x "$dir/ubc"; echo "$dir" >> "$GITHUB_PATH"
+    - name: Versions
+      shell: bash
+      run: |
+        cmake --version | head -1; ninja --version; dot -V
+        .venv/bin/python --version; ubc --version

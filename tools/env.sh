@@ -5,7 +5,8 @@
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 if [[ -z "${UBC:-}" ]]; then
-  UBC="$(ls -d "$HOME"/.vscode/extensions/useblocks.ubcode-*/server/cli/ubc 2>/dev/null | sort -V | tail -1)"
+  # no ubCode extension (e.g. CI): ls fails; must not abort callers using `set -euo pipefail`
+  UBC="$(ls -d "$HOME"/.vscode/extensions/useblocks.ubcode-*/server/cli/ubc 2>/dev/null | sort -V | tail -1 || true)"
   [[ -x "$UBC" ]] || UBC="$(command -v ubc || true)"
 fi
 [[ -x "$UBC" ]] || { echo "ubc not found: set UBC=<path to ubc>" >&2; exit 1; }
