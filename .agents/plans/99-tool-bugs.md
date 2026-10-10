@@ -77,6 +77,7 @@ documentation, convenience.
 | CL-06 | Sphinx-Codelinks | medium | duplicate need id in code aborts the build (uncaught `InvalidNeedException`) |
 | SM-01 | sphinx-mounts + ubc | medium | bare boolean condition: sphinx-mounts aborts the build, ubc warns and drops the rule |
 | UA-01 | ubc-action | low | Linux runners only |
+| UA-02 | ubc-action | medium | uses `actions/cache@v4` by tag: blocked in repositories that require SHA-pinned actions; downloads into the workspace, no checksum |
 
 ## 3. ubc / ubCode
 
@@ -730,3 +731,21 @@ warning); the abort comes from Sphinx-Codelinks — see CL-06.
 - **Summary:** the action installs ubc only on Linux runners; macOS / Windows jobs cannot run `ubc`.
 - **Solution A:** support macOS / Windows (the extension already ships ubc for them).
 - **Solution B:** document a manual install route (download URL per platform, checksum).
+
+### UA-02 Unpinned nested action, binary in the workspace
+
+- **Tool:** useblocks/ubc-action @ `393f60bb24e9988cd62f2044e4e200ad253395a7` (main, 2026-03-25)
+- **Marker:** `ci/pages@0400fa4` `.github/actions/setup/action.yml` (step `ubc`
+  with `uses: useblocks/ubc-action@393f60b…`), run
+  https://github.com/PhilipPartsch/variant_demo/actions/runs/38045904775 (2026-10-10).
+- **Summary:** the composite action calls `actions/cache@v4` by tag. A repository
+  that requires all actions to be pinned to a full-length commit SHA (GitHub
+  setting "Require actions to be pinned to a full-length commit SHA", B§3.4 R7)
+  rejects the whole action, although the caller pins `ubc-action` itself. The
+  action also downloads `ubc` into the working directory (an untracked file in
+  the checkout) and verifies no checksum.
+- **Input:** `uses: useblocks/ubc-action@393f60bb24e9988cd62f2044e4e200ad253395a7` with `version: "0.35.0"`.
+- **Wrong output:** `##[error]The action actions/cache@v4 is not allowed in PhilipPartsch/variant_demo because all actions must be from a repository owned by PhilipPartsch, created by GitHub, or match one of the patterns: astral-sh/setup-uv@*, useblocks/ubc-action@*. All actions must also be pinned to a full-length commit SHA.` — every job using the action fails in setup.
+- **Workaround:** download `ubc` directly from the same URL into `$RUNNER_TEMP`, check a pinned SHA-256 (`ci/pages`, `.github/actions/setup/action.yml`).
+- **Solution A:** pin `actions/cache` (and every nested action) to a commit SHA inside ubc-action.
+- **Solution B:** publish checksums next to the binaries and let the action verify them and install outside the workspace (`$RUNNER_TOOL_CACHE`).
