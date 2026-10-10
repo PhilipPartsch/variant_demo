@@ -1,0 +1,31 @@
+<map id="needflow" name="needflow">
+<area shape="rect" id="node1" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_CELL_VOLTAGE_LIMITS" target="_top" title="BMS_REQ_CELL_VOLTAGE_LIMITS" alt="" coords="5,240,295,496"/>
+<area shape="rect" id="node2" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_COOLING_REQUEST" target="_top" title="BMS_REQ_COOLING_REQUEST" alt="" coords="319,268,584,468"/>
+<area shape="rect" id="node3" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_FAULT_REACTION_TIME" target="_top" title="BMS_REQ_FAULT_REACTION_TIME" alt="" coords="1163,249,1457,487"/>
+<area shape="rect" id="node4" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_HEATING_REQUEST" target="_top" title="BMS_REQ_HEATING_REQUEST" alt="" coords="609,268,873,468"/>
+<area shape="rect" id="node5" href="https://bms-docs.invalid/0.1.0/specs/isolation-monitoring/requirements.html#REQ_ISOLATION_FAULT" target="_top" title="BMS_REQ_ISOLATION_FAULT" alt="" coords="1481,240,1733,496"/>
+<area shape="rect" id="node6" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_PACK_OVERCURRENT" target="_top" title="BMS_REQ_PACK_OVERCURRENT" alt="" coords="2149,240,2426,496"/>
+<area shape="rect" id="node7" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_POWER_DERATING" target="_top" title="BMS_REQ_POWER_DERATING" alt="" coords="2740,240,2997,496"/>
+<area shape="rect" id="node8" href="https://bms-docs.invalid/0.1.0/specs/state-estimation/requirements.html#REQ_SOC_ACCURACY" target="_top" title="BMS_REQ_SOC_ACCURACY" alt="" coords="3021,231,3257,505"/>
+<area shape="rect" id="node9" href="https://bms-docs.invalid/0.1.0/specs/state-estimation/requirements.html#REQ_SOC_INVALID_FLAG" target="_top" title="BMS_REQ_SOC_INVALID_FLAG" alt="" coords="3281,231,3544,505"/>
+<area shape="rect" id="node10" href="../region/na/annex.html#REQ_NA_CHARGING_STANDARD" target="_top" title="REQ_NA_CHARGING_STANDARD" alt="" coords="4047,315,4325,421"/>
+<area shape="poly" id="node29" href="../vehicle/user_stories.html#US_MARKET_CHARGING" target="_top" title="US_MARKET_CHARGING" alt="" coords="4341,686,4333,667,4311,650,4277,636,4234,627,4186,624,4138,627,4095,636,4061,650,4039,667,4031,686,4039,705,4061,723,4095,737,4138,745,4186,748,4234,745,4277,737,4311,723,4333,705"/>
+<area shape="rect" id="node11" href="../subsystems/bms/architecture.html#BB_ENERGY_STATE" target="_top" title="BB_ENERGY_STATE" alt="" coords="3314,15,3511,103"/>
+<area shape="rect" id="node20" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE" target="_top" title="REQ_ENERGY_SOURCE" alt="" coords="3569,324,3777,412"/>
+<area shape="rect" id="node12" href="../subsystems/bms/architecture.html#BB_POWER_LIMITS" target="_top" title="BB_POWER_LIMITS" alt="" coords="2387,15,2577,103"/>
+<area shape="rect" id="node22" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT" target="_top" title="REQ_TRACTION_POWER_LIMIT" alt="" coords="2451,324,2716,412"/>
+<area shape="rect" id="node13" href="../subsystems/bms/architecture.html#BB_HV_PROTECTION" target="_top" title="BB_HV_PROTECTION" alt="" coords="1511,5,1704,112"/>
+<area shape="rect" id="node24" href="../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT" target="_top" title="REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT" alt="" coords="1757,315,2124,421"/>
+<area shape="rect" id="node14" href="../subsystems/bms/architecture.html#BB_CHARGE_LIMITS" target="_top" title="BB_CHARGE_LIMITS" alt="" coords="496,15,697,103"/>
+<area shape="rect" id="node23" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER" target="_top" title="REQ_MAX_CHARGE_POWER" alt="" coords="897,324,1139,412"/>
+<area shape="rect" id="node15" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET" target="_top" title="ARCH_CHG_INLET" alt="" coords="931,5,1105,112"/>
+<area shape="rect" id="node16" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL" target="_top" title="ARCH_CHG_SESSION_CONTROL" alt="" coords="4049,5,4323,112"/>
+<area shape="rect" id="node17" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY" target="_top" title="ARCH_VCU_ENERGY_DISPLAY" alt="" coords="3656,15,3913,103"/>
+<area shape="rect" id="node21" href="../vehicle/requirements.html#REQ_RANGE_ESTIMATE" target="_top" title="REQ_RANGE_ESTIMATE" alt="" coords="3801,333,4014,403"/>
+<area shape="rect" id="node18" href="../subsystems/vcu/architecture.html#ARCH_VCU_POWER_MGMT" target="_top" title="ARCH_VCU_POWER_MGMT" alt="" coords="2686,15,2923,103"/>
+<area shape="rect" id="node19" href="../subsystems/vcu/architecture.html#ARCH_VCU_HV_SHUTDOWN" target="_top" title="ARCH_VCU_HV_SHUTDOWN" alt="" coords="1818,5,2063,112"/>
+<area shape="poly" id="node25" href="../vehicle/user_stories.html#US_RANGE_AWARENESS" target="_top" title="US_RANGE_AWARENESS" alt="" coords="3931,686,3923,671,3901,657,3866,647,3822,640,3773,637,3724,640,3680,647,3645,657,3622,671,3614,686,3622,701,3645,715,3680,726,3724,733,3773,735,3822,733,3866,726,3901,715,3923,701"/>
+<area shape="poly" id="node26" href="../vehicle/user_stories.html#US_PREDICTABLE_POWER" target="_top" title="US_PREDICTABLE_POWER" alt="" coords="2746,686,2738,667,2715,650,2679,636,2634,627,2583,624,2533,627,2487,636,2451,650,2428,667,2420,686,2428,705,2451,723,2487,737,2533,745,2583,748,2634,745,2679,737,2715,723,2738,705"/>
+<area shape="poly" id="node27" href="../vehicle/user_stories.html#US_FAST_DEPOT_CHARGING" target="_top" title="US_FAST_DEPOT_CHARGING" alt="" coords="1194,686,1186,667,1161,650,1122,636,1072,627,1018,624,964,627,914,636,875,650,850,667,842,686,850,705,875,723,914,737,964,745,1018,748,1072,745,1122,737,1161,723,1186,705"/>
+<area shape="poly" id="node28" href="../vehicle/user_stories.html#US_HV_SAFETY" target="_top" title="US_HV_SAFETY" alt="" coords="2066,686,2060,667,2042,650,2014,636,1979,627,1941,624,1902,627,1867,636,1839,650,1821,667,1815,686,1821,705,1839,723,1867,737,1902,745,1941,748,1979,745,2014,737,2042,723,2060,705"/>
+</map>

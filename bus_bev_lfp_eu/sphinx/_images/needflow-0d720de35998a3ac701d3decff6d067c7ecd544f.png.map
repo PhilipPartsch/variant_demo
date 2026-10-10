@@ -1,0 +1,36 @@
+<map id="needflow" name="needflow">
+<area shape="rect" id="node1" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_CELL_VOLTAGE_LIMITS" target="_top" title="BMS_REQ_CELL_VOLTAGE_LIMITS" alt="" coords="5,240,295,496"/>
+<area shape="rect" id="node2" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_COOLING_REQUEST" target="_top" title="BMS_REQ_COOLING_REQUEST" alt="" coords="319,268,584,468"/>
+<area shape="rect" id="node3" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_FAULT_REACTION_TIME" target="_top" title="BMS_REQ_FAULT_REACTION_TIME" alt="" coords="1509,249,1802,487"/>
+<area shape="rect" id="node4" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_HEATING_REQUEST" target="_top" title="BMS_REQ_HEATING_REQUEST" alt="" coords="609,268,873,468"/>
+<area shape="rect" id="node5" href="https://bms-docs.invalid/0.1.0/specs/isolation-monitoring/requirements.html#REQ_ISOLATION_FAULT" target="_top" title="BMS_REQ_ISOLATION_FAULT" alt="" coords="1827,240,2079,496"/>
+<area shape="rect" id="node6" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_PACK_OVERCURRENT" target="_top" title="BMS_REQ_PACK_OVERCURRENT" alt="" coords="2494,240,2771,496"/>
+<area shape="rect" id="node7" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_POWER_DERATING" target="_top" title="BMS_REQ_POWER_DERATING" alt="" coords="3085,240,3343,496"/>
+<area shape="rect" id="node8" href="https://bms-docs.invalid/0.1.0/specs/state-estimation/requirements.html#REQ_SOC_ACCURACY" target="_top" title="BMS_REQ_SOC_ACCURACY" alt="" coords="3367,231,3603,505"/>
+<area shape="rect" id="node9" href="https://bms-docs.invalid/0.1.0/specs/state-estimation/requirements.html#REQ_SOC_INVALID_FLAG" target="_top" title="BMS_REQ_SOC_INVALID_FLAG" alt="" coords="3627,231,3889,505"/>
+<area shape="rect" id="node10" href="../region/eu/annex.html#REQ_EU_CHARGING_STANDARD" target="_top" title="REQ_EU_CHARGING_STANDARD" alt="" coords="4384,315,4660,421"/>
+<area shape="poly" id="node32" href="../vehicle/user_stories.html#US_MARKET_CHARGING" target="_top" title="US_MARKET_CHARGING" alt="" coords="4677,686,4669,667,4647,650,4613,636,4570,627,4522,624,4474,627,4431,636,4397,650,4375,667,4367,686,4375,705,4397,723,4431,737,4474,745,4522,748,4570,745,4613,737,4647,723,4669,705"/>
+<area shape="rect" id="node11" href="../subsystems/bms/architecture.html#BB_ENERGY_STATE" target="_top" title="BB_ENERGY_STATE" alt="" coords="3659,15,3857,103"/>
+<area shape="rect" id="node21" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE" target="_top" title="REQ_ENERGY_SOURCE" alt="" coords="3914,324,4122,412"/>
+<area shape="rect" id="node12" href="../subsystems/bms/architecture.html#BB_POWER_LIMITS" target="_top" title="BB_POWER_LIMITS" alt="" coords="2733,15,2922,103"/>
+<area shape="rect" id="node23" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT" target="_top" title="REQ_TRACTION_POWER_LIMIT" alt="" coords="2796,324,3061,412"/>
+<area shape="rect" id="node13" href="../subsystems/bms/architecture.html#BB_HV_PROTECTION" target="_top" title="BB_HV_PROTECTION" alt="" coords="1856,5,2049,112"/>
+<area shape="rect" id="node25" href="../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT" target="_top" title="REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT" alt="" coords="2103,315,2469,421"/>
+<area shape="rect" id="node14" href="../subsystems/bms/architecture.html#BB_CHARGE_LIMITS" target="_top" title="BB_CHARGE_LIMITS" alt="" coords="496,15,697,103"/>
+<area shape="rect" id="node24" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER" target="_top" title="REQ_MAX_CHARGE_POWER" alt="" coords="897,324,1139,412"/>
+<area shape="rect" id="node15" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET" target="_top" title="ARCH_CHG_INLET" alt="" coords="1071,5,1245,112"/>
+<area shape="rect" id="node26" href="../vehicle/requirements.html#REQ_PANTOGRAPH_CHARGING" target="_top" title="REQ_PANTOGRAPH_CHARGING" alt="" coords="1215,324,1485,412"/>
+<area shape="rect" id="node16" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL" target="_top" title="ARCH_CHG_SESSION_CONTROL" alt="" coords="4385,5,4659,112"/>
+<area shape="rect" id="node17" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY" target="_top" title="ARCH_VCU_ENERGY_DISPLAY" alt="" coords="4000,15,4257,103"/>
+<area shape="rect" id="node22" href="../vehicle/requirements.html#REQ_RANGE_ESTIMATE" target="_top" title="REQ_RANGE_ESTIMATE" alt="" coords="4146,333,4359,403"/>
+<area shape="rect" id="node18" href="../subsystems/vcu/architecture.html#ARCH_VCU_POWER_MGMT" target="_top" title="ARCH_VCU_POWER_MGMT" alt="" coords="3033,15,3270,103"/>
+<area shape="rect" id="node19" href="../subsystems/vcu/architecture.html#ARCH_VCU_HV_SHUTDOWN" target="_top" title="ARCH_VCU_HV_SHUTDOWN" alt="" coords="2163,5,2409,112"/>
+<area shape="rect" id="node20" href="../subsystems/vcu/architecture.html#ARCH_VCU_DOOR_INTERLOCK" target="_top" title="ARCH_VCU_DOOR_INTERLOCK" alt="" coords="4759,15,5023,103"/>
+<area shape="rect" id="node27" href="../vehicle/requirements.html#REQ_DOOR_DRIVE_INTERLOCK" target="_top" title="REQ_DOOR_DRIVE_INTERLOCK" alt="" coords="4757,324,5025,412"/>
+<area shape="poly" id="node28" href="../vehicle/user_stories.html#US_RANGE_AWARENESS" target="_top" title="US_RANGE_AWARENESS" alt="" coords="4271,686,4263,671,4241,657,4206,647,4162,640,4113,637,4064,640,4020,647,3985,657,3962,671,3954,686,3962,701,3985,715,4020,726,4064,733,4113,735,4162,733,4206,726,4241,715,4263,701"/>
+<area shape="poly" id="node29" href="../vehicle/user_stories.html#US_PREDICTABLE_POWER" target="_top" title="US_PREDICTABLE_POWER" alt="" coords="3092,686,3084,667,3061,650,3025,636,2979,627,2929,624,2878,627,2833,636,2797,650,2774,667,2766,686,2774,705,2797,723,2833,737,2878,745,2929,748,2979,745,3025,737,3061,723,3084,705"/>
+<area shape="poly" id="node30" href="../vehicle/user_stories.html#US_FAST_DEPOT_CHARGING" target="_top" title="US_FAST_DEPOT_CHARGING" alt="" coords="1168,686,1159,667,1134,650,1095,636,1046,627,991,624,937,627,888,636,849,650,824,667,815,686,824,705,849,723,888,737,937,745,991,748,1046,745,1095,737,1134,723,1159,705"/>
+<area shape="poly" id="node31" href="../vehicle/user_stories.html#US_HV_SAFETY" target="_top" title="US_HV_SAFETY" alt="" coords="2411,686,2405,667,2387,650,2360,636,2325,627,2286,624,2247,627,2212,636,2185,650,2167,667,2161,686,2167,705,2185,723,2212,737,2247,745,2286,748,2325,745,2360,737,2387,723,2405,705"/>
+<area shape="poly" id="node33" href="../vehicle/user_stories.html#US_OPPORTUNITY_CHARGING" target="_top" title="US_OPPORTUNITY_CHARGING" alt="" coords="1561,686,1552,667,1526,650,1485,636,1434,627,1377,624,1320,627,1268,636,1227,650,1201,667,1192,686,1201,705,1227,723,1268,737,1320,745,1377,748,1434,745,1485,737,1526,723,1552,705"/>
+<area shape="poly" id="node34" href="../vehicle/user_stories.html#US_PASSENGER_DOOR_SAFETY" target="_top" title="US_PASSENGER_DOOR_SAFETY" alt="" coords="5082,686,5072,667,5045,650,5003,636,4950,627,4891,624,4832,627,4779,636,4737,650,4710,667,4701,686,4710,705,4737,723,4779,737,4832,745,4891,748,4950,745,5003,737,5045,723,5072,705"/>
+</map>

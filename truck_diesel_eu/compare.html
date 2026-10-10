@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>truck_diesel_eu — sphinx-needs and ubCode</title>
+<link rel="stylesheet" href="../assets/site.css"></head><body>
+<div class="bar"><a href="../index.html">all products</a>
+<label>Product <select id="product"><option value="bus_bev_lfp_eu">bus_bev_lfp_eu</option><option value="truck_bev_lfp_na">truck_bev_lfp_na</option><option value="truck_bev_nmc_eu">truck_bev_nmc_eu</option><option value="truck_diesel_eu" selected>truck_diesel_eu</option></select></label>
+<label>Page <select id="page"><option value="index.html">index</option><option value="method/architecture.html">method/architecture</option><option value="method/metamodel.html">method/metamodel</option><option value="method/requirements.html">method/requirements</option><option value="method/testing.html">method/testing</option><option value="region/eu/annex.html">region/eu/annex</option><option value="reports/index.html">reports/index</option><option value="search.html">search</option><option value="subsystems/eng/architecture.html">subsystems/eng/architecture</option><option value="subsystems/eng/code_trace.html">subsystems/eng/code_trace</option><option value="subsystems/eng/index.html">subsystems/eng/index</option><option value="subsystems/eng/software_requirements.html">subsystems/eng/software_requirements</option><option value="subsystems/vcu/architecture.html">subsystems/vcu/architecture</option><option value="subsystems/vcu/code_trace.html">subsystems/vcu/code_trace</option><option value="subsystems/vcu/index.html">subsystems/vcu/index</option><option value="subsystems/vcu/software_requirements.html">subsystems/vcu/software_requirements</option><option value="system/overview.html">system/overview</option><option value="vehicle/requirements.html">vehicle/requirements</option><option value="vehicle/user_stories.html">vehicle/user_stories</option></select></label>
+<span class="pane-title">left: sphinx-needs · right: ubCode</span>
+<a id="open-s" href="sphinx/index.html" target="_blank">open sphinx-needs</a>
+<a id="open-u" href="ubcode/index.html" target="_blank">open ubCode</a></div>
+<div class="panes"><iframe id="s" src="sphinx/index.html" title="sphinx-needs"></iframe>
+<iframe id="u" src="ubcode/index.html" title="ubCode"></iframe></div>
+<script>
+const page = document.getElementById('page');
+function show(p) { for (const [f, d] of [['s','sphinx'],['u','ubcode']]) {
+  document.getElementById(f).src = d + '/' + p; document.getElementById('open-' + f).href = d + '/' + p; }
+  history.replaceState(null, '', '#' + p); }
+page.addEventListener('change', () => show(page.value));
+document.getElementById('product').addEventListener('change', e =>
+  location.href = '../' + e.target.value + '/compare.html#' + page.value);
+const start = decodeURIComponent(location.hash.slice(1));
+if (start && [...page.options].some(o => o.value === start)) { page.value = start; show(start); }
+</script></body></html>

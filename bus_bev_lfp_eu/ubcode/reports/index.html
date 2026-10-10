@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="ubc">
+<title>Reports</title>
+<link rel="stylesheet" href="../_static/ubc.css">
+<script>(function(){try{var t=localStorage.getItem("ubc-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<script src="../_static/ubc-shell.js" defer></script>
+<script src="../_static/ubc-search.js" defer></script>
+<script src="../_static/ubc-mermaid.js" defer></script>
+</head>
+<body>
+<a class="ub-skip-to-content" href="#ub-main">Skip to content</a>
+<input type="checkbox" id="ub-drawer-nav" class="ub-drawer-toggle" aria-label="Navigation menu">
+<input type="checkbox" id="ub-drawer-toc" class="ub-drawer-toggle" aria-label="Page contents menu">
+<header class="ub-mobile-header ub-mh-nav ub-mh-toc">
+<div class="ub-mh-left"><label for="ub-drawer-nav" class="ub-mobile-btn ub-mobile-nav-open"><svg class="ub-mobile-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></label></div>
+<div class="ub-mh-center"><a class="ub-mobile-title" href="../index.html">cv_platform</a></div>
+<div class="ub-mh-right"><label for="ub-drawer-toc" class="ub-mobile-btn ub-mobile-toc-open"><svg class="ub-mobile-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 7h11M9 12h11M9 17h11M4.5 7h.01M4.5 12h.01M4.5 17h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></label></div>
+</header>
+<label for="ub-drawer-nav" class="ub-scrim ub-scrim-nav" aria-hidden="true"></label>
+<label for="ub-drawer-toc" class="ub-scrim ub-scrim-toc" aria-hidden="true"></label>
+<div class="ub-page">
+<aside class="ub-sidebar-drawer">
+<div class="ub-sidebar">
+<div class="ub-brand"><a class="ub-brand-link" href="../index.html">cv_platform</a></div>
+<nav class="ub-nav" aria-label="Site navigation">
+<p class="ub-nav-caption" role="heading" aria-level="2">Vehicle</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../vehicle/user_stories.html">User stories</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../vehicle/requirements.html">Vehicle requirements</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../system/overview.html">System overview</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Subsystems</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-1" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Vehicle Control Unit (VCU)">
+    <label for="ubnav-toggle-1" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../subsystems/vcu/index.html">Vehicle Control Unit (VCU)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/vcu/architecture.html">Architecture</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/vcu/software_requirements.html">Software requirements</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/vcu/code_trace.html">Code trace</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-2" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Charging Controller (CHG)">
+    <label for="ubnav-toggle-2" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../subsystems/chg/index.html">Charging Controller (CHG)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/chg/architecture.html">Architecture</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/chg/software_requirements.html">Software requirements</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/chg/code_trace.html">Code trace</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-3" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Battery Management System (BMS)">
+    <label for="ubnav-toggle-3" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../subsystems/bms/index.html">Battery Management System (BMS)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/bms/architecture.html">BMS black box</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/bms/integration.html">BMS integration</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Market</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../region/eu/annex.html">Market annex: Europe</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Project</p>
+<ul class="ub-nav-list ub-current-ancestor">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/risks.html">Risks</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/decisions.html">Decisions</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/test_results.html">Test results</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/gaps.html">Workflow gaps</a>
+  </li>
+  <li class="ub-nav-item ub-current">
+    <a class="ub-nav-link ub-current" href="#">Reports</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Method</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../method/metamodel.html">Metamodel</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../method/requirements.html">Requirements engineering</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../method/architecture.html">Architecture modelling</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../method/testing.html">Test strategy</a>
+  </li>
+</ul>
+</nav>
+</div>
+</aside>
+<div class="ub-main-column">
+<div class="ub-content-icons"><label for="ub-drawer-toc" class="ub-toc-content-open" title="On this page"><svg class="ub-mobile-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 7h11M9 12h11M9 17h11M4.5 7h.01M4.5 12h.01M4.5 17h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></label></div>
+<main class="ub-content" id="ub-main">
+<section id="reports">
+  <h1>Reports<a class="headerlink" href="#reports" title="Link to this heading">¶</a></h1>
+  <p>Traceability, coverage and BMS usage of this build&#x27;s product
+(bus_bev_lfp_eu). Every table is evaluated per product: switching the
+product changes the rows without changing the sources.</p>
+  <section id="product-and-bms-version">
+    <h2>Product and BMS version<a class="headerlink" href="#product-and-bms-version" title="Link to this heading">¶</a></h2>
+    <ul>
+      <li>
+        <p>Product: bus_bev_lfp_eu (vehicle bus,
+powertrain bev, market eu)</p>
+      </li>
+      <li>
+        <p>BMS release 0.1.0 (<code>third_party/bms/0.1.0/</code>), cell chemistry
+lfp (empty for diesel products: no BMS)</p>
+      </li>
+    </ul>
+  </section>
+  <section id="vehicle-requirements-architecture">
+    <h2>Vehicle requirements → architecture<a class="headerlink" href="#vehicle-requirements-architecture" title="Link to this heading">¶</a></h2>
+    <p>Every vehicle requirement and the CV architecture elements (<code>arch</code>) and BMS
+black boxes (<code>bms_block</code>) that satisfy it.</p>
+    <div class="ub-needtable">
+      <div class="ub-needtable-scroll">
+        <table class="ub-needtable NEEDS_TABLE">
+          <thead><tr><th scope="col" class="needs_col_id" data-col="id">ID</th><th scope="col" class="needs_col_title" data-col="title">Title</th><th scope="col" class="needs_col_type" data-col="type">Type</th><th scope="col" class="needs_col_satisfies" data-col="satisfies">Satisfies</th></tr></thead>
+          <tbody>
+            <tr class="need" data-need-id="ARCH_CHG_INLET"><td><a class="ub-xref" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET">ARCH_CHG_INLET</a></td><td>High-power charging interface</td><td>arch</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_PANTOGRAPH_CHARGING">REQ_PANTOGRAPH_CHARGING</a></td></tr>
+            <tr class="need" data-need-id="ARCH_CHG_SESSION_CONTROL"><td><a class="ub-xref" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL">ARCH_CHG_SESSION_CONTROL</a></td><td>CCS inlet and charging session</td><td>arch</td><td><a class="ub-xref" href="../region/eu/annex.html#REQ_EU_CHARGING_STANDARD">REQ_EU_CHARGING_STANDARD</a></td></tr>
+            <tr class="need" data-need-id="ARCH_VCU_DOOR_INTERLOCK"><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_DOOR_INTERLOCK">ARCH_VCU_DOOR_INTERLOCK</a></td><td>Door and drive interlock</td><td>arch</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_DOOR_DRIVE_INTERLOCK">REQ_DOOR_DRIVE_INTERLOCK</a></td></tr>
+            <tr class="need" data-need-id="ARCH_VCU_ENERGY_DISPLAY"><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY">ARCH_VCU_ENERGY_DISPLAY</a></td><td>Energy display manager</td><td>arch</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE">REQ_ENERGY_SOURCE</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_RANGE_ESTIMATE">REQ_RANGE_ESTIMATE</a></td></tr>
+            <tr class="need" data-need-id="ARCH_VCU_HV_SHUTDOWN"><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_HV_SHUTDOWN">ARCH_VCU_HV_SHUTDOWN</a></td><td>High-voltage shutdown coordinator</td><td>arch</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a></td></tr>
+            <tr class="need" data-need-id="ARCH_VCU_POWER_MGMT"><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_POWER_MGMT">ARCH_VCU_POWER_MGMT</a></td><td>Traction power manager</td><td>arch</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT">REQ_TRACTION_POWER_LIMIT</a></td></tr>
+            <tr class="need" data-need-id="BB_CHARGE_LIMITS"><td><a class="ub-xref" href="../subsystems/bms/architecture.html#BB_CHARGE_LIMITS">BB_CHARGE_LIMITS</a></td><td>Battery charging limits</td><td>bms_block</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a></td></tr>
+            <tr class="need" data-need-id="BB_ENERGY_STATE"><td><a class="ub-xref" href="../subsystems/bms/architecture.html#BB_ENERGY_STATE">BB_ENERGY_STATE</a></td><td>Battery energy state</td><td>bms_block</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE">REQ_ENERGY_SOURCE</a></td></tr>
+            <tr class="need" data-need-id="BB_HV_PROTECTION"><td><a class="ub-xref" href="../subsystems/bms/architecture.html#BB_HV_PROTECTION">BB_HV_PROTECTION</a></td><td>Battery isolation protection</td><td>bms_block</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a></td></tr>
+            <tr class="need" data-need-id="BB_POWER_LIMITS"><td><a class="ub-xref" href="../subsystems/bms/architecture.html#BB_POWER_LIMITS">BB_POWER_LIMITS</a></td><td>Battery power limits</td><td>bms_block</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT">REQ_TRACTION_POWER_LIMIT</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <section id="software-requirements-code-and-tests">
+    <h2>Software requirements → code and tests<a class="headerlink" href="#software-requirements-code-and-tests" title="Link to this heading">¶</a></h2>
+    <div class="ub-needtable">
+      <div class="ub-needtable-scroll">
+        <table class="ub-needtable NEEDS_TABLE">
+          <thead><tr><th scope="col" class="needs_col_id" data-col="id">ID</th><th scope="col" class="needs_col_title" data-col="title">Title</th><th scope="col" class="needs_col_type" data-col="type">Type</th><th scope="col" class="needs_col_implements" data-col="implements">Implements</th><th scope="col" class="needs_col_verifies" data-col="verifies">Verifies</th></tr></thead>
+          <tbody>
+            <tr class="need" data-need-id="IMPL_CHG_CURRENT_LIMIT"><td><a class="ub-xref" href="../subsystems/chg/code_trace.html#IMPL_CHG_CURRENT_LIMIT">IMPL_CHG_CURRENT_LIMIT</a></td><td>Charging current from power and pack voltage</td><td>impl</td><td><a class="ub-xref" href="../subsystems/chg/software_requirements.html#SWREQ_CHG_CURRENT_LIMIT">SWREQ_CHG_CURRENT_LIMIT</a></td><td></td></tr>
+            <tr class="need" data-need-id="IMPL_CHG_INTERFACE_DERATING"><td><a class="ub-xref" href="../subsystems/chg/code_trace.html#IMPL_CHG_INTERFACE_DERATING">IMPL_CHG_INTERFACE_DERATING</a></td><td>Halve current on hot contacts</td><td>impl</td><td><a class="ub-xref" href="../subsystems/chg/software_requirements.html#SWREQ_CHG_INTERFACE_DERATING">SWREQ_CHG_INTERFACE_DERATING</a></td><td></td></tr>
+            <tr class="need" data-need-id="IMPL_CHG_PANTOGRAPH_SEQUENCE"><td><a class="ub-xref" href="../subsystems/chg/code_trace.html#IMPL_CHG_PANTOGRAPH_SEQUENCE">IMPL_CHG_PANTOGRAPH_SEQUENCE</a></td><td>Raise pantograph at standstill only</td><td>impl</td><td><a class="ub-xref" href="../subsystems/chg/software_requirements.html#SWREQ_CHG_PANTOGRAPH_SEQUENCE">SWREQ_CHG_PANTOGRAPH_SEQUENCE</a></td><td></td></tr>
+            <tr class="need" data-need-id="IMPL_CHG_SESSION_START"><td><a class="ub-xref" href="../subsystems/chg/code_trace.html#IMPL_CHG_SESSION_START">IMPL_CHG_SESSION_START</a></td><td>Start session only with locked inlet</td><td>impl</td><td><a class="ub-xref" href="../subsystems/chg/software_requirements.html#SWREQ_CHG_SESSION_START">SWREQ_CHG_SESSION_START</a></td><td></td></tr>
+            <tr class="need" data-need-id="IMPL_VCU_DOOR_INTERLOCK"><td><a class="ub-xref" href="../subsystems/vcu/code_trace.html#IMPL_VCU_DOOR_INTERLOCK">IMPL_VCU_DOOR_INTERLOCK</a></td><td>Zero torque with open door</td><td>impl</td><td><a class="ub-xref" href="../subsystems/vcu/software_requirements.html#SWREQ_VCU_DOOR_INTERLOCK">SWREQ_VCU_DOOR_INTERLOCK</a></td><td></td></tr>
+            <tr class="need" data-need-id="IMPL_VCU_ENERGY_DISPLAY"><td><a class="ub-xref" href="../subsystems/vcu/code_trace.html#IMPL_VCU_ENERGY_DISPLAY">IMPL_VCU_ENERGY_DISPLAY</a></td><td>Show remaining energy (state of charge)</td><td>impl</td><td><a class="ub-xref" href="../subsystems/vcu/software_requirements.html#SWREQ_VCU_ENERGY_DISPLAY">SWREQ_VCU_ENERGY_DISPLAY</a></td><td></td></tr>
+            <tr class="need" data-need-id="IMPL_VCU_HV_SHUTDOWN"><td><a class="ub-xref" href="../subsystems/vcu/code_trace.html#IMPL_VCU_HV_SHUTDOWN">IMPL_VCU_HV_SHUTDOWN</a></td><td>Request contactor opening on isolation fault</td><td>impl</td><td><a class="ub-xref" href="../subsystems/vcu/software_requirements.html#SWREQ_VCU_HV_SHUTDOWN">SWREQ_VCU_HV_SHUTDOWN</a></td><td></td></tr>
+            <tr class="need" data-need-id="IMPL_VCU_POWER_LIMIT_APPLY"><td><a class="ub-xref" href="../subsystems/vcu/code_trace.html#IMPL_VCU_POWER_LIMIT_APPLY">IMPL_VCU_POWER_LIMIT_APPLY</a></td><td>Apply traction power limit</td><td>impl</td><td><a class="ub-xref" href="../subsystems/vcu/software_requirements.html#SWREQ_VCU_POWER_LIMIT_APPLY">SWREQ_VCU_POWER_LIMIT_APPLY</a></td><td></td></tr>
+            <tr class="need" data-need-id="TEST_CHG_CURRENT_LIMIT"><td><a class="ub-xref" href="../subsystems/chg/code_trace.html#TEST_CHG_CURRENT_LIMIT">TEST_CHG_CURRENT_LIMIT</a></td><td>Charging current follows the pack voltage</td><td>test</td><td></td><td><a class="ub-xref" href="../subsystems/chg/software_requirements.html#SWREQ_CHG_CURRENT_LIMIT">SWREQ_CHG_CURRENT_LIMIT</a></td></tr>
+            <tr class="need" data-need-id="TEST_CHG_INTERFACE_DERATING"><td><a class="ub-xref" href="../subsystems/chg/code_trace.html#TEST_CHG_INTERFACE_DERATING">TEST_CHG_INTERFACE_DERATING</a></td><td>Hot contacts halve the current</td><td>test</td><td></td><td><a class="ub-xref" href="../subsystems/chg/software_requirements.html#SWREQ_CHG_INTERFACE_DERATING">SWREQ_CHG_INTERFACE_DERATING</a></td></tr>
+            <tr class="need" data-need-id="TEST_CHG_PANTOGRAPH_SEQUENCE"><td><a class="ub-xref" href="../subsystems/chg/code_trace.html#TEST_CHG_PANTOGRAPH_SEQUENCE">TEST_CHG_PANTOGRAPH_SEQUENCE</a></td><td>Pantograph rises only at standstill</td><td>test</td><td></td><td><a class="ub-xref" href="../subsystems/chg/software_requirements.html#SWREQ_CHG_PANTOGRAPH_SEQUENCE">SWREQ_CHG_PANTOGRAPH_SEQUENCE</a></td></tr>
+            <tr class="need" data-need-id="TEST_CHG_SESSION_START"><td><a class="ub-xref" href="../subsystems/chg/code_trace.html#TEST_CHG_SESSION_START">TEST_CHG_SESSION_START</a></td><td>Session starts only with locked inlet</td><td>test</td><td></td><td><a class="ub-xref" href="../subsystems/chg/software_requirements.html#SWREQ_CHG_SESSION_START">SWREQ_CHG_SESSION_START</a></td></tr>
+            <tr class="need" data-need-id="TEST_VCU_DOOR_INTERLOCK"><td><a class="ub-xref" href="../subsystems/vcu/code_trace.html#TEST_VCU_DOOR_INTERLOCK">TEST_VCU_DOOR_INTERLOCK</a></td><td>Open door sets torque to zero</td><td>test</td><td></td><td><a class="ub-xref" href="../subsystems/vcu/software_requirements.html#SWREQ_VCU_DOOR_INTERLOCK">SWREQ_VCU_DOOR_INTERLOCK</a></td></tr>
+            <tr class="need" data-need-id="TEST_VCU_ENERGY_DISPLAY"><td><a class="ub-xref" href="../subsystems/vcu/code_trace.html#TEST_VCU_ENERGY_DISPLAY">TEST_VCU_ENERGY_DISPLAY</a></td><td>Remaining energy is rounded to percent</td><td>test</td><td></td><td><a class="ub-xref" href="../subsystems/vcu/software_requirements.html#SWREQ_VCU_ENERGY_DISPLAY">SWREQ_VCU_ENERGY_DISPLAY</a></td></tr>
+            <tr class="need" data-need-id="TEST_VCU_HV_SHUTDOWN"><td><a class="ub-xref" href="../subsystems/vcu/code_trace.html#TEST_VCU_HV_SHUTDOWN">TEST_VCU_HV_SHUTDOWN</a></td><td>Isolation fault requests contactor opening</td><td>test</td><td></td><td><a class="ub-xref" href="../subsystems/vcu/software_requirements.html#SWREQ_VCU_HV_SHUTDOWN">SWREQ_VCU_HV_SHUTDOWN</a></td></tr>
+            <tr class="need" data-need-id="TEST_VCU_POWER_LIMIT_APPLY"><td><a class="ub-xref" href="../subsystems/vcu/code_trace.html#TEST_VCU_POWER_LIMIT_APPLY">TEST_VCU_POWER_LIMIT_APPLY</a></td><td>Torque is limited by the power limit</td><td>test</td><td></td><td><a class="ub-xref" href="../subsystems/vcu/software_requirements.html#SWREQ_VCU_POWER_LIMIT_APPLY">SWREQ_VCU_POWER_LIMIT_APPLY</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <section id="bms-usage">
+    <h2>BMS usage<a class="headerlink" href="#bms-usage" title="Link to this heading">¶</a></h2>
+    <p>BMS interface needs this product allocates, with the chemistry they are
+resolved for.</p>
+    <div class="ub-needtable">
+      <div class="ub-needtable-scroll">
+        <table class="ub-needtable NEEDS_TABLE">
+          <thead><tr><th scope="col" class="needs_col_id" data-col="id">ID</th><th scope="col" class="needs_col_title" data-col="title">Title</th><th scope="col" class="needs_col_allocates" data-col="allocates">Allocates</th></tr></thead>
+          <tbody>
+            <tr class="need" data-need-id="BB_CHARGE_LIMITS"><td><a class="ub-xref" href="../subsystems/bms/architecture.html#BB_CHARGE_LIMITS">BB_CHARGE_LIMITS</a></td><td>Battery charging limits</td><td><a href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_CELL_VOLTAGE_LIMITS">BMS_REQ_CELL_VOLTAGE_LIMITS</a>; <a href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_COOLING_REQUEST">BMS_REQ_COOLING_REQUEST</a>; <a href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_HEATING_REQUEST">BMS_REQ_HEATING_REQUEST</a></td></tr>
+            <tr class="need" data-need-id="BB_ENERGY_STATE"><td><a class="ub-xref" href="../subsystems/bms/architecture.html#BB_ENERGY_STATE">BB_ENERGY_STATE</a></td><td>Battery energy state</td><td><a href="https://bms-docs.invalid/0.1.0/specs/state-estimation/requirements.html#REQ_SOC_ACCURACY">BMS_REQ_SOC_ACCURACY</a>; <a href="https://bms-docs.invalid/0.1.0/specs/state-estimation/requirements.html#REQ_SOC_INVALID_FLAG">BMS_REQ_SOC_INVALID_FLAG</a></td></tr>
+            <tr class="need" data-need-id="BB_HV_PROTECTION"><td><a class="ub-xref" href="../subsystems/bms/architecture.html#BB_HV_PROTECTION">BB_HV_PROTECTION</a></td><td>Battery isolation protection</td><td><a href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_FAULT_REACTION_TIME">BMS_REQ_FAULT_REACTION_TIME</a>; <a href="https://bms-docs.invalid/0.1.0/specs/isolation-monitoring/requirements.html#REQ_ISOLATION_FAULT">BMS_REQ_ISOLATION_FAULT</a></td></tr>
+            <tr class="need" data-need-id="BB_POWER_LIMITS"><td><a class="ub-xref" href="../subsystems/bms/architecture.html#BB_POWER_LIMITS">BB_POWER_LIMITS</a></td><td>Battery power limits</td><td><a href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_PACK_OVERCURRENT">BMS_REQ_PACK_OVERCURRENT</a>; <a href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_POWER_DERATING">BMS_REQ_POWER_DERATING</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <section id="needflow-user-story-to-bms">
+    <h2>Needflow: user story to BMS<a class="headerlink" href="#needflow-user-story-to-bms" title="Link to this heading">¶</a></h2>
+    <div class="directive directive-mermaid ub-needflow align-center">
+      <pre class="mermaid">
+flowchart TD
+    ARCH_CHG_INLET[&quot;Architecture&lt;br/&gt;High-power&lt;br/&gt;charging&lt;br/&gt;interface&lt;br/&gt;ARCH_CHG_INLET&quot;]
+    ARCH_CHG_SESSION_CONTROL[&quot;Architecture&lt;br/&gt;CCS inlet and&lt;br/&gt;charging&lt;br/&gt;session&lt;br/&gt;ARCH_CHG_SESSION_CONTROL&quot;]
+    ARCH_VCU_DOOR_INTERLOCK[&quot;Architecture&lt;br/&gt;Door and drive&lt;br/&gt;interlock&lt;br/&gt;ARCH_VCU_DOOR_INTERLOCK&quot;]
+    ARCH_VCU_ENERGY_DISPLAY[&quot;Architecture&lt;br/&gt;Energy display&lt;br/&gt;manager&lt;br/&gt;ARCH_VCU_ENERGY_DISPLAY&quot;]
+    ARCH_VCU_HV_SHUTDOWN[&quot;Architecture&lt;br/&gt;High-voltage&lt;br/&gt;shutdown&lt;br/&gt;coordinator&lt;br/&gt;ARCH_VCU_HV_SHUTDOWN&quot;]
+    ARCH_VCU_POWER_MGMT[&quot;Architecture&lt;br/&gt;Traction power&lt;br/&gt;manager&lt;br/&gt;ARCH_VCU_POWER_MGMT&quot;]
+    BB_CHARGE_LIMITS[&quot;BMS Black Box&lt;br/&gt;Battery&lt;br/&gt;charging limits&lt;br/&gt;BB_CHARGE_LIMITS&quot;]
+    BB_ENERGY_STATE[&quot;BMS Black Box&lt;br/&gt;Battery energy&lt;br/&gt;state&lt;br/&gt;BB_ENERGY_STATE&quot;]
+    BB_HV_PROTECTION[&quot;BMS Black Box&lt;br/&gt;Battery&lt;br/&gt;isolation&lt;br/&gt;protection&lt;br/&gt;BB_HV_PROTECTION&quot;]
+    BB_POWER_LIMITS[&quot;BMS Black Box&lt;br/&gt;Battery power&lt;br/&gt;limits&lt;br/&gt;BB_POWER_LIMITS&quot;]
+    BMS_REQ_CELL_VOLTAGE_LIMITS[&quot;Requirement&lt;br/&gt;The battery&lt;br/&gt;management&lt;br/&gt;system shall&lt;br/&gt;open the&lt;br/&gt;high-voltage&lt;br/&gt;contactors when&lt;br/&gt;any cell&lt;br/&gt;voltage leaves&lt;br/&gt;the safe window&lt;br/&gt;of the pack&lt;br/&gt;chemistry&lt;br/&gt;BMS_REQ_CELL_VOLTAGE_LIMITS&quot;]
+    BMS_REQ_COOLING_REQUEST[&quot;Requirement&lt;br/&gt;The battery&lt;br/&gt;management&lt;br/&gt;system shall&lt;br/&gt;request coolant&lt;br/&gt;flow when the&lt;br/&gt;highest cell&lt;br/&gt;temperature&lt;br/&gt;exceeds 35 °C&lt;br/&gt;BMS_REQ_COOLING_REQUEST&quot;]
+    BMS_REQ_FAULT_REACTION_TIME[&quot;Requirement&lt;br/&gt;The battery&lt;br/&gt;management&lt;br/&gt;system shall&lt;br/&gt;issue the&lt;br/&gt;contactor-open&lt;br/&gt;command within&lt;br/&gt;50 ms of&lt;br/&gt;detecting a&lt;br/&gt;cell-protection&lt;br/&gt;limit violation&lt;br/&gt;BMS_REQ_FAULT_REACTION_TIME&quot;]
+    BMS_REQ_HEATING_REQUEST[&quot;Requirement&lt;br/&gt;The battery&lt;br/&gt;management&lt;br/&gt;system shall&lt;br/&gt;request pack&lt;br/&gt;heating when&lt;br/&gt;the lowest cell&lt;br/&gt;temperature is&lt;br/&gt;below 5 °C&lt;br/&gt;BMS_REQ_HEATING_REQUEST&quot;]
+    BMS_REQ_ISOLATION_FAULT[&quot;Requirement&lt;br/&gt;The battery&lt;br/&gt;management&lt;br/&gt;system shall&lt;br/&gt;report an&lt;br/&gt;isolation fault&lt;br/&gt;when the&lt;br/&gt;isolation&lt;br/&gt;resistance&lt;br/&gt;falls below 500&lt;br/&gt;Ω per volt of&lt;br/&gt;pack voltage&lt;br/&gt;BMS_REQ_ISOLATION_FAULT&quot;]
+    BMS_REQ_PACK_OVERCURRENT[&quot;Requirement&lt;br/&gt;The battery&lt;br/&gt;management&lt;br/&gt;system shall&lt;br/&gt;open the&lt;br/&gt;high-voltage&lt;br/&gt;contactors when&lt;br/&gt;the pack&lt;br/&gt;discharge&lt;br/&gt;current exceeds&lt;br/&gt;350 A for more&lt;br/&gt;than 100 ms&lt;br/&gt;BMS_REQ_PACK_OVERCURRENT&quot;]
+    BMS_REQ_POWER_DERATING[&quot;Requirement&lt;br/&gt;The battery&lt;br/&gt;management&lt;br/&gt;system shall&lt;br/&gt;reduce the&lt;br/&gt;permitted&lt;br/&gt;discharge power&lt;br/&gt;linearly to&lt;br/&gt;zero between 55&lt;br/&gt;°C and 60 °C&lt;br/&gt;highest cell&lt;br/&gt;temperature&lt;br/&gt;BMS_REQ_POWER_DERATING&quot;]
+    BMS_REQ_SOC_ACCURACY[&quot;Requirement&lt;br/&gt;The battery&lt;br/&gt;management&lt;br/&gt;system shall&lt;br/&gt;report a state&lt;br/&gt;of charge whose&lt;br/&gt;absolute error&lt;br/&gt;stays within 3&lt;br/&gt;% of rated&lt;br/&gt;capacity&lt;br/&gt;between 10 %&lt;br/&gt;and 90 % state&lt;br/&gt;of charge&lt;br/&gt;BMS_REQ_SOC_ACCURACY&quot;]
+    BMS_REQ_SOC_INVALID_FLAG[&quot;Requirement&lt;br/&gt;The battery&lt;br/&gt;management&lt;br/&gt;system shall&lt;br/&gt;flag the state&lt;br/&gt;of charge as&lt;br/&gt;unreliable when&lt;br/&gt;pack current&lt;br/&gt;measurements&lt;br/&gt;have been&lt;br/&gt;unavailable for&lt;br/&gt;more than 5&lt;br/&gt;seconds&lt;br/&gt;BMS_REQ_SOC_INVALID_FLAG&quot;]
+    REQ_DOOR_DRIVE_INTERLOCK[&quot;Requirement&lt;br/&gt;Door and drive&lt;br/&gt;interlock&lt;br/&gt;REQ_DOOR_DRIVE_INTERLOCK&quot;]
+    REQ_ENERGY_SOURCE[&quot;Requirement&lt;br/&gt;Remaining&lt;br/&gt;energy display&lt;br/&gt;REQ_ENERGY_SOURCE&quot;]
+    REQ_EU_CHARGING_STANDARD[&quot;Requirement&lt;br/&gt;European&lt;br/&gt;charging&lt;br/&gt;standard&lt;br/&gt;REQ_EU_CHARGING_STANDARD&quot;]
+    REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT[&quot;Requirement&lt;br/&gt;High-voltage&lt;br/&gt;shutdown on&lt;br/&gt;isolation fault&lt;br/&gt;REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT&quot;]
+    REQ_MAX_CHARGE_POWER[&quot;Requirement&lt;br/&gt;Maximum&lt;br/&gt;charging power&lt;br/&gt;REQ_MAX_CHARGE_POWER&quot;]
+    REQ_PANTOGRAPH_CHARGING[&quot;Requirement&lt;br/&gt;Pantograph&lt;br/&gt;charging&lt;br/&gt;REQ_PANTOGRAPH_CHARGING&quot;]
+    REQ_RANGE_ESTIMATE[&quot;Requirement&lt;br/&gt;Range estimate&lt;br/&gt;REQ_RANGE_ESTIMATE&quot;]
+    REQ_TRACTION_POWER_LIMIT[&quot;Requirement&lt;br/&gt;Traction power&lt;br/&gt;limit&lt;br/&gt;REQ_TRACTION_POWER_LIMIT&quot;]
+    US_FAST_DEPOT_CHARGING([&quot;User Story&lt;br/&gt;Fast depot&lt;br/&gt;charging&lt;br/&gt;US_FAST_DEPOT_CHARGING&quot;])
+    US_HV_SAFETY([&quot;User Story&lt;br/&gt;High-voltage&lt;br/&gt;safety&lt;br/&gt;US_HV_SAFETY&quot;])
+    US_MARKET_CHARGING([&quot;User Story&lt;br/&gt;Charging in the&lt;br/&gt;home market&lt;br/&gt;US_MARKET_CHARGING&quot;])
+    US_OPPORTUNITY_CHARGING([&quot;User Story&lt;br/&gt;Opportunity&lt;br/&gt;charging&lt;br/&gt;US_OPPORTUNITY_CHARGING&quot;])
+    US_PASSENGER_DOOR_SAFETY([&quot;User Story&lt;br/&gt;Passenger door&lt;br/&gt;safety&lt;br/&gt;US_PASSENGER_DOOR_SAFETY&quot;])
+    US_PREDICTABLE_POWER([&quot;User Story&lt;br/&gt;Predictable&lt;br/&gt;traction power&lt;br/&gt;US_PREDICTABLE_POWER&quot;])
+    US_RANGE_AWARENESS([&quot;User Story&lt;br/&gt;Range awareness&lt;br/&gt;US_RANGE_AWARENESS&quot;])
+    ARCH_CHG_INLET --&gt;|&quot;satisfies&quot;| REQ_MAX_CHARGE_POWER
+    ARCH_CHG_INLET --&gt;|&quot;satisfies&quot;| REQ_PANTOGRAPH_CHARGING
+    ARCH_CHG_SESSION_CONTROL --&gt;|&quot;satisfies&quot;| REQ_EU_CHARGING_STANDARD
+    ARCH_VCU_DOOR_INTERLOCK --&gt;|&quot;satisfies&quot;| REQ_DOOR_DRIVE_INTERLOCK
+    ARCH_VCU_ENERGY_DISPLAY --&gt;|&quot;satisfies&quot;| REQ_ENERGY_SOURCE
+    ARCH_VCU_ENERGY_DISPLAY --&gt;|&quot;satisfies&quot;| REQ_RANGE_ESTIMATE
+    ARCH_VCU_HV_SHUTDOWN --&gt;|&quot;satisfies&quot;| REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT
+    ARCH_VCU_POWER_MGMT --&gt;|&quot;allocates&quot;| BMS_REQ_POWER_DERATING
+    ARCH_VCU_POWER_MGMT --&gt;|&quot;satisfies&quot;| REQ_TRACTION_POWER_LIMIT
+    BB_CHARGE_LIMITS --&gt;|&quot;allocates&quot;| BMS_REQ_CELL_VOLTAGE_LIMITS
+    BB_CHARGE_LIMITS --&gt;|&quot;allocates&quot;| BMS_REQ_COOLING_REQUEST
+    BB_CHARGE_LIMITS --&gt;|&quot;allocates&quot;| BMS_REQ_HEATING_REQUEST
+    BB_CHARGE_LIMITS --&gt;|&quot;satisfies&quot;| REQ_MAX_CHARGE_POWER
+    BB_ENERGY_STATE --&gt;|&quot;allocates&quot;| BMS_REQ_SOC_ACCURACY
+    BB_ENERGY_STATE --&gt;|&quot;allocates&quot;| BMS_REQ_SOC_INVALID_FLAG
+    BB_ENERGY_STATE --&gt;|&quot;satisfies&quot;| REQ_ENERGY_SOURCE
+    BB_HV_PROTECTION --&gt;|&quot;allocates&quot;| BMS_REQ_FAULT_REACTION_TIME
+    BB_HV_PROTECTION --&gt;|&quot;allocates&quot;| BMS_REQ_ISOLATION_FAULT
+    BB_HV_PROTECTION --&gt;|&quot;satisfies&quot;| REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT
+    BB_POWER_LIMITS --&gt;|&quot;allocates&quot;| BMS_REQ_PACK_OVERCURRENT
+    BB_POWER_LIMITS --&gt;|&quot;allocates&quot;| BMS_REQ_POWER_DERATING
+    BB_POWER_LIMITS --&gt;|&quot;satisfies&quot;| REQ_TRACTION_POWER_LIMIT
+    REQ_DOOR_DRIVE_INTERLOCK --&gt;|&quot;traces_to&quot;| US_PASSENGER_DOOR_SAFETY
+    REQ_ENERGY_SOURCE --&gt;|&quot;traces_to&quot;| US_RANGE_AWARENESS
+    REQ_EU_CHARGING_STANDARD --&gt;|&quot;traces_to&quot;| US_MARKET_CHARGING
+    REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT --&gt;|&quot;traces_to&quot;| US_HV_SAFETY
+    REQ_MAX_CHARGE_POWER --&gt;|&quot;traces_to&quot;| US_FAST_DEPOT_CHARGING
+    REQ_PANTOGRAPH_CHARGING --&gt;|&quot;traces_to&quot;| US_OPPORTUNITY_CHARGING
+    REQ_RANGE_ESTIMATE --&gt;|&quot;traces_to&quot;| US_RANGE_AWARENESS
+    REQ_TRACTION_POWER_LIMIT --&gt;|&quot;traces_to&quot;| US_PREDICTABLE_POWER
+    style ARCH_CHG_INLET fill:#818CF8,color:#1a1c1e
+    style ARCH_CHG_SESSION_CONTROL fill:#818CF8,color:#1a1c1e
+    style ARCH_VCU_DOOR_INTERLOCK fill:#818CF8,color:#1a1c1e
+    style ARCH_VCU_ENERGY_DISPLAY fill:#818CF8,color:#1a1c1e
+    style ARCH_VCU_HV_SHUTDOWN fill:#818CF8,color:#1a1c1e
+    style ARCH_VCU_POWER_MGMT fill:#818CF8,color:#1a1c1e
+    style BB_CHARGE_LIMITS fill:#A5B4FC,color:#1a1c1e
+    style BB_ENERGY_STATE fill:#A5B4FC,color:#1a1c1e
+    style BB_HV_PROTECTION fill:#A5B4FC,color:#1a1c1e
+    style BB_POWER_LIMITS fill:#A5B4FC,color:#1a1c1e
+    style BMS_REQ_CELL_VOLTAGE_LIMITS fill:#FDBA74,color:#1a1c1e
+    style BMS_REQ_COOLING_REQUEST fill:#FDBA74,color:#1a1c1e
+    style BMS_REQ_FAULT_REACTION_TIME fill:#FDBA74,color:#1a1c1e
+    style BMS_REQ_HEATING_REQUEST fill:#FDBA74,color:#1a1c1e
+    style BMS_REQ_ISOLATION_FAULT fill:#FDBA74,color:#1a1c1e
+    style BMS_REQ_PACK_OVERCURRENT fill:#FDBA74,color:#1a1c1e
+    style BMS_REQ_POWER_DERATING fill:#FDBA74,color:#1a1c1e
+    style BMS_REQ_SOC_ACCURACY fill:#FDBA74,color:#1a1c1e
+    style BMS_REQ_SOC_INVALID_FLAG fill:#FDBA74,color:#1a1c1e
+    style REQ_DOOR_DRIVE_INTERLOCK fill:#FDBA74,color:#1a1c1e
+    style REQ_ENERGY_SOURCE fill:#FDBA74,color:#1a1c1e
+    style REQ_EU_CHARGING_STANDARD fill:#FDBA74,color:#1a1c1e
+    style REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT fill:#FDBA74,color:#1a1c1e
+    style REQ_MAX_CHARGE_POWER fill:#FDBA74,color:#1a1c1e
+    style REQ_PANTOGRAPH_CHARGING fill:#FDBA74,color:#1a1c1e
+    style REQ_RANGE_ESTIMATE fill:#FDBA74,color:#1a1c1e
+    style REQ_TRACTION_POWER_LIMIT fill:#FDBA74,color:#1a1c1e
+    style US_FAST_DEPOT_CHARGING fill:#FDE68A,color:#1a1c1e
+    style US_HV_SAFETY fill:#FDE68A,color:#1a1c1e
+    style US_MARKET_CHARGING fill:#FDE68A,color:#1a1c1e
+    style US_OPPORTUNITY_CHARGING fill:#FDE68A,color:#1a1c1e
+    style US_PASSENGER_DOOR_SAFETY fill:#FDE68A,color:#1a1c1e
+    style US_PREDICTABLE_POWER fill:#FDE68A,color:#1a1c1e
+    style US_RANGE_AWARENESS fill:#FDE68A,color:#1a1c1e
+
+      </pre>
+    </div>
+  </section>
+  <section id="variant-comparison">
+    <h2>Variant comparison<a class="headerlink" href="#variant-comparison" title="Link to this heading">¶</a></h2>
+    <p>The comparison of the products (<code>needs.json</code> per product, side by side) is
+part of the published site (plan 6), not of a single product build.</p>
+  </section>
+</section>
+</main>
+<footer class="ub-footer">
+<nav class="ub-relations" aria-label="Related pages">
+<a class="ub-rel ub-rel-prev" href="../_global/gaps.html"><span class="ub-rel-dir">Previous</span><span class="ub-rel-title">Workflow gaps</span></a>
+<a class="ub-rel ub-rel-next" href="../method/metamodel.html"><span class="ub-rel-dir">Next</span><span class="ub-rel-title">Metamodel</span></a>
+</nav>
+<div class="ub-footer-bottom">
+<div class="ub-footer-details">
+<div class="ub-built-with">Built with <a href="https://ubcode.useblocks.com">ubc</a></div>
+</div>
+</div>
+</footer>
+</div>
+<aside class="ub-toc-drawer">
+<div class="ub-toc">
+<nav class="ub-page-toc" aria-label="On this page">
+<p class="ub-page-toc-title" role="heading" aria-level="2">On this page</p>
+<ul class="ub-toc-list">
+  <li><a href="#product-and-bms-version">Product and BMS version</a></li>
+  <li><a href="#vehicle-requirements-architecture">Vehicle requirements → architecture</a></li>
+  <li><a href="#software-requirements-code-and-tests">Software requirements → code and tests</a></li>
+  <li><a href="#bms-usage">BMS usage</a></li>
+  <li><a href="#needflow-user-story-to-bms">Needflow: user story to BMS</a></li>
+  <li><a href="#variant-comparison">Variant comparison</a></li>
+</ul>
+</nav>
+</div>
+</aside>
+</div>
+</body>
+</html>

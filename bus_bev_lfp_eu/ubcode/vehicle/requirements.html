@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="ubc">
+<title>Vehicle requirements</title>
+<link rel="stylesheet" href="../_static/ubc.css">
+<script>(function(){try{var t=localStorage.getItem("ubc-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<script src="../_static/ubc-shell.js" defer></script>
+<script src="../_static/ubc-search.js" defer></script>
+</head>
+<body>
+<a class="ub-skip-to-content" href="#ub-main">Skip to content</a>
+<input type="checkbox" id="ub-drawer-nav" class="ub-drawer-toggle" aria-label="Navigation menu">
+<input type="checkbox" id="ub-drawer-toc" class="ub-drawer-toggle" aria-label="Page contents menu">
+<header class="ub-mobile-header ub-mh-nav ub-mh-toc">
+<div class="ub-mh-left"><label for="ub-drawer-nav" class="ub-mobile-btn ub-mobile-nav-open"><svg class="ub-mobile-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></label></div>
+<div class="ub-mh-center"><a class="ub-mobile-title" href="../index.html">cv_platform</a></div>
+<div class="ub-mh-right"><label for="ub-drawer-toc" class="ub-mobile-btn ub-mobile-toc-open"><svg class="ub-mobile-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 7h11M9 12h11M9 17h11M4.5 7h.01M4.5 12h.01M4.5 17h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></label></div>
+</header>
+<label for="ub-drawer-nav" class="ub-scrim ub-scrim-nav" aria-hidden="true"></label>
+<label for="ub-drawer-toc" class="ub-scrim ub-scrim-toc" aria-hidden="true"></label>
+<div class="ub-page">
+<aside class="ub-sidebar-drawer">
+<div class="ub-sidebar">
+<div class="ub-brand"><a class="ub-brand-link" href="../index.html">cv_platform</a></div>
+<nav class="ub-nav" aria-label="Site navigation">
+<p class="ub-nav-caption" role="heading" aria-level="2">Vehicle</p>
+<ul class="ub-nav-list ub-current-ancestor">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="user_stories.html">User stories</a>
+  </li>
+  <li class="ub-nav-item ub-current">
+    <a class="ub-nav-link ub-current" href="#">Vehicle requirements</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../system/overview.html">System overview</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Subsystems</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-1" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Vehicle Control Unit (VCU)">
+    <label for="ubnav-toggle-1" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../subsystems/vcu/index.html">Vehicle Control Unit (VCU)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/vcu/architecture.html">Architecture</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/vcu/software_requirements.html">Software requirements</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/vcu/code_trace.html">Code trace</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-2" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Charging Controller (CHG)">
+    <label for="ubnav-toggle-2" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../subsystems/chg/index.html">Charging Controller (CHG)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/chg/architecture.html">Architecture</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/chg/software_requirements.html">Software requirements</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/chg/code_trace.html">Code trace</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-3" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Battery Management System (BMS)">
+    <label for="ubnav-toggle-3" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../subsystems/bms/index.html">Battery Management System (BMS)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/bms/architecture.html">BMS black box</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/bms/integration.html">BMS integration</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Market</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../region/eu/annex.html">Market annex: Europe</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Project</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/risks.html">Risks</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/decisions.html">Decisions</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/test_results.html">Test results</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/gaps.html">Workflow gaps</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../reports/index.html">Reports</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Method</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../method/metamodel.html">Metamodel</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../method/requirements.html">Requirements engineering</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../method/architecture.html">Architecture modelling</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../method/testing.html">Test strategy</a>
+  </li>
+</ul>
+</nav>
+</div>
+</aside>
+<div class="ub-main-column">
+<div class="ub-content-icons"><label for="ub-drawer-toc" class="ub-toc-content-open" title="On this page"><svg class="ub-mobile-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 7h11M9 12h11M9 17h11M4.5 7h.01M4.5 12h.01M4.5 17h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></label></div>
+<main class="ub-content" id="ub-main">
+<section id="vehicle-requirements">
+  <h1>Vehicle requirements<a class="headerlink" href="#vehicle-requirements" title="Link to this heading">¶</a></h1>
+  <p>Vehicle and system requirements (<code>req</code>), each tracing to a user story.
+Product-specific values are held in the <code>value</code> field. Workflow stage <code>reqs</code>.</p>
+  <section id="energy-and-range">
+    <h2>Energy and range<a class="headerlink" href="#energy-and-range" title="Link to this heading">¶</a></h2>
+      <div class="ub-need" id="REQ_ENERGY_SOURCE" data-need-type="req" data-need-id="REQ_ENERGY_SOURCE" style="--ub-need-accent: #FDBA74">
+        <div class="ub-need-header">
+          <span class="ub-need-type">req</span>
+          <span class="ub-need-title">Remaining energy display</span>
+          <span class="ub-need-id">REQ_ENERGY_SOURCE</span>
+          <a class="headerlink" href="#REQ_ENERGY_SOURCE" title="Link to this need">¶</a>
+        </div>
+        <details class="ub-need-meta-details" open="open">
+          <summary class="ub-need-meta-summary">Details</summary>
+          <table class="ub-need-meta">
+            <tr><th>status</th><td>draft</td></tr>
+            <tr><th>traces_to</th><td><a class="ub-xref" href="user_stories.html#US_RANGE_AWARENESS">US_RANGE_AWARENESS</a></td></tr>
+            <tr class="ub-need-links-back"><th>gaps</th><td><a class="ub-xref" href="../_global/gaps.html#GAP_REQ_ENERGY_SOURCE_REVIEW__BUS_BEV_LFP_EU">GAP_REQ_ENERGY_SOURCE_REVIEW__BUS_BEV_LFP_EU</a></td></tr>
+            <tr class="ub-need-links-back"><th>satisfied_by</th><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY">ARCH_VCU_ENERGY_DISPLAY</a>, <a class="ub-xref" href="../subsystems/bms/architecture.html#BB_ENERGY_STATE">BB_ENERGY_STATE</a></td></tr>
+          </table>
+        </details>
+        <div class="ub-need-content">
+          <p>The vehicle shall display the remaining energy as the state of charge
+reported by the battery management system, in percent with a resolution
+of 1 %.</p>
+        </div>
+      </div>
+    <div class="ub-need" id="REQ_RANGE_ESTIMATE" data-need-type="req" data-need-id="REQ_RANGE_ESTIMATE" style="--ub-need-accent: #FDBA74">
+      <div class="ub-need-header">
+        <span class="ub-need-type">req</span>
+        <span class="ub-need-title">Range estimate</span>
+        <span class="ub-need-id">REQ_RANGE_ESTIMATE</span>
+        <a class="headerlink" href="#REQ_RANGE_ESTIMATE" title="Link to this need">¶</a>
+      </div>
+      <details class="ub-need-meta-details" open="open">
+        <summary class="ub-need-meta-summary">Details</summary>
+        <table class="ub-need-meta">
+          <tr><th>status</th><td>draft</td></tr>
+          <tr><th>traces_to</th><td><a class="ub-xref" href="user_stories.html#US_RANGE_AWARENESS">US_RANGE_AWARENESS</a></td></tr>
+          <tr class="ub-need-links-back"><th>satisfied_by</th><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY">ARCH_VCU_ENERGY_DISPLAY</a></td></tr>
+        </table>
+      </details>
+      <div class="ub-need-content">
+        <p>The vehicle shall display the estimated remaining range in kilometres with a
+resolution of 1 km, calculated from the remaining energy and the average
+consumption of the last 50 km (the nominal consumption until 50 km are
+driven). Energy source of this product: bev.</p>
+      </div>
+    </div>
+  </section>
+  <section id="traction-power">
+    <h2>Traction power<a class="headerlink" href="#traction-power" title="Link to this heading">¶</a></h2>
+    <div class="ub-need" id="REQ_TRACTION_POWER_LIMIT" data-need-type="req" data-need-id="REQ_TRACTION_POWER_LIMIT" style="--ub-need-accent: #FDBA74">
+      <div class="ub-need-header">
+        <span class="ub-need-type">req</span>
+        <span class="ub-need-title">Traction power limit</span>
+        <span class="ub-need-id">REQ_TRACTION_POWER_LIMIT</span>
+        <a class="headerlink" href="#REQ_TRACTION_POWER_LIMIT" title="Link to this need">¶</a>
+      </div>
+      <details class="ub-need-meta-details" open="open">
+        <summary class="ub-need-meta-summary">Details</summary>
+        <table class="ub-need-meta">
+          <tr><th>status</th><td>draft</td></tr>
+          <tr><th>value</th><td>250 kW</td></tr>
+          <tr><th>traces_to</th><td><a class="ub-xref" href="user_stories.html#US_PREDICTABLE_POWER">US_PREDICTABLE_POWER</a></td></tr>
+          <tr class="ub-need-links-back"><th>satisfied_by</th><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_POWER_MGMT">ARCH_VCU_POWER_MGMT</a>, <a class="ub-xref" href="../subsystems/bms/architecture.html#BB_POWER_LIMITS">BB_POWER_LIMITS</a></td></tr>
+        </table>
+      </details>
+      <div class="ub-need-content">
+        <p>The vehicle shall limit the traction power measured at the drive axle to the
+value of this requirement, with a tolerance of 5 %.</p>
+      </div>
+    </div>
+  </section>
+  <section id="charging-and-high-voltage">
+    <h2>Charging and high voltage<a class="headerlink" href="#charging-and-high-voltage" title="Link to this heading">¶</a></h2>
+      <div class="ub-need" id="REQ_MAX_CHARGE_POWER" data-need-type="req" data-need-id="REQ_MAX_CHARGE_POWER" style="--ub-need-accent: #FDBA74">
+        <div class="ub-need-header">
+          <span class="ub-need-type">req</span>
+          <span class="ub-need-title">Maximum charging power</span>
+          <span class="ub-need-id">REQ_MAX_CHARGE_POWER</span>
+          <a class="headerlink" href="#REQ_MAX_CHARGE_POWER" title="Link to this need">¶</a>
+        </div>
+        <details class="ub-need-meta-details" open="open">
+          <summary class="ub-need-meta-summary">Details</summary>
+          <table class="ub-need-meta">
+            <tr><th>status</th><td>draft</td></tr>
+            <tr><th>value</th><td>350 kW</td></tr>
+            <tr><th>traces_to</th><td><a class="ub-xref" href="user_stories.html#US_FAST_DEPOT_CHARGING">US_FAST_DEPOT_CHARGING</a></td></tr>
+            <tr class="ub-need-links-back"><th>satisfied_by</th><td><a class="ub-xref" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET">ARCH_CHG_INLET</a>, <a class="ub-xref" href="../subsystems/bms/architecture.html#BB_CHARGE_LIMITS">BB_CHARGE_LIMITS</a></td></tr>
+          </table>
+        </details>
+        <div class="ub-need-content">
+          <p>The vehicle shall accept an average charging power of at least the value of
+this requirement while charging from 20 % to 80 % state of charge at a
+battery temperature of 25 °C.</p>
+        </div>
+      </div>
+      <div class="ub-need" id="REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT" data-need-type="req" data-need-id="REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT" style="--ub-need-accent: #FDBA74">
+        <div class="ub-need-header">
+          <span class="ub-need-type">req</span>
+          <span class="ub-need-title">High-voltage shutdown on isolation fault</span>
+          <span class="ub-need-id">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</span>
+          <a class="headerlink" href="#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT" title="Link to this need">¶</a>
+        </div>
+        <details class="ub-need-meta-details" open="open">
+          <summary class="ub-need-meta-summary">Details</summary>
+          <table class="ub-need-meta">
+            <tr><th>status</th><td>draft</td></tr>
+            <tr><th>traces_to</th><td><a class="ub-xref" href="user_stories.html#US_HV_SAFETY">US_HV_SAFETY</a></td></tr>
+            <tr class="ub-need-links-back"><th>mitigated_by</th><td><a class="ub-xref" href="../_global/risks.html#RISK_HV_EXPOSURE">RISK_HV_EXPOSURE</a></td></tr>
+            <tr class="ub-need-links-back"><th>satisfied_by</th><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_HV_SHUTDOWN">ARCH_VCU_HV_SHUTDOWN</a>, <a class="ub-xref" href="../subsystems/bms/architecture.html#BB_HV_PROTECTION">BB_HV_PROTECTION</a></td></tr>
+          </table>
+        </details>
+        <div class="ub-need-content">
+          <p>The vehicle shall open both poles of the high-voltage battery connection
+within 100 ms after the battery management system sets the isolation
+fault.</p>
+        </div>
+      </div>
+      <div class="ub-need" id="REQ_PANTOGRAPH_CHARGING" data-need-type="req" data-need-id="REQ_PANTOGRAPH_CHARGING" style="--ub-need-accent: #FDBA74">
+        <div class="ub-need-header">
+          <span class="ub-need-type">req</span>
+          <span class="ub-need-title">Pantograph charging</span>
+          <span class="ub-need-id">REQ_PANTOGRAPH_CHARGING</span>
+          <a class="headerlink" href="#REQ_PANTOGRAPH_CHARGING" title="Link to this need">¶</a>
+        </div>
+        <details class="ub-need-meta-details" open="open">
+          <summary class="ub-need-meta-summary">Details</summary>
+          <table class="ub-need-meta">
+            <tr><th>status</th><td>draft</td></tr>
+            <tr><th>traces_to</th><td><a class="ub-xref" href="user_stories.html#US_OPPORTUNITY_CHARGING">US_OPPORTUNITY_CHARGING</a></td></tr>
+            <tr class="ub-need-links-back"><th>satisfied_by</th><td><a class="ub-xref" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET">ARCH_CHG_INLET</a></td></tr>
+          </table>
+        </details>
+        <div class="ub-need-content">
+          <p>The vehicle shall support opportunity charging through a roof-mounted
+pantograph according to SAE J3105-2 (vehicle-mounted pantograph).</p>
+        </div>
+      </div>
+  </section>
+  <section id="passenger-safety">
+    <h2>Passenger safety<a class="headerlink" href="#passenger-safety" title="Link to this heading">¶</a></h2>
+      <div class="ub-need" id="REQ_DOOR_DRIVE_INTERLOCK" data-need-type="req" data-need-id="REQ_DOOR_DRIVE_INTERLOCK" style="--ub-need-accent: #FDBA74">
+        <div class="ub-need-header">
+          <span class="ub-need-type">req</span>
+          <span class="ub-need-title">Door and drive interlock</span>
+          <span class="ub-need-id">REQ_DOOR_DRIVE_INTERLOCK</span>
+          <a class="headerlink" href="#REQ_DOOR_DRIVE_INTERLOCK" title="Link to this need">¶</a>
+        </div>
+        <details class="ub-need-meta-details" open="open">
+          <summary class="ub-need-meta-summary">Details</summary>
+          <table class="ub-need-meta">
+            <tr><th>status</th><td>draft</td></tr>
+            <tr><th>traces_to</th><td><a class="ub-xref" href="user_stories.html#US_PASSENGER_DOOR_SAFETY">US_PASSENGER_DOOR_SAFETY</a></td></tr>
+            <tr class="ub-need-links-back"><th>mitigated_by</th><td><a class="ub-xref" href="../_global/risks.html#RISK_DOOR_TRAP">RISK_DOOR_TRAP</a></td></tr>
+            <tr class="ub-need-links-back"><th>satisfied_by</th><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_DOOR_INTERLOCK">ARCH_VCU_DOOR_INTERLOCK</a></td></tr>
+          </table>
+        </details>
+        <div class="ub-need-content">
+          <p>The vehicle shall inhibit traction at standstill and while moving whenever a
+passenger door is not detected as closed and locked.</p>
+        </div>
+      </div>
+  </section>
+</section>
+</main>
+<footer class="ub-footer">
+<nav class="ub-relations" aria-label="Related pages">
+<a class="ub-rel ub-rel-prev" href="user_stories.html"><span class="ub-rel-dir">Previous</span><span class="ub-rel-title">User stories</span></a>
+<a class="ub-rel ub-rel-next" href="../system/overview.html"><span class="ub-rel-dir">Next</span><span class="ub-rel-title">System overview</span></a>
+</nav>
+<div class="ub-footer-bottom">
+<div class="ub-footer-details">
+<div class="ub-built-with">Built with <a href="https://ubcode.useblocks.com">ubc</a></div>
+</div>
+</div>
+</footer>
+</div>
+<aside class="ub-toc-drawer">
+<div class="ub-toc">
+<nav class="ub-page-toc" aria-label="On this page">
+<p class="ub-page-toc-title" role="heading" aria-level="2">On this page</p>
+<ul class="ub-toc-list">
+  <li><a href="#energy-and-range">Energy and range</a></li>
+  <li><a href="#traction-power">Traction power</a></li>
+  <li><a href="#charging-and-high-voltage">Charging and high voltage</a></li>
+  <li><a href="#passenger-safety">Passenger safety</a></li>
+</ul>
+</nav>
+</div>
+</aside>
+</div>
+</body>
+</html>

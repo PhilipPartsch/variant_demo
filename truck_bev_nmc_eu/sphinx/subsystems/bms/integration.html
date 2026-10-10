@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>BMS integration &#8212; CV platform  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=803738c0" />
+    <script src="../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+    <script src="../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+    <script src="../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+    <script src="../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+    <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Market annex: Europe" href="../../region/eu/annex.html" />
+    <link rel="prev" title="BMS black box" href="architecture.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="bms-integration">
+<h1>BMS integration<a class="headerlink" href="#bms-integration" title="Link to this heading">¶</a></h1>
+<p>This product uses BMS release 0.1.0 with the cell chemistry
+nmc (<code class="docutils literal notranslate"><span class="pre">third_party/bms/0.1.0/</span></code>). Chemistry-specific
+values come from the imported needs and change with the product, without any
+change to the CV content.</p>
+<section id="allocated-interface-needs">
+<h2>Allocated interface needs<a class="headerlink" href="#allocated-interface-needs" title="Link to this heading">¶</a></h2>
+<div class="needstable_wrapper docutils container" id="needtable-subsystems/bms/integration-0">
+<table class="NEEDS_TABLE docutils align-default" id="needtable-subsystems/bms/integration-0-table_node">
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 50.0%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Title</p></th>
+<th class="head"><p>Satisfies</p></th>
+<th class="head"><p>Allocates</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="architecture.html#BB_CHARGE_LIMITS">BB_CHARGE_LIMITS</a></p></td>
+<td class="needs_title"><p>Battery charging limits</p></td>
+<td class="needs_satisfies"><p><a class="reference internal" href="../../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a></p></td>
+<td class="needs_allocates external_bms"><p><a class="external_bms reference internal" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_CELL_VOLTAGE_LIMITS">BMS_REQ_CELL_VOLTAGE_LIMITS</a><em>; </em><a class="external_bms reference internal" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_COOLING_REQUEST">BMS_REQ_COOLING_REQUEST</a><em>; </em><a class="external_bms reference internal" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_HEATING_REQUEST">BMS_REQ_HEATING_REQUEST</a></p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="architecture.html#BB_ENERGY_STATE">BB_ENERGY_STATE</a></p></td>
+<td class="needs_title"><p>Battery energy state</p></td>
+<td class="needs_satisfies"><p><a class="reference internal" href="../../vehicle/requirements.html#REQ_ENERGY_SOURCE">REQ_ENERGY_SOURCE</a></p></td>
+<td class="needs_allocates external_bms"><p><a class="external_bms reference internal" href="https://bms-docs.invalid/0.1.0/specs/state-estimation/requirements.html#REQ_SOC_ACCURACY">BMS_REQ_SOC_ACCURACY</a><em>; </em><a class="external_bms reference internal" href="https://bms-docs.invalid/0.1.0/specs/state-estimation/requirements.html#REQ_SOC_INVALID_FLAG">BMS_REQ_SOC_INVALID_FLAG</a></p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="architecture.html#BB_HV_PROTECTION">BB_HV_PROTECTION</a></p></td>
+<td class="needs_title"><p>Battery isolation protection</p></td>
+<td class="needs_satisfies"><p><a class="reference internal" href="../../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a></p></td>
+<td class="needs_allocates external_bms"><p><a class="external_bms reference internal" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_FAULT_REACTION_TIME">BMS_REQ_FAULT_REACTION_TIME</a><em>; </em><a class="external_bms reference internal" href="https://bms-docs.invalid/0.1.0/specs/isolation-monitoring/requirements.html#REQ_ISOLATION_FAULT">BMS_REQ_ISOLATION_FAULT</a></p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="architecture.html#BB_POWER_LIMITS">BB_POWER_LIMITS</a></p></td>
+<td class="needs_title"><p>Battery power limits</p></td>
+<td class="needs_satisfies"><p><a class="reference internal" href="../../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT">REQ_TRACTION_POWER_LIMIT</a></p></td>
+<td class="needs_allocates external_bms"><p><a class="external_bms reference internal" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_PACK_OVERCURRENT">BMS_REQ_PACK_OVERCURRENT</a><em>; </em><a class="external_bms reference internal" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_POWER_DERATING">BMS_REQ_POWER_DERATING</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="all-bms-interface-needs">
+<h2>All BMS interface needs<a class="headerlink" href="#all-bms-interface-needs" title="Link to this heading">¶</a></h2>
+<div class="needstable_wrapper docutils container" id="needtable-subsystems/bms/integration-1">
+<table class="NEEDS_TABLE docutils align-default" id="needtable-subsystems/bms/integration-1-table_node">
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 50.0%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Title</p></th>
+<th class="head"><p>Chemistry</p></th>
+<th class="head"><p>Allocated From</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="need row-even"><td class="needs_id external_bms"><p><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_CELL_VOLTAGE_LIMITS">BMS_REQ_CELL_VOLTAGE_LIMITS</a></p></td>
+<td class="needs_title"><p>The battery management system shall open the high-voltage contactors when any cell voltage leaves the safe window of the pack chemistry</p></td>
+<td class="needs_chemistry"><p>NMC</p></td>
+<td class="needs_allocates_back"><p><a class="reference external" href="architecture.html#BB_CHARGE_LIMITS">BB_CHARGE_LIMITS</a></p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id external_bms"><p><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_COOLING_REQUEST">BMS_REQ_COOLING_REQUEST</a></p></td>
+<td class="needs_title"><p>The battery management system shall request coolant flow when the highest cell temperature exceeds 35 °C</p></td>
+<td class="needs_chemistry"><p></p></td>
+<td class="needs_allocates_back"><p><a class="reference external" href="architecture.html#BB_CHARGE_LIMITS">BB_CHARGE_LIMITS</a></p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id external_bms"><p><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_FAULT_REACTION_TIME">BMS_REQ_FAULT_REACTION_TIME</a></p></td>
+<td class="needs_title"><p>The battery management system shall issue the contactor-open command within 50 ms of detecting a cell-protection limit violation</p></td>
+<td class="needs_chemistry"><p></p></td>
+<td class="needs_allocates_back"><p><a class="reference external" href="architecture.html#BB_HV_PROTECTION">BB_HV_PROTECTION</a></p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id external_bms"><p><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_HEATING_REQUEST">BMS_REQ_HEATING_REQUEST</a></p></td>
+<td class="needs_title"><p>The battery management system shall request pack heating when the lowest cell temperature is below 5 °C</p></td>
+<td class="needs_chemistry"><p></p></td>
+<td class="needs_allocates_back"><p><a class="reference external" href="architecture.html#BB_CHARGE_LIMITS">BB_CHARGE_LIMITS</a></p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id external_bms"><p><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/isolation-monitoring/requirements.html#REQ_ISOLATION_FAULT">BMS_REQ_ISOLATION_FAULT</a></p></td>
+<td class="needs_title"><p>The battery management system shall report an isolation fault when the isolation resistance falls below 500 Ω per volt of pack voltage</p></td>
+<td class="needs_chemistry"><p></p></td>
+<td class="needs_allocates_back"><p><a class="reference external" href="architecture.html#BB_HV_PROTECTION">BB_HV_PROTECTION</a></p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id external_bms"><p><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_PACK_OVERCURRENT">BMS_REQ_PACK_OVERCURRENT</a></p></td>
+<td class="needs_title"><p>The battery management system shall open the high-voltage contactors when the pack discharge current exceeds 350 A for more than 100 ms</p></td>
+<td class="needs_chemistry"><p></p></td>
+<td class="needs_allocates_back"><p><a class="reference external" href="architecture.html#BB_POWER_LIMITS">BB_POWER_LIMITS</a></p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id external_bms"><p><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_POWER_DERATING">BMS_REQ_POWER_DERATING</a></p></td>
+<td class="needs_title"><p>The battery management system shall reduce the permitted discharge power linearly to zero between 55 °C and 60 °C highest cell temperature</p></td>
+<td class="needs_chemistry"><p></p></td>
+<td class="needs_allocates_back"><p><a class="reference external" href="../vcu/architecture.html#ARCH_VCU_POWER_MGMT">ARCH_VCU_POWER_MGMT</a><em>; </em><a class="reference external" href="architecture.html#BB_POWER_LIMITS">BB_POWER_LIMITS</a></p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id external_bms"><p><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/state-estimation/requirements.html#REQ_SOC_ACCURACY">BMS_REQ_SOC_ACCURACY</a></p></td>
+<td class="needs_title"><p>The battery management system shall report a state of charge whose absolute error stays within 3 % of rated capacity between 10 % and 90 % state of charge</p></td>
+<td class="needs_chemistry"><p></p></td>
+<td class="needs_allocates_back"><p><a class="reference external" href="architecture.html#BB_ENERGY_STATE">BB_ENERGY_STATE</a></p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id external_bms"><p><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/state-estimation/requirements.html#REQ_SOC_INVALID_FLAG">BMS_REQ_SOC_INVALID_FLAG</a></p></td>
+<td class="needs_title"><p>The battery management system shall flag the state of charge as unreliable when pack current measurements have been unavailable for more than 5 seconds</p></td>
+<td class="needs_chemistry"><p></p></td>
+<td class="needs_allocates_back"><p><a class="reference external" href="architecture.html#BB_ENERGY_STATE">BB_ENERGY_STATE</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">CV platform</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Vehicle</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../vehicle/user_stories.html">User stories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vehicle/requirements.html">Vehicle requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../system/overview.html">System overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Subsystems</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../vcu/index.html">Vehicle Control Unit (VCU)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chg/index.html">Charging Controller (CHG)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Battery Management System (BMS)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">BMS black box</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">BMS integration</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Market</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../region/eu/annex.html">Market annex: Europe</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../_global/risks.html">Risks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_global/decisions.html">Decisions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_global/test_results.html">Test results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_global/gaps.html">Workflow gaps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/index.html">Reports</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Method</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../method/metamodel.html">Metamodel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../method/requirements.html">Requirements engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../method/architecture.html">Architecture modelling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../method/testing.html">Test strategy</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Battery Management System (BMS)</a><ul>
+      <li>Previous: <a href="architecture.html" title="previous chapter">BMS black box</a></li>
+      <li>Next: <a href="../../region/eu/annex.html" title="next chapter">Market annex: Europe</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;PhilipPartsch, MIT licence.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/subsystems/bms/integration.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

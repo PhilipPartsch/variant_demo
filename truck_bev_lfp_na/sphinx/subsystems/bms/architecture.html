@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>BMS black box &#8212; CV platform  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=803738c0" />
+    <script src="../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+    <script src="../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+    <script src="../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+    <script src="../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+    <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="BMS integration" href="integration.html" />
+    <link rel="prev" title="Battery Management System (BMS)" href="index.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="bms-black-box">
+<h1>BMS black box<a class="headerlink" href="#bms-black-box" title="Link to this heading">¶</a></h1>
+<p>Black-box elements of the BMS as seen by the CV platform (<code class="docutils literal notranslate"><span class="pre">bms_block</span></code>,
+prefix <code class="docutils literal notranslate"><span class="pre">BB_</span></code>). Each satisfies a vehicle requirement and allocates BMS
+interface needs (<code class="docutils literal notranslate"><span class="pre">BMS_REQ_*</span></code>). Workflow stage <code class="docutils literal notranslate"><span class="pre">bms_allocation</span></code>. The whole
+folder exists only in battery-electric products; BMS values are referenced
+through the allocated needs, never copied.</p>
+<div class="need_container docutils container" id="SNCB-659f0a84">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_bms_block docutils align-default" id="BB_ENERGY_STATE">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">BMS Black Box</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Battery energy state</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#BB_ENERGY_STATE" title="BB_ENERGY_STATE">BB_ENERGY_STATE</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">draft</span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="reference internal" href="../../vehicle/requirements.html#REQ_ENERGY_SOURCE" title="BB_ENERGY_STATE">REQ_ENERGY_SOURCE</a></span></span></div>
+<div class="line">allocates: <span class="allocates"><span><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/state-estimation/requirements.html#REQ_SOC_ACCURACY">BMS_REQ_SOC_ACCURACY</a>, <a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/state-estimation/requirements.html#REQ_SOC_INVALID_FLAG">BMS_REQ_SOC_INVALID_FLAG</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>The BMS provides the state of charge shown to the driver, with its accuracy
+and a flag when the value is unreliable.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-e4104633">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_bms_block docutils align-default" id="BB_POWER_LIMITS">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">BMS Black Box</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Battery power limits</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#BB_POWER_LIMITS" title="BB_POWER_LIMITS">BB_POWER_LIMITS</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">draft</span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="reference internal" href="../../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT" title="BB_POWER_LIMITS">REQ_TRACTION_POWER_LIMIT</a></span></span></div>
+<div class="line">allocates: <span class="allocates"><span><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_PACK_OVERCURRENT">BMS_REQ_PACK_OVERCURRENT</a>, <a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_POWER_DERATING">BMS_REQ_POWER_DERATING</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>The BMS publishes the permitted discharge power that the VCU applies as a
+traction power limit, and protects the pack against overcurrent as the last
+line of defence.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-71435c2a">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_bms_block docutils align-default" id="BB_HV_PROTECTION">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">BMS Black Box</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Battery isolation protection</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#BB_HV_PROTECTION" title="BB_HV_PROTECTION">BB_HV_PROTECTION</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">draft</span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="reference internal" href="../../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT" title="BB_HV_PROTECTION">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a></span></span></div>
+<div class="line">allocates: <span class="allocates"><span><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_FAULT_REACTION_TIME">BMS_REQ_FAULT_REACTION_TIME</a>, <a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/isolation-monitoring/requirements.html#REQ_ISOLATION_FAULT">BMS_REQ_ISOLATION_FAULT</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>The BMS detects the isolation fault that triggers the high-voltage shutdown
+and opens the main contactors on request of the VCU. Open point for the BMS
+team: no BMS requirement bounds the isolation-fault reaction time yet.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-550537c6">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_bms_block docutils align-default" id="BB_CHARGE_LIMITS">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">BMS Black Box</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Battery charging limits</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#BB_CHARGE_LIMITS" title="BB_CHARGE_LIMITS">BB_CHARGE_LIMITS</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">draft</span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="reference internal" href="../../vehicle/requirements.html#REQ_MAX_CHARGE_POWER" title="BB_CHARGE_LIMITS">REQ_MAX_CHARGE_POWER</a></span></span></div>
+<div class="line">allocates: <span class="allocates"><span><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_CELL_VOLTAGE_LIMITS">BMS_REQ_CELL_VOLTAGE_LIMITS</a>, <a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_COOLING_REQUEST">BMS_REQ_COOLING_REQUEST</a>, <a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_HEATING_REQUEST">BMS_REQ_HEATING_REQUEST</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>The BMS keeps every cell inside the voltage window of its chemistry and
+requests heating or cooling, so that charging power is accepted only within
+safe cell limits. Open point for the BMS team: no BMS interface requirement
+publishes a permitted charging power yet.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">CV platform</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Vehicle</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../vehicle/user_stories.html">User stories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vehicle/requirements.html">Vehicle requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../system/overview.html">System overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Subsystems</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../vcu/index.html">Vehicle Control Unit (VCU)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chg/index.html">Charging Controller (CHG)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Battery Management System (BMS)</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">BMS black box</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integration.html">BMS integration</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Market</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../region/na/annex.html">Market annex: North America</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../_global/risks.html">Risks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_global/decisions.html">Decisions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_global/test_results.html">Test results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_global/gaps.html">Workflow gaps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/index.html">Reports</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Method</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../method/metamodel.html">Metamodel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../method/requirements.html">Requirements engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../method/architecture.html">Architecture modelling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../method/testing.html">Test strategy</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Battery Management System (BMS)</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Battery Management System (BMS)</a></li>
+      <li>Next: <a href="integration.html" title="next chapter">BMS integration</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;PhilipPartsch, MIT licence.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/subsystems/bms/architecture.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

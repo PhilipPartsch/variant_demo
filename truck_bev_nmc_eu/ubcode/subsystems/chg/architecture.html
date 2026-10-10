@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="ubc">
+<title>Architecture</title>
+<link rel="stylesheet" href="../../_static/ubc.css">
+<script>(function(){try{var t=localStorage.getItem("ubc-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<script src="../../_static/ubc-shell.js" defer></script>
+<script src="../../_static/ubc-search.js" defer></script>
+</head>
+<body>
+<a class="ub-skip-to-content" href="#ub-main">Skip to content</a>
+<input type="checkbox" id="ub-drawer-nav" class="ub-drawer-toggle" aria-label="Navigation menu">
+<header class="ub-mobile-header ub-mh-nav">
+<div class="ub-mh-left"><label for="ub-drawer-nav" class="ub-mobile-btn ub-mobile-nav-open"><svg class="ub-mobile-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></label></div>
+<div class="ub-mh-center"><a class="ub-mobile-title" href="../../index.html">cv_platform</a></div>
+<div class="ub-mh-right"></div>
+</header>
+<label for="ub-drawer-nav" class="ub-scrim ub-scrim-nav" aria-hidden="true"></label>
+<div class="ub-page">
+<aside class="ub-sidebar-drawer">
+<div class="ub-sidebar">
+<div class="ub-brand"><a class="ub-brand-link" href="../../index.html">cv_platform</a></div>
+<nav class="ub-nav" aria-label="Site navigation">
+<p class="ub-nav-caption" role="heading" aria-level="2">Vehicle</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../../vehicle/user_stories.html">User stories</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../../vehicle/requirements.html">Vehicle requirements</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../../system/overview.html">System overview</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Subsystems</p>
+<ul class="ub-nav-list ub-current-ancestor">
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-1" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Vehicle Control Unit (VCU)">
+    <label for="ubnav-toggle-1" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../vcu/index.html">Vehicle Control Unit (VCU)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../vcu/architecture.html">Architecture</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../vcu/software_requirements.html">Software requirements</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../vcu/code_trace.html">Code trace</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li class="ub-nav-item ub-has-children ub-current-ancestor">
+    <input type="checkbox" id="ubnav-toggle-2" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Charging Controller (CHG)" checked>
+    <label for="ubnav-toggle-2" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="index.html">Charging Controller (CHG)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list ub-current-ancestor">
+        <li class="ub-nav-item ub-current">
+          <a class="ub-nav-link ub-current" href="#">Architecture</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="software_requirements.html">Software requirements</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="code_trace.html">Code trace</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-3" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Battery Management System (BMS)">
+    <label for="ubnav-toggle-3" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../bms/index.html">Battery Management System (BMS)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../bms/architecture.html">BMS black box</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../bms/integration.html">BMS integration</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Market</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../../region/eu/annex.html">Market annex: Europe</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Project</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../../_global/risks.html">Risks</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../../_global/decisions.html">Decisions</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../../_global/test_results.html">Test results</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../../_global/gaps.html">Workflow gaps</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../../reports/index.html">Reports</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Method</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../../method/metamodel.html">Metamodel</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../../method/requirements.html">Requirements engineering</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../../method/architecture.html">Architecture modelling</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../../method/testing.html">Test strategy</a>
+  </li>
+</ul>
+</nav>
+</div>
+</aside>
+<div class="ub-main-column">
+<div class="ub-content-icons"></div>
+<main class="ub-content" id="ub-main">
+<section id="architecture">
+  <h1>Architecture<a class="headerlink" href="#architecture" title="Link to this heading">¶</a></h1>
+  <p>Architecture elements (<code>arch</code>) of the Charging Controller (CHG), each
+satisfying vehicle requirements. Workflow stage <code>archs</code>, stream <code>chg</code>.
+The whole folder exists only in battery-electric products.</p>
+    <div class="ub-need" id="ARCH_CHG_INLET" data-need-type="arch" data-need-id="ARCH_CHG_INLET" style="--ub-need-accent: #818CF8">
+      <div class="ub-need-header">
+        <span class="ub-need-type">arch</span>
+        <span class="ub-need-title">High-power charging interface</span>
+        <span class="ub-need-id">ARCH_CHG_INLET</span>
+        <a class="headerlink" href="#ARCH_CHG_INLET" title="Link to this need">¶</a>
+      </div>
+      <details class="ub-need-meta-details" open="open">
+        <summary class="ub-need-meta-summary">Details</summary>
+        <table class="ub-need-meta">
+          <tr><th>status</th><td>draft</td></tr>
+          <tr><th>satisfies</th><td><a class="ub-xref" href="../../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a>, <a class="ub-xref" href="../../vehicle/requirements.html#REQ_MCS_CHARGING">REQ_MCS_CHARGING</a></td></tr>
+          <tr class="ub-need-links-back"><th>affected_by</th><td><a class="ub-xref" href="../../_global/decisions.html#DEC_CHARGING_INLET_PRIORITY">DEC_CHARGING_INLET_PRIORITY</a></td></tr>
+          <tr class="ub-need-links-back"><th>gaps</th><td><a class="ub-xref" href="../../_global/gaps.html#GAP_ARCH_CHG_INLET_REVIEW__TRUCK_BEV_NMC_EU">GAP_ARCH_CHG_INLET_REVIEW__TRUCK_BEV_NMC_EU</a></td></tr>
+          <tr class="ub-need-links-back"><th>refined_by</th><td><a class="ub-xref" href="software_requirements.html#SWREQ_CHG_INTERFACE_DERATING">SWREQ_CHG_INTERFACE_DERATING</a>, <a class="ub-xref" href="software_requirements.html#SWREQ_CHG_MCS_HANDSHAKE">SWREQ_CHG_MCS_HANDSHAKE</a></td></tr>
+        </table>
+      </details>
+      <div class="ub-need-content">
+        <p>The high-power charging interface is an MCS vehicle inlet (IEC 63379)
+next to the CCS inlet, rated for the charging power of
+REQ_MAX_CHARGE_POWER, with connector lock and pin temperature monitoring.</p>
+      </div>
+    </div>
+    <div class="ub-need" id="ARCH_CHG_SESSION_CONTROL" data-need-type="arch" data-need-id="ARCH_CHG_SESSION_CONTROL" style="--ub-need-accent: #818CF8">
+      <div class="ub-need-header">
+        <span class="ub-need-type">arch</span>
+        <span class="ub-need-title">CCS inlet and charging session</span>
+        <span class="ub-need-id">ARCH_CHG_SESSION_CONTROL</span>
+        <a class="headerlink" href="#ARCH_CHG_SESSION_CONTROL" title="Link to this need">¶</a>
+      </div>
+      <details class="ub-need-meta-details" open="open">
+        <summary class="ub-need-meta-summary">Details</summary>
+        <table class="ub-need-meta">
+          <tr><th>status</th><td>draft</td></tr>
+          <tr><th>satisfies</th><td><a class="ub-xref" href="../../region/eu/annex.html#REQ_EU_CHARGING_STANDARD">REQ_EU_CHARGING_STANDARD</a></td></tr>
+          <tr class="ub-need-links-back"><th>gaps</th><td><a class="ub-xref" href="../../_global/gaps.html#GAP_ARCH_CHG_SESSION_CONTROL_REVIEW__TRUCK_BEV_NMC_EU">GAP_ARCH_CHG_SESSION_CONTROL_REVIEW__TRUCK_BEV_NMC_EU</a></td></tr>
+          <tr class="ub-need-links-back"><th>refined_by</th><td><a class="ub-xref" href="software_requirements.html#SWREQ_CHG_CURRENT_LIMIT">SWREQ_CHG_CURRENT_LIMIT</a>, <a class="ub-xref" href="software_requirements.html#SWREQ_CHG_SESSION_START">SWREQ_CHG_SESSION_START</a></td></tr>
+        </table>
+      </details>
+      <div class="ub-need-content">
+        <p>The CCS inlet is a CCS2 vehicle inlet (IEC 62196-3). The charging session
+control runs the session with the charger over ISO 15118-2 and sets the
+charging current limit from the BMS cell limits.</p>
+      </div>
+    </div>
+</section>
+</main>
+<footer class="ub-footer">
+<nav class="ub-relations" aria-label="Related pages">
+<a class="ub-rel ub-rel-prev" href="index.html"><span class="ub-rel-dir">Previous</span><span class="ub-rel-title">Charging Controller (CHG)</span></a>
+<a class="ub-rel ub-rel-next" href="software_requirements.html"><span class="ub-rel-dir">Next</span><span class="ub-rel-title">Software requirements</span></a>
+</nav>
+<div class="ub-footer-bottom">
+<div class="ub-footer-details">
+<div class="ub-built-with">Built with <a href="https://ubcode.useblocks.com">ubc</a></div>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</body>
+</html>

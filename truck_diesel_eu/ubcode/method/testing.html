@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="ubc">
+<title>Test strategy</title>
+<link rel="stylesheet" href="../_static/ubc.css">
+<link rel="stylesheet" href="../_static/ubc-copybutton.css">
+<script>(function(){try{var t=localStorage.getItem("ubc-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<script src="../_static/ubc-shell.js" defer></script>
+<script src="../_static/ubc-search.js" defer></script>
+<script src="../_static/ubc-copybutton.js" defer></script>
+</head>
+<body>
+<a class="ub-skip-to-content" href="#ub-main">Skip to content</a>
+<input type="checkbox" id="ub-drawer-nav" class="ub-drawer-toggle" aria-label="Navigation menu">
+<input type="checkbox" id="ub-drawer-toc" class="ub-drawer-toggle" aria-label="Page contents menu">
+<header class="ub-mobile-header ub-mh-nav ub-mh-toc">
+<div class="ub-mh-left"><label for="ub-drawer-nav" class="ub-mobile-btn ub-mobile-nav-open"><svg class="ub-mobile-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></label></div>
+<div class="ub-mh-center"><a class="ub-mobile-title" href="../index.html">cv_platform</a></div>
+<div class="ub-mh-right"><label for="ub-drawer-toc" class="ub-mobile-btn ub-mobile-toc-open"><svg class="ub-mobile-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 7h11M9 12h11M9 17h11M4.5 7h.01M4.5 12h.01M4.5 17h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></label></div>
+</header>
+<label for="ub-drawer-nav" class="ub-scrim ub-scrim-nav" aria-hidden="true"></label>
+<label for="ub-drawer-toc" class="ub-scrim ub-scrim-toc" aria-hidden="true"></label>
+<div class="ub-page">
+<aside class="ub-sidebar-drawer">
+<div class="ub-sidebar">
+<div class="ub-brand"><a class="ub-brand-link" href="../index.html">cv_platform</a></div>
+<nav class="ub-nav" aria-label="Site navigation">
+<p class="ub-nav-caption" role="heading" aria-level="2">Vehicle</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../vehicle/user_stories.html">User stories</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../vehicle/requirements.html">Vehicle requirements</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../system/overview.html">System overview</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Subsystems</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-1" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Vehicle Control Unit (VCU)">
+    <label for="ubnav-toggle-1" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../subsystems/vcu/index.html">Vehicle Control Unit (VCU)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/vcu/architecture.html">Architecture</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/vcu/software_requirements.html">Software requirements</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/vcu/code_trace.html">Code trace</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-2" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Engine Interface (ENG)">
+    <label for="ubnav-toggle-2" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../subsystems/eng/index.html">Engine Interface (ENG)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/eng/architecture.html">Architecture</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/eng/software_requirements.html">Software requirements</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/eng/code_trace.html">Code trace</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Market</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../region/eu/annex.html">Market annex: Europe</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Project</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/risks.html">Risks</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/decisions.html">Decisions</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/test_results.html">Test results</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/gaps.html">Workflow gaps</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../reports/index.html">Reports</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Method</p>
+<ul class="ub-nav-list ub-current-ancestor">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="metamodel.html">Metamodel</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="requirements.html">Requirements engineering</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="architecture.html">Architecture modelling</a>
+  </li>
+  <li class="ub-nav-item ub-current">
+    <a class="ub-nav-link ub-current" href="#">Test strategy</a>
+  </li>
+</ul>
+</nav>
+</div>
+</aside>
+<div class="ub-main-column">
+<div class="ub-content-icons"><label for="ub-drawer-toc" class="ub-toc-content-open" title="On this page"><svg class="ub-mobile-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 7h11M9 12h11M9 17h11M4.5 7h.01M4.5 12h.01M4.5 17h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></label></div>
+<main class="ub-content" id="ub-main">
+<section id="test-strategy">
+  <h1>Test strategy<a class="headerlink" href="#test-strategy" title="Link to this heading">¶</a></h1>
+  <p>Everything is tested <strong>per product</strong> and with <strong>both toolchains</strong> (ubc and
+Sphinx). One command runs the automated levels — the same command CI calls:</p>
+  <pre><code>tools/test_all.sh        # tools/build_all.sh + pytest tools/tests</code></pre>
+  <section id="levels">
+    <h2>Levels<a class="headerlink" href="#levels" title="Link to this heading">¶</a></h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th><p>Level</p>
+</th>
+            <th><p>Name</p>
+</th>
+            <th><p>What is checked</p>
+</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><p>L1</p>
+</td>
+            <td><p>Tooling</p>
+</td>
+            <td><p>generator, check scripts and importers (unit tests)</p>
+</td>
+          </tr>
+          <tr>
+            <td><p>L2</p>
+</td>
+            <td><p>Build integration</p>
+</td>
+            <td><p>CMake configure per product, active copies, BMS and component
+selection, fixed build type, entry points</p>
+</td>
+          </tr>
+          <tr>
+            <td><p>L3</p>
+</td>
+            <td><p>Docs per product</p>
+</td>
+            <td><p>needs present / absent, values, link variants, alternatives,
+file variants, BMS import, code needs, ubc ↔ Sphinx parity,
+golden files</p>
+</td>
+          </tr>
+          <tr>
+            <td><p>L4</p>
+</td>
+            <td><p>Content</p>
+</td>
+            <td><p>coverage of types / links / fields, warning-free traceability,
+no dangling links, allocations, review verdicts, brevity</p>
+</td>
+          </tr>
+          <tr>
+            <td><p>L5</p>
+</td>
+            <td><p>Negative / mutation</p>
+</td>
+            <td><p>every check fails on the defect it exists for (one defect per
+test, in a copy of the repository, with a clean control)</p>
+</td>
+          </tr>
+          <tr>
+            <td><p>L6</p>
+</td>
+            <td><p>C code</p>
+</td>
+            <td><p>CTest per product, feature tests, imported results,
+every software requirement verified by a passing test</p>
+</td>
+          </tr>
+          <tr>
+            <td><p>L7</p>
+</td>
+            <td><p>Mechanism regression</p>
+</td>
+            <td><p>generic elements per variant mechanism on a side branch</p>
+</td>
+          </tr>
+          <tr>
+            <td><p>L8</p>
+</td>
+            <td><p>IDE</p>
+</td>
+            <td><p>CMake Tools and ubCode behaviour (manual checklist)</p>
+</td>
+          </tr>
+          <tr>
+            <td><p>L9</p>
+</td>
+            <td><p>Platform</p>
+</td>
+            <td><p>macOS locally, Linux in CI</p>
+</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section id="oracles">
+    <h2>Oracles<a class="headerlink" href="#oracles" title="Link to this heading">¶</a></h2>
+    <ul>
+      <li>
+        <p><strong>Expectation tables</strong> per product (which need exists where, values,
+alternatives) — <code>tools/tests/oracle.py</code>.</p>
+      </li>
+      <li>
+        <p><strong>Golden files</strong> — the authored needs of each product,
+<code>tools/tests/golden/</code>; they change only through a reviewed commit.</p>
+      </li>
+      <li>
+        <p><strong>Known toolchain differences</strong> that are not variant behaviour are
+normalised before comparing (<code>tools/tests/normalize.py</code>).</p>
+      </li>
+    </ul>
+  </section>
+  <section id="test-evidence-in-the-documentation">
+    <h2>Test evidence in the documentation<a class="headerlink" href="#test-evidence-in-the-documentation" title="Link to this heading">¶</a></h2>
+    <ul>
+      <li>
+        <p>Each C test prints <code>PASS</code> / <code>FAIL</code> with its test id; the CTest JUnit
+report of every product is imported as <code>test_result</code> needs with the
+<code>product</code> field (<code>tools/import_test_results.py</code>) and linked to the test
+(<code>results_for</code>) and the vehicle requirements it is evidence for.</p>
+      </li>
+      <li>
+        <p>The workflow gaps of every product are imported as <code>gap</code> needs
+(<code>tools/import_gaps.py</code>).</p>
+      </li>
+      <li>
+        <p>Both are shown per product: the results of other products are gated out.</p>
+      </li>
+    </ul>
+  </section>
+</section>
+</main>
+<footer class="ub-footer">
+<nav class="ub-relations" aria-label="Related pages">
+<a class="ub-rel ub-rel-prev" href="architecture.html"><span class="ub-rel-dir">Previous</span><span class="ub-rel-title">Architecture modelling</span></a>
+</nav>
+<div class="ub-footer-bottom">
+<div class="ub-footer-details">
+<div class="ub-built-with">Built with <a href="https://ubcode.useblocks.com">ubc</a></div>
+</div>
+</div>
+</footer>
+</div>
+<aside class="ub-toc-drawer">
+<div class="ub-toc">
+<nav class="ub-page-toc" aria-label="On this page">
+<p class="ub-page-toc-title" role="heading" aria-level="2">On this page</p>
+<ul class="ub-toc-list">
+  <li><a href="#levels">Levels</a></li>
+  <li><a href="#oracles">Oracles</a></li>
+  <li><a href="#test-evidence-in-the-documentation">Test evidence in the documentation</a></li>
+</ul>
+</nav>
+</div>
+</aside>
+</div>
+</body>
+</html>

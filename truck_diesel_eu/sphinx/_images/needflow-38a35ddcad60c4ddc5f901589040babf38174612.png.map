@@ -1,0 +1,11 @@
+<map id="needflow" name="needflow">
+<area shape="rect" id="node1" href="../subsystems/eng/architecture.html#ARCH_ENG_FUEL_LEVEL" target="_top" title="ARCH_ENG_FUEL_LEVEL" alt="" coords="5,5,229,93"/>
+<area shape="rect" id="node5" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE" target="_top" title="REQ_ENERGY_SOURCE" alt="" coords="44,212,252,300"/>
+<area shape="rect" id="node2" href="../subsystems/eng/architecture.html#ARCH_ENG_TORQUE_INTERFACE" target="_top" title="ARCH_ENG_TORQUE_INTERFACE" alt="" coords="561,5,844,93"/>
+<area shape="rect" id="node7" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT" target="_top" title="REQ_TRACTION_POWER_LIMIT" alt="" coords="607,212,873,300"/>
+<area shape="rect" id="node3" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY" target="_top" title="ARCH_VCU_ENERGY_DISPLAY" alt="" coords="254,5,511,93"/>
+<area shape="rect" id="node6" href="../vehicle/requirements.html#REQ_RANGE_ESTIMATE" target="_top" title="REQ_RANGE_ESTIMATE" alt="" coords="276,221,489,291"/>
+<area shape="rect" id="node4" href="../subsystems/vcu/architecture.html#ARCH_VCU_POWER_MGMT" target="_top" title="ARCH_VCU_POWER_MGMT" alt="" coords="868,5,1105,93"/>
+<area shape="poly" id="node8" href="../vehicle/user_stories.html#US_RANGE_AWARENESS" target="_top" title="US_RANGE_AWARENESS" alt="" coords="492,481,484,466,461,452,426,441,382,434,333,432,284,434,240,441,205,452,183,466,175,481,183,496,205,510,240,521,284,528,333,530,382,528,426,521,461,510,484,496"/>
+<area shape="poly" id="node9" href="../vehicle/user_stories.html#US_PREDICTABLE_POWER" target="_top" title="US_PREDICTABLE_POWER" alt="" coords="903,481,895,462,872,444,836,431,790,422,740,419,690,422,644,431,608,444,585,462,577,481,585,500,608,517,644,531,690,540,740,543,790,540,836,531,872,517,895,500"/>
+</map>

@@ -1,0 +1,50 @@
+{
+  "commit": "9546209775bed65f9957d1f4004bf7d743b9e532",
+  "built": "2026-10-10 10:51 UTC",
+  "bms": "0.1.0",
+  "tools": {
+    "sphinx": "8.2.3",
+    "sphinx-needs": "8.5.0",
+    "sphinx-mounts": "0.2.0",
+    "sphinx-codelinks": "1.4.0",
+    "ubc": "0.35.0"
+  },
+  "products": [
+    {
+      "name": "bus_bev_lfp_eu",
+      "configuration": "bus \u00b7 BEV \u00b7 LFP \u00b7 400 V \u00b7 pantograph \u00b7 EU",
+      "needs_diff": 0,
+      "tests": [
+        8,
+        8
+      ]
+    },
+    {
+      "name": "truck_bev_lfp_na",
+      "configuration": "truck \u00b7 BEV \u00b7 LFP \u00b7 800 V \u00b7 NA",
+      "needs_diff": 0,
+      "tests": [
+        6,
+        6
+      ]
+    },
+    {
+      "name": "truck_bev_nmc_eu",
+      "configuration": "truck \u00b7 BEV \u00b7 NMC \u00b7 800 V \u00b7 MCS \u00b7 EU",
+      "needs_diff": 0,
+      "tests": [
+        7,
+        7
+      ]
+    },
+    {
+      "name": "truck_diesel_eu",
+      "configuration": "truck \u00b7 diesel \u00b7 EU",
+      "needs_diff": 0,
+      "tests": [
+        4,
+        4
+      ]
+    }
+  ]
+}

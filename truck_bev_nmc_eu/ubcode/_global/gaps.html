@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="ubc">
+<title>Workflow gaps</title>
+<link rel="stylesheet" href="../_static/ubc.css">
+<script>(function(){try{var t=localStorage.getItem("ubc-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<script src="../_static/ubc-shell.js" defer></script>
+<script src="../_static/ubc-search.js" defer></script>
+</head>
+<body>
+<a class="ub-skip-to-content" href="#ub-main">Skip to content</a>
+<input type="checkbox" id="ub-drawer-nav" class="ub-drawer-toggle" aria-label="Navigation menu">
+<header class="ub-mobile-header ub-mh-nav">
+<div class="ub-mh-left"><label for="ub-drawer-nav" class="ub-mobile-btn ub-mobile-nav-open"><svg class="ub-mobile-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></label></div>
+<div class="ub-mh-center"><a class="ub-mobile-title" href="../index.html">cv_platform</a></div>
+<div class="ub-mh-right"></div>
+</header>
+<label for="ub-drawer-nav" class="ub-scrim ub-scrim-nav" aria-hidden="true"></label>
+<div class="ub-page">
+<aside class="ub-sidebar-drawer">
+<div class="ub-sidebar">
+<div class="ub-brand"><a class="ub-brand-link" href="../index.html">cv_platform</a></div>
+<nav class="ub-nav" aria-label="Site navigation">
+<p class="ub-nav-caption" role="heading" aria-level="2">Vehicle</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../vehicle/user_stories.html">User stories</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../vehicle/requirements.html">Vehicle requirements</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../system/overview.html">System overview</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Subsystems</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-1" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Vehicle Control Unit (VCU)">
+    <label for="ubnav-toggle-1" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../subsystems/vcu/index.html">Vehicle Control Unit (VCU)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/vcu/architecture.html">Architecture</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/vcu/software_requirements.html">Software requirements</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/vcu/code_trace.html">Code trace</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-2" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Charging Controller (CHG)">
+    <label for="ubnav-toggle-2" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../subsystems/chg/index.html">Charging Controller (CHG)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/chg/architecture.html">Architecture</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/chg/software_requirements.html">Software requirements</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/chg/code_trace.html">Code trace</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-3" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Battery Management System (BMS)">
+    <label for="ubnav-toggle-3" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../subsystems/bms/index.html">Battery Management System (BMS)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/bms/architecture.html">BMS black box</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/bms/integration.html">BMS integration</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Market</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../region/eu/annex.html">Market annex: Europe</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Project</p>
+<ul class="ub-nav-list ub-current-ancestor">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="risks.html">Risks</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="decisions.html">Decisions</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="test_results.html">Test results</a>
+  </li>
+  <li class="ub-nav-item ub-current">
+    <a class="ub-nav-link ub-current" href="#">Workflow gaps</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../reports/index.html">Reports</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Method</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../method/metamodel.html">Metamodel</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../method/requirements.html">Requirements engineering</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../method/architecture.html">Architecture modelling</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../method/testing.html">Test strategy</a>
+  </li>
+</ul>
+</nav>
+</div>
+</aside>
+<div class="ub-main-column">
+<div class="ub-content-icons"></div>
+<main class="ub-content" id="ub-main">
+<section id="workflow-gaps">
+  <h1>Workflow gaps<a class="headerlink" href="#workflow-gaps" title="Link to this heading">¶</a></h1>
+  <p>Workflow gaps (<code>gap</code>) of each product, generated by
+<code>tools/import_gaps.py</code> from <code>ubc agent gaps</code>. Only the gaps of this
+build&#x27;s product (truck_bev_nmc_eu) are shown.</p>
+  <div class="ub-needtable">
+    <div class="ub-needtable-scroll">
+      <table class="ub-needtable NEEDS_TABLE">
+        <thead><tr><th scope="col" class="needs_col_id" data-col="id">ID</th><th scope="col" class="needs_col_gap_category" data-col="gap_category">Gap Category</th><th scope="col" class="needs_col_gap_for" data-col="gap_for">Gap For</th><th scope="col" class="needs_col_gap_shortfall" data-col="gap_shortfall">Gap Shortfall</th></tr></thead>
+        <tbody>
+          <tr class="need" data-need-id="BMS_GAP_REQ_CELL_BALANCING_WINDOW_NO_SATISFIES_BACK"><td><a href="https://bms-docs.invalid/0.1.0/specs/_global/gaps.html#GAP_REQ_CELL_BALANCING_WINDOW_NO_SATISFIES_BACK">BMS_GAP_REQ_CELL_BALANCING_WINDOW_NO_SATISFIES_BACK</a></td><td>trace_backward</td><td><a href="https://bms-docs.invalid/0.1.0/specs/cell-balancing/requirements.html#REQ_CELL_BALANCING_WINDOW">BMS_REQ_CELL_BALANCING_WINDOW</a></td><td>0 of 1</td></tr>
+          <tr class="need" data-need-id="GAP_ARCH_CHG_INLET_REVIEW__TRUCK_BEV_NMC_EU"><td><a class="ub-xref" href="#GAP_ARCH_CHG_INLET_REVIEW__TRUCK_BEV_NMC_EU">GAP_ARCH_CHG_INLET_REVIEW__TRUCK_BEV_NMC_EU</a></td><td>review</td><td><a class="ub-xref" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET">ARCH_CHG_INLET</a></td><td>0 of 1</td></tr>
+          <tr class="need" data-need-id="GAP_ARCH_CHG_SESSION_CONTROL_REVIEW__TRUCK_BEV_NMC_EU"><td><a class="ub-xref" href="#GAP_ARCH_CHG_SESSION_CONTROL_REVIEW__TRUCK_BEV_NMC_EU">GAP_ARCH_CHG_SESSION_CONTROL_REVIEW__TRUCK_BEV_NMC_EU</a></td><td>review</td><td><a class="ub-xref" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL">ARCH_CHG_SESSION_CONTROL</a></td><td>0 of 1</td></tr>
+          <tr class="need" data-need-id="GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_BEV_NMC_EU"><td><a class="ub-xref" href="#GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_BEV_NMC_EU">GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_BEV_NMC_EU</a></td><td>review</td><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY">ARCH_VCU_ENERGY_DISPLAY</a></td><td>0 of 1</td></tr>
+          <tr class="need" data-need-id="GAP_DEC_CHARGING_INLET_PRIORITY_REVIEW__TRUCK_BEV_NMC_EU"><td><a class="ub-xref" href="#GAP_DEC_CHARGING_INLET_PRIORITY_REVIEW__TRUCK_BEV_NMC_EU">GAP_DEC_CHARGING_INLET_PRIORITY_REVIEW__TRUCK_BEV_NMC_EU</a></td><td>review</td><td><a class="ub-xref" href="decisions.html#DEC_CHARGING_INLET_PRIORITY">DEC_CHARGING_INLET_PRIORITY</a></td><td>0 of 1</td></tr>
+          <tr class="need" data-need-id="GAP_REQ_ENERGY_SOURCE_REVIEW__TRUCK_BEV_NMC_EU"><td><a class="ub-xref" href="#GAP_REQ_ENERGY_SOURCE_REVIEW__TRUCK_BEV_NMC_EU">GAP_REQ_ENERGY_SOURCE_REVIEW__TRUCK_BEV_NMC_EU</a></td><td>review</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE">REQ_ENERGY_SOURCE</a></td><td>0 of 1</td></tr>
+          <tr class="need" data-need-id="GAP_SWREQ_CHG_CURRENT_LIMIT_REVIEW__TRUCK_BEV_NMC_EU"><td><a class="ub-xref" href="#GAP_SWREQ_CHG_CURRENT_LIMIT_REVIEW__TRUCK_BEV_NMC_EU">GAP_SWREQ_CHG_CURRENT_LIMIT_REVIEW__TRUCK_BEV_NMC_EU</a></td><td>review</td><td><a class="ub-xref" href="../subsystems/chg/software_requirements.html#SWREQ_CHG_CURRENT_LIMIT">SWREQ_CHG_CURRENT_LIMIT</a></td><td>0 of 1</td></tr>
+          <tr class="need" data-need-id="GAP_SWREQ_CHG_INTERFACE_DERATING_REVIEW__TRUCK_BEV_NMC_EU"><td><a class="ub-xref" href="#GAP_SWREQ_CHG_INTERFACE_DERATING_REVIEW__TRUCK_BEV_NMC_EU">GAP_SWREQ_CHG_INTERFACE_DERATING_REVIEW__TRUCK_BEV_NMC_EU</a></td><td>review</td><td><a class="ub-xref" href="../subsystems/chg/software_requirements.html#SWREQ_CHG_INTERFACE_DERATING">SWREQ_CHG_INTERFACE_DERATING</a></td><td>0 of 1</td></tr>
+          <tr class="need" data-need-id="GAP_SWREQ_CHG_SESSION_START_REVIEW__TRUCK_BEV_NMC_EU"><td><a class="ub-xref" href="#GAP_SWREQ_CHG_SESSION_START_REVIEW__TRUCK_BEV_NMC_EU">GAP_SWREQ_CHG_SESSION_START_REVIEW__TRUCK_BEV_NMC_EU</a></td><td>review</td><td><a class="ub-xref" href="../subsystems/chg/software_requirements.html#SWREQ_CHG_SESSION_START">SWREQ_CHG_SESSION_START</a></td><td>0 of 1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+    <div class="ub-need" id="GAP_ARCH_CHG_INLET_REVIEW__TRUCK_BEV_NMC_EU" data-need-type="gap" data-need-id="GAP_ARCH_CHG_INLET_REVIEW__TRUCK_BEV_NMC_EU" style="--ub-need-accent: #EF4444">
+      <div class="ub-need-header">
+        <span class="ub-need-type">gap</span>
+        <span class="ub-need-title">ARCH_CHG_INLET: review review</span>
+        <span class="ub-need-id">GAP_ARCH_CHG_INLET_REVIEW__TRUCK_BEV_NMC_EU</span>
+        <a class="headerlink" href="#GAP_ARCH_CHG_INLET_REVIEW__TRUCK_BEV_NMC_EU" title="Link to this need">¶</a>
+      </div>
+      <details class="ub-need-meta-details" open="open">
+        <summary class="ub-need-meta-summary">Details</summary>
+        <table class="ub-need-meta">
+          <tr><th>gap_category</th><td>review</td></tr>
+          <tr><th>gap_need_id</th><td>ARCH_CHG_INLET</td></tr>
+          <tr><th>gap_need_type</th><td>arch</td></tr>
+          <tr><th>gap_shortfall</th><td>0 of 1</td></tr>
+          <tr><th>product</th><td>truck_bev_nmc_eu</td></tr>
+          <tr><th>gap_for</th><td><a class="ub-xref" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET">ARCH_CHG_INLET</a></td></tr>
+        </table>
+      </details>
+      <div class="ub-need-content">
+        <p><code>ubc agent gaps</code> reports ARCH_CHG_INLET (arch) in truck_bev_nmc_eu.</p>
+      </div>
+    </div>
+    <div class="ub-need" id="GAP_ARCH_CHG_SESSION_CONTROL_REVIEW__TRUCK_BEV_NMC_EU" data-need-type="gap" data-need-id="GAP_ARCH_CHG_SESSION_CONTROL_REVIEW__TRUCK_BEV_NMC_EU" style="--ub-need-accent: #EF4444">
+      <div class="ub-need-header">
+        <span class="ub-need-type">gap</span>
+        <span class="ub-need-title">ARCH_CHG_SESSION_CONTROL: review review</span>
+        <span class="ub-need-id">GAP_ARCH_CHG_SESSION_CONTROL_REVIEW__TRUCK_BEV_NMC_EU</span>
+        <a class="headerlink" href="#GAP_ARCH_CHG_SESSION_CONTROL_REVIEW__TRUCK_BEV_NMC_EU" title="Link to this need">¶</a>
+      </div>
+      <details class="ub-need-meta-details" open="open">
+        <summary class="ub-need-meta-summary">Details</summary>
+        <table class="ub-need-meta">
+          <tr><th>gap_category</th><td>review</td></tr>
+          <tr><th>gap_need_id</th><td>ARCH_CHG_SESSION_CONTROL</td></tr>
+          <tr><th>gap_need_type</th><td>arch</td></tr>
+          <tr><th>gap_shortfall</th><td>0 of 1</td></tr>
+          <tr><th>product</th><td>truck_bev_nmc_eu</td></tr>
+          <tr><th>gap_for</th><td><a class="ub-xref" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL">ARCH_CHG_SESSION_CONTROL</a></td></tr>
+        </table>
+      </details>
+      <div class="ub-need-content">
+        <p><code>ubc agent gaps</code> reports ARCH_CHG_SESSION_CONTROL (arch) in truck_bev_nmc_eu.</p>
+      </div>
+    </div>
+    <div class="ub-need" id="GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_BEV_NMC_EU" data-need-type="gap" data-need-id="GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_BEV_NMC_EU" style="--ub-need-accent: #EF4444">
+      <div class="ub-need-header">
+        <span class="ub-need-type">gap</span>
+        <span class="ub-need-title">ARCH_VCU_ENERGY_DISPLAY: review review</span>
+        <span class="ub-need-id">GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_BEV_NMC_EU</span>
+        <a class="headerlink" href="#GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_BEV_NMC_EU" title="Link to this need">¶</a>
+      </div>
+      <details class="ub-need-meta-details" open="open">
+        <summary class="ub-need-meta-summary">Details</summary>
+        <table class="ub-need-meta">
+          <tr><th>gap_category</th><td>review</td></tr>
+          <tr><th>gap_need_id</th><td>ARCH_VCU_ENERGY_DISPLAY</td></tr>
+          <tr><th>gap_need_type</th><td>arch</td></tr>
+          <tr><th>gap_shortfall</th><td>0 of 1</td></tr>
+          <tr><th>product</th><td>truck_bev_nmc_eu</td></tr>
+          <tr><th>gap_for</th><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY">ARCH_VCU_ENERGY_DISPLAY</a></td></tr>
+        </table>
+      </details>
+      <div class="ub-need-content">
+        <p><code>ubc agent gaps</code> reports ARCH_VCU_ENERGY_DISPLAY (arch) in truck_bev_nmc_eu.</p>
+      </div>
+    </div>
+    <div class="ub-need" id="GAP_DEC_CHARGING_INLET_PRIORITY_REVIEW__TRUCK_BEV_NMC_EU" data-need-type="gap" data-need-id="GAP_DEC_CHARGING_INLET_PRIORITY_REVIEW__TRUCK_BEV_NMC_EU" style="--ub-need-accent: #EF4444">
+      <div class="ub-need-header">
+        <span class="ub-need-type">gap</span>
+        <span class="ub-need-title">DEC_CHARGING_INLET_PRIORITY: review review</span>
+        <span class="ub-need-id">GAP_DEC_CHARGING_INLET_PRIORITY_REVIEW__TRUCK_BEV_NMC_EU</span>
+        <a class="headerlink" href="#GAP_DEC_CHARGING_INLET_PRIORITY_REVIEW__TRUCK_BEV_NMC_EU" title="Link to this need">¶</a>
+      </div>
+      <details class="ub-need-meta-details" open="open">
+        <summary class="ub-need-meta-summary">Details</summary>
+        <table class="ub-need-meta">
+          <tr><th>gap_category</th><td>review</td></tr>
+          <tr><th>gap_need_id</th><td>DEC_CHARGING_INLET_PRIORITY</td></tr>
+          <tr><th>gap_need_type</th><td>decision</td></tr>
+          <tr><th>gap_shortfall</th><td>0 of 1</td></tr>
+          <tr><th>product</th><td>truck_bev_nmc_eu</td></tr>
+          <tr><th>gap_for</th><td><a class="ub-xref" href="decisions.html#DEC_CHARGING_INLET_PRIORITY">DEC_CHARGING_INLET_PRIORITY</a></td></tr>
+        </table>
+      </details>
+      <div class="ub-need-content">
+        <p><code>ubc agent gaps</code> reports DEC_CHARGING_INLET_PRIORITY (decision) in truck_bev_nmc_eu.</p>
+      </div>
+    </div>
+    <div class="ub-need" id="GAP_REQ_ENERGY_SOURCE_REVIEW__TRUCK_BEV_NMC_EU" data-need-type="gap" data-need-id="GAP_REQ_ENERGY_SOURCE_REVIEW__TRUCK_BEV_NMC_EU" style="--ub-need-accent: #EF4444">
+      <div class="ub-need-header">
+        <span class="ub-need-type">gap</span>
+        <span class="ub-need-title">REQ_ENERGY_SOURCE: review review</span>
+        <span class="ub-need-id">GAP_REQ_ENERGY_SOURCE_REVIEW__TRUCK_BEV_NMC_EU</span>
+        <a class="headerlink" href="#GAP_REQ_ENERGY_SOURCE_REVIEW__TRUCK_BEV_NMC_EU" title="Link to this need">¶</a>
+      </div>
+      <details class="ub-need-meta-details" open="open">
+        <summary class="ub-need-meta-summary">Details</summary>
+        <table class="ub-need-meta">
+          <tr><th>gap_category</th><td>review</td></tr>
+          <tr><th>gap_need_id</th><td>REQ_ENERGY_SOURCE</td></tr>
+          <tr><th>gap_need_type</th><td>req</td></tr>
+          <tr><th>gap_shortfall</th><td>0 of 1</td></tr>
+          <tr><th>product</th><td>truck_bev_nmc_eu</td></tr>
+          <tr><th>gap_for</th><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE">REQ_ENERGY_SOURCE</a></td></tr>
+        </table>
+      </details>
+      <div class="ub-need-content">
+        <p><code>ubc agent gaps</code> reports REQ_ENERGY_SOURCE (req) in truck_bev_nmc_eu.</p>
+      </div>
+    </div>
+    <div class="ub-need" id="GAP_SWREQ_CHG_CURRENT_LIMIT_REVIEW__TRUCK_BEV_NMC_EU" data-need-type="gap" data-need-id="GAP_SWREQ_CHG_CURRENT_LIMIT_REVIEW__TRUCK_BEV_NMC_EU" style="--ub-need-accent: #EF4444">
+      <div class="ub-need-header">
+        <span class="ub-need-type">gap</span>
+        <span class="ub-need-title">SWREQ_CHG_CURRENT_LIMIT: review review</span>
+        <span class="ub-need-id">GAP_SWREQ_CHG_CURRENT_LIMIT_REVIEW__TRUCK_BEV_NMC_EU</span>
+        <a class="headerlink" href="#GAP_SWREQ_CHG_CURRENT_LIMIT_REVIEW__TRUCK_BEV_NMC_EU" title="Link to this need">¶</a>
+      </div>
+      <details class="ub-need-meta-details" open="open">
+        <summary class="ub-need-meta-summary">Details</summary>
+        <table class="ub-need-meta">
+          <tr><th>gap_category</th><td>review</td></tr>
+          <tr><th>gap_need_id</th><td>SWREQ_CHG_CURRENT_LIMIT</td></tr>
+          <tr><th>gap_need_type</th><td>swreq</td></tr>
+          <tr><th>gap_shortfall</th><td>0 of 1</td></tr>
+          <tr><th>product</th><td>truck_bev_nmc_eu</td></tr>
+          <tr><th>gap_for</th><td><a class="ub-xref" href="../subsystems/chg/software_requirements.html#SWREQ_CHG_CURRENT_LIMIT">SWREQ_CHG_CURRENT_LIMIT</a></td></tr>
+        </table>
+      </details>
+      <div class="ub-need-content">
+        <p><code>ubc agent gaps</code> reports SWREQ_CHG_CURRENT_LIMIT (swreq) in truck_bev_nmc_eu.</p>
+      </div>
+    </div>
+    <div class="ub-need" id="GAP_SWREQ_CHG_INTERFACE_DERATING_REVIEW__TRUCK_BEV_NMC_EU" data-need-type="gap" data-need-id="GAP_SWREQ_CHG_INTERFACE_DERATING_REVIEW__TRUCK_BEV_NMC_EU" style="--ub-need-accent: #EF4444">
+      <div class="ub-need-header">
+        <span class="ub-need-type">gap</span>
+        <span class="ub-need-title">SWREQ_CHG_INTERFACE_DERATING: review review</span>
+        <span class="ub-need-id">GAP_SWREQ_CHG_INTERFACE_DERATING_REVIEW__TRUCK_BEV_NMC_EU</span>
+        <a class="headerlink" href="#GAP_SWREQ_CHG_INTERFACE_DERATING_REVIEW__TRUCK_BEV_NMC_EU" title="Link to this need">¶</a>
+      </div>
+      <details class="ub-need-meta-details" open="open">
+        <summary class="ub-need-meta-summary">Details</summary>
+        <table class="ub-need-meta">
+          <tr><th>gap_category</th><td>review</td></tr>
+          <tr><th>gap_need_id</th><td>SWREQ_CHG_INTERFACE_DERATING</td></tr>
+          <tr><th>gap_need_type</th><td>swreq</td></tr>
+          <tr><th>gap_shortfall</th><td>0 of 1</td></tr>
+          <tr><th>product</th><td>truck_bev_nmc_eu</td></tr>
+          <tr><th>gap_for</th><td><a class="ub-xref" href="../subsystems/chg/software_requirements.html#SWREQ_CHG_INTERFACE_DERATING">SWREQ_CHG_INTERFACE_DERATING</a></td></tr>
+        </table>
+      </details>
+      <div class="ub-need-content">
+        <p><code>ubc agent gaps</code> reports SWREQ_CHG_INTERFACE_DERATING (swreq) in truck_bev_nmc_eu.</p>
+      </div>
+    </div>
+    <div class="ub-need" id="GAP_SWREQ_CHG_SESSION_START_REVIEW__TRUCK_BEV_NMC_EU" data-need-type="gap" data-need-id="GAP_SWREQ_CHG_SESSION_START_REVIEW__TRUCK_BEV_NMC_EU" style="--ub-need-accent: #EF4444">
+      <div class="ub-need-header">
+        <span class="ub-need-type">gap</span>
+        <span class="ub-need-title">SWREQ_CHG_SESSION_START: review review</span>
+        <span class="ub-need-id">GAP_SWREQ_CHG_SESSION_START_REVIEW__TRUCK_BEV_NMC_EU</span>
+        <a class="headerlink" href="#GAP_SWREQ_CHG_SESSION_START_REVIEW__TRUCK_BEV_NMC_EU" title="Link to this need">¶</a>
+      </div>
+      <details class="ub-need-meta-details" open="open">
+        <summary class="ub-need-meta-summary">Details</summary>
+        <table class="ub-need-meta">
+          <tr><th>gap_category</th><td>review</td></tr>
+          <tr><th>gap_need_id</th><td>SWREQ_CHG_SESSION_START</td></tr>
+          <tr><th>gap_need_type</th><td>swreq</td></tr>
+          <tr><th>gap_shortfall</th><td>0 of 1</td></tr>
+          <tr><th>product</th><td>truck_bev_nmc_eu</td></tr>
+          <tr><th>gap_for</th><td><a class="ub-xref" href="../subsystems/chg/software_requirements.html#SWREQ_CHG_SESSION_START">SWREQ_CHG_SESSION_START</a></td></tr>
+        </table>
+      </details>
+      <div class="ub-need-content">
+        <p><code>ubc agent gaps</code> reports SWREQ_CHG_SESSION_START (swreq) in truck_bev_nmc_eu.</p>
+      </div>
+    </div>
+</section>
+</main>
+<footer class="ub-footer">
+<nav class="ub-relations" aria-label="Related pages">
+<a class="ub-rel ub-rel-prev" href="test_results.html"><span class="ub-rel-dir">Previous</span><span class="ub-rel-title">Test results</span></a>
+<a class="ub-rel ub-rel-next" href="../reports/index.html"><span class="ub-rel-dir">Next</span><span class="ub-rel-title">Reports</span></a>
+</nav>
+<div class="ub-footer-bottom">
+<div class="ub-footer-details">
+<div class="ub-built-with">Built with <a href="https://ubcode.useblocks.com">ubc</a></div>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</body>
+</html>

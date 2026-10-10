@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="ubc">
+<title>Requirements engineering</title>
+<link rel="stylesheet" href="../_static/ubc.css">
+<script>(function(){try{var t=localStorage.getItem("ubc-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<script src="../_static/ubc-shell.js" defer></script>
+<script src="../_static/ubc-search.js" defer></script>
+</head>
+<body>
+<a class="ub-skip-to-content" href="#ub-main">Skip to content</a>
+<input type="checkbox" id="ub-drawer-nav" class="ub-drawer-toggle" aria-label="Navigation menu">
+<input type="checkbox" id="ub-drawer-toc" class="ub-drawer-toggle" aria-label="Page contents menu">
+<header class="ub-mobile-header ub-mh-nav ub-mh-toc">
+<div class="ub-mh-left"><label for="ub-drawer-nav" class="ub-mobile-btn ub-mobile-nav-open"><svg class="ub-mobile-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></label></div>
+<div class="ub-mh-center"><a class="ub-mobile-title" href="../index.html">cv_platform</a></div>
+<div class="ub-mh-right"><label for="ub-drawer-toc" class="ub-mobile-btn ub-mobile-toc-open"><svg class="ub-mobile-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 7h11M9 12h11M9 17h11M4.5 7h.01M4.5 12h.01M4.5 17h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></label></div>
+</header>
+<label for="ub-drawer-nav" class="ub-scrim ub-scrim-nav" aria-hidden="true"></label>
+<label for="ub-drawer-toc" class="ub-scrim ub-scrim-toc" aria-hidden="true"></label>
+<div class="ub-page">
+<aside class="ub-sidebar-drawer">
+<div class="ub-sidebar">
+<div class="ub-brand"><a class="ub-brand-link" href="../index.html">cv_platform</a></div>
+<nav class="ub-nav" aria-label="Site navigation">
+<p class="ub-nav-caption" role="heading" aria-level="2">Vehicle</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../vehicle/user_stories.html">User stories</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../vehicle/requirements.html">Vehicle requirements</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../system/overview.html">System overview</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Subsystems</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-1" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Vehicle Control Unit (VCU)">
+    <label for="ubnav-toggle-1" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../subsystems/vcu/index.html">Vehicle Control Unit (VCU)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/vcu/architecture.html">Architecture</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/vcu/software_requirements.html">Software requirements</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/vcu/code_trace.html">Code trace</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-2" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Charging Controller (CHG)">
+    <label for="ubnav-toggle-2" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../subsystems/chg/index.html">Charging Controller (CHG)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/chg/architecture.html">Architecture</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/chg/software_requirements.html">Software requirements</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/chg/code_trace.html">Code trace</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li class="ub-nav-item ub-has-children">
+    <input type="checkbox" id="ubnav-toggle-3" class="ub-nav-toggle" role="switch" aria-label="Toggle navigation of Battery Management System (BMS)">
+    <label for="ubnav-toggle-3" class="ub-nav-toggle-label"></label>
+    <a class="ub-nav-link" href="../subsystems/bms/index.html">Battery Management System (BMS)</a>
+    <div class="ub-nav-children">
+      <ul class="ub-nav-list">
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/bms/architecture.html">BMS black box</a>
+        </li>
+        <li class="ub-nav-item">
+          <a class="ub-nav-link" href="../subsystems/bms/integration.html">BMS integration</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Market</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../region/eu/annex.html">Market annex: Europe</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Project</p>
+<ul class="ub-nav-list">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/risks.html">Risks</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/decisions.html">Decisions</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/test_results.html">Test results</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../_global/gaps.html">Workflow gaps</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="../reports/index.html">Reports</a>
+  </li>
+</ul>
+<p class="ub-nav-caption" role="heading" aria-level="2">Method</p>
+<ul class="ub-nav-list ub-current-ancestor">
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="metamodel.html">Metamodel</a>
+  </li>
+  <li class="ub-nav-item ub-current">
+    <a class="ub-nav-link ub-current" href="#">Requirements engineering</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="architecture.html">Architecture modelling</a>
+  </li>
+  <li class="ub-nav-item">
+    <a class="ub-nav-link" href="testing.html">Test strategy</a>
+  </li>
+</ul>
+</nav>
+</div>
+</aside>
+<div class="ub-main-column">
+<div class="ub-content-icons"><label for="ub-drawer-toc" class="ub-toc-content-open" title="On this page"><svg class="ub-mobile-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 7h11M9 12h11M9 17h11M4.5 7h.01M4.5 12h.01M4.5 17h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></label></div>
+<main class="ub-content" id="ub-main">
+<section id="requirements-engineering">
+  <h1>Requirements engineering<a class="headerlink" href="#requirements-engineering" title="Link to this heading">¶</a></h1>
+  <p>Requirements are written in the <strong>150 % source</strong> and resolved per product.
+They are authored stage by stage in the AI workflow (<code>ubc agent</code>) and
+reviewed against criteria files in <code>metamodel/quality/</code>.</p>
+  <section id="levels">
+    <h2>Levels<a class="headerlink" href="#levels" title="Link to this heading">¶</a></h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th><p>Level</p>
+</th>
+            <th><p>Rule</p>
+</th>
+            <th><p>Traces to</p>
+</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><p>User story</p>
+</td>
+            <td><p>&quot;As a &lt;role&gt;, I …&quot; — one capability a user
+can observe; no implementation terms</p>
+</td>
+            <td><p>— (root of the V)</p>
+</td>
+          </tr>
+          <tr>
+            <td><p>Vehicle req</p>
+</td>
+            <td><p>one <em>shall</em>, verifiable (unit, tolerance,
+condition); product values in <code>value</code></p>
+</td>
+            <td><p>exactly one user story</p>
+</td>
+          </tr>
+          <tr>
+            <td><p>Software req</p>
+</td>
+            <td><p>one <em>shall</em> for one subsystem&#x27;s software</p>
+</td>
+            <td><p>exactly one architecture element</p>
+</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section id="writing-rules">
+    <h2>Writing rules<a class="headerlink" href="#writing-rules" title="Link to this heading">¶</a></h2>
+    <ul>
+      <li>
+        <p><strong>One statement per need</strong>; one or two sentences.</p>
+      </li>
+      <li>
+        <p><strong>Product-specific values</strong> are not written into the text but into the
+<code>value</code> field with a variant function, so the requirement stays one need:
+<code>:value: &lt;&lt;mcs: 1000 kW, 350 kW&gt;&gt;</code>.</p>
+      </li>
+      <li>
+        <p><strong>Variant-specific requirements</strong> are gated with an <code>if</code> block on the
+variant data (e.g. <code>.. if:: var.vehicle.type == &#x27;bus&#x27;</code>) or live in a
+variant folder (<code>region/eu</code>, <code>region/na</code>).</p>
+      </li>
+      <li>
+        <p><strong>Alternatives</strong> (same requirement, different content per product) share one
+id in complementary <code>if</code> blocks — e.g. <code>REQ_ENERGY_SOURCE</code>: state of charge
+for battery-electric products, fuel level for diesel.</p>
+      </li>
+      <li>
+        <p><strong>Imported BMS requirements</strong> are context, never edited or restated; CV needs
+reference them and link only to BMS interface needs.</p>
+      </li>
+    </ul>
+  </section>
+  <section id="workflow-and-review">
+    <h2>Workflow and review<a class="headerlink" href="#workflow-and-review" title="Link to this heading">¶</a></h2>
+    <p>The stages are configured in <code>[workflow]</code> of <code>ubproject.toml</code>:
+<code>user_stories</code> → <code>reqs</code> → <code>archs</code> / <code>bms_allocation</code> → <code>swreqs</code> →
+<code>code</code> → <code>tests</code>, plus <code>risks</code> and <code>decisions</code>.</p>
+    <ul>
+      <li>
+        <p><code>ubc agent next</code> names the next stage; <code>ubc agent gaps</code> lists what is
+missing per product.</p>
+      </li>
+      <li>
+        <p>An independent review (separate context) scores every need against the
+criteria of its type (e.g. <em>atomicity</em>, <em>verifiability</em>, <em>parent fit</em>,
+<em>variant consistency</em>) and stores a verdict in <code>.pharaoh/verdicts/</code>.</p>
+      </li>
+      <li>
+        <p>A need is gated as strongly as its parent (<em>variant consistency</em>); no
+build-type or kit conditions.</p>
+      </li>
+    </ul>
+  </section>
+</section>
+</main>
+<footer class="ub-footer">
+<nav class="ub-relations" aria-label="Related pages">
+<a class="ub-rel ub-rel-prev" href="metamodel.html"><span class="ub-rel-dir">Previous</span><span class="ub-rel-title">Metamodel</span></a>
+<a class="ub-rel ub-rel-next" href="architecture.html"><span class="ub-rel-dir">Next</span><span class="ub-rel-title">Architecture modelling</span></a>
+</nav>
+<div class="ub-footer-bottom">
+<div class="ub-footer-details">
+<div class="ub-built-with">Built with <a href="https://ubcode.useblocks.com">ubc</a></div>
+</div>
+</div>
+</footer>
+</div>
+<aside class="ub-toc-drawer">
+<div class="ub-toc">
+<nav class="ub-page-toc" aria-label="On this page">
+<p class="ub-page-toc-title" role="heading" aria-level="2">On this page</p>
+<ul class="ub-toc-list">
+  <li><a href="#levels">Levels</a></li>
+  <li><a href="#writing-rules">Writing rules</a></li>
+  <li><a href="#workflow-and-review">Workflow and review</a></li>
+</ul>
+</nav>
+</div>
+</aside>
+</div>
+</body>
+</html>
