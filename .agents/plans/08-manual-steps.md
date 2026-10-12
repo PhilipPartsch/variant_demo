@@ -1,4 +1,4 @@
-# Plan 7: Manual steps
+# Plan 8: Manual steps
 
 All steps of the other plans that need **you** — a decision, a look, or a
 session in VS Code / the browser. The other plans only point here; everything
@@ -24,13 +24,13 @@ that owns the step.
 | M-04 | decision | CNT-05 and PH-01 (plan 99) | T§6 CNT-05 | — | **done 2026-10-10: option b** — affected ids excluded by name (`PH01_EXCLUDED` in `tools/tests/test_l4_content.py`), each must be fresh in ≥ 1 product |
 | M-05 | IDE | IDE checklist IDE-01 … IDE-07 (includes V16 / V17 deferred from plan 3) | T§ L8, V§ V16 / V17 | M-01 | open |
 | M-06 | decision | Windows in L9 (platform tests) or not | T§ L9 | — | open |
-| M-07 | browser | side-by-side compare page per product (includes V22 deferred from plan 3) | A§1.1 G5, V§ V22 | first CI deploy | open |
-| M-08 | browser | published site: variant folders, `_static/` served, no local paths | A§1.1 G4, UB-14 | first CI deploy | open |
-| M-09 | settings | branch rulesets R9 (`main`) and R10 (`gh-pages`) | B§3.4, A§5 step 2a | CI checks exist | open |
+| M-07 | browser | side-by-side compare page per product (includes V22 deferred from plan 3) | A§1.1 G5, V§ V22 | first CI deploy ✓ (2026-10-10) | **possible now** |
+| M-08 | browser | published site: variant folders, `_static/` served, no local paths | A§1.1 G4, UB-14 | first CI deploy ✓ (HTTP checks and path check done by the agent) | **possible now** (visual) |
+| M-09 | settings | branch rulesets R9 (`main`) and R10 (`gh-pages`) | B§3.4, A§5 step 2a | CI checks exist ✓ | **possible now** |
 | M-10 | decision | `choose` supported by all useblocks tools: start [plan 20](20-choose-migration.md) (incl. its IDE check, step 9) | C§8.2, plan 20 | gate of plan 20 §1 | waiting |
 | M-11 | decision | demo dry run of the walk-through C§8.1 | C§8.1 | M-01, ideally M-10 | open |
 | M-12 | decision | hand plan 99 to the useblocks teams (which entries, which channel) | plan 99 | — | open |
-| M-13 | decision | open points for the BMS team (`BB_CHARGE_LIMITS`, `BB_HV_PROTECTION`, interface tags, release artifacts) | C§3, B§5.2 | — | open |
+| M-13 | decision | BMS repository topics: interface tags and per-chemistry release artifacts (the missing BMS capabilities are requirements in this repo, plan 7 phase 2) | C§3, B§5.2 | — | open |
 
 Order (roadmap, way A): **M-01, M-03, M-04 block the merge of
 `test/cv-platform` into `main` and therefore plan 6.** Then M-06 and M-05
@@ -54,7 +54,8 @@ the first CI deploy, and M-02, M-11, M-12, M-13 whenever convenient.
 
 - **What:** the scores of 1 listed in [04-content-result.md](04-content-result.md) §6
   (charging current limit, interface derating, power-limit ownership VCU / ENG,
-  ENG units, range estimate, BMS open points, decision rationale).
+  ENG units, range estimate, decision rationale). The BMS open points item is
+  covered by plan 7 phase 2 (requirements in the repo).
 - **Choice:** apply now (one more authoring + review round) / later / never.
 
 ### M-03 Approve the golden files (plan 5)
@@ -98,12 +99,15 @@ the first CI deploy, and M-02, M-11, M-12, M-13 whenever convenient.
   (issues on GitHub for the open-source tools, internal channel for the others).
 - **Result:** per entry: reported (link) / not reported.
 
-### M-13 Open points for the BMS team
+### M-13 BMS repository topics
 
-- **What:** no BMS interface requirement for a permitted charging power
-  (`BB_CHARGE_LIMITS`) or for the isolation-fault reaction time
-  (`BB_HV_PROTECTION`); interface tags and per-chemistry release artifacts are
-  still done on the CV side (`tools/pin_bms.py`, B§5.2).
+- **What:** interface tags and per-chemistry release artifacts are still done
+  on the CV side (`tools/pin_bms.py`, B§5.2).
+- **Not here any more:** the missing permitted charging power
+  (`BB_CHARGE_LIMITS`) and isolation-fault reaction time (`BB_HV_PROTECTION`).
+  There are no open points for the BMS; they become requirements in this
+  repository, not implemented yet ([plan 7](07-system-model.md) phase 2,
+  decision 2026-10-12).
 - **Choice:** raise with the BMS repository now / later.
 
 ## 2. IDE session (M-05)

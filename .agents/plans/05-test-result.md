@@ -2,7 +2,7 @@
 
 Outcome of [05-test.md](05-test.md) (`T§`), executed 2026-10-10 on the local
 branch `test/cv-platform` (from `content/cv-platform@25b77bd`, `main` merged in;
-not pushed). The content is not merged into `main` yet (plan 7 M-01), so the
+not pushed). The content is not merged into `main` yet (plan 8 M-01), so the
 tests run on top of the content branch and reach `main` with it.
 
 **Status: L1–L7 green on macOS. `tools/test_all.sh` → 117 passed, 1 skipped
@@ -21,7 +21,7 @@ Linux with the first CI run (plan 6).**
 | L5 negative | `test_l5_negative.py` | 21 | ✓ | NEG-01 … NEG-16 (+ variants) and a positive control (unchanged copy builds clean) |
 | L6 C code | `test_l6_code.py` | 13 | ✓ | CODE-01 … CODE-04 |
 | L7 mechanisms | `eval/mechanisms` rebased on `main@c5902d7` (local) | 15 groups | ✓ | `tools/build_all.sh` + `tools/eval_expect.py`: V01 … V20 all ok |
-| L8 IDE | — | — | open | manual, plan 7 M-05 |
+| L8 IDE | — | — | open | manual, plan 8 M-05 |
 | L9 platform | — | — | macOS ✓ | Linux with the first CI run (plan 6); Windows left out (M-06 proposal) |
 
 Entry point (T§1): `tools/test_all.sh` = `tools/build_all.sh` + `pytest tools/tests`
@@ -57,8 +57,8 @@ Entry point (T§1): `tools/test_all.sh` = `tools/build_all.sh` + `pytest tools/t
 |---|---|
 | T§7 NEG-15 | was "marker inside `#if MCS` implementing an ungated swreq → fails"; that is allowed by C§5 rule 3. Now: the MCS marker **outside** its `#if` (code need gated weaker than its swreq) → `ubc check` fails in the non-MCS products |
 | T§7 NEG-04 | names `tools/check_kconfig.py` as the failing check |
-| T§9 L8 | moved to plan 7 (M-05) earlier |
-| plan 7 | M-03 ready for review, M-04 implemented as proposed |
+| T§9 L8 | moved to plan 8 (M-05) earlier |
+| plan 8 | M-03 ready for review, M-04 implemented as proposed |
 | `requirements.txt` | `pytest==8.4.2` |
 
 ## 5. Not covered / deviations
@@ -77,7 +77,7 @@ Entry point (T§1): `tools/test_all.sh` = `tools/build_all.sh` + `pytest tools/t
 
 Order "way A" (roadmap):
 
-1. You: M-01 (content), M-03 (golden files), M-04 (`xfail` OK) — plan 7.
+1. You: M-01 (content), M-03 (golden files), M-04 (`xfail` OK) — plan 8.
 2. Merge `test/cv-platform` (content + tests) into `main`, `tools/test_all.sh`
    green on `main`, push `main`. The branch itself need not be pushed.
 3. Plan 6 on a `ci/*` branch from `main`; CI calls `tools/test_all.sh`; the
