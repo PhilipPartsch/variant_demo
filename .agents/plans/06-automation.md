@@ -34,7 +34,7 @@ plan 2; this plan completes it.
 
 ## 1. Prerequisites
 
-**Order (roadmap, way A):** plan 6 starts after the reviews of plan 7 (M-01
+**Order (roadmap, way A):** plan 6 starts after the reviews of plan 8 (M-01
 content, M-03 golden files, M-04 `xfail`) and after `test/cv-platform`
 (content + tests) is merged into `main`. Work happens on a `ci/*` branch from
 that `main`, as a pull request; the `build` jobs call `tools/build_product.sh`,
@@ -65,7 +65,7 @@ has a fallback ready:
 | 99 UB-14, CL-03 | no machine path in the published site: `grep -r 'file:///' gh-pages/` (ubCode HTML shows `local-url` as text, ubc `needs.json` carries it) | no match | `tools/make_site.py` strips / rewrites `local-url` in the ubCode HTML and the published `needs.json`, or `set_local_url = false` (see §6) |
 
 Results are added to [01-evaluation-result.md](01-evaluation-result.md). The browser checks (G4, G5, UB-14) are
-manual: [07-manual-steps.md](07-manual-steps.md) §3 (M-07, M-08).
+manual: [08-manual-steps.md](08-manual-steps.md) §3 (M-07, M-08).
 
 ## 2. Workflows
 
@@ -182,7 +182,7 @@ field / link values — from the two `needs.json` files. Empty diff = parity
 
 1. Prerequisites (§1): `LICENSE` (MIT) pushed on `main`, `gh-pages` branch and Pages source (both done), repository settings B§3.4 R7, R8, R11, pinned versions (no licence secrets).
 2. `checks` + `build` matrix (minimal CI, may already exist from plan 2); the first run on `main` verifies §1.1.
-2a. Branch rulesets B§3.4 R9, R10 once the required checks exist ([07-manual-steps.md](07-manual-steps.md) M-09).
+2a. Branch rulesets B§3.4 R9, R10 once the required checks exist ([08-manual-steps.md](08-manual-steps.md) M-09).
 3. Tests of T§ wired into `checks` and `build` as they become available.
 4. `report` job summary.
 5. Site assembly (`tools/make_site.py`), landing page, compare page, needs diff.

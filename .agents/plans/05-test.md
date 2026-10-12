@@ -142,21 +142,21 @@ Each test runs for D, N, B, A, with ubc **and** Sphinx.
 
 ## 9. L8 — IDE checklist (manual)
 
-Manual; moved to [07-manual-steps.md](07-manual-steps.md) §2 (M-05,
+Manual; moved to [08-manual-steps.md](08-manual-steps.md) §2 (M-05,
 IDE-01 … IDE-07). Other manual steps of this plan: M-03 (approve the golden
 files), M-04 (CNT-05 as `xfail`), M-06 (Windows in L9).
 
 ## 10. Entry and exit criteria
 
 **Entry:** plan 4 content merged for the items under test (M-01); golden files
-reviewed (M-03, [07-manual-steps.md](07-manual-steps.md)).
+reviewed (M-03, [08-manual-steps.md](08-manual-steps.md)).
 
 **Exit:**
 
 - L1–L6 green for all four products, both toolchains, on Linux.
 - Every NEG test fails as expected (a check that never fails is not a check).
 - L7 green on `eval/mechanisms` rebased on the current `main`.
-- L8 checklist passed on at least one OS ([07-manual-steps.md](07-manual-steps.md) M-05).
+- L8 checklist passed on at least one OS ([08-manual-steps.md](08-manual-steps.md) M-05).
 - Release-gated tests (DOC-06) skipped only while the pinned sphinx-needs has
   no `choose`; mandatory after the pin is raised.
 - Every test that fails because of a useblocks tool (not our content or

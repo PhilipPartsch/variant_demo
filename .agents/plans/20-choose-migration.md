@@ -8,7 +8,7 @@ then the alternatives stay as complementary `if` blocks with one shared id
 Referenced: [variant-mechanisms.md](variant-mechanisms.md) (`M§5`, §5.1, §5.2),
 [04-content.md](04-content.md) (`C§4.1`, §8.2), [05-test.md](05-test.md)
 (`T§` DOC-06, NEG-09), [03-mechanism-evaluation.md](03-mechanism-evaluation.md)
-(`V§` V06), [07-manual-steps.md](07-manual-steps.md) (M-10),
+(`V§` V06), [08-manual-steps.md](08-manual-steps.md) (M-10),
 [99-tool-bugs.md](99-tool-bugs.md).
 
 ## 0. Goal
@@ -56,7 +56,7 @@ variants are not resolved, plan 99 UB-12); mistakes are reported as
 |---|---|---|---|
 | Sphinx-Needs | release with `choose` | **no** — latest release 8.5.0 (2026-09-03); `choose` documented for 8.6.0 | PyPI `sphinx-needs` ≥ 8.6.0; the probe (§3 step 1) builds with `-W` |
 | ubc (CLI) | parses `choose`, same result as Sphinx | **no** — 0.35.0: `Unknown directive: 'choose'`, the alternative need is dropped (probe on `test/cv-platform@23d74b4`, reverted) | probe: `ubc check` without `Unknown directive`, `ubc build needs` per product = Sphinx |
-| ubCode (VS Code) | editor support: branches not taken shown inactive, Needs Index follows the product | **no** (same engine as ubc 0.35.0) | IDE check (§3 step 9, plan 7) |
+| ubCode (VS Code) | editor support: branches not taken shown inactive, Needs Index follows the product | **no** (same engine as ubc 0.35.0) | IDE check (§3 step 9, plan 8) |
 | Pharaoh (`ubc agent`) | stages, gaps and reviews see the chosen branch | open | `ubc agent gaps` per product unchanged by the migration |
 | sphinx-mounts, Sphinx-Codelinks | not involved (`choose` is inside a document; code alternatives stay `#if` / `#else`) | — | — |
 
@@ -90,10 +90,10 @@ Work on a branch `feat/choose` from `main`; one commit per step.
 | 6 | **Migrate showcase B** (`ARCH_CHG_INLET`) and update `DEC_CHARGING_INLET_PRIORITY` (the order of the `when` branches is the decision) | golden files unchanged except the decision text |
 | 7 | **Migrate the market alternative** (`ARCH_CHG_SESSION_CONTROL`) | golden files unchanged |
 | 8 | **Tests:** DOC-06 active (skip only if the installed Sphinx-Needs < 8.6.0); NEG-09 becomes "overlapping `when` conditions → first branch wins, no duplicate" (expectation changes); new NEG-17 `when` without condition → `needs.choose`; new NEG-18 `choose` without matching branch and without `otherwise` → alternatives check fails | `tools/test_all.sh` green |
-| 9 | **IDE check** (plan 7, as an addition to M-05): ubCode shows the branches not taken as inactive and the Needs Index follows the product for the three alternatives | your OK |
+| 9 | **IDE check** (plan 8, as an addition to M-05): ubCode shows the branches not taken as inactive and the Needs Index follows the product for the three alternatives | your OK |
 | 10 | **Rules and texts:** M§5.1 / §5.2 (interim pattern → history), C§6.2 rule 4, the authoring texts of `[workflow]` (stage `reqs`: "alternatives as `choose`"), criterion `variant_consistency` (mentions `choose` / `when`), the RST comments "With the sphinx-needs `choose` directive this becomes …" removed | review of the diff |
 | 11 | **Reviews:** the changed needs get new fingerprints → one review round (independent context) for the migrated ids | verdicts submitted; PH-01 (one verdict per id) still applies — `choose` does not change it |
-| 12 | Pull request to `main`; plan 7 M-10 closed; C§8.2 demo readiness done | merged |
+| 12 | Pull request to `main`; plan 8 M-10 closed; C§8.2 demo readiness done | merged |
 
 ## 4. Exit criteria
 
