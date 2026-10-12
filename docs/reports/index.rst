@@ -24,6 +24,17 @@ black boxes (``bms_block``) that satisfy it.
    :columns: id, title, type, satisfies
    :style: table
 
+Subsystems → requirements and elements
+--------------------------------------
+
+The subsystems of this product (part of ``SYS_VEHICLE``), the vehicle
+requirements each covers and its architecture elements.
+
+.. needtable::
+   :filter: type == "subsystem"
+   :columns: id, title, covers, has_part
+   :style: table
+
 Software requirements → code and tests
 --------------------------------------
 

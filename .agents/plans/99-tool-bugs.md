@@ -52,6 +52,7 @@ documentation, convenience.
 | UB-12 | ubc + Sphinx-Needs | medium | `if` does not resolve named variants (`[needs.variants]`) |
 | UB-13 | ubc + Sphinx-Needs | medium | imported needs of an undeclared type dropped, undeclared fields stripped, silently |
 | UB-14 | ubc | medium | ubCode HTML: source links as plain text, absolute local path published |
+| UB-15 | ubc | low | `ubc build needs` exports no backlinks (`<link>_back`); Sphinx does |
 | PH-01 | Pharaoh | **high** | verdicts stored per need id only: alternatives with one id overwrite each other |
 | PH-02 | Pharaoh | **high** | review fingerprint ignores resolved field values and link variants |
 | PH-03 | Pharaoh | medium | fingerprint follows parents one level only (children / decisions flip, grandchildren not) |
@@ -62,6 +63,7 @@ documentation, convenience.
 | PH-08 | Pharaoh | low | `agent audit` omits `value`, `tags` and `refines` / `allocates` in `trace` |
 | PH-09 | Pharaoh | low | `doctor` checks only the `.claude` copy of project skills |
 | PH-10 | Pharaoh | low | brief / skills: `submit_command` without `-p`, `stale` bucket undocumented |
+| PH-11 | Pharaoh | low | skills document `review-brief --ids <ID,...>`, the CLI rejects the comma list; TYPE + `--ids` is refused |
 | SN-01 | Sphinx-Needs | medium | every schema severity is a Sphinx warning; `-W` fails on `warning` rules |
 | SN-02 | Sphinx-Needs | medium | `needs_from_toml` overrides `needs_external_needs` from `conf.py` |
 | SN-03 | Sphinx-Needs | low | `needs.json` drops external needs by default (`builder_filter`), unlike ubc |
@@ -273,6 +275,17 @@ documentation, convenience.
 - **Solution A:** render URL fields (`remote-url`, `local-url`, fields with `needs_string_links`) as links, and map `local-url` to a generated source page as Sphinx does.
 - **Solution B:** an option for `ubc build html` to drop / rewrite machine-specific fields (`local-url`) for published builds.
 
+### UB-15 `ubc build needs` exports no backlinks
+
+- **Tool:** ubc 0.35.0 (Sphinx-Needs 8.5.0 for comparison)
+- **Marker:** `main@1a480bf`, any product, e.g. `truck_bev_nmc_eu`: need `REQ_MAX_CHARGE_POWER`. Found in plan 7 phase 1 (`model/system`).
+- **Summary:** the Sphinx `needs.json` carries every incoming link as `<link>_back` (`satisfies_back`, `part_of_back`, `covers_back`, …); the ubc export carries none, although ubc knows them (tables with an incoming-link column, e.g. `has_part`, `covered_by`, `allocated_from`, render the same in both HTML outputs).
+- **Input:** `tools/build_product.sh truck_bev_nmc_eu`, then compare `REQ_MAX_CHARGE_POWER` in `build/site/truck_bev_nmc_eu/{ubc,sphinx}.needs.json`.
+- **Wrong output:** ubc: no `*_back` key. Sphinx: `"satisfies_back": ["ARCH_CHG_INLET", "BB_CHARGE_LIMITS"]`. Expected: the same backlinks in both exports (or the configured `incoming` names).
+- **Workaround:** the tests compute backlinks from the outgoing links (`tools/tests/system_model.py`, `has_part` from `part_of`); the parity check compares ids only.
+- **Solution A:** export backlinks like Sphinx-Needs (`<link>_back`).
+- **Solution B:** an option of `ubc build needs` to include backlinks, documented as a known difference otherwise.
+
 ## 4. Pharaoh (`ubc agent`)
 
 ### PH-01 Verdicts stored per need id only
@@ -440,6 +453,16 @@ documentation, convenience.
 - **Solution A:** mirror check for every skill found in any host location.
 - **Solution B:** `ubc agent skill add <path>` registering project skills in the manifest (then the existing mirror check applies).
 
+### PH-05 addendum: membership links (plan 7)
+
+The same per-type rule appears with `part_of` (arch / bms_block → subsystem):
+a `direction = "both"` trace in stage `archs` makes `SUB_BMS` owe an `arch`
+part (`{'id': 'SUB_BMS', 'link': 'part_of', 'have': 0, 'need': 1, 'category':
+'trace_backward'}` on `model/system`, truck_bev_nmc_eu) although its parts
+are `bms_block`s of stage `bms_allocation`. Workaround: `direction =
+"outgoing"` in both stages, "every subsystem has a part" as the schema rule
+`coverage-subsystem-part_of-back` (counts both types).
+
 ### PH-10 Brief and skill documentation gaps
 
 - **Tool:** ubc 0.35.0 + installed `review-*` skills (vmodel v9)
@@ -447,6 +470,17 @@ documentation, convenience.
 - **Summary:** `submit_command` omits `-p <project>` although the skills require it; `verdict-check` returns a `stale` bucket (verdict of a need absent in the product) not described in the skills; exit code 1 whenever `ok` is false.
 - **Solution A:** include `-p` in `submit_command`; document `stale` (useful for product lines).
 - **Solution B:** `verdict-check --variant-aware` treating `stale` explicitly as "not applicable".
+
+### PH-11 `review-brief --ids` comma list rejected
+
+- **Tool:** ubc 0.35.0 + installed `review-*` skills
+- **Marker:** `main@1a480bf`, `.claude/skills/review-arch/SKILL.md` step 1 (`--ids <ID,...>`). Found in plan 7 phase 1.
+- **Summary:** the skills tell the reviewer to call `ubc agent review-brief <TYPE> … (or --ids <ID,...>)`; the CLI takes space-separated ids only and refuses a type together with `--ids`.
+- **Input:** `ubc agent review-brief --ids ARCH_VCU_POWER_MGMT,ARCH_ENG_FUEL_LEVEL -p .`; `ubc agent review-brief arch --ids ARCH_VCU_POWER_MGMT -p .`
+- **Wrong output:** `{"ok": false, "error": "unknown_need", "id": "ARCH_VCU_POWER_MGMT,ARCH_ENG_FUEL_LEVEL"}`; `{"ok": false, "error": "ambiguous_selection"}`. Expected: the documented comma list works (or the skills document the space-separated form).
+- **Workaround:** space-separated ids without a type.
+- **Solution A:** accept comma-separated ids (and a type as a filter together with `--ids`).
+- **Solution B:** correct the skills (`--ids <ID> <ID> …`, no type).
 
 ## 5. Sphinx-Needs
 

@@ -8,7 +8,8 @@ import warnings
 import pytest
 
 from conftest import BEV, PRODUCTS, ROOT, SITE, UBC, local, make_repo, run
-from oracle import ALTERNATIVE, PAGES
+from oracle import ALTERNATIVE, COVERS, PAGES, SUBSYSTEM_PAGE
+from system_model import covers_mismatch, system_tree
 
 CONFIG = tomllib.loads((ROOT / "ubproject.toml").read_text())
 LINKS = set(CONFIG["needs"]["links"])
@@ -24,8 +25,8 @@ def union(site, tool="ubc"):
 def test_cnt01_coverage_matrix(site):
     needs = union(site)
     types = {n["type"] for n in needs.values()}
-    assert types >= {"user_story", "req", "arch", "bms_block", "swreq", "impl", "test", "risk", "decision",
-                     "test_result", "gap"}, types
+    assert types >= {"system", "subsystem", "user_story", "req", "arch", "bms_block", "swreq", "impl", "test",
+                     "risk", "decision", "test_result", "gap"}, types
     used = {l for n in needs.values() for l in LINKS if n.get(l)}
     assert used >= LINKS - {"motivates"}, f"unused links: {LINKS - used}"   # motivates: declared, unused (as in the BMS)
     assert any(n.get("value") for n in needs.values()), "value field"
@@ -69,6 +70,8 @@ PH01_EXCLUDED = {
     "SWREQ_CHG_INTERFACE_DERATING": "refines ARCH_CHG_INLET",
     "SWREQ_CHG_SESSION_START": "refines ARCH_CHG_SESSION_CONTROL",
     "SWREQ_CHG_CURRENT_LIMIT": "refines ARCH_CHG_SESSION_CONTROL",
+    "SUB_VCU": "covers differs per product (variant functions)",
+    "SUB_CHG": "covers differs per product (variant functions)",
 }
 
 
@@ -113,3 +116,30 @@ def test_cnt06_brevity(site):
             long.append((i, len(sentences)))
     if long:
         warnings.warn(f"needs with more than two sentences (C§0): {long}")
+
+
+# --- system level (plan 7 S§2.3) -------------------------------------------------
+
+@pytest.mark.parametrize("tool", ("ubc", "sphinx"))
+@pytest.mark.parametrize("product", PRODUCTS)
+def test_cnt07_subsystem_covers_its_parts(site, product, tool):
+    needs = local(site[product][tool])
+    assert not covers_mismatch(needs), covers_mismatch(needs)
+    for sid, per in COVERS.items():
+        if product in per:
+            assert sorted(needs[sid]["covers"]) == per[product], (sid, product)
+
+
+@pytest.mark.parametrize("tool", ("ubc", "sphinx"))
+@pytest.mark.parametrize("product", PRODUCTS)
+def test_cnt08_one_system(site, product, tool):
+    problems = system_tree(local(site[product][tool]))
+    assert not problems, problems
+
+
+@pytest.mark.parametrize("tool", ("sphinx", "ubcode"))
+@pytest.mark.parametrize("product", PRODUCTS)
+def test_cnt09_subsystem_gated_like_its_folder(site, product, tool):
+    needs = site[product]["ubc"]
+    for sid, page in SUBSYSTEM_PAGE.items():
+        assert (sid in needs) == (SITE / product / tool / page).exists(), (sid, product, tool)

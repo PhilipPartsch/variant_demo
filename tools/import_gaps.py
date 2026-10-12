@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LINKS = {"traces_to", "satisfies", "refines", "implements", "verifies", "results_for", "affects",
-         "motivates", "mitigates", "gap_for", "allocates", "links"}
+         "motivates", "mitigates", "gap_for", "allocates", "part_of", "covers", "links"}
 
 
 def main() -> int:

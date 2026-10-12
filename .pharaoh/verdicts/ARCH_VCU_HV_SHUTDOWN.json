@@ -2,40 +2,39 @@
   "agent": "claude-code",
   "axes": {
     "allocation_complete": {
-      "reason": "The element has no `allocates`, so this axis is met by definition.",
+      "reason": "No allocates; scored max as the guide prescribes.",
       "score": 2
     },
     "completeness": {
-      "reason": "Opening both poles within 100 ms after the fault is addressed.",
+      "reason": "Both-pole opening within 100 ms after the fault is addressed (request plus check); detection is the BMS sibling's part.",
       "score": 2
     },
     "consistency": {
-      "reason": "Matches BB_HV_PROTECTION: the BMS detects the fault and opens the contactors on VCU request.",
+      "reason": "Consistent with sibling BB_HV_PROTECTION, which opens the contactors on VCU request.",
       "score": 2
     },
     "design_clarity": {
-      "reason": "Names the steps but not how 'both poles are open' is checked (contactor feedback vs. voltage) nor the reaction if the check fails.",
-      "score": 1,
-      "suggestion": "Name the check signal and the fallback when a pole stays closed."
+      "reason": "Concrete sequence: receive fault, request contactor opening, switch off HV consumers, warn driver, verify both poles within 100 ms.",
+      "score": 2
     },
     "implementability": {
-      "reason": "Bounded coordinator with a fixed sequence.",
+      "reason": "Bounded coordinator with a clear sequence and deadline.",
       "score": 2
     },
     "interface_only": {
-      "reason": "The element has no `allocates`, so this axis is met by definition.",
+      "reason": "No allocates; scored max as the guide prescribes.",
       "score": 2
     },
     "no_value_copy": {
-      "reason": "Names no BMS limit, threshold or timing.",
+      "reason": "The 100 ms is the vehicle requirement's value, not a BMS value; no BMS threshold restated.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Coordinates the shutdown that opens both poles within 100 ms.",
+      "reason": "Coordinates the shutdown after the BMS isolation fault and verifies both poles open within 100 ms, as REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT requires.",
       "score": 2
     },
     "variant_consistency": {
-      "reason": "Gated `var.powertrain.type == 'bev'`, same as REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT.",
+      "reason": "Gated by if var.powertrain.type == 'bev', same as the parent.",
       "score": 2
     }
   },
@@ -43,6 +42,6 @@
   "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
   "model": "claude-opus-5-5",
   "need": "ARCH_VCU_HV_SHUTDOWN",
-  "reviewed_fingerprint": "9cd17a9605777e7aa8a9f626e081bd88a62ba161951111e0068b05810fc2a148",
+  "reviewed_fingerprint": "8c4993269a462caa4adc6a51e79dcad7b06044e43b16f0f13a50bd201c50a7aa",
   "schema": 2
 }

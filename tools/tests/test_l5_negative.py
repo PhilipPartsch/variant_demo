@@ -2,7 +2,8 @@
 it exists for. Every test injects one defect into a copy of the repository."""
 import pytest
 
-from conftest import B, D, N
+from conftest import B, D, N, UBC, load_needs, run
+from system_model import covers_mismatch, system_tree
 
 BEV_ONLY_REQ = "REQ_MAX_CHARGE_POWER"
 
@@ -133,6 +134,52 @@ def test_neg16_same_id_without_if_else(repo):
     repo.configure(N)
     fails_with(repo.ubc_check(), "IMPL_VCU_ENERGY_DISPLAY")
     fails_with(repo.sphinx(), "already exists")  # Sphinx aborts (plan 99 CL-06)
+
+
+def ubc_needs(repo):
+    run([UBC, "build", "needs", "-o", "build/n.json"], cwd=repo.path, check=True)
+    return {i: n for i, n in load_needs(repo.path / "build/n.json").items() if not i.startswith("BMS_")}
+
+
+def test_neg17_arch_without_subsystem(repo):
+    repo.edit("docs/subsystems/vcu/architecture.rst", "   :part_of: SUB_VCU\n", "")
+    repo.configure(D)
+    fails_with(repo.ubc_check(), "trace-arch-part_of")
+    fails_with(repo.sphinx(), "trace-arch-part_of")
+
+
+def test_neg18_arch_part_of_the_system(repo):
+    repo.edit("docs/subsystems/vcu/architecture.rst", "   :part_of: SUB_VCU\n", "   :part_of: SYS_VEHICLE\n")
+    repo.configure(D)
+    fails_with(repo.ubc_check(), "trace-arch-part_of")
+    fails_with(repo.sphinx(), "trace-arch-part_of")
+
+
+def test_neg19_subsystem_covers_what_no_part_satisfies(repo):
+    repo.edit("docs/system/overview.rst", ":covers: REQ_ENERGY_SOURCE, REQ_TRACTION_POWER_LIMIT\n",
+              ":covers: REQ_ENERGY_SOURCE, REQ_TRACTION_POWER_LIMIT, REQ_RANGE_ESTIMATE\n")
+    repo.configure(D)
+    assert any("SUB_ENG covers ['REQ_RANGE_ESTIMATE']" in p for p in covers_mismatch(ubc_needs(repo)))
+
+
+def test_neg20_part_satisfies_what_its_subsystem_does_not_cover(repo):
+    repo.edit("docs/system/overview.rst", ":covers: REQ_ENERGY_SOURCE, REQ_TRACTION_POWER_LIMIT\n",
+              ":covers: REQ_ENERGY_SOURCE\n")
+    repo.configure(D)
+    assert any("SUB_ENG does not cover ['REQ_TRACTION_POWER_LIMIT']" in p for p in covers_mismatch(ubc_needs(repo)))
+
+
+def test_neg21_second_system(repo):
+    repo.append("docs/system/overview.rst", "\n.. system:: Trailer\n   :id: SYS_TRAILER\n   :status: draft\n\n   A second system.\n")
+    repo.configure(D)
+    assert any("exactly one system" in p for p in system_tree(ubc_needs(repo)))
+
+
+def test_neg22_subsystem_gated_wrongly(repo):
+    # SUB_ENG without its gate: present in BEV products, where its folder is excluded
+    repo.edit("docs/system/overview.rst", ".. if:: var.powertrain.type == 'diesel'\n", ".. if:: True\n")
+    repo.configure(N)
+    fails_with(repo.ubc_check(), "SUB_ENG")
 
 
 @pytest.mark.parametrize("product", (D, N))

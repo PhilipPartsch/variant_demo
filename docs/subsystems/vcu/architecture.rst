@@ -7,6 +7,7 @@ satisfying vehicle requirements. Workflow stage ``archs``, stream ``vcu``.
 .. arch:: Energy display manager
    :id: ARCH_VCU_ENERGY_DISPLAY
    :status: draft
+   :part_of: SUB_VCU
    :satisfies: REQ_ENERGY_SOURCE, REQ_RANGE_ESTIMATE
 
    The VCU energy display manager reads the remaining energy in percent from the
@@ -17,6 +18,7 @@ satisfying vehicle requirements. Workflow stage ``archs``, stream ``vcu``.
 .. arch:: Traction power manager
    :id: ARCH_VCU_POWER_MGMT
    :status: draft
+   :part_of: SUB_VCU
    :satisfies: REQ_TRACTION_POWER_LIMIT
    :allocates: <<bev: BMS_REQ_POWER_DERATING>>
 
@@ -30,6 +32,7 @@ satisfying vehicle requirements. Workflow stage ``archs``, stream ``vcu``.
    .. arch:: High-voltage shutdown coordinator
       :id: ARCH_VCU_HV_SHUTDOWN
       :status: draft
+      :part_of: SUB_VCU
       :satisfies: REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT
 
       The VCU high-voltage shutdown coordinator receives the isolation fault
@@ -42,6 +45,7 @@ satisfying vehicle requirements. Workflow stage ``archs``, stream ``vcu``.
    .. arch:: Door and drive interlock
       :id: ARCH_VCU_DOOR_INTERLOCK
       :status: draft
+      :part_of: SUB_VCU
       :satisfies: REQ_DOOR_DRIVE_INTERLOCK
 
       The VCU door interlock reads the closed-and-locked signals of all

@@ -2,41 +2,39 @@
   "agent": "claude-code",
   "axes": {
     "allocation_complete": {
-      "reason": "The element has no `allocates`, so this axis is met by definition.",
+      "reason": "No allocates; scored max as the guide prescribes.",
       "score": 2
     },
     "completeness": {
-      "reason": "The single obligation (CCS1 inlet per SAE J1772) is covered.",
+      "reason": "The only obligation (CCS2 inlet per IEC 62196-3) is addressed.",
       "score": 2
     },
     "consistency": {
-      "reason": "No sibling shares REQ_NA_CHARGING_STANDARD.",
+      "reason": "No sibling on the same requirement; consistent with ARCH_CHG_INLET, which uses the CCS inlet when no high-power interface exists.",
       "score": 2
     },
     "design_clarity": {
-      "reason": "Inlet and protocol are concrete, but 'sets the charging current limit from the BMS cell limits' leaves the derivation open.",
-      "score": 1,
-      "suggestion": "State which BMS-published limit is used and how it maps to the requested current."
+      "reason": "Concrete choices: CCS2 inlet (IEC 62196-3), ISO 15118-2 session, current limit from BMS cell limits.",
+      "score": 2
     },
     "implementability": {
-      "reason": "Bundles inlet hardware and session control software; the current-limit rule needs a judgement call during implementation.",
-      "score": 1,
-      "suggestion": "Split inlet and session control, or bound the current-limit rule."
+      "reason": "Bounded inlet plus session controller.",
+      "score": 2
     },
     "interface_only": {
-      "reason": "The element has no `allocates`, so this axis is met by definition.",
+      "reason": "No allocates; scored max as the guide prescribes.",
       "score": 2
     },
     "no_value_copy": {
-      "reason": "Names no BMS limit, threshold or timing.",
+      "reason": "Refers to the BMS cell limits without restating any value.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "NA alternative: CCS1 inlet per SAE J1772 exactly as REQ_NA_CHARGING_STANDARD requires.",
+      "reason": "Provides a CCS2 inlet per IEC 62196-3, exactly REQ_EU_CHARGING_STANDARD.",
       "score": 2
     },
     "variant_consistency": {
-      "reason": "Gated `var.market.region == 'na'` in the bev chg folder, same as its parent in region/na under bev.",
+      "reason": "Gated by if var.market.region == 'eu' in the bev folder subsystems/chg, at least as strong as the region/eu parent.",
       "score": 2
     }
   },
@@ -44,6 +42,6 @@
   "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
   "model": "claude-opus-5-5",
   "need": "ARCH_CHG_SESSION_CONTROL",
-  "reviewed_fingerprint": "70da9e915da02a792cfcda83f2d2ad6dc882d0b3b55884cf8aac8dd3d1ba2748",
+  "reviewed_fingerprint": "a15c84214aab4694d593e5f13478c142a60546de501017bda5548811d1d382c7",
   "schema": 2
 }

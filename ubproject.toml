@@ -57,6 +57,9 @@ css_class = "external_bms"
 bev = "var.powertrain.type == 'bev'"
 bus = "var.vehicle.type == 'bus'"
 mcs = "var.charging.mcs == True"
+pantograph = "var.charging.pantograph == True"
+eu = "var.market.region == 'eu'"
+na = "var.market.region == 'na'"
 
 # --- File variants (M§6); globs are relative to [source] dir = "docs" -------------
 [[source.variant_sources]]
@@ -76,6 +79,22 @@ if = "var.market.region == 'eu'"
 files = ["region/eu/**"]
 
 # --- NEED TYPES (taken over from the BMS, incl. colours and styles) -------------
+# CV system level (plan 7): one system (the vehicle) and its subsystems. The
+# vehicle-level user stories and requirements belong to the system by level.
+[[needs.types]]
+directive = "system"
+title = "System"
+prefix = "SYS_"
+color = "#A5B4FC"
+style = "package"
+
+[[needs.types]]
+directive = "subsystem"
+title = "Subsystem"
+prefix = "SUB_"
+color = "#C7D2FE"
+style = "package"
+
 [[needs.types]]
 directive = "user_story"
 title = "User Story"
@@ -204,6 +223,20 @@ incoming = "allocated_from"
 outgoing = "allocates"
 parse_variants = true
 
+# CV system level (plan 7): membership, child -> parent (arch / bms_block ->
+# subsystem, subsystem -> system).
+[needs.links.part_of]
+incoming = "has_part"
+outgoing = "part_of"
+
+# CV system level (plan 7): requirement allocation, subsystem -> req. Own link,
+# so that `satisfies` (arch / bms_block -> req) and its reports stay unchanged.
+# Variant functions: a subsystem covers some reqs only in some products.
+[needs.links.covers]
+incoming = "covered_by"
+outgoing = "covers"
+parse_variants = true
+
 # --- FIELDS ---------------------------------------------------------------------
 # Imported BMS needs are dropped (unknown type) or stripped (unknown field)
 # unless the CV project declares the BMS vocabulary, so every BMS field is
@@ -275,6 +308,8 @@ schema = { type = "string", enum = [
   "mitigates",
   "gap_for",
   "allocates",
+  "part_of",
+  "covers",
   "links",
 ] }
 
@@ -296,6 +331,8 @@ default = ""
 nullable = false
 schema = { type = "string", enum = [
   "",
+  "system",
+  "subsystem",
   "user_story",
   "req",
   "arch",
@@ -496,7 +533,7 @@ needs_fields = [
 # Imported BMS needs (status `imported`) are context, not CV work items.
 [workflow]
 exempt_status = ["imported"]
-orphan_exempt_types = ["user_story", "req", "arch", "bms_block", "swreq", "gap"]
+orphan_exempt_types = ["system", "subsystem", "user_story", "req", "arch", "bms_block", "swreq", "gap"]
 
 [workflow.diagram]
 enabled = false
@@ -530,12 +567,33 @@ direction = "both"
 min = 1
 
 [[workflow.stages]]
+id = "subsystems"
+produces = "subsystem"
+depends_on = ["reqs"]
+review_skill = "review-arch"
+authoring = "Allocate every vehicle requirement to the subsystems that realise it (system architecture): one subsystem per CV subsystem and one for the BMS, each part_of SYS_VEHICLE. Gate a subsystem like its documentation folder; gate a requirement in `covers` with a variant function at least as strongly as the requirement."
+[workflow.stages.route]
+scope = "global"
+granularity = "single"
+path = "docs/system/overview.rst"
+[[workflow.stages.trace]]
+link = "covers"
+up = "req"
+direction = "both"
+min = 1
+[[workflow.stages.trace]]
+link = "part_of"
+up = "system"
+direction = "outgoing"
+min = 1
+
+[[workflow.stages]]
 id = "archs"
 produces = "arch"
-depends_on = ["reqs"]
+depends_on = ["subsystems"]
 author_skill = "draft-arch"
 review_skill = "review-arch"
-authoring = "Produce the architecture elements the requirements need (one per distinct responsibility, enough that every requirement is satisfied by at least one element). Place variant-specific elements in the subsystem folder of their variant (chg: BEV, eng: diesel); gate any other variant-specific content with the named variants, at least as strongly as the parent requirement."
+authoring = "Produce the architecture elements the requirements need (one per distinct responsibility, enough that every requirement is satisfied by at least one element). Place variant-specific elements in the subsystem folder of their variant (chg: BEV, eng: diesel) and set `:part_of:` to the subsystem of that folder (SUB_VCU, SUB_CHG, SUB_ENG); gate any other variant-specific content with the named variants, at least as strongly as the parent requirement."
 [workflow.stages.route]
 scope = "stream"
 granularity = "per-root"
@@ -545,14 +603,21 @@ link = "satisfies"
 up = "req"
 direction = "both"
 min = 1
+# outgoing only: SUB_BMS has bms_block parts, not arch parts; "every subsystem
+# has a part" is the schema rule coverage-subsystem-part_of-back.
+[[workflow.stages.trace]]
+link = "part_of"
+up = "subsystem"
+direction = "outgoing"
+min = 1
 
 [[workflow.stages]]
 id = "bms_allocation"
 produces = "bms_block"
-depends_on = ["reqs"]
+depends_on = ["subsystems"]
 author_skill = "draft-allocation"
 review_skill = "review-arch"
-authoring = "Write one black-box BMS element per CV requirement it serves; it satisfies the CV requirement and allocates only BMS interface needs (BMS_REQ_*, tag interface). The page is BEV only. Reference BMS values, never copy them."
+authoring = "Write one black-box BMS element per CV requirement it serves; it satisfies the CV requirement, is part_of SUB_BMS and allocates only BMS interface needs (BMS_REQ_*, tag interface). The page is BEV only. Reference BMS values, never copy them."
 [workflow.stages.route]
 scope = "global"
 granularity = "single"
@@ -567,6 +632,11 @@ min = 1
 [[workflow.stages.trace]]
 link = "allocates"
 up = "req"
+direction = "outgoing"
+min = 1
+[[workflow.stages.trace]]
+link = "part_of"
+up = "subsystem"
 direction = "outgoing"
 min = 1
 
@@ -678,6 +748,12 @@ criteria_file = "metamodel/quality/requirement.toml"
 criteria_file = "metamodel/quality/requirement.toml"
 
 [quality.type_configs.arch]
+criteria_file = "metamodel/quality/arch.toml"
+
+[quality.type_configs.system]
+criteria_file = "metamodel/quality/arch.toml"
+
+[quality.type_configs.subsystem]
 criteria_file = "metamodel/quality/arch.toml"
 
 [quality.type_configs.bms_block]

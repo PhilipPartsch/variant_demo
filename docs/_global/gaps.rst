@@ -12,42 +12,6 @@ build's product (:variant:`meta.product`) are shown.
 
 .. if:: var.meta.product == 'bus_bev_lfp_eu'
 
-   .. gap:: ARCH_CHG_INLET: review review
-      :id: GAP_ARCH_CHG_INLET_REVIEW__BUS_BEV_LFP_EU
-      :gap_for: ARCH_CHG_INLET
-      :gap_category: review
-      :gap_link: 
-      :gap_shortfall: 0 of 1
-      :gap_need_id: ARCH_CHG_INLET
-      :gap_need_type: arch
-      :product: bus_bev_lfp_eu
-
-      ``ubc agent gaps`` reports ARCH_CHG_INLET (arch) in bus_bev_lfp_eu.
-
-   .. gap:: ARCH_CHG_SESSION_CONTROL: review review
-      :id: GAP_ARCH_CHG_SESSION_CONTROL_REVIEW__BUS_BEV_LFP_EU
-      :gap_for: ARCH_CHG_SESSION_CONTROL
-      :gap_category: review
-      :gap_link: 
-      :gap_shortfall: 0 of 1
-      :gap_need_id: ARCH_CHG_SESSION_CONTROL
-      :gap_need_type: arch
-      :product: bus_bev_lfp_eu
-
-      ``ubc agent gaps`` reports ARCH_CHG_SESSION_CONTROL (arch) in bus_bev_lfp_eu.
-
-   .. gap:: ARCH_VCU_ENERGY_DISPLAY: review review
-      :id: GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__BUS_BEV_LFP_EU
-      :gap_for: ARCH_VCU_ENERGY_DISPLAY
-      :gap_category: review
-      :gap_link: 
-      :gap_shortfall: 0 of 1
-      :gap_need_id: ARCH_VCU_ENERGY_DISPLAY
-      :gap_need_type: arch
-      :product: bus_bev_lfp_eu
-
-      ``ubc agent gaps`` reports ARCH_VCU_ENERGY_DISPLAY (arch) in bus_bev_lfp_eu.
-
    .. gap:: DEC_CHARGING_INLET_PRIORITY: review review
       :id: GAP_DEC_CHARGING_INLET_PRIORITY_REVIEW__BUS_BEV_LFP_EU
       :gap_for: DEC_CHARGING_INLET_PRIORITY
@@ -110,17 +74,29 @@ build's product (:variant:`meta.product`) are shown.
 
 .. if:: var.meta.product == 'truck_bev_lfp_na'
 
-   .. gap:: ARCH_VCU_ENERGY_DISPLAY: review review
-      :id: GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_BEV_LFP_NA
-      :gap_for: ARCH_VCU_ENERGY_DISPLAY
+   .. gap:: ARCH_CHG_INLET: review review
+      :id: GAP_ARCH_CHG_INLET_REVIEW__TRUCK_BEV_LFP_NA
+      :gap_for: ARCH_CHG_INLET
       :gap_category: review
       :gap_link: 
       :gap_shortfall: 0 of 1
-      :gap_need_id: ARCH_VCU_ENERGY_DISPLAY
+      :gap_need_id: ARCH_CHG_INLET
       :gap_need_type: arch
       :product: truck_bev_lfp_na
 
-      ``ubc agent gaps`` reports ARCH_VCU_ENERGY_DISPLAY (arch) in truck_bev_lfp_na.
+      ``ubc agent gaps`` reports ARCH_CHG_INLET (arch) in truck_bev_lfp_na.
+
+   .. gap:: ARCH_CHG_SESSION_CONTROL: review review
+      :id: GAP_ARCH_CHG_SESSION_CONTROL_REVIEW__TRUCK_BEV_LFP_NA
+      :gap_for: ARCH_CHG_SESSION_CONTROL
+      :gap_category: review
+      :gap_link: 
+      :gap_shortfall: 0 of 1
+      :gap_need_id: ARCH_CHG_SESSION_CONTROL
+      :gap_need_type: arch
+      :product: truck_bev_lfp_na
+
+      ``ubc agent gaps`` reports ARCH_CHG_SESSION_CONTROL (arch) in truck_bev_lfp_na.
 
    .. gap:: REQ_ENERGY_SOURCE: review review
       :id: GAP_REQ_ENERGY_SOURCE_REVIEW__TRUCK_BEV_LFP_NA
@@ -133,6 +109,30 @@ build's product (:variant:`meta.product`) are shown.
       :product: truck_bev_lfp_na
 
       ``ubc agent gaps`` reports REQ_ENERGY_SOURCE (req) in truck_bev_lfp_na.
+
+   .. gap:: SUB_CHG: review review
+      :id: GAP_SUB_CHG_REVIEW__TRUCK_BEV_LFP_NA
+      :gap_for: SUB_CHG
+      :gap_category: review
+      :gap_link: 
+      :gap_shortfall: 0 of 1
+      :gap_need_id: SUB_CHG
+      :gap_need_type: subsystem
+      :product: truck_bev_lfp_na
+
+      ``ubc agent gaps`` reports SUB_CHG (subsystem) in truck_bev_lfp_na.
+
+   .. gap:: SUB_VCU: review review
+      :id: GAP_SUB_VCU_REVIEW__TRUCK_BEV_LFP_NA
+      :gap_for: SUB_VCU
+      :gap_category: review
+      :gap_link: 
+      :gap_shortfall: 0 of 1
+      :gap_need_id: SUB_VCU
+      :gap_need_type: subsystem
+      :product: truck_bev_lfp_na
+
+      ``ubc agent gaps`` reports SUB_VCU (subsystem) in truck_bev_lfp_na.
 
 .. if:: var.meta.product == 'truck_bev_nmc_eu'
 
@@ -147,30 +147,6 @@ build's product (:variant:`meta.product`) are shown.
       :product: truck_bev_nmc_eu
 
       ``ubc agent gaps`` reports ARCH_CHG_INLET (arch) in truck_bev_nmc_eu.
-
-   .. gap:: ARCH_CHG_SESSION_CONTROL: review review
-      :id: GAP_ARCH_CHG_SESSION_CONTROL_REVIEW__TRUCK_BEV_NMC_EU
-      :gap_for: ARCH_CHG_SESSION_CONTROL
-      :gap_category: review
-      :gap_link: 
-      :gap_shortfall: 0 of 1
-      :gap_need_id: ARCH_CHG_SESSION_CONTROL
-      :gap_need_type: arch
-      :product: truck_bev_nmc_eu
-
-      ``ubc agent gaps`` reports ARCH_CHG_SESSION_CONTROL (arch) in truck_bev_nmc_eu.
-
-   .. gap:: ARCH_VCU_ENERGY_DISPLAY: review review
-      :id: GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_BEV_NMC_EU
-      :gap_for: ARCH_VCU_ENERGY_DISPLAY
-      :gap_category: review
-      :gap_link: 
-      :gap_shortfall: 0 of 1
-      :gap_need_id: ARCH_VCU_ENERGY_DISPLAY
-      :gap_need_type: arch
-      :product: truck_bev_nmc_eu
-
-      ``ubc agent gaps`` reports ARCH_VCU_ENERGY_DISPLAY (arch) in truck_bev_nmc_eu.
 
    .. gap:: DEC_CHARGING_INLET_PRIORITY: review review
       :id: GAP_DEC_CHARGING_INLET_PRIORITY_REVIEW__TRUCK_BEV_NMC_EU
@@ -195,6 +171,30 @@ build's product (:variant:`meta.product`) are shown.
       :product: truck_bev_nmc_eu
 
       ``ubc agent gaps`` reports REQ_ENERGY_SOURCE (req) in truck_bev_nmc_eu.
+
+   .. gap:: SUB_CHG: review review
+      :id: GAP_SUB_CHG_REVIEW__TRUCK_BEV_NMC_EU
+      :gap_for: SUB_CHG
+      :gap_category: review
+      :gap_link: 
+      :gap_shortfall: 0 of 1
+      :gap_need_id: SUB_CHG
+      :gap_need_type: subsystem
+      :product: truck_bev_nmc_eu
+
+      ``ubc agent gaps`` reports SUB_CHG (subsystem) in truck_bev_nmc_eu.
+
+   .. gap:: SUB_VCU: review review
+      :id: GAP_SUB_VCU_REVIEW__TRUCK_BEV_NMC_EU
+      :gap_for: SUB_VCU
+      :gap_category: review
+      :gap_link: 
+      :gap_shortfall: 0 of 1
+      :gap_need_id: SUB_VCU
+      :gap_need_type: subsystem
+      :product: truck_bev_nmc_eu
+
+      ``ubc agent gaps`` reports SUB_VCU (subsystem) in truck_bev_nmc_eu.
 
    .. gap:: SWREQ_CHG_CURRENT_LIMIT: review review
       :id: GAP_SWREQ_CHG_CURRENT_LIMIT_REVIEW__TRUCK_BEV_NMC_EU
@@ -231,3 +231,29 @@ build's product (:variant:`meta.product`) are shown.
       :product: truck_bev_nmc_eu
 
       ``ubc agent gaps`` reports SWREQ_CHG_SESSION_START (swreq) in truck_bev_nmc_eu.
+
+.. if:: var.meta.product == 'truck_diesel_eu'
+
+   .. gap:: ARCH_VCU_ENERGY_DISPLAY: review review
+      :id: GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_DIESEL_EU
+      :gap_for: ARCH_VCU_ENERGY_DISPLAY
+      :gap_category: review
+      :gap_link: 
+      :gap_shortfall: 0 of 1
+      :gap_need_id: ARCH_VCU_ENERGY_DISPLAY
+      :gap_need_type: arch
+      :product: truck_diesel_eu
+
+      ``ubc agent gaps`` reports ARCH_VCU_ENERGY_DISPLAY (arch) in truck_diesel_eu.
+
+   .. gap:: SUB_VCU: review review
+      :id: GAP_SUB_VCU_REVIEW__TRUCK_DIESEL_EU
+      :gap_for: SUB_VCU
+      :gap_category: review
+      :gap_link: 
+      :gap_shortfall: 0 of 1
+      :gap_need_id: SUB_VCU
+      :gap_need_type: subsystem
+      :product: truck_diesel_eu
+
+      ``ubc agent gaps`` reports SUB_VCU (subsystem) in truck_diesel_eu.

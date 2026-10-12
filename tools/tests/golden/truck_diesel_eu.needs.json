@@ -2,6 +2,9 @@
  "ARCH_ENG_FUEL_LEVEL": {
   "content": "The engine interface fuel level provider reads the analogue tank level\nsensor every 100 ms, averages it over 10 s against fuel slosh and provides\nthe fuel level in percent of the tank capacity (1 % resolution) to the VCU.",
   "id": "ARCH_ENG_FUEL_LEVEL",
+  "part_of": [
+   "SUB_ENG"
+  ],
   "satisfies": [
    "REQ_ENERGY_SOURCE"
   ],
@@ -12,6 +15,9 @@
  "ARCH_ENG_TORQUE_INTERFACE": {
   "content": "The engine torque interface converts the VCU traction power limit into a\ntorque limit at the current engine speed and sends it to the engine control\nunit as an SAE J1939 torque/speed control (TSC1) message.",
   "id": "ARCH_ENG_TORQUE_INTERFACE",
+  "part_of": [
+   "SUB_ENG"
+  ],
   "satisfies": [
    "REQ_TRACTION_POWER_LIMIT"
   ],
@@ -22,6 +28,9 @@
  "ARCH_VCU_ENERGY_DISPLAY": {
   "content": "The VCU energy display manager reads the remaining energy in percent from the\nenergy source of the product (BMS state of charge or ENG fuel level), derives\nthe remaining range from it and the average consumption of the last 50 km,\nand sends both to the instrument cluster once per second.",
   "id": "ARCH_VCU_ENERGY_DISPLAY",
+  "part_of": [
+   "SUB_VCU"
+  ],
   "satisfies": [
    "REQ_ENERGY_SOURCE",
    "REQ_RANGE_ESTIMATE"
@@ -33,6 +42,9 @@
  "ARCH_VCU_POWER_MGMT": {
   "content": "The VCU traction power manager limits the torque request to the power limit\ndivided by the current motor speed. The power limit is the vehicle limit; in\nbattery-electric products it is the lower of the vehicle limit and the\npermitted discharge power published by the BMS.",
   "id": "ARCH_VCU_POWER_MGMT",
+  "part_of": [
+   "SUB_VCU"
+  ],
   "satisfies": [
    "REQ_TRACTION_POWER_LIMIT"
   ],
@@ -103,6 +115,35 @@
   "type": "req",
   "value": "450 kW"
  },
+ "SUB_ENG": {
+  "content": "The ENG provides the fuel level from the tank sensor and passes the\ntraction power limit to the engine control unit as an SAE J1939 torque\nlimit. Diesel products only; own documentation and C code (``src/eng``).",
+  "covers": [
+   "REQ_ENERGY_SOURCE",
+   "REQ_TRACTION_POWER_LIMIT"
+  ],
+  "id": "SUB_ENG",
+  "part_of": [
+   "SYS_VEHICLE"
+  ],
+  "status": "draft",
+  "title": "Engine Interface (ENG)",
+  "type": "subsystem"
+ },
+ "SUB_VCU": {
+  "content": "The VCU shows the remaining energy and range and limits the traction power\nin every product, coordinates the high-voltage shutdown in battery-electric\nproducts and the door interlock in buses. Own documentation and C code\n(``src/vcu``).",
+  "covers": [
+   "REQ_ENERGY_SOURCE",
+   "REQ_RANGE_ESTIMATE",
+   "REQ_TRACTION_POWER_LIMIT"
+  ],
+  "id": "SUB_VCU",
+  "part_of": [
+   "SYS_VEHICLE"
+  ],
+  "status": "draft",
+  "title": "Vehicle Control Unit (VCU)",
+  "type": "subsystem"
+ },
  "SWREQ_ENG_FUEL_LEVEL_REPORT": {
   "content": "The ENG software shall report the fuel level as the 10 s average of the tank\nlevel sensor in percent of the tank capacity, rounded to 1 %.",
   "id": "SWREQ_ENG_FUEL_LEVEL_REPORT",
@@ -142,6 +183,13 @@
   "status": "draft",
   "title": "Apply traction power limit",
   "type": "swreq"
+ },
+ "SYS_VEHICLE": {
+  "content": "The commercial vehicle of this product (:variant:`meta.product`): vehicle\n:variant:`vehicle.type`, powertrain :variant:`powertrain.type`, market\n:variant:`market.region`. Which subsystems it contains depends on its\npowertrain.",
+  "id": "SYS_VEHICLE",
+  "status": "draft",
+  "title": "Commercial vehicle",
+  "type": "system"
  },
  "TEST_ENG_FUEL_LEVEL_REPORT": {
   "id": "TEST_ENG_FUEL_LEVEL_REPORT",

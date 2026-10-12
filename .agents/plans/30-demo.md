@@ -90,6 +90,11 @@ long demo; the short demo uses the parts marked **(short)**.
   conditions are evaluated for the selected product."
 - **Do:** switch to **`truck_bev_nmc_eu`**: megawatt charging appears,
   charging power **1000 kW**.
+- **Show (plan 7):** `system/overview.rst`: the vehicle `SYS_VEHICLE` and its
+  subsystems; `SUB_CHG` covers MCS charging here, the pantograph in the bus,
+  and does not exist in the diesel truck (no `SUB_ENG` in BEV products).
+- **Say:** "The allocation of requirements to subsystems follows the product
+  too, and every architecture element belongs to exactly one subsystem."
 - **If the Needs Index lags:** run **CMake: Configure** once (known IDE
   behaviour; the preview is always right).
 
