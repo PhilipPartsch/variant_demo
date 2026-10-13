@@ -14,6 +14,7 @@ The whole folder exists only in battery-electric products.
    .. arch:: High-power charging interface
       :id: ARCH_CHG_INLET
       :status: draft
+      :part_of: SUB_CHG
       :satisfies: REQ_MAX_CHARGE_POWER, REQ_MCS_CHARGING
 
       The high-power charging interface is an MCS vehicle inlet (IEC 63379)
@@ -25,6 +26,7 @@ The whole folder exists only in battery-electric products.
    .. arch:: High-power charging interface
       :id: ARCH_CHG_INLET
       :status: draft
+      :part_of: SUB_CHG
       :satisfies: REQ_MAX_CHARGE_POWER, REQ_PANTOGRAPH_CHARGING
 
       The high-power charging interface is a vehicle-mounted roof pantograph
@@ -36,6 +38,7 @@ The whole folder exists only in battery-electric products.
    .. arch:: High-power charging interface
       :id: ARCH_CHG_INLET
       :status: draft
+      :part_of: SUB_CHG
       :satisfies: REQ_MAX_CHARGE_POWER
 
       There is no additional high-power interface: the vehicle charges with
@@ -49,6 +52,7 @@ The whole folder exists only in battery-electric products.
    .. arch:: CCS inlet and charging session
       :id: ARCH_CHG_SESSION_CONTROL
       :status: draft
+      :part_of: SUB_CHG
       :satisfies: REQ_EU_CHARGING_STANDARD
 
       The CCS inlet is a CCS2 vehicle inlet (IEC 62196-3). The charging session
@@ -60,6 +64,7 @@ The whole folder exists only in battery-electric products.
    .. arch:: CCS inlet and charging session
       :id: ARCH_CHG_SESSION_CONTROL
       :status: draft
+      :part_of: SUB_CHG
       :satisfies: REQ_NA_CHARGING_STANDARD
 
       The CCS inlet is a CCS1 vehicle inlet (SAE J1772). The charging session

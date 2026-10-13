@@ -36,6 +36,9 @@ How a product is built
 4. Every product is built with **ubc** (ubCode) and **Sphinx**; both results
    must agree.
 
+The vehicle is the **system** (``SYS_VEHICLE``) with its **subsystems**; the
+system overview shows which vehicle requirements each subsystem covers.
+
 The battery management system (BMS) is a **separate product**: its released
 needs are imported per cell chemistry with the prefix ``BMS_``, and the CV
 platform links only to its interface needs.

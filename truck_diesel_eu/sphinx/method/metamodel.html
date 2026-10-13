@@ -53,9 +53,9 @@
 <h1>Metamodel<a class="headerlink" href="#metamodel" title="Link to this heading">¶</a></h1>
 <p>The metamodel is defined in <code class="docutils literal notranslate"><span class="pre">ubproject.toml</span></code> (need types, links, fields) and
 <code class="docutils literal notranslate"><span class="pre">metamodel/schemas.json</span></code> (rules). It follows the metamodel of the BMS, so
-that both products read the same; the CV platform adds one type
-(<code class="docutils literal notranslate"><span class="pre">bms_block</span></code>), one link (<code class="docutils literal notranslate"><span class="pre">allocates</span></code>) and two fields (<code class="docutils literal notranslate"><span class="pre">value</span></code>,
-<code class="docutils literal notranslate"><span class="pre">product</span></code>).</p>
+that both products read the same; the CV platform adds three types
+(<code class="docutils literal notranslate"><span class="pre">bms_block</span></code>, <code class="docutils literal notranslate"><span class="pre">system</span></code>, <code class="docutils literal notranslate"><span class="pre">subsystem</span></code>), three links (<code class="docutils literal notranslate"><span class="pre">allocates</span></code>,
+<code class="docutils literal notranslate"><span class="pre">part_of</span></code>, <code class="docutils literal notranslate"><span class="pre">covers</span></code>) and two fields (<code class="docutils literal notranslate"><span class="pre">value</span></code>, <code class="docutils literal notranslate"><span class="pre">product</span></code>).</p>
 <section id="v-model-chain">
 <h2>V-model chain<a class="headerlink" href="#v-model-chain" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>user_story ◄─traces_to── req ◄─satisfies── arch ◄─refines── swreq ◄─implements── impl
@@ -67,6 +67,13 @@ that both products read the same; the CV platform adds one type
                 BMS_REQ_* (imported, interface needs)
 
 risk ──mitigates──► req          gap ──gap_for──► any need
+
+System level: the vehicle is the system; the vehicle-level user stories and
+requirements belong to it by their level.
+
+req ◄─covers── subsystem ──part_of──► system (SYS_VEHICLE)
+                   ▲
+                   └──part_of── arch / bms_block
 </pre></div>
 </div>
 </section>
@@ -81,6 +88,17 @@ risk ──mitigates──► req          gap ──gap_for──► any need
 </tr>
 </thead>
 <tbody>
+<tr class="row-even"><td><p>system</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SYS_</span></code></p></td>
+<td><p>the vehicle; exactly one per product</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/system/overview.rst</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>subsystem</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SUB_</span></code></p></td>
+<td><p>subsystem of the vehicle (VCU, CHG, ENG,
+BMS); covers the reqs allocated to it</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/system/overview.rst</span></code></p></td>
+</tr>
 <tr class="row-even"><td><p>user_story</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">US_</span></code></p></td>
 <td><p>one user-observable capability</p></td>
@@ -144,9 +162,10 @@ risk ──mitigates──► req          gap ──gap_for──► any need
 <ul class="simple">
 <li><p>Links: <code class="docutils literal notranslate"><span class="pre">traces_to</span></code>, <code class="docutils literal notranslate"><span class="pre">satisfies</span></code>, <code class="docutils literal notranslate"><span class="pre">refines</span></code>, <code class="docutils literal notranslate"><span class="pre">implements</span></code>,
 <code class="docutils literal notranslate"><span class="pre">verifies</span></code>, <code class="docutils literal notranslate"><span class="pre">results_for</span></code>, <code class="docutils literal notranslate"><span class="pre">mitigates</span></code>, <code class="docutils literal notranslate"><span class="pre">affects</span></code>, <code class="docutils literal notranslate"><span class="pre">gap_for</span></code>
-(<code class="docutils literal notranslate"><span class="pre">motivates</span></code> is declared but unused) and <code class="docutils literal notranslate"><span class="pre">allocates</span></code> (<code class="docutils literal notranslate"><span class="pre">arch</span></code> /
-<code class="docutils literal notranslate"><span class="pre">bms_block</span></code> → BMS interface requirement; the only link with variant
-functions).</p></li>
+(<code class="docutils literal notranslate"><span class="pre">motivates</span></code> is declared but unused), <code class="docutils literal notranslate"><span class="pre">allocates</span></code> (<code class="docutils literal notranslate"><span class="pre">arch</span></code> /
+<code class="docutils literal notranslate"><span class="pre">bms_block</span></code> → BMS interface requirement, with variant functions),
+<code class="docutils literal notranslate"><span class="pre">part_of</span></code> (<code class="docutils literal notranslate"><span class="pre">arch</span></code> / <code class="docutils literal notranslate"><span class="pre">bms_block</span></code> → subsystem, subsystem → system) and
+<code class="docutils literal notranslate"><span class="pre">covers</span></code> (subsystem → req, with variant functions).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">status</span></code>: <code class="docutils literal notranslate"><span class="pre">draft</span></code> → <code class="docutils literal notranslate"><span class="pre">review</span></code> → <code class="docutils literal notranslate"><span class="pre">approved</span></code>; <code class="docutils literal notranslate"><span class="pre">imported</span></code> for every
 BMS need.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">value</span></code>: the product-specific value of a vehicle requirement, written with
@@ -163,6 +182,10 @@ that imported needs keep them.</p></li>
 traces and required fields as <em>violations</em>; reverse coverage (“every req is
 satisfied”) is a <em>warning</em>, because it is owed by a later stage. They apply
 to local needs only; imported BMS needs are validated by the BMS.</p></li>
+<li><p><strong>System level:</strong> exactly one system; every subsystem is <code class="docutils literal notranslate"><span class="pre">part_of</span></code> it and
+covers ≥ 1 req; every <code class="docutils literal notranslate"><span class="pre">arch</span></code> / <code class="docutils literal notranslate"><span class="pre">bms_block</span></code> is <code class="docutils literal notranslate"><span class="pre">part_of</span></code> exactly one
+subsystem; every req is covered by a subsystem. A subsystem covers exactly
+the reqs its parts satisfy (checked per product by the tests).</p></li>
 <li><p><strong>BMS links:</strong> <code class="docutils literal notranslate"><span class="pre">allocates</span></code> may target only BMS requirements tagged
 <code class="docutils literal notranslate"><span class="pre">interface</span></code>; every <code class="docutils literal notranslate"><span class="pre">bms_block</span></code> allocates at least one.</p></li>
 <li><p><strong>Variants:</strong> a need is gated by the same or a stronger condition than its

@@ -128,9 +128,9 @@
   <h1>Metamodel<a class="headerlink" href="#metamodel" title="Link to this heading">¶</a></h1>
   <p>The metamodel is defined in <code>ubproject.toml</code> (need types, links, fields) and
 <code>metamodel/schemas.json</code> (rules). It follows the metamodel of the BMS, so
-that both products read the same; the CV platform adds one type
-(<code>bms_block</code>), one link (<code>allocates</code>) and two fields (<code>value</code>,
-<code>product</code>).</p>
+that both products read the same; the CV platform adds three types
+(<code>bms_block</code>, <code>system</code>, <code>subsystem</code>), three links (<code>allocates</code>,
+<code>part_of</code>, <code>covers</code>) and two fields (<code>value</code>, <code>product</code>).</p>
   <section id="v-model-chain">
     <h2>V-model chain<a class="headerlink" href="#v-model-chain" title="Link to this heading">¶</a></h2>
     <pre><code>user_story ◄─traces_to── req ◄─satisfies── arch ◄─refines── swreq ◄─implements── impl
@@ -141,7 +141,14 @@ that both products read the same; the CV platform adds one type
                           ▼
                 BMS_REQ_* (imported, interface needs)
 
-risk ──mitigates──► req          gap ──gap_for──► any need</code></pre>
+risk ──mitigates──► req          gap ──gap_for──► any need
+
+System level: the vehicle is the system; the vehicle-level user stories and
+requirements belong to it by their level.
+
+req ◄─covers── subsystem ──part_of──► system (SYS_VEHICLE)
+                   ▲
+                   └──part_of── arch / bms_block</code></pre>
   </section>
   <section id="need-types">
     <h2>Need types<a class="headerlink" href="#need-types" title="Link to this heading">¶</a></h2>
@@ -160,6 +167,27 @@ risk ──mitigates──► req          gap ──gap_for──► any need</
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td><p>system</p>
+</td>
+            <td><p><code>SYS_</code></p>
+</td>
+            <td><p>the vehicle; exactly one per product</p>
+</td>
+            <td><p><code>docs/system/overview.rst</code></p>
+</td>
+          </tr>
+          <tr>
+            <td><p>subsystem</p>
+</td>
+            <td><p><code>SUB_</code></p>
+</td>
+            <td><p>subsystem of the vehicle (VCU, CHG, ENG,
+BMS); covers the reqs allocated to it</p>
+</td>
+            <td><p><code>docs/system/overview.rst</code></p>
+</td>
+          </tr>
           <tr>
             <td><p>user_story</p>
 </td>
@@ -280,9 +308,10 @@ risk ──mitigates──► req          gap ──gap_for──► any need</
       <li>
         <p>Links: <code>traces_to</code>, <code>satisfies</code>, <code>refines</code>, <code>implements</code>,
 <code>verifies</code>, <code>results_for</code>, <code>mitigates</code>, <code>affects</code>, <code>gap_for</code>
-(<code>motivates</code> is declared but unused) and <code>allocates</code> (<code>arch</code> /
-<code>bms_block</code> → BMS interface requirement; the only link with variant
-functions).</p>
+(<code>motivates</code> is declared but unused), <code>allocates</code> (<code>arch</code> /
+<code>bms_block</code> → BMS interface requirement, with variant functions),
+<code>part_of</code> (<code>arch</code> / <code>bms_block</code> → subsystem, subsystem → system) and
+<code>covers</code> (subsystem → req, with variant functions).</p>
       </li>
       <li>
         <p><code>status</code>: <code>draft</code> → <code>review</code> → <code>approved</code>; <code>imported</code> for every
@@ -309,6 +338,12 @@ that imported needs keep them.</p>
 traces and required fields as <em>violations</em>; reverse coverage (&quot;every req is
 satisfied&quot;) is a <em>warning</em>, because it is owed by a later stage. They apply
 to local needs only; imported BMS needs are validated by the BMS.</p>
+      </li>
+      <li>
+        <p><strong>System level:</strong> exactly one system; every subsystem is <code>part_of</code> it and
+covers ≥ 1 req; every <code>arch</code> / <code>bms_block</code> is <code>part_of</code> exactly one
+subsystem; every req is covered by a subsystem. A subsystem covers exactly
+the reqs its parts satisfy (checked per product by the tests).</p>
       </li>
       <li>
         <p><strong>BMS links:</strong> <code>allocates</code> may target only BMS requirements tagged

@@ -51,34 +51,232 @@
             
   <section id="system-overview">
 <h1>System overview<a class="headerlink" href="#system-overview" title="Link to this heading">¶</a></h1>
-<p>The CV platform consists of four subsystems. Which of them a product contains
-depends on its powertrain.</p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Subsystem</p></th>
-<th class="head"><p>Products</p></th>
-<th class="head"><p>Integration</p></th>
-</tr>
-</thead>
+<p>The system architecture of the CV platform: the vehicle as <strong>system</strong>
+(<code class="docutils literal notranslate"><span class="pre">system</span></code>) and its <strong>subsystems</strong> (<code class="docutils literal notranslate"><span class="pre">subsystem</span></code>). The vehicle level is the
+system level: the user stories and vehicle requirements are the stakeholder and
+system requirements of the vehicle. Each subsystem covers the vehicle
+requirements allocated to it; its architecture elements are <code class="docutils literal notranslate"><span class="pre">part_of</span></code> it.
+Workflow stage <code class="docutils literal notranslate"><span class="pre">subsystems</span></code>.</p>
+<div class="need_container docutils container" id="SNCB-79ce6dce">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_system docutils align-default" id="SYS_VEHICLE">
 <tbody>
-<tr class="row-even"><td><p>Vehicle Control Unit (VCU)</p></td>
-<td><p>all</p></td>
-<td><p>own docs and C code</p></td>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">System</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Commercial vehicle</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SYS_VEHICLE" title="SYS_VEHICLE">SYS_VEHICLE</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
 </tr>
-<tr class="row-odd"><td><p>Charging Controller (CHG)</p></td>
-<td><p>BEV</p></td>
-<td><p>own docs and C code</p></td>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">draft</span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">has_part: <span class="part_of"><span><a class="reference internal" href="#SUB_BMS" title="SYS_VEHICLE">SUB_BMS</a>, <a class="reference internal" href="#SUB_CHG" title="SYS_VEHICLE">SUB_CHG</a>, <a class="reference internal" href="#SUB_VCU" title="SYS_VEHICLE">SUB_VCU</a></span></span></div>
+</span></div>
+</div>
+</td>
 </tr>
-<tr class="row-even"><td><p>Engine Interface (ENG)</p></td>
-<td><p>diesel</p></td>
-<td><p>own docs and C code</p></td>
-</tr>
-<tr class="row-odd"><td><p>Battery Management System (BMS)</p></td>
-<td><p>BEV</p></td>
-<td><p>imported needs (external)</p></td>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>The commercial vehicle of this product (truck_bev_lfp_na): vehicle
+truck, powertrain bev, market
+na. Which subsystems it contains depends on its
+powertrain.</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+<section id="subsystems-of-this-product">
+<h2>Subsystems of this product<a class="headerlink" href="#subsystems-of-this-product" title="Link to this heading">¶</a></h2>
+<div class="needstable_wrapper docutils container" id="needtable-system/overview-0">
+<table class="NEEDS_TABLE docutils align-default" id="needtable-system/overview-0-table_node">
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 50.0%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Title</p></th>
+<th class="head"><p>Covers</p></th>
+<th class="head"><p>Has Part</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="#SUB_BMS">SUB_BMS</a></p></td>
+<td class="needs_title"><p>Battery Management System (BMS)</p></td>
+<td class="needs_covers"><p><a class="reference internal" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE">REQ_ENERGY_SOURCE</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT">REQ_TRACTION_POWER_LIMIT</a></p></td>
+<td class="needs_part_of_back"><p><a class="reference internal" href="../subsystems/bms/architecture.html#BB_CHARGE_LIMITS">BB_CHARGE_LIMITS</a><em>; </em><a class="reference internal" href="../subsystems/bms/architecture.html#BB_ENERGY_STATE">BB_ENERGY_STATE</a><em>; </em><a class="reference internal" href="../subsystems/bms/architecture.html#BB_HV_PROTECTION">BB_HV_PROTECTION</a><em>; </em><a class="reference internal" href="../subsystems/bms/architecture.html#BB_POWER_LIMITS">BB_POWER_LIMITS</a></p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="#SUB_CHG">SUB_CHG</a></p></td>
+<td class="needs_title"><p>Charging Controller (CHG)</p></td>
+<td class="needs_covers"><p><a class="reference internal" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a><em>; </em><a class="reference internal" href="../region/na/annex.html#REQ_NA_CHARGING_STANDARD">REQ_NA_CHARGING_STANDARD</a></p></td>
+<td class="needs_part_of_back"><p><a class="reference internal" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET">ARCH_CHG_INLET</a><em>; </em><a class="reference internal" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL">ARCH_CHG_SESSION_CONTROL</a></p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="#SUB_VCU">SUB_VCU</a></p></td>
+<td class="needs_title"><p>Vehicle Control Unit (VCU)</p></td>
+<td class="needs_covers"><p><a class="reference internal" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE">REQ_ENERGY_SOURCE</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_RANGE_ESTIMATE">REQ_RANGE_ESTIMATE</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT">REQ_TRACTION_POWER_LIMIT</a></p></td>
+<td class="needs_part_of_back"><p><a class="reference internal" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY">ARCH_VCU_ENERGY_DISPLAY</a><em>; </em><a class="reference internal" href="../subsystems/vcu/architecture.html#ARCH_VCU_HV_SHUTDOWN">ARCH_VCU_HV_SHUTDOWN</a><em>; </em><a class="reference internal" href="../subsystems/vcu/architecture.html#ARCH_VCU_POWER_MGMT">ARCH_VCU_POWER_MGMT</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-1ead878a">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_subsystem docutils align-default" id="SUB_VCU">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Subsystem</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Vehicle Control Unit (VCU)</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SUB_VCU" title="SUB_VCU">SUB_VCU</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">draft</span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">gaps: <span class="gap_for"><span><a class="reference internal" href="../_global/gaps.html#GAP_SUB_VCU_REVIEW__TRUCK_BEV_LFP_NA" title="SUB_VCU">GAP_SUB_VCU_REVIEW__TRUCK_BEV_LFP_NA</a></span></span></div>
+<div class="line">part_of: <span class="part_of"><span><a class="reference internal" href="#SYS_VEHICLE" title="SUB_VCU">SYS_VEHICLE</a></span></span></div>
+<div class="line">has_part: <span class="part_of"><span><a class="reference internal" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY" title="SUB_VCU">ARCH_VCU_ENERGY_DISPLAY</a>, <a class="reference internal" href="../subsystems/vcu/architecture.html#ARCH_VCU_HV_SHUTDOWN" title="SUB_VCU">ARCH_VCU_HV_SHUTDOWN</a>, <a class="reference internal" href="../subsystems/vcu/architecture.html#ARCH_VCU_POWER_MGMT" title="SUB_VCU">ARCH_VCU_POWER_MGMT</a></span></span></div>
+<div class="line">covers: <span class="covers"><span><a class="reference internal" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE" title="SUB_VCU">REQ_ENERGY_SOURCE</a>, <a class="reference internal" href="../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT" title="SUB_VCU">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a>, <a class="reference internal" href="../vehicle/requirements.html#REQ_RANGE_ESTIMATE" title="SUB_VCU">REQ_RANGE_ESTIMATE</a>, <a class="reference internal" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT" title="SUB_VCU">REQ_TRACTION_POWER_LIMIT</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>The VCU shows the remaining energy and range and limits the traction power
+in every product, coordinates the high-voltage shutdown in battery-electric
+products and the door interlock in buses. Own documentation and C code
+(<code class="docutils literal notranslate"><span class="pre">src/vcu</span></code>).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-b2271eb6">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_subsystem docutils align-default" id="SUB_CHG">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Subsystem</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Charging Controller (CHG)</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SUB_CHG" title="SUB_CHG">SUB_CHG</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">draft</span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">gaps: <span class="gap_for"><span><a class="reference internal" href="../_global/gaps.html#GAP_SUB_CHG_REVIEW__TRUCK_BEV_LFP_NA" title="SUB_CHG">GAP_SUB_CHG_REVIEW__TRUCK_BEV_LFP_NA</a></span></span></div>
+<div class="line">part_of: <span class="part_of"><span><a class="reference internal" href="#SYS_VEHICLE" title="SUB_CHG">SYS_VEHICLE</a></span></span></div>
+<div class="line">has_part: <span class="part_of"><span><a class="reference internal" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET" title="SUB_CHG">ARCH_CHG_INLET</a>, <a class="reference internal" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL" title="SUB_CHG">ARCH_CHG_SESSION_CONTROL</a></span></span></div>
+<div class="line">covers: <span class="covers"><span><a class="reference internal" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER" title="SUB_CHG">REQ_MAX_CHARGE_POWER</a>, <a class="reference internal" href="../region/na/annex.html#REQ_NA_CHARGING_STANDARD" title="SUB_CHG">REQ_NA_CHARGING_STANDARD</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>The CHG charges the battery at the rated charging power through the CCS
+inlet of the market (ISO 15118 session) and the high-power interface of
+the product (MCS inlet, roof pantograph or none). Battery-electric
+products only; own documentation and C code (<code class="docutils literal notranslate"><span class="pre">src/chg</span></code>).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-3c9af49d">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_subsystem docutils align-default" id="SUB_BMS">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Subsystem</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Battery Management System (BMS)</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SUB_BMS" title="SUB_BMS">SUB_BMS</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">draft</span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">part_of: <span class="part_of"><span><a class="reference internal" href="#SYS_VEHICLE" title="SUB_BMS">SYS_VEHICLE</a></span></span></div>
+<div class="line">has_part: <span class="part_of"><span><a class="reference internal" href="../subsystems/bms/architecture.html#BB_CHARGE_LIMITS" title="SUB_BMS">BB_CHARGE_LIMITS</a>, <a class="reference internal" href="../subsystems/bms/architecture.html#BB_ENERGY_STATE" title="SUB_BMS">BB_ENERGY_STATE</a>, <a class="reference internal" href="../subsystems/bms/architecture.html#BB_HV_PROTECTION" title="SUB_BMS">BB_HV_PROTECTION</a>, <a class="reference internal" href="../subsystems/bms/architecture.html#BB_POWER_LIMITS" title="SUB_BMS">BB_POWER_LIMITS</a></span></span></div>
+<div class="line">covers: <span class="covers"><span><a class="reference internal" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE" title="SUB_BMS">REQ_ENERGY_SOURCE</a>, <a class="reference internal" href="../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT" title="SUB_BMS">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a>, <a class="reference internal" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER" title="SUB_BMS">REQ_MAX_CHARGE_POWER</a>, <a class="reference internal" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT" title="SUB_BMS">REQ_TRACTION_POWER_LIMIT</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>The BMS provides the state of charge, the permitted discharge power, the
+isolation fault with the main contactors and the cell limits for
+charging. Battery-electric products only; a separate product whose
+released needs are imported for the cell chemistry of the product (BMS
+release 0.1.0).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="requirements-of-the-system">
+<h2>Requirements of the system<a class="headerlink" href="#requirements-of-the-system" title="Link to this heading">¶</a></h2>
+<p>The vehicle-level needs of this product, with the subsystems that cover them.</p>
+<div class="needstable_wrapper docutils container" id="needtable-system/overview-1">
+<table class="NEEDS_TABLE docutils align-default" id="needtable-system/overview-1-table_node">
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 50.0%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Title</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Covered By</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE">REQ_ENERGY_SOURCE</a></p></td>
+<td class="needs_title"><p>Remaining energy display</p></td>
+<td class="needs_type"><p>req</p></td>
+<td class="needs_covers_back"><p><a class="reference internal" href="#SUB_BMS">SUB_BMS</a><em>; </em><a class="reference internal" href="#SUB_VCU">SUB_VCU</a></p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a></p></td>
+<td class="needs_title"><p>High-voltage shutdown on isolation fault</p></td>
+<td class="needs_type"><p>req</p></td>
+<td class="needs_covers_back"><p><a class="reference internal" href="#SUB_BMS">SUB_BMS</a><em>; </em><a class="reference internal" href="#SUB_VCU">SUB_VCU</a></p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a></p></td>
+<td class="needs_title"><p>Maximum charging power</p></td>
+<td class="needs_type"><p>req</p></td>
+<td class="needs_covers_back"><p><a class="reference internal" href="#SUB_BMS">SUB_BMS</a><em>; </em><a class="reference internal" href="#SUB_CHG">SUB_CHG</a></p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="../region/na/annex.html#REQ_NA_CHARGING_STANDARD">REQ_NA_CHARGING_STANDARD</a></p></td>
+<td class="needs_title"><p>North American charging standard</p></td>
+<td class="needs_type"><p>req</p></td>
+<td class="needs_covers_back"><p><a class="reference internal" href="#SUB_CHG">SUB_CHG</a></p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="../vehicle/requirements.html#REQ_RANGE_ESTIMATE">REQ_RANGE_ESTIMATE</a></p></td>
+<td class="needs_title"><p>Range estimate</p></td>
+<td class="needs_type"><p>req</p></td>
+<td class="needs_covers_back"><p><a class="reference internal" href="#SUB_VCU">SUB_VCU</a></p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT">REQ_TRACTION_POWER_LIMIT</a></p></td>
+<td class="needs_title"><p>Traction power limit</p></td>
+<td class="needs_type"><p>req</p></td>
+<td class="needs_covers_back"><p><a class="reference internal" href="#SUB_BMS">SUB_BMS</a><em>; </em><a class="reference internal" href="#SUB_VCU">SUB_VCU</a></p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="../vehicle/user_stories.html#US_FAST_DEPOT_CHARGING">US_FAST_DEPOT_CHARGING</a></p></td>
+<td class="needs_title"><p>Fast depot charging</p></td>
+<td class="needs_type"><p>user_story</p></td>
+<td class="needs_covers_back"><p></p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="../vehicle/user_stories.html#US_HV_SAFETY">US_HV_SAFETY</a></p></td>
+<td class="needs_title"><p>High-voltage safety</p></td>
+<td class="needs_type"><p>user_story</p></td>
+<td class="needs_covers_back"><p></p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="../vehicle/user_stories.html#US_MARKET_CHARGING">US_MARKET_CHARGING</a></p></td>
+<td class="needs_title"><p>Charging in the home market</p></td>
+<td class="needs_type"><p>user_story</p></td>
+<td class="needs_covers_back"><p></p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="../vehicle/user_stories.html#US_PREDICTABLE_POWER">US_PREDICTABLE_POWER</a></p></td>
+<td class="needs_title"><p>Predictable traction power</p></td>
+<td class="needs_type"><p>user_story</p></td>
+<td class="needs_covers_back"><p></p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="../vehicle/user_stories.html#US_RANGE_AWARENESS">US_RANGE_AWARENESS</a></p></td>
+<td class="needs_title"><p>Range awareness</p></td>
+<td class="needs_type"><p>user_story</p></td>
+<td class="needs_covers_back"><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 </section>
 
 
@@ -111,7 +309,11 @@ depends on its powertrain.</p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../vehicle/user_stories.html">User stories</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../vehicle/requirements.html">Vehicle requirements</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">System overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">System overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subsystems-of-this-product">Subsystems of this product</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements-of-the-system">Requirements of the system</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Subsystems</span></p>
 <ul>

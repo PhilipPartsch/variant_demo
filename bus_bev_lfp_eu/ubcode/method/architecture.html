@@ -147,64 +147,29 @@ architecture element.</p>
     <h2>Elements<a class="headerlink" href="#elements" title="Link to this heading">¶</a></h2>
     <ul>
       <li>
-        <p><strong>CV subsystems</strong> (<code>arch</code>, <code>docs/subsystems/&lt;x&gt;/architecture.rst</code>):</p>
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th><p>Name</p>
-</th>
-                <th><p>Subsystem</p>
-</th>
-                <th><p>Products</p>
-</th>
-                <th><p>Code</p>
-</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><p>VCU</p>
-</td>
-                <td><p>Vehicle Control Unit</p>
-</td>
-                <td><p>all</p>
-</td>
-                <td><p><code>src/vcu</code></p>
-</td>
-              </tr>
-              <tr>
-                <td><p>CHG</p>
-</td>
-                <td><p>Charging Controller</p>
-</td>
-                <td><p>battery-electric</p>
-</td>
-                <td><p><code>src/chg</code></p>
-</td>
-              </tr>
-              <tr>
-                <td><p>ENG</p>
-</td>
-                <td><p>Engine Interface</p>
-</td>
-                <td><p>diesel</p>
-</td>
-                <td><p><code>src/eng</code></p>
-</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>A subsystem that a product does not contain is excluded as a whole: its
-documentation folder by a file variant, its code by CMake.</p>
+        <p><strong>System and subsystems</strong> (<code>system</code>, <code>subsystem</code>,
+<code>docs/system/overview.rst</code>): the vehicle <code>SYS_VEHICLE</code> is the root; its
+subsystems <code>SUB_VCU</code> (all products, <code>src/vcu</code>), <code>SUB_CHG</code>
+(battery-electric, <code>src/chg</code>), <code>SUB_ENG</code> (diesel, <code>src/eng</code>) and
+<code>SUB_BMS</code> (battery-electric, imported product) are <code>part_of</code> it. Each
+subsystem <em>covers</em> the vehicle requirements allocated to it; the user stories
+and vehicle requirements belong to the system by their level.
+A subsystem that a product does not contain is excluded as a whole: its
+need by an <code>if</code> block, its documentation folder by a file variant, its code
+by CMake.</p>
+      </li>
+      <li>
+        <p><strong>CV architecture elements</strong> (<code>arch</code>, <code>docs/subsystems/&lt;x&gt;/architecture.rst</code>):
+each is <code>part_of</code> exactly one subsystem and satisfies vehicle requirements.
+The requirements a subsystem covers are exactly those its elements satisfy.</p>
       </li>
       <li>
         <p><strong>BMS black boxes</strong> (<code>bms_block</code>, <code>docs/subsystems/bms/architecture.rst</code>):
 the BMS is an external product. Each black box satisfies a vehicle
 requirement and <em>allocates</em> the BMS interface requirements that realise it.
 BMS values are referenced through the allocated needs, never copied.
-A black box is not refined by CV software requirements.</p>
+A black box is not refined by CV software requirements; it is <code>part_of</code>
+<code>SUB_BMS</code>.</p>
       </li>
       <li>
         <p><strong>Software requirements</strong> refine one architecture element each; code and

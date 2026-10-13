@@ -10,6 +10,7 @@ through the allocated needs, never copied.
 .. bms_block:: Battery energy state
    :id: BB_ENERGY_STATE
    :status: draft
+   :part_of: SUB_BMS
    :satisfies: REQ_ENERGY_SOURCE
    :allocates: BMS_REQ_SOC_ACCURACY, BMS_REQ_SOC_INVALID_FLAG
 
@@ -19,6 +20,7 @@ through the allocated needs, never copied.
 .. bms_block:: Battery power limits
    :id: BB_POWER_LIMITS
    :status: draft
+   :part_of: SUB_BMS
    :satisfies: REQ_TRACTION_POWER_LIMIT
    :allocates: BMS_REQ_POWER_DERATING, BMS_REQ_PACK_OVERCURRENT
 
@@ -29,6 +31,7 @@ through the allocated needs, never copied.
 .. bms_block:: Battery isolation protection
    :id: BB_HV_PROTECTION
    :status: draft
+   :part_of: SUB_BMS
    :satisfies: REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT
    :allocates: BMS_REQ_ISOLATION_FAULT, BMS_REQ_FAULT_REACTION_TIME
 
@@ -39,6 +42,7 @@ through the allocated needs, never copied.
 .. bms_block:: Battery charging limits
    :id: BB_CHARGE_LIMITS
    :status: draft
+   :part_of: SUB_BMS
    :satisfies: REQ_MAX_CHARGE_POWER
    :allocates: BMS_REQ_CELL_VOLTAGE_LIMITS, BMS_REQ_HEATING_REQUEST, BMS_REQ_COOLING_REQUEST
 

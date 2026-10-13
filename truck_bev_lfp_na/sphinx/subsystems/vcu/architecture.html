@@ -53,7 +53,7 @@
 <h1>Architecture<a class="headerlink" href="#architecture" title="Link to this heading">¶</a></h1>
 <p>Architecture elements (<code class="docutils literal notranslate"><span class="pre">arch</span></code>) of the Vehicle Control Unit (VCU), each
 satisfying vehicle requirements. Workflow stage <code class="docutils literal notranslate"><span class="pre">archs</span></code>, stream <code class="docutils literal notranslate"><span class="pre">vcu</span></code>.</p>
-<div class="need_container docutils container" id="SNCB-a4a97416">
+<div class="need_container docutils container" id="SNCB-95712d07">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_arch docutils align-default" id="ARCH_VCU_ENERGY_DISPLAY">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -66,7 +66,7 @@ satisfying vehicle requirements. Workflow stage <code class="docutils literal no
 </span></span></div>
 <div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="reference internal" href="../../vehicle/requirements.html#REQ_ENERGY_SOURCE" title="ARCH_VCU_ENERGY_DISPLAY">REQ_ENERGY_SOURCE</a>, <a class="reference internal" href="../../vehicle/requirements.html#REQ_RANGE_ESTIMATE" title="ARCH_VCU_ENERGY_DISPLAY">REQ_RANGE_ESTIMATE</a></span></span></div>
 <div class="line">refined_by: <span class="refines"><span><a class="reference internal" href="software_requirements.html#SWREQ_VCU_ENERGY_DISPLAY" title="ARCH_VCU_ENERGY_DISPLAY">SWREQ_VCU_ENERGY_DISPLAY</a></span></span></div>
-<div class="line">gaps: <span class="gap_for"><span><a class="reference internal" href="../../_global/gaps.html#GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_BEV_LFP_NA" title="ARCH_VCU_ENERGY_DISPLAY">GAP_ARCH_VCU_ENERGY_DISPLAY_REVIEW__TRUCK_BEV_LFP_NA</a></span></span></div>
+<div class="line">part_of: <span class="part_of"><span><a class="reference internal" href="../../system/overview.html#SUB_VCU" title="ARCH_VCU_ENERGY_DISPLAY">SUB_VCU</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -79,7 +79,7 @@ and sends both to the instrument cluster once per second.</p></td>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-5d938f03">
+<div class="need_container docutils container" id="SNCB-97382c2a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_arch docutils align-default" id="ARCH_VCU_POWER_MGMT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -94,6 +94,7 @@ and sends both to the instrument cluster once per second.</p></td>
 <div class="line">refined_by: <span class="refines"><span><a class="reference internal" href="software_requirements.html#SWREQ_VCU_POWER_LIMIT_APPLY" title="ARCH_VCU_POWER_MGMT">SWREQ_VCU_POWER_LIMIT_APPLY</a></span></span></div>
 <div class="line">affected_by: <span class="affects"><span><a class="reference internal" href="../../_global/decisions.html#DEC_BMS_AS_EXTERNAL_PRODUCT" title="ARCH_VCU_POWER_MGMT">DEC_BMS_AS_EXTERNAL_PRODUCT</a></span></span></div>
 <div class="line">allocates: <span class="allocates"><span><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_POWER_DERATING">BMS_REQ_POWER_DERATING</a></span></span></div>
+<div class="line">part_of: <span class="part_of"><span><a class="reference internal" href="../../system/overview.html#SUB_VCU" title="ARCH_VCU_POWER_MGMT">SUB_VCU</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -106,7 +107,7 @@ permitted discharge power published by the BMS.</p></td>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-005e1d5d">
+<div class="need_container docutils container" id="SNCB-4e889e23">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_arch docutils align-default" id="ARCH_VCU_HV_SHUTDOWN">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -119,6 +120,7 @@ permitted discharge power published by the BMS.</p></td>
 </span></span></div>
 <div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="reference internal" href="../../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT" title="ARCH_VCU_HV_SHUTDOWN">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a></span></span></div>
 <div class="line">refined_by: <span class="refines"><span><a class="reference internal" href="software_requirements.html#SWREQ_VCU_HV_SHUTDOWN" title="ARCH_VCU_HV_SHUTDOWN">SWREQ_VCU_HV_SHUTDOWN</a></span></span></div>
+<div class="line">part_of: <span class="part_of"><span><a class="reference internal" href="../../system/overview.html#SUB_VCU" title="ARCH_VCU_HV_SHUTDOWN">SUB_VCU</a></span></span></div>
 </span></div>
 </div>
 </td>

@@ -57,42 +57,26 @@ responsibility; every vehicle requirement is satisfied by at least one CV
 architecture element.</p>
 <section id="elements">
 <h2>Elements<a class="headerlink" href="#elements" title="Link to this heading">¶</a></h2>
-<ul>
-<li><p><strong>CV subsystems</strong> (<code class="docutils literal notranslate"><span class="pre">arch</span></code>, <code class="docutils literal notranslate"><span class="pre">docs/subsystems/&lt;x&gt;/architecture.rst</span></code>):</p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Name</p></th>
-<th class="head"><p>Subsystem</p></th>
-<th class="head"><p>Products</p></th>
-<th class="head"><p>Code</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>VCU</p></td>
-<td><p>Vehicle Control Unit</p></td>
-<td><p>all</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">src/vcu</span></code></p></td>
-</tr>
-<tr class="row-odd"><td><p>CHG</p></td>
-<td><p>Charging Controller</p></td>
-<td><p>battery-electric</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">src/chg</span></code></p></td>
-</tr>
-<tr class="row-even"><td><p>ENG</p></td>
-<td><p>Engine Interface</p></td>
-<td><p>diesel</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">src/eng</span></code></p></td>
-</tr>
-</tbody>
-</table>
-<p>A subsystem that a product does not contain is excluded as a whole: its
-documentation folder by a file variant, its code by CMake.</p>
-</li>
+<ul class="simple">
+<li><p><strong>System and subsystems</strong> (<code class="docutils literal notranslate"><span class="pre">system</span></code>, <code class="docutils literal notranslate"><span class="pre">subsystem</span></code>,
+<code class="docutils literal notranslate"><span class="pre">docs/system/overview.rst</span></code>): the vehicle <code class="docutils literal notranslate"><span class="pre">SYS_VEHICLE</span></code> is the root; its
+subsystems <code class="docutils literal notranslate"><span class="pre">SUB_VCU</span></code> (all products, <code class="docutils literal notranslate"><span class="pre">src/vcu</span></code>), <code class="docutils literal notranslate"><span class="pre">SUB_CHG</span></code>
+(battery-electric, <code class="docutils literal notranslate"><span class="pre">src/chg</span></code>), <code class="docutils literal notranslate"><span class="pre">SUB_ENG</span></code> (diesel, <code class="docutils literal notranslate"><span class="pre">src/eng</span></code>) and
+<code class="docutils literal notranslate"><span class="pre">SUB_BMS</span></code> (battery-electric, imported product) are <code class="docutils literal notranslate"><span class="pre">part_of</span></code> it. Each
+subsystem <em>covers</em> the vehicle requirements allocated to it; the user stories
+and vehicle requirements belong to the system by their level.
+A subsystem that a product does not contain is excluded as a whole: its
+need by an <code class="docutils literal notranslate"><span class="pre">if</span></code> block, its documentation folder by a file variant, its code
+by CMake.</p></li>
+<li><p><strong>CV architecture elements</strong> (<code class="docutils literal notranslate"><span class="pre">arch</span></code>, <code class="docutils literal notranslate"><span class="pre">docs/subsystems/&lt;x&gt;/architecture.rst</span></code>):
+each is <code class="docutils literal notranslate"><span class="pre">part_of</span></code> exactly one subsystem and satisfies vehicle requirements.
+The requirements a subsystem covers are exactly those its elements satisfy.</p></li>
 <li><p><strong>BMS black boxes</strong> (<code class="docutils literal notranslate"><span class="pre">bms_block</span></code>, <code class="docutils literal notranslate"><span class="pre">docs/subsystems/bms/architecture.rst</span></code>):
 the BMS is an external product. Each black box satisfies a vehicle
 requirement and <em>allocates</em> the BMS interface requirements that realise it.
 BMS values are referenced through the allocated needs, never copied.
-A black box is not refined by CV software requirements.</p></li>
+A black box is not refined by CV software requirements; it is <code class="docutils literal notranslate"><span class="pre">part_of</span></code>
+<code class="docutils literal notranslate"><span class="pre">SUB_BMS</span></code>.</p></li>
 <li><p><strong>Software requirements</strong> refine one architecture element each; code and
 tests implement and verify them with one-line markers.</p></li>
 </ul>

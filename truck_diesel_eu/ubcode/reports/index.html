@@ -159,6 +159,22 @@ black boxes (<code>bms_block</code>) that satisfy it.</p>
       </div>
     </div>
   </section>
+  <section id="subsystems-requirements-and-elements">
+    <h2>Subsystems → requirements and elements<a class="headerlink" href="#subsystems-requirements-and-elements" title="Link to this heading">¶</a></h2>
+    <p>The subsystems of this product (part of <code>SYS_VEHICLE</code>), the vehicle
+requirements each covers and its architecture elements.</p>
+    <div class="ub-needtable">
+      <div class="ub-needtable-scroll">
+        <table class="ub-needtable NEEDS_TABLE">
+          <thead><tr><th scope="col" class="needs_col_id" data-col="id">ID</th><th scope="col" class="needs_col_title" data-col="title">Title</th><th scope="col" class="needs_col_covers" data-col="covers">Covers</th><th scope="col" class="needs_col_has_part" data-col="has_part">Has Part</th></tr></thead>
+          <tbody>
+            <tr class="need" data-need-id="SUB_ENG"><td><a class="ub-xref" href="../system/overview.html#SUB_ENG">SUB_ENG</a></td><td>Engine Interface (ENG)</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE">REQ_ENERGY_SOURCE</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT">REQ_TRACTION_POWER_LIMIT</a></td><td><a class="ub-xref" href="../subsystems/eng/architecture.html#ARCH_ENG_FUEL_LEVEL">ARCH_ENG_FUEL_LEVEL</a>; <a class="ub-xref" href="../subsystems/eng/architecture.html#ARCH_ENG_TORQUE_INTERFACE">ARCH_ENG_TORQUE_INTERFACE</a></td></tr>
+            <tr class="need" data-need-id="SUB_VCU"><td><a class="ub-xref" href="../system/overview.html#SUB_VCU">SUB_VCU</a></td><td>Vehicle Control Unit (VCU)</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE">REQ_ENERGY_SOURCE</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_RANGE_ESTIMATE">REQ_RANGE_ESTIMATE</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT">REQ_TRACTION_POWER_LIMIT</a></td><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY">ARCH_VCU_ENERGY_DISPLAY</a>; <a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_POWER_MGMT">ARCH_VCU_POWER_MGMT</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
   <section id="software-requirements-code-and-tests">
     <h2>Software requirements → code and tests<a class="headerlink" href="#software-requirements-code-and-tests" title="Link to this heading">¶</a></h2>
     <div class="ub-needtable">
@@ -248,6 +264,7 @@ part of the published site (plan 6), not of a single product build.</p>
 <ul class="ub-toc-list">
   <li><a href="#product-and-bms-version">Product and BMS version</a></li>
   <li><a href="#vehicle-requirements-architecture">Vehicle requirements → architecture</a></li>
+  <li><a href="#subsystems-requirements-and-elements">Subsystems → requirements and elements</a></li>
   <li><a href="#software-requirements-code-and-tests">Software requirements → code and tests</a></li>
   <li><a href="#bms-usage">BMS usage</a></li>
   <li><a href="#needflow-user-story-to-bms">Needflow: user story to BMS</a></li>

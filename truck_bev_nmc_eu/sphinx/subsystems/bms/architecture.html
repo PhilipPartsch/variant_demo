@@ -56,7 +56,7 @@ prefix <code class="docutils literal notranslate"><span class="pre">BB_</span></
 interface needs (<code class="docutils literal notranslate"><span class="pre">BMS_REQ_*</span></code>). Workflow stage <code class="docutils literal notranslate"><span class="pre">bms_allocation</span></code>. The whole
 folder exists only in battery-electric products; BMS values are referenced
 through the allocated needs, never copied.</p>
-<div class="need_container docutils container" id="SNCB-cec34ec0">
+<div class="need_container docutils container" id="SNCB-1d9d65c8">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_bms_block docutils align-default" id="BB_ENERGY_STATE">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -69,6 +69,7 @@ through the allocated needs, never copied.</p>
 </span></span></div>
 <div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="reference internal" href="../../vehicle/requirements.html#REQ_ENERGY_SOURCE" title="BB_ENERGY_STATE">REQ_ENERGY_SOURCE</a></span></span></div>
 <div class="line">allocates: <span class="allocates"><span><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/state-estimation/requirements.html#REQ_SOC_ACCURACY">BMS_REQ_SOC_ACCURACY</a>, <a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/state-estimation/requirements.html#REQ_SOC_INVALID_FLAG">BMS_REQ_SOC_INVALID_FLAG</a></span></span></div>
+<div class="line">part_of: <span class="part_of"><span><a class="reference internal" href="../../system/overview.html#SUB_BMS" title="BB_ENERGY_STATE">SUB_BMS</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -79,7 +80,7 @@ and a flag when the value is unreliable.</p></td>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-d3335ed1">
+<div class="need_container docutils container" id="SNCB-7cca5aa2">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_bms_block docutils align-default" id="BB_POWER_LIMITS">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -92,6 +93,7 @@ and a flag when the value is unreliable.</p></td>
 </span></span></div>
 <div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="reference internal" href="../../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT" title="BB_POWER_LIMITS">REQ_TRACTION_POWER_LIMIT</a></span></span></div>
 <div class="line">allocates: <span class="allocates"><span><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_PACK_OVERCURRENT">BMS_REQ_PACK_OVERCURRENT</a>, <a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_POWER_DERATING">BMS_REQ_POWER_DERATING</a></span></span></div>
+<div class="line">part_of: <span class="part_of"><span><a class="reference internal" href="../../system/overview.html#SUB_BMS" title="BB_POWER_LIMITS">SUB_BMS</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -103,7 +105,7 @@ line of defence.</p></td>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-91369aa9">
+<div class="need_container docutils container" id="SNCB-b897a50d">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_bms_block docutils align-default" id="BB_HV_PROTECTION">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -116,6 +118,7 @@ line of defence.</p></td>
 </span></span></div>
 <div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="reference internal" href="../../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT" title="BB_HV_PROTECTION">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a></span></span></div>
 <div class="line">allocates: <span class="allocates"><span><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_FAULT_REACTION_TIME">BMS_REQ_FAULT_REACTION_TIME</a>, <a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/isolation-monitoring/requirements.html#REQ_ISOLATION_FAULT">BMS_REQ_ISOLATION_FAULT</a></span></span></div>
+<div class="line">part_of: <span class="part_of"><span><a class="reference internal" href="../../system/overview.html#SUB_BMS" title="BB_HV_PROTECTION">SUB_BMS</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -127,7 +130,7 @@ team: no BMS requirement bounds the isolation-fault reaction time yet.</p></td>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-2259e68b">
+<div class="need_container docutils container" id="SNCB-05d21ba5">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_bms_block docutils align-default" id="BB_CHARGE_LIMITS">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -140,6 +143,7 @@ team: no BMS requirement bounds the isolation-fault reaction time yet.</p></td>
 </span></span></div>
 <div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="reference internal" href="../../vehicle/requirements.html#REQ_MAX_CHARGE_POWER" title="BB_CHARGE_LIMITS">REQ_MAX_CHARGE_POWER</a></span></span></div>
 <div class="line">allocates: <span class="allocates"><span><a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_CELL_VOLTAGE_LIMITS">BMS_REQ_CELL_VOLTAGE_LIMITS</a>, <a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_COOLING_REQUEST">BMS_REQ_COOLING_REQUEST</a>, <a class="external_bms reference external" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_HEATING_REQUEST">BMS_REQ_HEATING_REQUEST</a></span></span></div>
+<div class="line">part_of: <span class="part_of"><span><a class="reference internal" href="../../system/overview.html#SUB_BMS" title="BB_CHARGE_LIMITS">SUB_BMS</a></span></span></div>
 </span></div>
 </div>
 </td>

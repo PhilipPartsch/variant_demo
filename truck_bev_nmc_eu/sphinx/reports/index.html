@@ -132,10 +132,49 @@ black boxes (<code class="docutils literal notranslate"><span class="pre">bms_bl
 </table>
 </div>
 </section>
-<section id="software-requirements-code-and-tests">
-<h2>Software requirements → code and tests<a class="headerlink" href="#software-requirements-code-and-tests" title="Link to this heading">¶</a></h2>
+<section id="subsystems-requirements-and-elements">
+<h2>Subsystems → requirements and elements<a class="headerlink" href="#subsystems-requirements-and-elements" title="Link to this heading">¶</a></h2>
+<p>The subsystems of this product (part of <code class="docutils literal notranslate"><span class="pre">SYS_VEHICLE</span></code>), the vehicle
+requirements each covers and its architecture elements.</p>
 <div class="needstable_wrapper docutils container" id="needtable-reports/index-1">
 <table class="NEEDS_TABLE docutils align-default" id="needtable-reports/index-1-table_node">
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 50.0%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Title</p></th>
+<th class="head"><p>Covers</p></th>
+<th class="head"><p>Has Part</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="../system/overview.html#SUB_BMS">SUB_BMS</a></p></td>
+<td class="needs_title"><p>Battery Management System (BMS)</p></td>
+<td class="needs_covers"><p><a class="reference internal" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE">REQ_ENERGY_SOURCE</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT">REQ_TRACTION_POWER_LIMIT</a></p></td>
+<td class="needs_part_of_back"><p><a class="reference internal" href="../subsystems/bms/architecture.html#BB_CHARGE_LIMITS">BB_CHARGE_LIMITS</a><em>; </em><a class="reference internal" href="../subsystems/bms/architecture.html#BB_ENERGY_STATE">BB_ENERGY_STATE</a><em>; </em><a class="reference internal" href="../subsystems/bms/architecture.html#BB_HV_PROTECTION">BB_HV_PROTECTION</a><em>; </em><a class="reference internal" href="../subsystems/bms/architecture.html#BB_POWER_LIMITS">BB_POWER_LIMITS</a></p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="../system/overview.html#SUB_CHG">SUB_CHG</a></p></td>
+<td class="needs_title"><p>Charging Controller (CHG)</p></td>
+<td class="needs_covers"><p><a class="reference internal" href="../region/eu/annex.html#REQ_EU_CHARGING_STANDARD">REQ_EU_CHARGING_STANDARD</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_MCS_CHARGING">REQ_MCS_CHARGING</a></p></td>
+<td class="needs_part_of_back"><p><a class="reference internal" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET">ARCH_CHG_INLET</a><em>; </em><a class="reference internal" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL">ARCH_CHG_SESSION_CONTROL</a></p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="../system/overview.html#SUB_VCU">SUB_VCU</a></p></td>
+<td class="needs_title"><p>Vehicle Control Unit (VCU)</p></td>
+<td class="needs_covers"><p><a class="reference internal" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE">REQ_ENERGY_SOURCE</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_RANGE_ESTIMATE">REQ_RANGE_ESTIMATE</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT">REQ_TRACTION_POWER_LIMIT</a></p></td>
+<td class="needs_part_of_back"><p><a class="reference internal" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY">ARCH_VCU_ENERGY_DISPLAY</a><em>; </em><a class="reference internal" href="../subsystems/vcu/architecture.html#ARCH_VCU_HV_SHUTDOWN">ARCH_VCU_HV_SHUTDOWN</a><em>; </em><a class="reference internal" href="../subsystems/vcu/architecture.html#ARCH_VCU_POWER_MGMT">ARCH_VCU_POWER_MGMT</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="software-requirements-code-and-tests">
+<h2>Software requirements → code and tests<a class="headerlink" href="#software-requirements-code-and-tests" title="Link to this heading">¶</a></h2>
+<div class="needstable_wrapper docutils container" id="needtable-reports/index-2">
+<table class="NEEDS_TABLE docutils align-default" id="needtable-reports/index-2-table_node">
 <colgroup>
 <col style="width: 14.3%" />
 <col style="width: 42.9%" />
@@ -244,8 +283,8 @@ black boxes (<code class="docutils literal notranslate"><span class="pre">bms_bl
 <h2>BMS usage<a class="headerlink" href="#bms-usage" title="Link to this heading">¶</a></h2>
 <p>BMS interface needs this product allocates, with the chemistry they are
 resolved for.</p>
-<div class="needstable_wrapper docutils container" id="needtable-reports/index-2">
-<table class="NEEDS_TABLE docutils align-default" id="needtable-reports/index-2-table_node">
+<div class="needstable_wrapper docutils container" id="needtable-reports/index-3">
+<table class="NEEDS_TABLE docutils align-default" id="needtable-reports/index-3-table_node">
 <colgroup>
 <col style="width: 20.0%" />
 <col style="width: 60.0%" />
