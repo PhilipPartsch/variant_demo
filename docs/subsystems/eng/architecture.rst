@@ -8,6 +8,7 @@ The whole folder exists only in diesel products.
 .. arch:: Fuel level provider
    :id: ARCH_ENG_FUEL_LEVEL
    :status: draft
+   :part_of: SUB_ENG
    :satisfies: REQ_ENERGY_SOURCE
 
    The engine interface fuel level provider reads the analogue tank level
@@ -17,6 +18,7 @@ The whole folder exists only in diesel products.
 .. arch:: Engine torque interface
    :id: ARCH_ENG_TORQUE_INTERFACE
    :status: draft
+   :part_of: SUB_ENG
    :satisfies: REQ_TRACTION_POWER_LIMIT
 
    The engine torque interface converts the VCU traction power limit into a

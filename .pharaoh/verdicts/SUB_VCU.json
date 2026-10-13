@@ -1,0 +1,48 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "allocation_complete": {
+      "reason": "No allocates; scored max as the guide prescribes.",
+      "score": 2
+    },
+    "completeness": {
+      "reason": "Every covered requirement maps to a named responsibility with an arch part.",
+      "score": 2
+    },
+    "consistency": {
+      "reason": "Reconciled with SUB_BMS / SUB_ENG: VCU displays, limits and coordinates; they supply and actuate.",
+      "score": 2
+    },
+    "design_clarity": {
+      "reason": "States which responsibilities apply in which products and its own code base, but names no concrete choice at subsystem level (interfaces to BMS/ENG, instrument cluster, torque request path).",
+      "score": 1,
+      "suggestion": "Name the chosen interfaces, e.g. energy value from BMS/ENG, display output to the instrument cluster, torque request limiting."
+    },
+    "implementability": {
+      "reason": "Bounded ECU subsystem with own code under src/vcu.",
+      "score": 2
+    },
+    "interface_only": {
+      "reason": "No allocates; scored max as the guide prescribes.",
+      "score": 2
+    },
+    "no_value_copy": {
+      "reason": "Names no BMS value.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "Names a responsibility for every covered requirement: energy and range display, traction power limit, HV shutdown (bev), door interlock (bus).",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "Ungated platform element; bev/bus-only covers use variant functions and the body now ties HV shutdown to battery-electric products and the door interlock to buses.",
+      "score": 2
+    }
+  },
+  "criteria": "arch",
+  "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
+  "model": "claude-opus-5-5",
+  "need": "SUB_VCU",
+  "reviewed_fingerprint": "62e55a5bb97ff546e0476ba64bfe9d11e7f72063e42f43d83e7352cc7a5357bf",
+  "schema": 2
+}

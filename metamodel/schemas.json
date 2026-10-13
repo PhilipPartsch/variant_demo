@@ -22,7 +22,11 @@
     "fields such as `tags` (E-R C5).",
     "  * the BMS black-box elements have their own type `bms_block` (produced by",
     "    stage bms_allocation): they satisfy a req and allocate BMS interface needs",
-    "    and are not refined by CV swreqs (V\u00a75 #8)."
+    "    and are not refined by CV swreqs (V\u00a75 #8).",
+    "  * system level (plan 7): one `system` (SYS_VEHICLE) and its `subsystem`s;",
+    "    a subsystem `covers` the reqs allocated to it and is `part_of` the system,",
+    "    every arch / bms_block is `part_of` exactly one subsystem. That covers equals",
+    "    the union of its parts' satisfies is checked by pytest (not expressible here)."
    ]
   },
   "type-user_story": {
@@ -89,6 +93,8 @@
    "properties": {
     "type": {
      "enum": [
+      "system",
+      "subsystem",
       "user_story",
       "req",
       "arch",
@@ -120,6 +126,26 @@
       "arch",
       "bms_block"
      ]
+    },
+    "is_external": {
+     "const": false
+    }
+   }
+  },
+  "type-system": {
+   "properties": {
+    "type": {
+     "const": "system"
+    },
+    "is_external": {
+     "const": false
+    }
+   }
+  },
+  "type-subsystem": {
+   "properties": {
+    "type": {
+     "const": "subsystem"
     },
     "is_external": {
      "const": false
@@ -338,6 +364,40 @@
      "properties": {
       "id": {
        "pattern": "^GAP_"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "id-prefix-system",
+   "severity": "violation",
+   "message": "DECLARED: [[needs.types]] gives system the prefix SYS_.",
+   "select": {
+    "$ref": "#/$defs/type-system"
+   },
+   "validate": {
+    "local": {
+     "properties": {
+      "id": {
+       "pattern": "^SYS_"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "id-prefix-subsystem",
+   "severity": "violation",
+   "message": "DECLARED: [[needs.types]] gives subsystem the prefix SUB_.",
+   "select": {
+    "$ref": "#/$defs/type-subsystem"
+   },
+   "validate": {
+    "local": {
+     "properties": {
+      "id": {
+       "pattern": "^SUB_"
       }
      }
     }
@@ -1026,6 +1086,172 @@
      "required": [
       "allocates"
      ]
+    }
+   }
+  },
+  {
+   "id": "trace-subsystem-covers",
+   "severity": "violation",
+   "message": "DECLARED (stage `subsystems`, trace link=covers min=1 up=req): every subsystem covers at least one req, and covers targets only reqs.",
+   "select": {
+    "$ref": "#/$defs/type-subsystem"
+   },
+   "validate": {
+    "local": {
+     "properties": {
+      "covers": {
+       "minItems": 1
+      }
+     },
+     "required": [
+      "covers"
+     ]
+    },
+    "network": {
+     "covers": {
+      "items": {
+       "local": {
+        "$ref": "#/$defs/type-req"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "trace-subsystem-part_of",
+   "severity": "violation",
+   "message": "DECLARED (stage `subsystems`, trace link=part_of min=1 up=system): every subsystem is part_of exactly one system.",
+   "select": {
+    "$ref": "#/$defs/type-subsystem"
+   },
+   "validate": {
+    "local": {
+     "properties": {
+      "part_of": {
+       "minItems": 1,
+       "maxItems": 1
+      }
+     },
+     "required": [
+      "part_of"
+     ]
+    },
+    "network": {
+     "part_of": {
+      "items": {
+       "local": {
+        "$ref": "#/$defs/type-system"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "trace-arch-part_of",
+   "severity": "violation",
+   "message": "DECLARED (stages `archs` / `bms_allocation`, trace link=part_of min=1 up=subsystem): every arch and bms_block is part_of exactly one subsystem, never the system directly.",
+   "select": {
+    "$ref": "#/$defs/type-arch-or-bms_block"
+   },
+   "validate": {
+    "local": {
+     "properties": {
+      "part_of": {
+       "minItems": 1,
+       "maxItems": 1
+      }
+     },
+     "required": [
+      "part_of"
+     ]
+    },
+    "network": {
+     "part_of": {
+      "items": {
+       "local": {
+        "$ref": "#/$defs/type-subsystem"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "system-is-root",
+   "severity": "violation",
+   "message": "CV (plan 7): the system is the root of the architecture; it is part_of nothing.",
+   "select": {
+    "$ref": "#/$defs/type-system"
+   },
+   "validate": {
+    "local": {
+     "properties": {
+      "part_of": {
+       "maxItems": 0
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "coverage-subsystem-part_of-back",
+   "severity": "warning",
+   "message": "DECLARED (stages `archs` / `bms_allocation`): every subsystem has at least one part (arch or bms_block). BACKWARD, so `warning`: owed by a later stage.",
+   "select": {
+    "$ref": "#/$defs/type-subsystem"
+   },
+   "validate": {
+    "network_back": {
+     "part_of": {
+      "contains": {
+       "local": {
+        "$ref": "#/$defs/type-arch-or-bms_block"
+       }
+      },
+      "minContains": 1
+     }
+    }
+   }
+  },
+  {
+   "id": "coverage-system-part_of-back",
+   "severity": "warning",
+   "message": "CV (plan 7): the system has at least one subsystem. BACKWARD, so `warning`: owed by stage `subsystems`.",
+   "select": {
+    "$ref": "#/$defs/type-system"
+   },
+   "validate": {
+    "network_back": {
+     "part_of": {
+      "contains": {
+       "local": {
+        "$ref": "#/$defs/type-subsystem"
+       }
+      },
+      "minContains": 1
+     }
+    }
+   }
+  },
+  {
+   "id": "coverage-req-covers-back",
+   "severity": "warning",
+   "message": "DECLARED (stage `subsystems`, direction=both): every req is covered by at least one subsystem. BACKWARD, so `warning`: owed by stage `subsystems`.",
+   "select": {
+    "$ref": "#/$defs/type-req"
+   },
+   "validate": {
+    "network_back": {
+     "covers": {
+      "contains": {
+       "local": {
+        "$ref": "#/$defs/type-subsystem"
+       }
+      },
+      "minContains": 1
+     }
     }
    }
   }

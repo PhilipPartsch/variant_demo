@@ -109,6 +109,9 @@ Each test runs for D, N, B, A, with ubc **and** Sphinx.
 | CNT-04 | allocations | every `allocates` targets a BMS interface need | B§4.4 |
 | CNT-05 | review verdicts | every authored need has a verdict in `.pharaoh/verdicts/` with `parent_fit` and `variant_consistency` passed | B§7.3 |
 | CNT-06 | brevity | needs ≤ 2 sentences (lint script, warning only) | C§0 |
+| CNT-07 | subsystem coverage | per product and toolchain: `SUB_X.covers` = ⋃ `satisfies` of its parts (apart from the named not-implemented reqs) and = the expected list | S§2.3 |
+| CNT-08 | one system | exactly one `system` need; every subsystem `part_of` it | S§2.3 |
+| CNT-09 | subsystem gating | `SUB_X` exists ⇔ `subsystems/<x>/` is built (sphinx and ubcode HTML) | S§2.2 |
 
 ## 7. L5 — Negative / mutation
 
@@ -130,6 +133,12 @@ Each test runs for D, N, B, A, with ubc **and** Sphinx.
 | NEG-14 | bare boolean `var.x` in a `variant_sources` rule | rejected → fail |
 | NEG-15 | MCS marker **outside** its `#if CONFIG_CHARGING__MCS` (code need gated more weakly than its MCS-only swreq) | `ubc check` fails in the non-MCS products (dangling `implements`) — corrected 2026-10-10: a marker inside `#if MCS` linking an ungated swreq is allowed by C§5 rule 3 |
 | NEG-16 | the two `IMPL_VCU_ENERGY_DISPLAY` markers without `#if` / `#else` (both active) | duplicate ID: ubc `needs.duplicate`, Sphinx `duplicate_id` |
+| NEG-17 | arch without `part_of` | schema `trace-arch-part_of` fails (ubc and Sphinx) |
+| NEG-18 | arch `part_of` the system directly | schema `trace-arch-part_of` fails (ubc and Sphinx) |
+| NEG-19 | subsystem covers a req none of its parts satisfies | CNT-07 check reports it |
+| NEG-20 | part satisfies a req its subsystem does not cover | CNT-07 check reports it |
+| NEG-21 | a second system | CNT-08 check reports it |
+| NEG-22 | subsystem gated more weakly than its folder (`SUB_ENG` in a BEV product) | `ubc check` fails on `SUB_ENG` |
 
 ## 8. L6 — C code
 

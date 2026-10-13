@@ -2,40 +2,40 @@
   "agent": "claude-code",
   "axes": {
     "allocation_complete": {
-      "reason": "The element has no `allocates`, so this axis is met by definition.",
+      "reason": "No allocates; scored max as the guide prescribes.",
       "score": 2
     },
     "completeness": {
-      "reason": "REQ_RANGE_ESTIMATE's nominal-consumption fallback for the first 50 km and the 1 km resolution are not addressed; the 1 % resolution of REQ_ENERGY_SOURCE is only implied.",
+      "reason": "The fallback to nominal consumption before 50 km are driven and the display units/resolutions (1 %, 1 km) of the requirements are not addressed.",
       "score": 1,
-      "suggestion": "Add the fallback before 50 km and the output resolutions."
+      "suggestion": "Add the nominal-consumption fallback for the first 50 km and the 1 % / 1 km display resolution."
     },
     "consistency": {
-      "reason": "Consistent with BB_ENERGY_STATE / ARCH_ENG_FUEL_LEVEL, which provide the input it reads.",
+      "reason": "Consistent with siblings BB_ENERGY_STATE (bev) and ARCH_ENG_FUEL_LEVEL (diesel) that provide the percent value.",
       "score": 2
     },
     "design_clarity": {
-      "reason": "Names the inputs, the 50 km averaging and the 1 s send period.",
+      "reason": "Concrete choices: source per product (BMS SoC / ENG fuel level), 50 km average, 1 Hz update to the instrument cluster.",
       "score": 2
     },
     "implementability": {
-      "reason": "One bounded component; the source selection is fixed per product.",
+      "reason": "Single bounded display/estimation function.",
       "score": 2
     },
     "interface_only": {
-      "reason": "The element has no `allocates`, so this axis is met by definition.",
+      "reason": "No allocates; scored max as the guide prescribes.",
       "score": 2
     },
     "no_value_copy": {
-      "reason": "Names no BMS limit, threshold or timing.",
+      "reason": "Names no BMS value.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Reads the product's energy value and derives range; engages with both REQ_ENERGY_SOURCE and REQ_RANGE_ESTIMATE.",
+      "reason": "Reads the remaining energy in percent and derives the range from the last-50-km consumption, directly serving REQ_ENERGY_SOURCE and REQ_RANGE_ESTIMATE.",
       "score": 2
     },
     "variant_consistency": {
-      "reason": "Ungated like its parents (one of which is an alternative pair covering every product).",
+      "reason": "Ungated like REQ_RANGE_ESTIMATE and the always-present REQ_ENERGY_SOURCE alternatives; the energy source wording is valid in every product.",
       "score": 2
     }
   },
@@ -43,6 +43,6 @@
   "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
   "model": "claude-opus-5-5",
   "need": "ARCH_VCU_ENERGY_DISPLAY",
-  "reviewed_fingerprint": "55a4904fa4a77d51e22e2db8e8a1910bc14feea05306ecc49a08c0c747da085a",
+  "reviewed_fingerprint": "7899b32014ec4afdaa432e9298f7f7e6a29f3a288c385b2c27bcc0e9832fb83b",
   "schema": 2
 }

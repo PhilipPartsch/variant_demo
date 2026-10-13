@@ -3,9 +3,9 @@ Metamodel
 
 The metamodel is defined in ``ubproject.toml`` (need types, links, fields) and
 ``metamodel/schemas.json`` (rules). It follows the metamodel of the BMS, so
-that both products read the same; the CV platform adds one type
-(``bms_block``), one link (``allocates``) and two fields (``value``,
-``product``).
+that both products read the same; the CV platform adds three types
+(``bms_block``, ``system``, ``subsystem``), three links (``allocates``,
+``part_of``, ``covers``) and two fields (``value``, ``product``).
 
 V-model chain
 -------------
@@ -22,12 +22,22 @@ V-model chain
 
    risk ──mitigates──► req          gap ──gap_for──► any need
 
+   System level: the vehicle is the system; the vehicle-level user stories and
+   requirements belong to it by their level.
+
+   req ◄─covers── subsystem ──part_of──► system (SYS_VEHICLE)
+                      ▲
+                      └──part_of── arch / bms_block
+
 Need types
 ----------
 
 ===========  ==========  =========================================  =================================
 Type         Prefix      Purpose                                    Where
 ===========  ==========  =========================================  =================================
+system       ``SYS_``    the vehicle; exactly one per product       ``docs/system/overview.rst``
+subsystem    ``SUB_``    subsystem of the vehicle (VCU, CHG, ENG,   ``docs/system/overview.rst``
+                         BMS); covers the reqs allocated to it
 user_story   ``US_``     one user-observable capability             ``docs/vehicle/user_stories.rst``
 req          ``REQ_``    vehicle requirement, one shall             ``docs/vehicle``, ``docs/region``
 arch         ``ARCH_``   architecture element of a CV subsystem     ``docs/subsystems/{vcu,chg,eng}``
@@ -46,9 +56,10 @@ Links and fields
 
 - Links: ``traces_to``, ``satisfies``, ``refines``, ``implements``,
   ``verifies``, ``results_for``, ``mitigates``, ``affects``, ``gap_for``
-  (``motivates`` is declared but unused) and ``allocates`` (``arch`` /
-  ``bms_block`` → BMS interface requirement; the only link with variant
-  functions).
+  (``motivates`` is declared but unused), ``allocates`` (``arch`` /
+  ``bms_block`` → BMS interface requirement, with variant functions),
+  ``part_of`` (``arch`` / ``bms_block`` → subsystem, subsystem → system) and
+  ``covers`` (subsystem → req, with variant functions).
 - ``status``: ``draft`` → ``review`` → ``approved``; ``imported`` for every
   BMS need.
 - ``value``: the product-specific value of a vehicle requirement, written with
@@ -64,6 +75,10 @@ Rules
   traces and required fields as *violations*; reverse coverage ("every req is
   satisfied") is a *warning*, because it is owed by a later stage. They apply
   to local needs only; imported BMS needs are validated by the BMS.
+- **System level:** exactly one system; every subsystem is ``part_of`` it and
+  covers ≥ 1 req; every ``arch`` / ``bms_block`` is ``part_of`` exactly one
+  subsystem; every req is covered by a subsystem. A subsystem covers exactly
+  the reqs its parts satisfy (checked per product by the tests).
 - **BMS links:** ``allocates`` may target only BMS requirements tagged
   ``interface``; every ``bms_block`` allocates at least one.
 - **Variants:** a need is gated by the same or a stronger condition than its

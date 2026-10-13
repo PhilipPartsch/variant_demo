@@ -9,24 +9,27 @@ architecture element.
 Elements
 --------
 
-- **CV subsystems** (``arch``, ``docs/subsystems/<x>/architecture.rst``):
-
-  ======  ==========================  ================  ======================
-  Name    Subsystem                   Products          Code
-  ======  ==========================  ================  ======================
-  VCU     Vehicle Control Unit        all               ``src/vcu``
-  CHG     Charging Controller         battery-electric  ``src/chg``
-  ENG     Engine Interface            diesel            ``src/eng``
-  ======  ==========================  ================  ======================
-
+- **System and subsystems** (``system``, ``subsystem``,
+  ``docs/system/overview.rst``): the vehicle ``SYS_VEHICLE`` is the root; its
+  subsystems ``SUB_VCU`` (all products, ``src/vcu``), ``SUB_CHG``
+  (battery-electric, ``src/chg``), ``SUB_ENG`` (diesel, ``src/eng``) and
+  ``SUB_BMS`` (battery-electric, imported product) are ``part_of`` it. Each
+  subsystem *covers* the vehicle requirements allocated to it; the user stories
+  and vehicle requirements belong to the system by their level.
   A subsystem that a product does not contain is excluded as a whole: its
-  documentation folder by a file variant, its code by CMake.
+  need by an ``if`` block, its documentation folder by a file variant, its code
+  by CMake.
+
+- **CV architecture elements** (``arch``, ``docs/subsystems/<x>/architecture.rst``):
+  each is ``part_of`` exactly one subsystem and satisfies vehicle requirements.
+  The requirements a subsystem covers are exactly those its elements satisfy.
 
 - **BMS black boxes** (``bms_block``, ``docs/subsystems/bms/architecture.rst``):
   the BMS is an external product. Each black box satisfies a vehicle
   requirement and *allocates* the BMS interface requirements that realise it.
   BMS values are referenced through the allocated needs, never copied.
-  A black box is not refined by CV software requirements.
+  A black box is not refined by CV software requirements; it is ``part_of``
+  ``SUB_BMS``.
 
 - **Software requirements** refine one architecture element each; code and
   tests implement and verify them with one-line markers.

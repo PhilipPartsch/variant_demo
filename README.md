@@ -21,6 +21,9 @@ needs are imported for the product's cell chemistry.
 | `bus_bev_lfp_eu` | bus | BEV | LFP | 400 V | pantograph | EU |
 | `truck_bev_lfp_na` | truck | BEV | LFP | 800 V | — | NA |
 
+The subsystems (VCU, CHG, ENG, BMS) are needs too (`SUB_*`, part of the
+system `SYS_VEHICLE`), in `docs/system/overview.rst`.
+
 ## Layout
 
 ```

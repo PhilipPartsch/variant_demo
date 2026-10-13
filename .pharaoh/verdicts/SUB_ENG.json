@@ -1,0 +1,47 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "allocation_complete": {
+      "reason": "No allocates; scored max as the guide prescribes.",
+      "score": 2
+    },
+    "completeness": {
+      "reason": "The ENG share of both covered requirements is addressed; display and resolution belong to SUB_VCU.",
+      "score": 2
+    },
+    "consistency": {
+      "reason": "Reconciled with SUB_VCU: the VCU sets the power limit, the ENG passes it on as a torque limit.",
+      "score": 2
+    },
+    "design_clarity": {
+      "reason": "Names the concrete interfaces: tank level sensor in, SAE J1939 torque limit to the engine control unit.",
+      "score": 2
+    },
+    "implementability": {
+      "reason": "Clearly bounded diesel-only interface with own code under src/eng.",
+      "score": 2
+    },
+    "interface_only": {
+      "reason": "No allocates; scored max as the guide prescribes.",
+      "score": 2
+    },
+    "no_value_copy": {
+      "reason": "Names no BMS value.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "Fuel level from the tank sensor and the traction power limit passed to the engine ECU engage directly with REQ_ENERGY_SOURCE and REQ_TRACTION_POWER_LIMIT.",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "Gated by if var.powertrain.type == 'diesel', stronger than its covered requirements; no product values in prose.",
+      "score": 2
+    }
+  },
+  "criteria": "arch",
+  "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
+  "model": "claude-opus-5-5",
+  "need": "SUB_ENG",
+  "reviewed_fingerprint": "7fe3bce188293e6f7e6c14b0d0f74da25922dbf84aa7c93d5fcb3fdf3415bd37",
+  "schema": 2
+}

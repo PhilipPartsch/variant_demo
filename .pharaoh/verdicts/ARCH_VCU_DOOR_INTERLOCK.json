@@ -2,39 +2,39 @@
   "agent": "claude-code",
   "axes": {
     "allocation_complete": {
-      "reason": "The element has no `allocates`, so this axis is met by definition.",
+      "reason": "No allocates; scored max as the guide prescribes.",
       "score": 2
     },
     "completeness": {
-      "reason": "Covers standstill and moving, as the requirement asks.",
+      "reason": "Covers standstill and moving cases (torque request zero whenever any door not closed and locked).",
       "score": 2
     },
     "consistency": {
-      "reason": "No sibling shares REQ_DOOR_DRIVE_INTERLOCK.",
+      "reason": "No sibling on the same requirement; no conflict with the power manager.",
       "score": 2
     },
     "design_clarity": {
-      "reason": "Names inputs (closed-and-locked signals of all doors) and the action (zero torque request).",
+      "reason": "Concrete choice: read closed-and-locked signals of all doors, set traction torque request to zero.",
       "score": 2
     },
     "implementability": {
-      "reason": "Single bounded function.",
+      "reason": "Single bounded interlock function.",
       "score": 2
     },
     "interface_only": {
-      "reason": "The element has no `allocates`, so this axis is met by definition.",
+      "reason": "No allocates; scored max as the guide prescribes.",
       "score": 2
     },
     "no_value_copy": {
-      "reason": "Names no BMS limit, threshold or timing.",
+      "reason": "Names no BMS value.",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Zeroes the torque request while any door is not closed and locked, which inhibits traction as required.",
+      "reason": "Inhibits traction while any passenger door is not closed and locked, exactly REQ_DOOR_DRIVE_INTERLOCK.",
       "score": 2
     },
     "variant_consistency": {
-      "reason": "Gated `var.vehicle.type == 'bus'`, same as its parent.",
+      "reason": "Gated by if var.vehicle.type == 'bus', same as its parent.",
       "score": 2
     }
   },
@@ -42,6 +42,6 @@
   "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
   "model": "claude-opus-5-5",
   "need": "ARCH_VCU_DOOR_INTERLOCK",
-  "reviewed_fingerprint": "bb3f33d03c121b172c3de012fca040057e7d4d752904cd5522f49e76dc46a9eb",
+  "reviewed_fingerprint": "12fdb8ede699153509483b91c916db780bb73dd02ac515f82c41df6026694c56",
   "schema": 2
 }

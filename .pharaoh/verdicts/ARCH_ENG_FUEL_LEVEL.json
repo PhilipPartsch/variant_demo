@@ -2,39 +2,39 @@
   "agent": "claude-code",
   "axes": {
     "allocation_complete": {
-      "reason": "The element has no `allocates`, so this axis is met by definition.",
+      "reason": "No allocates; scored max as the guide prescribes.",
       "score": 2
     },
     "completeness": {
-      "reason": "Percent of tank capacity and 1 % resolution covered; display is left to the VCU.",
+      "reason": "Covers the source-side obligation (percent, 1 % resolution); the display itself is the distinct part of sibling ARCH_VCU_ENERGY_DISPLAY.",
       "score": 2
     },
     "consistency": {
-      "reason": "Consistent with ARCH_VCU_ENERGY_DISPLAY, which reads the ENG fuel level.",
+      "reason": "Matches sibling ARCH_VCU_ENERGY_DISPLAY, which reads the ENG fuel level in percent.",
       "score": 2
     },
     "design_clarity": {
-      "reason": "Concrete: analogue sensor, 100 ms sampling, 10 s averaging against slosh.",
+      "reason": "Concrete choices: analogue tank sensor, 100 ms sampling, 10 s averaging against slosh, percent output to the VCU.",
       "score": 2
     },
     "implementability": {
-      "reason": "Single bounded provider.",
+      "reason": "Single bounded sensor-filter-provider function with parameters given.",
       "score": 2
     },
     "interface_only": {
-      "reason": "The element has no `allocates`, so this axis is met by definition.",
+      "reason": "No allocates; scored max as the guide prescribes.",
       "score": 2
     },
     "no_value_copy": {
-      "reason": "Names no BMS limit, threshold or timing.",
+      "reason": "Names no BMS value (only own sampling/filter timings).",
       "score": 2
     },
     "parent_fit": {
-      "reason": "Provides the fuel level in percent with 1 % resolution that REQ_ENERGY_SOURCE displays.",
+      "reason": "Provides the fuel level in percent of tank capacity at 1 % resolution, exactly the quantity REQ_ENERGY_SOURCE requires to be displayed.",
       "score": 2
     },
     "variant_consistency": {
-      "reason": "Lives in subsystems/eng (diesel-only folder); its parent is gated the same (`not bev`) or ungated, so it never exists without its parent.",
+      "reason": "Lives in variant folder subsystems/eng (diesel only), at least as strong as the not-bev parent variant; part_of SUB_ENG gated diesel.",
       "score": 2
     }
   },
@@ -42,6 +42,6 @@
   "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
   "model": "claude-opus-5-5",
   "need": "ARCH_ENG_FUEL_LEVEL",
-  "reviewed_fingerprint": "55b5bd7709acdf325f0d7415878ca9dcfc6e7c97e572bf6704e9a319f4a3a766",
+  "reviewed_fingerprint": "e85907426867841b62c531be73e9ddd58d81647bdffed3063c5821e44c20a03f",
   "schema": 2
 }

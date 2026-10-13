@@ -1,0 +1,47 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "allocation_complete": {
+      "reason": "No allocates; scored max as the guide prescribes.",
+      "score": 2
+    },
+    "completeness": {
+      "reason": "Power level, pantograph and CCS2 inlet obligations are each addressed; battery-side acceptance belongs to SUB_BMS.",
+      "score": 2
+    },
+    "consistency": {
+      "reason": "Consistent with SUB_BMS on REQ_MAX_CHARGE_POWER and with DEC_CHARGING_INLET_PRIORITY.",
+      "score": 2
+    },
+    "design_clarity": {
+      "reason": "Concrete choices: CCS inlet per market with ISO 15118 session plus one high-power interface (MCS inlet, roof pantograph or none).",
+      "score": 2
+    },
+    "implementability": {
+      "reason": "Bounded bev-only subsystem with own code under src/chg; interface alternatives resolved per product.",
+      "score": 2
+    },
+    "interface_only": {
+      "reason": "No allocates; scored max as the guide prescribes.",
+      "score": 2
+    },
+    "no_value_copy": {
+      "reason": "Names no BMS value.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "Engages with every covered requirement: rated charging power, the market CCS inlet (CCS2 in eu) and the high-power interface (pantograph here).",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "Gated by if var.powertrain.type == 'bev'; product-specific covers use variant functions (mcs, pantograph, eu, na); the prose lists the alternatives without fixing a product value.",
+      "score": 2
+    }
+  },
+  "criteria": "arch",
+  "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
+  "model": "claude-opus-5-5",
+  "need": "SUB_CHG",
+  "reviewed_fingerprint": "8b2669815001e5a93413bd1ddbce2cb37501b5020218f035629e483f2e65e9f7",
+  "schema": 2
+}

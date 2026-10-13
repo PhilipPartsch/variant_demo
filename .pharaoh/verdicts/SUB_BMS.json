@@ -1,0 +1,48 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "allocation_complete": {
+      "reason": "No allocates; scored max as the guide prescribes.",
+      "score": 2
+    },
+    "completeness": {
+      "reason": "For REQ_MAX_CHARGE_POWER only cell limits are provided; nothing commits the BMS to a permitted charging power that supports the required minimum average power (same open point as BB_CHARGE_LIMITS).",
+      "score": 1,
+      "suggestion": "Add a permitted charging power published by the BMS once the BMS team provides the interface requirement."
+    },
+    "consistency": {
+      "reason": "Reconciled with SUB_VCU and SUB_CHG: the BMS supplies values and contactor actions, they apply them.",
+      "score": 2
+    },
+    "design_clarity": {
+      "reason": "Concrete choices: the published signals/commands listed, and an external product whose released needs are imported per chemistry at release 0.1.0.",
+      "score": 2
+    },
+    "implementability": {
+      "reason": "Bounded: an external product at a pinned release, selected by chemistry.",
+      "score": 2
+    },
+    "interface_only": {
+      "reason": "No allocates; scored max as the guide prescribes.",
+      "score": 2
+    },
+    "no_value_copy": {
+      "reason": "Names signals only, no BMS limit, threshold or timing.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "Names the BMS contribution to each covered requirement: state of charge (energy display), permitted discharge power (traction limit), isolation fault and main contactors (HV shutdown), cell limits for charging (charging power).",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "Gated by if var.powertrain.type == 'bev'; every covered requirement is bev-gated or ungated.",
+      "score": 2
+    }
+  },
+  "criteria": "arch",
+  "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
+  "model": "claude-opus-5-5",
+  "need": "SUB_BMS",
+  "reviewed_fingerprint": "f4785f3c69640fd4a97922eb85c70a9aa95ee10902fd3179b2f3e0d8dd0b193e",
+  "schema": 2
+}

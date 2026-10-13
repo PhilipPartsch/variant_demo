@@ -7,6 +7,8 @@ ALL = set(PRODUCTS)
 BEVS = set(BEV)
 
 PRESENT = {
+    # system and subsystems (plan 7)
+    "SYS_VEHICLE": ALL, "SUB_VCU": ALL, "SUB_CHG": BEVS, "SUB_BMS": BEVS, "SUB_ENG": {D},
     # user stories
     "US_RANGE_AWARENESS": ALL, "US_PREDICTABLE_POWER": ALL, "US_FAST_DEPOT_CHARGING": BEVS,
     "US_HV_SAFETY": BEVS, "US_MARKET_CHARGING": BEVS, "US_OPPORTUNITY_CHARGING": {B},
@@ -57,3 +59,18 @@ PAGES = {
     "subsystems/vcu/architecture.html": ALL,
 }
 BMS_CHEMISTRY = {N: "NMC", B: "LFP", A: "LFP"}
+# requirements each subsystem covers per product (plan 7, variant functions in `covers`)
+COVERS = {
+    "SUB_VCU": {D: ["REQ_ENERGY_SOURCE", "REQ_RANGE_ESTIMATE", "REQ_TRACTION_POWER_LIMIT"],
+                N: ["REQ_ENERGY_SOURCE", "REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT", "REQ_RANGE_ESTIMATE", "REQ_TRACTION_POWER_LIMIT"],
+                B: ["REQ_DOOR_DRIVE_INTERLOCK", "REQ_ENERGY_SOURCE", "REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT", "REQ_RANGE_ESTIMATE",
+                    "REQ_TRACTION_POWER_LIMIT"],
+                A: ["REQ_ENERGY_SOURCE", "REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT", "REQ_RANGE_ESTIMATE", "REQ_TRACTION_POWER_LIMIT"]},
+    "SUB_CHG": {N: ["REQ_EU_CHARGING_STANDARD", "REQ_MAX_CHARGE_POWER", "REQ_MCS_CHARGING"],
+                B: ["REQ_EU_CHARGING_STANDARD", "REQ_MAX_CHARGE_POWER", "REQ_PANTOGRAPH_CHARGING"],
+                A: ["REQ_MAX_CHARGE_POWER", "REQ_NA_CHARGING_STANDARD"]},
+    "SUB_ENG": {D: ["REQ_ENERGY_SOURCE", "REQ_TRACTION_POWER_LIMIT"]},
+}
+# a subsystem exists exactly where its documentation folder is built (file variants)
+SUBSYSTEM_PAGE = {"SUB_VCU": "subsystems/vcu/index.html", "SUB_CHG": "subsystems/chg/index.html",
+                  "SUB_ENG": "subsystems/eng/index.html", "SUB_BMS": "subsystems/bms/index.html"}
