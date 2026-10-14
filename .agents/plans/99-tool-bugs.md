@@ -30,7 +30,7 @@ versions; entries not marked fixed are not re-tested on the new ones yet.
 | Sphinx-Data-Viewer | open source | 0.1.5 | indirectly (sphinx-needs dependency) | no findings |
 | ubTrace | commercial | — | no | — |
 | ubConnect | commercial | — | no | — |
-| Sphinx-Test-Reports | open source | — | no (candidate to replace `tools/import_test_results.py`) | — |
+| Sphinx-Test-Reports (`sphinx-test-reports` + `ub-test-reports`) | open source | 3.0.0 / 1.1.0 (findings: 2.0.0 and 3.0.0 / 1.1.0) | no; evaluated in plan 110 as replacement for `tools/import_test_results.py` | §9 |
 | Sphinx-Modeling, Sphinx-Collections, Sphinx-Preview, Sphinx-SimplePDF, Sphinx-EMF, Bazel-Drives-Sphinx, libpdf | open source | — | no | — |
 
 ## 2. Overview
@@ -55,6 +55,10 @@ documentation, convenience.
 | UB-13 | ubc + Sphinx-Needs | medium | imported needs of an undeclared type dropped, undeclared fields stripped, silently |
 | UB-14 | ubc | medium | ubCode HTML: source links as plain text, absolute local path published |
 | UB-15 | ubc | low | `ubc build needs` exports no backlinks (`<link>_back`); Sphinx does |
+| UB-16 | ubc | medium | external source dropped when its `needs_schema` has `default: null` for a field declared non-nullable |
+| UB-17 | ubc + Sphinx-Needs | low | `needimport` ignored `id_regex` in ubc only — **resolved** with Sphinx-Needs 9.0.0 (neither checks imports) |
+| UB-18 | ubc | high | Sphinx-Test-Reports directives unknown — **fixed in 0.37.0** |
+| UB-19 | ubc + Sphinx-Needs | low | local need with an id outside `id_regex`: ubc warns and keeps it, Sphinx drops it |
 | PH-01 | Pharaoh | **high** | verdicts stored per need id only: alternatives with one id overwrite each other |
 | PH-02 | Pharaoh | **high** | review fingerprint ignores resolved field values and link variants |
 | PH-03 | Pharaoh | medium | fingerprint follows parents one level only (children / decisions flip, grandchildren not) |
@@ -66,6 +70,8 @@ documentation, convenience.
 | PH-09 | Pharaoh | low | `doctor` checks only the `.claude` copy of project skills |
 | PH-10 | Pharaoh | low | brief / skills: `submit_command` without `-p`, `stale` bucket undocumented |
 | PH-11 | Pharaoh | low | skills document `review-brief --ids <ID,...>`, the CLI rejects the comma list; TYPE + `--ids` is refused |
+| PH-12 | Pharaoh | medium | `config-validate` / `doctor`: a type declared by `[test_reports]` counts as undeclared |
+| PH-13 | Pharaoh | medium | outgoing trace obligation (`min = 1`) met by any link, e.g. STR's generic `links` |
 | SN-01 | Sphinx-Needs | medium | every schema severity is a Sphinx warning; `-W` fails on `warning` rules |
 | SN-02 | Sphinx-Needs | medium | `needs_from_toml` overrides `needs_external_needs` from `conf.py` |
 | SN-03 | Sphinx-Needs | low | `needs.json` drops external needs by default (`builder_filter`), unlike ubc |
@@ -82,6 +88,10 @@ documentation, convenience.
 | SM-01 | sphinx-mounts + ubc | medium | bare boolean condition: sphinx-mounts aborts the build, ubc warns and drops the rule |
 | UA-01 | ubc-action | low | Linux runners only |
 | UA-02 | ubc-action | medium | uses `actions/cache@v4` by tag: blocked in repositories that require SHA-pinned actions; downloads into the workspace, no checksum |
+| STR-01 | Sphinx-Test-Reports | medium | CTest `status="disabled"` reported as `passed` |
+| STR-02 | Sphinx-Test-Reports | medium | converter ignores the configured case prefix; lower-case hash IDs fail a strict `id_regex` |
+| STR-03 | Sphinx-Test-Reports | high | type declared in `[[needs.types]]` and `[test_reports.case]` aborts the Sphinx build |
+| STR-04 | Sphinx-Test-Reports + ubc | low | `test-results` summary `Errors: -1` in Sphinx, `0` in ubc, when the JUnit file has no `errors` attribute |
 
 ## 3. ubc / ubCode
 
@@ -288,6 +298,67 @@ documentation, convenience.
 - **Solution A:** export backlinks like Sphinx-Needs (`<link>_back`).
 - **Solution B:** an option of `ubc build needs` to include backlinks, documented as a known difference otherwise.
 
+### UB-16 External source dropped: `needs_schema` `default: null` vs non-nullable field
+
+- **Tool:** ubc 0.35.0, still in 0.37.0 (Sphinx-Needs 8.5.0 / 9.0.0 for comparison)
+- **Marker:** scratch copy based on `main@54e862c` (plan 110 E9): input is the
+  `test-reports build needs` output of a `build/site/<p>/junit.xml`
+  (`tools/build_product.sh:32`), fields declared like `ubproject.toml:267-287`.
+- **Summary:** the converter writes a `needs_schema` block with `"default": null`
+  for its fields. When those fields are declared in `[needs.fields]` with
+  `default = ""` / `nullable = false` (the style of this repository), ubc drops
+  the whole external source. The needs themselves contain no `null`. Related to
+  UB-02, but triggered by the schema block alone.
+- **Input:** `[[needs.external_needs]] json_path = "active/tr.json"`, fields
+  `case`, `result`, `time`, … declared with `default = ""`, `nullable = false`.
+- **Wrong output:** `warning[needs.external] root['versions']['1.0']['needs_schema']['properties']['case']['default'] could not be read: Value cannot be converted to string: null; the source contributed no needs` (one per field); 0 of 3 needs. Sphinx imports all 3.
+- **Workaround:** declare the imported fields with `nullable = true` and no
+  default (both tools import everything, ubc warning-free), or strip `needs_schema`.
+- **Solution A:** read `default: null` as "no default"; the declared field wins.
+- **Solution B:** on a schema mismatch keep the needs, ignore the block, and warn once.
+
+### UB-17 `needimport`: `id_regex` checked by Sphinx only (resolved)
+
+- **Tool:** ubc 0.35.0 with Sphinx-Needs 8.5.0. **Resolved** on 2026-10-14 by
+  Sphinx-Needs 9.0.0, which skips `id_regex` for imported and external needs by
+  design (`sphinx_needs/api/need.py`, `from_outside`); ubc 0.37.0 behaves the same.
+- **Marker:** scratch copy based on `main@9546209` / `main@54e862c` (plan 110 E8).
+- **Summary:** with 0.35.0 / 8.5.0, ubc imported needs whose ids fail `id_regex`
+  and Sphinx refused them, a silent parity break. Now both import them; no tool
+  checks imported ids any more.
+- **Input:** `.. needimport:: tr.json` with `:id_prefix: TRES_` (ids
+  `TRES_test_result__…`), `id_regex = "^[A-Z]+_[A-Z][A-Z0-9_]*$"`.
+- **Wrong output (old):** ubc 3 needs, "No errors found"; Sphinx 0 needs (`does not match configured regex`).
+- **Workaround:** none needed now; a schema rule on the id can replace the regex if wanted.
+- **Solution A:** (resolved.) If an id check for imports is wanted again: an opt-in option in both tools.
+- **Solution B:** a schema rule on `id` that selects imported needs.
+
+### UB-18 Sphinx-Test-Reports directives unknown to ubc (fixed in 0.37.0)
+
+- **Tool:** ubc 0.35.0 / ubCode. **Fixed in 0.37.0** (checked 2026-10-14, plan 110 E7).
+- **Marker:** scratch copy based on `main@9546209` (plan 110 E7).
+- **Summary:** ubc did not know `test-file` / `test-suite` / `test-case`; no test
+  needs in ubc, the IDE or the ubCode HTML. 0.37.0 reads `[test_reports]` and
+  creates the same needs as Sphinx.
+- **Input:** `.. test-file::` in an rst file.
+- **Wrong output (old):** `warning[block.directive_unknown] Unknown directive: 'test-file'`.
+- **Workaround:** keep `tools/import_test_results.py`.
+- **Solution A:** ubc supports the STR directives (done in 0.37.0).
+- **Solution B:** ubc runs the STR conversion for an external source that is a JUnit file.
+
+### UB-19 Local need outside `id_regex`: ubc keeps it, Sphinx drops it
+
+- **Tool:** ubc 0.37.0, Sphinx-Needs 9.0.0
+- **Marker:** scratch copy based on `main@54e862c` (plan 110, E8 control);
+  `id_regex` as in `ubproject.toml:32`.
+- **Summary:** both tools report the bad id, but ubc still creates the need and
+  Sphinx does not, so the two `needs.json` differ by that need.
+- **Input:** `.. test:: Bad id` with `:id: TEST_bad`, `id_regex = "^[A-Z]+_[A-Z][A-Z0-9_]*$"`.
+- **Wrong output:** ubc `warning[needs.id_regex]`, 7 needs; Sphinx `WARNING: Need could not be created: Given ID 'TEST_bad' does not match configured regex` [needs.create_need], 6 needs.
+- **Workaround:** none needed; the parity check and `-W` / `--deny warning` catch it.
+- **Solution A:** ubc drops the need too, like Sphinx.
+- **Solution B:** document the difference; same diagnostic in both.
+
 ## 4. Pharaoh (`ubc agent`)
 
 ### PH-01 Verdicts stored per need id only
@@ -483,6 +554,44 @@ are `bms_block`s of stage `bms_allocation`. Workaround: `direction =
 - **Workaround:** space-separated ids without a type.
 - **Solution A:** accept comma-separated ids (and a type as a filter together with `--ids`).
 - **Solution B:** correct the skills (`--ids <ID> <ID> …`, no type).
+
+### PH-12 `config-validate`: a type declared by `[test_reports]` counts as undeclared
+
+- **Tool:** ubc 0.37.0 (`ubc agent config-validate`, `ubc agent doctor`) with Sphinx-Test-Reports 3.0.0
+- **Marker:** scratch copy based on `main@54e862c` (plan 110 E7b / E16); stage
+  `test_results` as in `ubproject.toml:686-697`.
+- **Summary:** STR registers the case type from `[test_reports.case]`, and ubc
+  builds those needs. Because of STR-03 the type may not also be in
+  `[[needs.types]]`, but `config-validate` only accepts `[[needs.types]]`, so
+  every project that uses the STR directives fails `doctor`.
+- **Input:** `[test_reports.case] type = "test_result"` (all six keys), no
+  `[[needs.types]]` entry, `[[workflow.stages]] produces = "test_result"`.
+- **Wrong output:** `{"kind": "undeclared_type", "subject": "test_result", "message": "type 'test_result' referenced by stage 'test_results' is not a declared [[needs.types]] directive"}`; `doctor` `ok: false`. `status` / `gaps` work on the same config.
+- **Workaround:** give only the `doctor` / `config-validate` run the full type list:
+  `ubc agent doctor -p . -c 'needs.types = [{directive = "…", title = "…", prefix = "…"}, …, {directive = "test_result", …}]'`.
+  The override replaces the whole list (as in UB-05), so every type must be repeated. Checked 2026-10-14 on a scratch
+  copy of `../test-reports-example` (its README documents it) with a `[workflow]` stage producing `testcase`:
+  plain `doctor` `ok: false` (`undeclared_type`), with the override `ok: true`; `status` unchanged. Declaring the type
+  twice is no workaround: it aborts Sphinx (STR-03).
+- **Solution A:** `config-validate` accepts the types `[test_reports]` declares (file, suite, case), as ubc's build does.
+- **Solution B:** fix STR-03, so the type can stay in `[[needs.types]]`.
+
+### PH-13 Outgoing trace obligation met by any link
+
+- **Tool:** ubc 0.37.0 (`ubc agent gaps`, `ubc agent status`)
+- **Marker:** scratch copy based on `main@54e862c` (plan 110 E16); stage
+  `test_results` with `[[workflow.stages.trace]] link = "results_for"`,
+  `direction = "outgoing"`, `min = 1` (`ubproject.toml:693-697`).
+- **Summary:** a `test_result` without `results_for` is only reported (as
+  `orphan`) when it has no link at all. Any other link, e.g. the generic `links`
+  STR sets from each case to its file and suite need, hides the gap, and the
+  stage reads `done`.
+- **Input:** `.. test_result::` `:id: TRES_MANUAL` `:links: TRES_P2` (no
+  `results_for`); the same for every STR case of a JUnit file without `cmake_labels`.
+- **Wrong output:** `gaps` lists only the `TEST_*` orphans; `status`: `test_results done`, `failing_gates: []`, although `results_for` is missing. Without `:links:` the same need is an `orphan` and the stage fails the `trace` gate. Expected: a gap on the declared link `results_for`.
+- **Workaround:** the schema rule `trace-test_result-results_for` (min 1) catches it in `ubc check` and Sphinx.
+- **Solution A:** check the declared trace link per need of the produced type, not "has any link".
+- **Solution B:** report `trace_forward` gaps for needs that lack the declared outgoing link.
 
 ## 5. Sphinx-Needs
 
@@ -786,3 +895,54 @@ warning); the abort comes from Sphinx-Codelinks — see CL-06.
 - **Workaround:** download `ubc` directly from the same URL into `$RUNNER_TEMP`, check a pinned SHA-256 (`ci/pages`, `.github/actions/setup/action.yml`).
 - **Solution A:** pin `actions/cache` (and every nested action) to a commit SHA inside ubc-action.
 - **Solution B:** publish checksums next to the binaries and let the action verify them and install outside the workspace (`$RUNNER_TOOL_CACHE`).
+
+## 9. Sphinx-Test-Reports
+
+Evaluated in plan 110 (`sphinx-test-reports` 2.0.0 on 2026-10-12; 3.0.0 with
+`ub-test-reports` 1.1.0 on 2026-10-14). Not used in the repository yet, so the
+markers point to a scratch copy based on `main@54e862c` with the repository
+inputs named.
+
+### STR-01 CTest `status="disabled"` reported as passed
+
+- **Tool:** sphinx-test-reports 2.0.0; `ub-test-reports` 1.1.0 (`ub_test_reports/junitparser.py:247-256`), used by the converter and the 3.0.0 directives
+- **Marker:** scratch copy based on `main@54e862c`; CTest as in `tests/CMakeLists.txt` with one case `DISABLED TRUE`.
+- **Summary:** a CTest case without a result child is read as passed unless it is googletest's `status="notrun"` / `result="suppressed"`.
+- **Input:** CTest `--output-junit` with `set_tests_properties(T PROPERTIES DISABLED TRUE)` → `<testcase … status="disabled">` without a result child.
+- **Wrong output:** `result: passed` (converter and `test-file` directive). Expected `disabled` / `skipped`.
+- **Workaround:** none needed yet (no disabled tests).
+- **Solution A:** treat every `status` other than `run` (`disabled`, `notrun`) as not passed.
+- **Solution B:** a CTest dialect (as for googletest), detected by `cmake_labels` / `<testsuite name="(empty)">`.
+
+### STR-02 Converter ignores the configured prefix; IDs fail a strict `id_regex`
+
+- **Tool:** sphinx-test-reports 2.0.0; `ub-test-reports` 1.1.0 (`needs_export.py:227`, `identity.py:71-93`)
+- **Marker:** scratch copy based on `main@54e862c`; `id_regex` as in `ubproject.toml:32`.
+- **Summary:** `test-reports build needs` builds case ids as `<need_type>__<class>__<name>_<hash5>` with a lower-case hash; `[test_reports.case] prefix` is not used.
+- **Input:** `[test_reports] deterministic_case_ids = true`, `[test_reports.case] prefix = "TRES_"` (all six keys), `[test_reports.build.needs] need_type = "test_result"`, `test-reports build needs -o out.json cm.xml`.
+- **Wrong output:** `test_result__TEST_A__TEST_A_isagy`. Expected `TRES_…` and an id that can match `^[A-Z]+_[A-Z][A-Z0-9_]*$`. (The 3.0.0 directives build upper-case ids from the `test-file` id instead, see plan 110 E13.)
+- **Workaround:** `[[needs.external_needs]] id_prefix`; neither tool checks imported ids (UB-17).
+- **Solution A:** the converter uses `[test_reports.case].prefix` and the directives' id scheme.
+- **Solution B:** an id template option (e.g. `{prefix}{name}`) for cases whose name is already unique.
+
+### STR-03 Type declared in `[[needs.types]]` and `[test_reports.case]` aborts Sphinx
+
+- **Tool:** sphinx-test-reports 2.0.0 and 3.0.0 with sphinx-needs 8.5.0 / 9.0.0 `needs_from_toml`
+- **Marker:** scratch copy based on `main@54e862c`; type `test_result` as in `ubproject.toml` (`[[needs.types]] directive = "test_result"`).
+- **Summary:** STR registers the case type with `add_need_type`, which fails when the type already comes from `[[needs.types]]`. ubc accepts both declarations; Pharaoh needs the `[[needs.types]]` one (PH-12).
+- **Input:** one `ubproject.toml` with `[[needs.types]] directive = "test_result"` and `[test_reports.case] type = "test_result"`.
+- **Wrong output:** `NeedsApiConfigException: test_result already exists as need type`; the build aborts. Expected: reuse the declared type, or a typed `test_reports.*` warning.
+- **Workaround:** declare the type only in `[test_reports.case]` (costs PH-12).
+- **Solution A:** skip `add_need_type` when the type already exists with compatible settings.
+- **Solution B:** `[test_reports.case]` references an existing `[[needs.types]]` entry.
+
+### STR-04 `test-results` summary: `Errors: -1` in Sphinx, `0` in ubc
+
+- **Tool:** sphinx-test-reports 3.0.0 (directive `test-results`), ubc 0.37.0
+- **Marker:** scratch copy based on `main@54e862c`; any CTest `junit.xml` (`tools/build_product.sh:32`).
+- **Summary:** CTest writes no `errors` attribute on `<testsuite>`. Sphinx shows the parser's "unknown" value, ubc shows 0.
+- **Input:** `.. test-results:: p1/junit.xml` on a CTest file.
+- **Wrong output:** Sphinx HTML `Tests: 3, Failures: 1, Errors: -1, Skips: 0`; ubc HTML `… Errors: 0 …`. Expected the same value, and `0` (or "n/a") rather than `-1`. Also `Skips: 0` although the file has `disabled="1"` (STR-01).
+- **Workaround:** use a `needtable` instead of `test-results`.
+- **Solution A:** count `<error>` children when the attribute is missing (as ubc does).
+- **Solution B:** show "n/a" for a missing attribute in both tools.

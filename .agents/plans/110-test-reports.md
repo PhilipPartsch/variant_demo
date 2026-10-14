@@ -5,11 +5,29 @@ CV platform can replace its own importer `tools/import_test_results.py` with the
 useblocks tool [Sphinx-Test-Reports](https://sphinx-test-reports.readthedocs.io/en/latest/index.html)
 ("STR"). Plan 99 §1 lists STR as "candidate to replace `tools/import_test_results.py`".
 
-**Trigger 2026-10-14 (T1, T4): re-run open.** ubCode / ubc 0.37.0 reads the STR
+**Trigger 2026-10-14 (T1, T2, T4): re-run open.** ubCode / ubc 0.37.0 reads the STR
 directives (`test-file`, `test-suite`, `test-case`, `:auto_suites:` /
 `:auto_cases:`) with a `[test_reports]` table and reports mistakes as
 `needs.test_report_*` (ubCode changelog 0.37); the pin is now Sphinx-Needs
-9.0.0 (plan 20). The baseline below is the state before.
+9.0.0 (plan 20); `sphinx-test-reports` 3.0.0 and `ub-test-reports` 1.1.0 were
+released the same day. The baseline below is the state before.
+
+Decided for the re-run: test only the newest STR packages (3.0.0 / 1.1.0),
+transfer every reproduced finding to plan 99, leave plan changes uncommitted.
+
+**Status (re-run 2026-10-14): route B (directives) works in both tools, with
+caveats; decision with the user open.** ubc 0.37.0 supports the STR directives
+(UB-18 fixed). The directive route gives the same needs, IDs, links and fields in
+ubc and Sphinx, gates per product with `.. if::`, renders in both HTML outputs
+and is checked by the schema rules (E7, E11–E15 ✓, §3). Open problems:
+`test_result` can be declared only in `[test_reports.case]` (STR-03), and
+Pharaoh's `config-validate` / `doctor` then fail (PH-12) unless the CI `doctor`
+run gets the full type list via `-c 'needs.types = [...]'` (workaround from
+`../test-reports-example`, checked 2026-10-14); the Pharaoh trace gate
+accepts STR's generic `links` instead of `results_for` (PH-13); a CTest
+`DISABLED` case still reads `passed` (STR-01). The converter route D is still
+blocked (STR-02, UB-16). Per §5 the follow-up is the route B migration plan and a
+decision with the user (§6.3); §6.1 is still the prerequisite.
 
 **Status (baseline 2026-10-12): not possible.** ubCode / ubc 0.35.0 does not know
 the STR directives, and the STR command-line converter has bugs that block the
@@ -29,9 +47,9 @@ Global rules that apply here (roadmap):
   only once a **released** ubc / ubCode supports them.
 - **Rule 3: ubc and Sphinx give the same result.** Every route must keep the parity
   check of `tools/build_product.sh` green.
-- **Rule 4: tool bugs go into plan 99.** The findings in §7 are written ready to
-  paste into plan 99 but are **not in plan 99 yet**. Transfer them on the first
-  re-run, after reproducing each one on a pushed commit.
+- **Rule 4: tool bugs go into plan 99.** The findings in §7 were transferred to
+  plan 99 on the re-run of 2026-10-14 (§9 Sphinx-Test-Reports, UB-16…19,
+  PH-12, PH-13). Plan 99 is the record from now on; §7 keeps the plan-110 view.
 - **The analysis does not touch the repository.** Other agents may be working in it
   at the same time. Work only in a shadow folder in the session scratchpad and
   delete it completely at the end (§4.6).
@@ -55,7 +73,7 @@ Re-run §4 when any of these happens:
 | T1 | New ubCode extension / ubc release | `ls ~/.vscode/extensions/ \| grep useblocks.ubcode`, `ubc --version`, ubCode changelog; plan 99 version table |
 | T2 | New STR / `ub-test-reports` release (e.g. 3.0.0) | `curl -s https://pypi.org/pypi/sphinx-test-reports/json`, same for `ub-test-reports`; STR changelog |
 | T3 | One of the findings in §7 is reported as fixed | plan 99 entries / useblocks release notes |
-| T4 | The sphinx-needs pin changes (`requirements.txt`) | the STR minimum is 8.5.0 in 3.0 |
+| T4 | The sphinx-needs pin changes (`requirements.txt`) | STR 3.0.0 requires `sphinx-needs>=9.0.0,<10` |
 
 Before starting, search the ubCode docs (the ubcode MCP server's documentation
 search, or the website) for "test-file", "test_reports", "Sphinx-Test-Reports" and
@@ -100,38 +118,67 @@ docs/_global/test_results.rst  COMMITTED snapshot, one `.. if:: var.meta.product
 - A manual, committed snapshot (295 lines) that goes stale. CODE-03 only detects
   that it is stale.
 
-## 3. Baseline results (2026-10-12)
+## 3. Results (baseline 2026-10-12, re-run 2026-10-14)
 
-Versions: ubc / ubCode 0.35.0, `sphinx-test-reports==2.0.0` (released
+Baseline versions: ubc / ubCode 0.35.0, `sphinx-test-reports==2.0.0` (released
 2026-09-11; `ub-test-reports` 1.0.0 is on PyPI but was not tested),
 `sphinx==8.2.3`, `sphinx-needs==8.5.0`, CMake / CTest 4.4.2. Base commit
 `main@9546209`.
 
-| # | Experiment (§4.4) | Baseline result | Verdict |
-|---|---|---|---|
-| E1 | Converter on today's `junit.xml` | 2 needs (`test_result__test_vcu__test_vcu_woszt`, …), **one per executable**, no link to `TEST_*` | needs per-case CTest |
-| E2 | CTest, one `add_test` per case with `LABELS` | one `<testcase name="TEST_A">` per case with its own `status`/`time`/`<failure>`; the **only** property CTest writes is `cmake_labels` | ✓ |
-| E3 | `--link-property cmake_labels=results_for`, label = test id | `results_for: ['TEST_A']` | ✓ |
-| E4 | CTest `DISABLED` case (`status="disabled"`) | `result: passed` | ✗ STR-01 |
-| E5 | `[test_reports.case] prefix = "TRES_"`, `deterministic_case_ids = true` | ignored by the converter; IDs `<need_type>__<class>__<name>_<hash5 lowercase>`, outside `id_regex` | ✗ STR-02 |
-| E6 | `[[needs.external_needs]]` + `id_prefix = "TRES_"` | imported in ubc **and** Sphinx; links resolve; Sphinx fills `results_for_back`; `id_regex` not applied to external needs in either tool; undeclared STR fields → one warning per source | ✓ with warnings |
-| E7 | `.. test-file::` directive | **ubc: `warning[block.directive_unknown] Unknown directive: 'test-file'`**, no needs. Sphinx: `NeedsApiConfigException: test_result already exists as need type` when the type is in `[[needs.types]]` and in `[test_reports.case]` | ✗ UB-17, STR-03 |
-| E8 | `.. needimport::` of the converter output | ubc imports all needs, Sphinx refuses them (`id_regex`) → silent parity break | ✗ UB-16 |
-| E9 | E6 with the STR fields declared in `[needs.fields]` | **ubc drops the whole source** (`needs_schema…default … null; the source contributed no needs`); Sphinx is fine. Stripping `needs_schema` fixes ubc | ✗ UB-15 |
-| E10 | Field values (E6 + workaround) | `result`, `time`, `results_for`; no product, no run timestamp, no `chain_reqs` | metamodel change needed |
-| E11 | `test-file` inside `.. if:: var.meta.product == …` | not reachable (E7) | open |
-| E12 | Directive links via `property_link_types` | not reachable (E7) | open |
-| E13 | ubc ↔ Sphinx ID parity for directive-created cases | not reachable (E7) | open |
-| E14 | ubCode HTML / IDE rendering of STR needs | not reachable (E7) | open |
+Re-run 2026-10-14 versions: ubc / ubCode 0.37.0, `sphinx-test-reports==3.0.0`,
+`ub-test-reports==1.1.0` (both released 2026-10-14), `sphinx==8.2.3`,
+`sphinx-needs==9.0.0`, `sphinx-mounts==0.3.0`, CMake / CTest 4.4.2. Base commit
+`main@54e862c`. The IDE part of E14 (hover, needs explorer) was not checked; it
+needs an interactive VS Code session.
+
+| # | Experiment (§4.4) | Baseline result | Verdict | Re-run 2026-10-14 | Verdict |
+|---|---|---|---|---|---|
+| E1 | Converter on today's `junit.xml` | 2 needs (`test_result__test_vcu__test_vcu_woszt`, …), **one per executable**, no link to `TEST_*` | needs per-case CTest | unchanged (`testcase__test_eng__test_eng_ijxud`, …); the converter also warns once per file that no `<testcase>` has a `line` attribute (CTest never writes one) | needs per-case CTest |
+| E2 | CTest, one `add_test` per case with `LABELS` | one `<testcase name="TEST_A">` per case with its own `status`/`time`/`<failure>`; the **only** property CTest writes is `cmake_labels` | ✓ | unchanged | ✓ |
+| E3 | `--link-property cmake_labels=results_for`, label = test id | `results_for: ['TEST_A']` | ✓ | unchanged; also from `[test_reports.build.needs.link_properties]` | ✓ |
+| E4 | CTest `DISABLED` case (`status="disabled"`) | `result: passed` | ✗ STR-01 | unchanged, in the converter **and** the directives (one parser): only googletest's `status="notrun"` / `result="suppressed"` count as disabled | ✗ STR-01 |
+| E5 | `[test_reports.case] prefix = "TRES_"`, `deterministic_case_ids = true` | ignored by the converter; IDs `<need_type>__<class>__<name>_<hash5 lowercase>`, outside `id_regex` | ✗ STR-02 | unchanged (`test_result__TEST_A__TEST_A_isagy`). New: `[test_reports.case]` needs all six keys (`directive`, `type`, `name`, `prefix`, `color`, `style`), else the converter aborts; `deterministic_case_ids` is a key of `[test_reports]` itself | ✗ STR-02 |
+| E6 | `[[needs.external_needs]]` + `id_prefix = "TRES_"` | imported in ubc **and** Sphinx; links resolve; Sphinx fills `results_for_back`; `id_regex` not applied to external needs in either tool; undeclared STR fields → one warning per source | ✓ with warnings | unchanged | ✓ with warnings |
+| E7 | `.. test-file::` directive | **ubc: `warning[block.directive_unknown] Unknown directive: 'test-file'`**, no needs. Sphinx: `NeedsApiConfigException: test_result already exists as need type` when the type is in `[[needs.types]]` and in `[test_reports.case]` | ✗ UB-18, STR-03 | ubc knows `test-file` / `test-results` and reads `[test_reports]`; ubc and Sphinx create the same 8 needs (file, suite, 3 cases) with the same IDs and fields. STR-03 unchanged: Sphinx aborts when the type is declared twice | ✓ (UB-18 fixed), STR-03 open |
+| E7b | Where `test_result` is declared | — | — | ubc accepts both. Sphinx needs it **only** in `[test_reports.case]` (STR-03). Pharaoh `config-validate` / `doctor` then report `undeclared_type` (PH-12). Stage counts and gaps are the same either way | ✗ PH-12 vs STR-03; workaround: `doctor -c 'needs.types = [...]'` with the full list (checked on `../test-reports-example`) |
+| E8 | `.. needimport::` of the converter output | ubc imports all needs, Sphinx refuses them (`id_regex`) → silent parity break | ✗ UB-17 | both import all needs: Sphinx-Needs 9.0.0 no longer checks `id_regex` for imported / external needs (`api/need.py`, by design). Parity restored; no tool checks the IDs any more | ✓ (UB-17 resolved) |
+| E9 | E6 with the STR fields declared in `[needs.fields]` | **ubc drops the whole source** (`needs_schema…default … null; the source contributed no needs`); Sphinx is fine. Stripping `needs_schema` fixes ubc | ✗ UB-16 | with the repository style (`default = ""`, `nullable = false`) unchanged: ubc drops all 3 needs, Sphinx imports them. With `nullable = true` (no default) both import all needs, warning-free in ubc | ✗ UB-16 (lighter workaround: `nullable = true`) |
+| E10 | Field values (E6 + workaround) | `result`, `time`, `results_for`; no product, no run timestamp, no `chain_reqs` | metamodel change needed | directive route: identical in both tools: `result`, `time`, `results_for`, `case`, `case_name`, `classname`, `suite` (`(empty)` for CTest), `file`, and a generic `links` to the file and suite needs. No product, run timestamp or `chain_reqs` | metamodel change needed |
+| E11 | `test-file` inside `.. if:: var.meta.product == …` | not reachable (E7) | open | one `.. if::` block per product, each with its own `test-file` `:id:` and `:file: <p>/junit.xml` under `rootdir`: only the active product's needs exist, in both tools. A missing file of an inactive product is ignored; a missing file of the active product gives a warning in both (`needs.test_report_missing` / `test_reports.report_missing`) and the same 3 remaining needs | ✓ |
+| E12 | Directive links via `property_link_types` | not reachable (E7) | open | `[test_reports] property_link_types = { cmake_labels = "results_for" }` → `results_for: ['TEST_A']` in both tools | ✓ |
+| E13 | ubc ↔ Sphinx ID parity for directive-created cases | not reachable (E7) | open | identical IDs `<test-file id>_<suite hash3>_<case hash5>` (upper case, e.g. `TFILE_P1_48B_5F1F7`), matching `id_regex`; unchanged over two CTest runs with different timings. The `[test_reports.case]` prefix is not used for cases; a `test-file` `:id:` such as `TRES_<PRODUCT>` gives the `TRES_` prefix | ✓ |
+| E14 | ubCode HTML / IDE rendering of STR needs | not reachable (E7) | open | the case needs, the `test-results` table and a `needtable` render the same in ubc HTML and Sphinx HTML; no absolute local path in either HTML. Difference: the `test-results` summary shows `Errors: -1` in Sphinx and `Errors: 0` in ubc (CTest writes no `errors` attribute; STR-04). The ubc `needs.json` has absolute paths in `__source__.path` / `__source__.report` (known, UB-01). IDE not checked | ✓ HTML, IDE open |
+| E15 | Schema rules on directive-created needs | — | — | `is_external == false`; the repository rules fire identically in ubc and Sphinx: `id-prefix-test_result` fails for `TFILE_…` IDs and passes for `TRES_…`; `trace-test_result-results_for` fails for unlinked cases in both. `field-test_result-run-evidence` must be rewritten for the STR fields (`result`, `time`) | ✓ |
+| E16 | Workflow stage `test_results` | — | — | `agent status` counts the directive-created needs. But an unlinked case is not a gap: STR's generic `links` to the file / suite needs counts, and the stage reads `done` (PH-13; the schema rule still catches it). `config-validate` / `doctor` fail when the type is not in `[[needs.types]]` (PH-12) | ✗ PH-12, PH-13 |
 
 **Baseline conclusion:** no route meets rules 1 and 3 without workarounds.
 
-- Directives (route B): blocked by **UB-17** in ubc.
-- `needimport` (route C): blocked by **UB-16**.
-- Converter + external needs (route D): works only with two workarounds (UB-15,
+- Directives (route B): blocked by **UB-18** in ubc.
+- `needimport` (route C): blocked by **UB-17**.
+- Converter + external needs (route D): works only with two workarounds (UB-16,
   STR-02) plus a latent wrong result (STR-01).
 
 Keep the importer.
+
+**Re-run conclusion (2026-10-14):** route B now meets rules 1 and 3 for the
+documentation build (E7, E11–E15 ✓), so §5 says: write the route B migration plan
+and decide with the user. Things the decision has to cover:
+
+- **PH-12 vs STR-03:** `test_result` declared only in `[test_reports.case]` keeps
+  Sphinx and ubc running but fails `ubc agent config-validate` / `doctor`. Declared
+  in both, Sphinx aborts. Workaround until one is fixed: the CI step
+  (`.github/workflows/ci.yml:72`) runs `ubc agent doctor -p . -c 'needs.types = [...]'`
+  with every type repeated, `test_result` included (a second copy of the type list).
+- **PH-13:** the workflow gate does not enforce `results_for` on STR cases; the
+  schema rule `trace-test_result-results_for` does (both tools), so keep it.
+- **STR-01:** latent; there are no disabled tests today. A CTest `DISABLED` case
+  would read `passed`.
+- **IDs:** `test-file` `:id: TRES_<PRODUCT>`; case IDs are hashes (no readable test
+  id in the result ID), the test id is in `results_for` and `title`.
+- §6.1 (one CTest test per case) is still the prerequisite.
+
+Route D stays blocked (STR-02, UB-16). Route C (`needimport`) now works in both
+tools but is still worse than B (§5).
 
 ## 4. Re-run procedure
 
@@ -144,6 +191,8 @@ cp build/site/*/junit.xml "$S/in/"     # read-only copies; build/ may be missing
 UBC="$(ls -d ~/.vscode/extensions/useblocks.ubcode-*/server/cli/ubc | sort -V | tail -1)"
 ```
 
+Always call `"$UBC"`, never a bare `ubc`: the `ubc` on `PATH`
+(`~/.local/bin/ubc`) can be an older release (0.33.0 on 2026-10-14).
 Do not use `git worktree`, because it writes to `.git`. Do not run the repository's
 `tools/*.sh`, because they write to `build/active/` and `build/site/`.
 
@@ -151,12 +200,19 @@ Do not use `git worktree`, because it writes to `.git`. Do not run the repositor
 
 ```bash
 python3.12 -m venv "$S/venv"
-"$S/venv/bin/pip" install "sphinx==8.2.3" "sphinx-needs==<pin from requirements.txt>" \
-    "sphinx-mounts==0.2.0" "sphinx-test-reports[sphinx]==<newest>"   # + "ub-test-reports==<newest>" if released
+"$S/venv/bin/pip" install "sphinx==<pin>" "sphinx-needs==<pin>" "sphinx-mounts==<pin>" \
+    "sphinx-test-reports==<newest>" "ub-test-reports==<newest>"   # pins from requirements.txt
 "$UBC" --version
 ```
 
-Record every version in the result table (§4.5).
+Record every version in the result table (§4.5). Since STR 3.0 (2026-10-14):
+
+- `sphinx-test-reports` has no `[sphinx]` extra any more (only `docs`, `pytest`).
+- The Sphinx extension is `sphinx_test_reports` (`sphinxcontrib.test_reports`
+  is still shipped as a compatibility package; use the new name).
+- The `test-reports` converter CLI is in `ub-test-reports`
+  (`ub_test_reports.cli`), which `sphinx-test-reports` 3.0 requires (`>=1.1.0,<2`).
+  Pin it explicitly anyway.
 
 ### 4.3 Minimal projects
 
@@ -167,9 +223,21 @@ Record every version in the result table (§4.5).
 - **Docs project** `$S/mini/<route>`: copy the relevant parts of the repository
   `ubproject.toml`, namely `[needs] id_required`, **the same `id_regex`**,
   `builder_filter = ""`, types `test` + `test_result`, link `results_for`, and a
-  `[needs.variants]`/`variant_data_file` pair for E11. Add `docs/conf.py` with
+  `[needs.variants]`/`variant_data_file` pair for E11, plus a `[test_reports]`
+  table with `rootdir`. Add `docs/conf.py` with
+  `extensions = ["sphinx_needs", "sphinx_test_reports"]`,
   `needs_from_toml = "../ubproject.toml"`, `needs_build_json = True`, and an
-  `index.rst` with `.. test::` needs `TEST_A`, `TEST_B`. Use one project per route:
+  `index.rst` with `.. test::` needs `TEST_A`, `TEST_B`.
+- Directive rules ubc 0.37.0 enforces (smoke test): `:auto_cases:` needs
+  `:auto_suites:` on `test-file` (`needs.test_report_option_invalid`), and a
+  `:file:` outside `[test_reports] rootdir` is not read
+  (`needs.test_report_path_outside_root`). Keep the JUnit files under `rootdir`.
+- Found on 2026-10-14: `[test_reports.case]` needs all six keys (`directive`, `type`,
+  `name`, `prefix`, `color`, `style`); in the `dir` project declare `test_result`
+  **only** there (STR-03); for E16 add a `[workflow]` with stages `tests` and
+  `test_results` (trace `results_for`, `up = "test"`) copied from the repository.
+- Don't name a helper script after a standard module (`html.py`, `json.py`):
+  Python imports it instead of the module. Use one project per route:
   `ext` (E6/E9), `imp` (E8) and `dir` (E7, E11–E14).
 - In each project run `"$UBC" check`, `"$UBC" build needs -o ubc.json`,
   `"$UBC" build html -o ubc_html`, and
@@ -187,7 +255,7 @@ important ones:
 | E7b | `test_result` declared once: in `[[needs.types]]` **or** `[test_reports.case]`. Which one does ubc need? Does STR-03 still abort Sphinx? |
 | E11 | `test-file` inside `.. if:: var.meta.product == '<p>'` and with a path that varies per product. Options: one block per product pointing to `build/site/<p>/junit.xml`, or one file `build/active/junit.xml`, which needs a copy step in `build_product.sh`. Check `tr_rootdir` / `rootdir` relative to the repo root in ubc and Sphinx |
 | E12 | `property_link_types = { cmake_labels = "results_for" }` makes `results_for` → `TEST_A` in **both** tools |
-| E13 | Identical IDs in ubc and Sphinx (deterministic or hashed); IDs match `id_regex` / `TRES_`; IDs are stable over two CTest runs with different timings |
+| E13 | Identical IDs in ubc and Sphinx (deterministic or hashed); IDs match `id_regex` / `TRES_`; IDs are stable over two CTest runs with different timings. ubc 0.37.0 derives case IDs from the `test-file` `:id:` (e.g. `TFILE_1_48B_7F240`, upper case): check them against the repository `id_regex` and re-check STR-02 (E5) for the converter |
 | E14 | ubCode HTML and the IDE (hover, needs explorer) show the results; the `test-report` / `test-results` tables render in ubc HTML; no absolute local paths in the output (compare UB-14) |
 | E15 | Schema rules: are directive-created needs `is_external == false`? Do the rules `trace-test_result-results_for` and `field-test_result-run-evidence` fire correctly, or do they need STR field names? |
 | E16 | Workflow: `ubc agent gaps` / stage `test_results` counts the new needs (PH-06) |
@@ -210,9 +278,13 @@ git status --short      # must show no changes made by this analysis (other agen
 | Outcome of the re-run | Route | Follow-up |
 |---|---|---|
 | E7 + E11–E15 ✓ (ubc supports the STR directives, parity, product gating, links) | **B: directives** | Write the migration plan (§6.2 B) and start a decision with the user |
-| E7 ✗, but STR-01, STR-02 and UB-15 fixed (E4, E5, E9 ✓ without workarounds) | **D: converter + `[[needs.external_needs]]`** | Write the migration plan (§6.2 D) |
+| E7 ✗, but STR-01, STR-02 and UB-16 fixed (E4, E5, E9 ✓ without workarounds) | **D: converter + `[[needs.external_needs]]`** | Write the migration plan (§6.2 D) |
 | E7 ✗ and the D blockers still open | — | Keep the importer; update §3 and plan 99; wait for the next trigger |
-| Only UB-16 fixed | C (`needimport`) is still worse than D (it needs a committed file or a docs-time path) | No action |
+| Only UB-17 fixed | C (`needimport`) is still worse than D (it needs a committed file or a docs-time path) | No action |
+
+**2026-10-14:** first row reached (route B), with the caveats in §3 "Re-run
+conclusion". The migration plan is not written yet; it waits for the user's
+decision (§6.3).
 
 Whichever route is chosen, §6.1 is a prerequisite.
 
@@ -270,59 +342,25 @@ user, not part of this plan's trigger.
 | D4 | `chain_reqs`: drop and add a view, or keep | drop, add a view |
 | D5 | Package: `sphinx-test-reports` or `ub-test-reports` (3.0 split) | the one the chosen route needs; pin exactly |
 
-## 7. Tool findings for plan 99 (baseline, to transfer)
+## 7. Tool findings (transferred to plan 99 on 2026-10-14)
 
-Reproduced in a scratch copy based on `main@9546209`. Before transferring them to
-plan 99, reproduce each one on a pushed commit (rule 4). On every re-run, mark the
-entries that are fixed (§4.5).
+The full entries (input, wrong output, workaround, two solutions) are in
+[99-tool-bugs.md](99-tool-bugs.md). The provisional plan-110 ids UB-15/16/17 of the
+baseline became UB-16/17/18, because plan 99 already had a UB-15. On every
+re-run, update the status column here and the entry in plan 99.
 
-### STR-01 CTest `status="disabled"` reported as passed
-- **Tool:** sphinx-test-reports 2.0.0 (`junitparser.py:204-212`)
-- **Input:** CTest `--output-junit` with `set_tests_properties(T PROPERTIES DISABLED TRUE)` → `<testcase … status="disabled">` without a result child.
-- **Wrong output:** `result: passed`. Expected `disabled` / `skipped`.
-- **Workaround:** none needed yet (no disabled tests).
-- **Solution A:** treat every `status` other than `run` (`disabled`, `notrun`) as not passed.
-- **Solution B:** a CTest dialect (as for googletest), detected by `cmake_labels` / `<testsuite name="(empty)">`.
-
-### STR-02 Converter ignores the configured prefix; IDs fail a strict `id_regex`
-- **Tool:** sphinx-test-reports 2.0.0 (`needs_export.py:214`, `identity.py`)
-- **Input:** `[test_reports.case] prefix = "TRES_"`, `deterministic_case_ids = true`, `test-reports build needs …`.
-- **Wrong output:** `test_result__TEST_A__TEST_A_isagy`. The prefix is unused, and the lowercase hash conflicts with `id_regex = "^[A-Z]+_[A-Z][A-Z0-9_]*$"`. External needs are not regex-checked, so this only shows with `needimport`.
-- **Workaround:** `[[needs.external_needs]] id_prefix`.
-- **Solution A:** the converter uses `[test_reports.case].prefix`, with an option for upper-case IDs.
-- **Solution B:** an ID template option (e.g. `{prefix}{name}`) for cases whose name is already unique.
-
-### STR-03 Type declared in `[[needs.types]]` and `[test_reports.case]` aborts Sphinx
-- **Tool:** sphinx-test-reports 2.0.0 with sphinx-needs 8.5.0 `needs_from_toml`
-- **Input:** one `ubproject.toml` with `[[needs.types]] directive = "test_result"` and `[test_reports.case] type = "test_result"`.
-- **Wrong output:** `NeedsApiConfigException: test_result already exists as need type`, and the build aborts. Expected: reuse the declared type, or a typed `test_reports.*` warning.
-- **Workaround:** declare the type once. ubc needs it in `[[needs.types]]`.
-- **Solution A:** skip `add_need_type` when the type already exists with compatible settings.
-- **Solution B:** `[test_reports.case]` references an existing `[[needs.types]]` entry.
-
-### UB-15 External `needs.json` with `needs_schema` `default: null` dropped entirely
-- **Tool:** ubc 0.35.0
-- **Input:** `[[needs.external_needs]]` on a `test-reports build needs` output, with the STR fields declared in `[needs.fields]`.
-- **Wrong output:** `needs_schema…default could not be read: Value cannot be converted to string: null; the source contributed no needs`; 0 of 3 needs imported. Sphinx imports all 3.
-- **Workaround:** strip `needs_schema` from the file before import.
-- **Solution A:** accept `null` as "no default" (it is valid JSON Schema).
-- **Solution B:** on a schema mismatch, ignore the `needs_schema` block, keep the needs, and warn.
-
-### UB-16 `needimport`: ubc skips `id_regex` and the unknown-key warning
-- **Tool:** ubc 0.35.0
-- **Input:** `.. needimport:: tr.needs.json` with `:id_prefix: TRES_`, IDs `TRES_test_result__…`, `id_regex = "^[A-Z]+_[A-Z][A-Z0-9_]*$"`.
-- **Wrong output:** ubc imports all 3 needs and reports "No errors found". Sphinx refuses all 3 (`does not match configured regex`) and warns about unknown keys. The result is a silent ubc ↔ Sphinx difference.
-- **Workaround:** do not use `needimport` for test results.
-- **Solution A:** apply `id_regex` to imported needs, as Sphinx does.
-- **Solution B:** at least warn, as ubc already does for external sources (`needs.external`).
-
-### UB-17 (gap) Sphinx-Test-Reports directives unknown to ubc
-- **Tool:** ubc 0.35.0 / ubCode
-- **Input:** `.. test-file::` in an rst file.
-- **Wrong output:** `warning[block.directive_unknown] Unknown directive: 'test-file'`; no test needs in ubc, the IDE or the ubCode HTML.
-- **Workaround:** keep `tools/import_test_results.py`.
-- **Solution A:** ubc supports the STR directives and reads `[test_reports]` from `ubproject.toml`.
-- **Solution B:** ubc runs the STR conversion itself for a `[[needs.external_needs]]` entry that points at a JUnit file.
+| ID | Tool | Summary | Baseline 2026-10-12 | Re-run 2026-10-14 |
+|---|---|---|---|---|
+| STR-01 | Sphinx-Test-Reports | CTest `status="disabled"` reported as `passed` | open | open (converter and directives) |
+| STR-02 | Sphinx-Test-Reports | converter ignores the case prefix; lower-case hash ids | open | open |
+| STR-03 | Sphinx-Test-Reports | type in `[[needs.types]]` and `[test_reports.case]` aborts Sphinx | open | open |
+| STR-04 | Sphinx-Test-Reports + ubc | `test-results` summary `Errors: -1` (Sphinx) vs `0` (ubc) | — | new |
+| UB-16 | ubc | external source dropped: `needs_schema` `default: null` vs non-nullable field | open | open; workaround `nullable = true` |
+| UB-17 | ubc + Sphinx-Needs | `needimport` `id_regex` checked by Sphinx only | open | resolved (Sphinx-Needs 9.0.0 skips imports too) |
+| UB-18 | ubc | STR directives unknown | open | fixed in 0.37.0 |
+| UB-19 | ubc + Sphinx-Needs | local need outside `id_regex`: ubc keeps it, Sphinx drops it | — | new |
+| PH-12 | Pharaoh | `config-validate` / `doctor`: `[test_reports]` type counts as undeclared | — | new |
+| PH-13 | Pharaoh | outgoing trace obligation met by any link (STR's generic `links`) | — | new |
 
 ## 8. Risks for a later migration
 
@@ -335,6 +373,17 @@ entries that are fixed (§4.5).
 - **External needs** (route D) are outside the `is_external == false` rules and the
   Pharaoh stage counts (PH-06). UB-07: ubc does not fill back-links on external
   needs.
-- **STR 3.0** renames modules (`sphinxcontrib.test_reports` → `sphinx_test_reports`
-  / `ub_test_reports`) and moves the converter. Pin exactly and re-run §4 on every
+- **STR 3.0** renamed the modules (`sphinxcontrib.test_reports` → `sphinx_test_reports`
+  / `ub_test_reports`; the old name works with a deprecation warning until 4.0) and
+  moved the converter to `ub-test-reports`. Pin both exactly and re-run §4 on every
   upgrade.
+- **Hashed case ids** (route B, E13): `TRES_<PRODUCT>_<suite hash>_<case hash>`. They
+  are stable while the suite and case names stay the same; renaming a test or
+  CTest's suite name `(empty)` changing gives new ids. The readable test id is in
+  `results_for` and `title`.
+- **Generic `links` on STR cases** (E10/E16): every case links to its file and suite
+  need through `links`. This hides missing `results_for` from Pharaoh (PH-13); the
+  schema rule `trace-test_result-results_for` must stay.
+- **Per-product files** (E11): one `.. if::` block per product needs a JUnit file
+  under `[test_reports] rootdir` per product; a product not built yet is fine, the
+  active product's missing file is a warning (fails `-W` / `--deny warning`).
