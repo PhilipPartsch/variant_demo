@@ -11,13 +11,12 @@
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=27fed22d" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=803738c0" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/needstable.css?v=7b67799e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=c1bc121d" />
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
@@ -25,8 +24,6 @@
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
     <script src="../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
-    <script src="../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
-    <script src="../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
     <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -54,7 +51,7 @@
 <p>Implementation and test needs from the C sources of the Vehicle Control Unit (VCU)
 (<code class="docutils literal notranslate"><span class="pre">src/vcu</span></code>, <code class="docutils literal notranslate"><span class="pre">tests/vcu</span></code>). Markers in inactive <code class="docutils literal notranslate"><span class="pre">#if</span> <span class="pre">CONFIG_*</span></code> branches of the
 configured product are dropped.</p>
-<div class="need_container docutils container" id="SNCB-f8bb7fbc">
+<div class="need_container docutils container" id="SNCB-a312bfb6">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_impl docutils align-default" id="IMPL_VCU_HV_SHUTDOWN">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -64,7 +61,7 @@ configured product are dropped.</p>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_local-url"><span class="needs_label">local-url: </span><span class="needs_data"><a class="reference external" href="../../vcu/hv_shutdown.html#L-6">../../vcu/hv_shutdown#L6</a></span></span></div>
-<div class="line"><span class="needs_remote-url"><span class="needs_label">remote-url: </span><span class="needs_data"><a class="reference external" href="https://github.com/PhilipPartsch/variant_demo/blob/c3982b413221428bc95fb88539f27d6ee0fee114/src/vcu/hv_shutdown.c#L6">src/vcu/hv_shutdown.c#L6</a></span></span></div>
+<div class="line"><span class="needs_remote-url"><span class="needs_label">remote-url: </span><span class="needs_data"><a class="reference external" href="https://github.com/PhilipPartsch/variant_demo/blob/eb1c29a39d949148e8210096041589c0c30ca932/src/vcu/hv_shutdown.c#L6">src/vcu/hv_shutdown.c#L6</a></span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">implements: <span class="implements"><span><a class="reference internal" href="software_requirements.html#SWREQ_VCU_HV_SHUTDOWN" title="IMPL_VCU_HV_SHUTDOWN">SWREQ_VCU_HV_SHUTDOWN</a></span></span></div>
 </span></div>
@@ -76,7 +73,7 @@ configured product are dropped.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-fe90532b">
+<div class="need_container docutils container" id="SNCB-73a2cb95">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_impl docutils align-default" id="IMPL_VCU_POWER_LIMIT_APPLY">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -86,7 +83,7 @@ configured product are dropped.</p>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_local-url"><span class="needs_label">local-url: </span><span class="needs_data"><a class="reference external" href="../../vcu/power_limit.html#L-7">../../vcu/power_limit#L7</a></span></span></div>
-<div class="line"><span class="needs_remote-url"><span class="needs_label">remote-url: </span><span class="needs_data"><a class="reference external" href="https://github.com/PhilipPartsch/variant_demo/blob/c3982b413221428bc95fb88539f27d6ee0fee114/src/vcu/power_limit.c#L7">src/vcu/power_limit.c#L7</a></span></span></div>
+<div class="line"><span class="needs_remote-url"><span class="needs_label">remote-url: </span><span class="needs_data"><a class="reference external" href="https://github.com/PhilipPartsch/variant_demo/blob/eb1c29a39d949148e8210096041589c0c30ca932/src/vcu/power_limit.c#L7">src/vcu/power_limit.c#L7</a></span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">implements: <span class="implements"><span><a class="reference internal" href="software_requirements.html#SWREQ_VCU_POWER_LIMIT_APPLY" title="IMPL_VCU_POWER_LIMIT_APPLY">SWREQ_VCU_POWER_LIMIT_APPLY</a></span></span></div>
 </span></div>
@@ -98,7 +95,7 @@ configured product are dropped.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-801dd8df">
+<div class="need_container docutils container" id="SNCB-62b719b5">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_impl docutils align-default" id="IMPL_VCU_ENERGY_DISPLAY">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -108,7 +105,7 @@ configured product are dropped.</p>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_local-url"><span class="needs_label">local-url: </span><span class="needs_data"><a class="reference external" href="../../vcu/energy_display.html#L-8">../../vcu/energy_display#L8</a></span></span></div>
-<div class="line"><span class="needs_remote-url"><span class="needs_label">remote-url: </span><span class="needs_data"><a class="reference external" href="https://github.com/PhilipPartsch/variant_demo/blob/c3982b413221428bc95fb88539f27d6ee0fee114/src/vcu/energy_display.c#L8">src/vcu/energy_display.c#L8</a></span></span></div>
+<div class="line"><span class="needs_remote-url"><span class="needs_label">remote-url: </span><span class="needs_data"><a class="reference external" href="https://github.com/PhilipPartsch/variant_demo/blob/eb1c29a39d949148e8210096041589c0c30ca932/src/vcu/energy_display.c#L8">src/vcu/energy_display.c#L8</a></span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">implements: <span class="implements"><span><a class="reference internal" href="software_requirements.html#SWREQ_VCU_ENERGY_DISPLAY" title="IMPL_VCU_ENERGY_DISPLAY">SWREQ_VCU_ENERGY_DISPLAY</a></span></span></div>
 </span></div>
@@ -120,7 +117,7 @@ configured product are dropped.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-c2177023">
+<div class="need_container docutils container" id="SNCB-0af5cbc2">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_test docutils align-default" id="TEST_VCU_ENERGY_DISPLAY">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -130,7 +127,7 @@ configured product are dropped.</p>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_local-url"><span class="needs_label">local-url: </span><span class="needs_data"><a class="reference external" href="../../vcu/test_vcu.html#L-15">../../vcu/test_vcu#L15</a></span></span></div>
-<div class="line"><span class="needs_remote-url"><span class="needs_label">remote-url: </span><span class="needs_data"><a class="reference external" href="https://github.com/PhilipPartsch/variant_demo/blob/c3982b413221428bc95fb88539f27d6ee0fee114/tests/vcu/test_vcu.c#L15">tests/vcu/test_vcu.c#L15</a></span></span></div>
+<div class="line"><span class="needs_remote-url"><span class="needs_label">remote-url: </span><span class="needs_data"><a class="reference external" href="https://github.com/PhilipPartsch/variant_demo/blob/eb1c29a39d949148e8210096041589c0c30ca932/tests/vcu/test_vcu.c#L15">tests/vcu/test_vcu.c#L15</a></span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">verifies: <span class="verifies"><span><a class="reference internal" href="software_requirements.html#SWREQ_VCU_ENERGY_DISPLAY" title="TEST_VCU_ENERGY_DISPLAY">SWREQ_VCU_ENERGY_DISPLAY</a></span></span></div>
 <div class="line">results: <span class="results_for"><span><a class="reference internal" href="../../_global/test_results.html#TRES_VCU_ENERGY_DISPLAY__TRUCK_BEV_NMC_EU" title="TEST_VCU_ENERGY_DISPLAY">TRES_VCU_ENERGY_DISPLAY__TRUCK_BEV_NMC_EU</a></span></span></div>
@@ -143,7 +140,7 @@ configured product are dropped.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-14117160">
+<div class="need_container docutils container" id="SNCB-d6df36b4">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_test docutils align-default" id="TEST_VCU_POWER_LIMIT_APPLY">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -153,7 +150,7 @@ configured product are dropped.</p>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_local-url"><span class="needs_label">local-url: </span><span class="needs_data"><a class="reference external" href="../../vcu/test_vcu.html#L-25">../../vcu/test_vcu#L25</a></span></span></div>
-<div class="line"><span class="needs_remote-url"><span class="needs_label">remote-url: </span><span class="needs_data"><a class="reference external" href="https://github.com/PhilipPartsch/variant_demo/blob/c3982b413221428bc95fb88539f27d6ee0fee114/tests/vcu/test_vcu.c#L25">tests/vcu/test_vcu.c#L25</a></span></span></div>
+<div class="line"><span class="needs_remote-url"><span class="needs_label">remote-url: </span><span class="needs_data"><a class="reference external" href="https://github.com/PhilipPartsch/variant_demo/blob/eb1c29a39d949148e8210096041589c0c30ca932/tests/vcu/test_vcu.c#L25">tests/vcu/test_vcu.c#L25</a></span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">verifies: <span class="verifies"><span><a class="reference internal" href="software_requirements.html#SWREQ_VCU_POWER_LIMIT_APPLY" title="TEST_VCU_POWER_LIMIT_APPLY">SWREQ_VCU_POWER_LIMIT_APPLY</a></span></span></div>
 <div class="line">results: <span class="results_for"><span><a class="reference internal" href="../../_global/test_results.html#TRES_VCU_POWER_LIMIT_APPLY__TRUCK_BEV_NMC_EU" title="TEST_VCU_POWER_LIMIT_APPLY">TRES_VCU_POWER_LIMIT_APPLY__TRUCK_BEV_NMC_EU</a></span></span></div>
@@ -166,7 +163,7 @@ configured product are dropped.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-245eac27">
+<div class="need_container docutils container" id="SNCB-a025c550">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_test docutils align-default" id="TEST_VCU_HV_SHUTDOWN">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -176,7 +173,7 @@ configured product are dropped.</p>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_local-url"><span class="needs_label">local-url: </span><span class="needs_data"><a class="reference external" href="../../vcu/test_vcu.html#L-38">../../vcu/test_vcu#L38</a></span></span></div>
-<div class="line"><span class="needs_remote-url"><span class="needs_label">remote-url: </span><span class="needs_data"><a class="reference external" href="https://github.com/PhilipPartsch/variant_demo/blob/c3982b413221428bc95fb88539f27d6ee0fee114/tests/vcu/test_vcu.c#L38">tests/vcu/test_vcu.c#L38</a></span></span></div>
+<div class="line"><span class="needs_remote-url"><span class="needs_label">remote-url: </span><span class="needs_data"><a class="reference external" href="https://github.com/PhilipPartsch/variant_demo/blob/eb1c29a39d949148e8210096041589c0c30ca932/tests/vcu/test_vcu.c#L38">tests/vcu/test_vcu.c#L38</a></span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">verifies: <span class="verifies"><span><a class="reference internal" href="software_requirements.html#SWREQ_VCU_HV_SHUTDOWN" title="TEST_VCU_HV_SHUTDOWN">SWREQ_VCU_HV_SHUTDOWN</a></span></span></div>
 <div class="line">results: <span class="results_for"><span><a class="reference internal" href="../../_global/test_results.html#TRES_VCU_HV_SHUTDOWN__TRUCK_BEV_NMC_EU" title="TEST_VCU_HV_SHUTDOWN">TRES_VCU_HV_SHUTDOWN__TRUCK_BEV_NMC_EU</a></span></span></div>

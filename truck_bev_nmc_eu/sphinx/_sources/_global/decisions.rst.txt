@@ -41,8 +41,10 @@ rationale.
       combination in Kconfig.
 
       **Consequences:** The high-power charging interface is selected in the
-      order MCS, pantograph, none; a product with both features gets the MCS
-      interface and no pantograph requirement is satisfied.
+      order MCS, pantograph, none: the order of the ``when`` branches of
+      ARCH_CHG_INLET, where the first true branch wins. A product with both
+      features gets the MCS interface and no pantograph requirement is
+      satisfied.
 
       **Rationale:** MCS serves long-haul trucks, the main BEV use case; the
       order keeps the Kconfig model open for a future pantograph truck.

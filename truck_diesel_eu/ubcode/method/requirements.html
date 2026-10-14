@@ -145,7 +145,7 @@ reviewed against criteria files in <code>metamodel/quality/</code>.</p>
           <tr>
             <td><p>User story</p>
 </td>
-            <td><p>&quot;As a &lt;role&gt;, I …&quot; — one capability a user
+            <td><p>“As a &lt;role&gt;, I …” — one capability a user
 can observe; no implementation terms</p>
 </td>
             <td><p>— (root of the V)</p>
@@ -163,7 +163,7 @@ condition); product values in <code>value</code></p>
           <tr>
             <td><p>Software req</p>
 </td>
-            <td><p>one <em>shall</em> for one subsystem&#x27;s software</p>
+            <td><p>one <em>shall</em> for one subsystem’s software</p>
 </td>
             <td><p>exactly one architecture element</p>
 </td>
@@ -190,8 +190,9 @@ variant folder (<code>region/eu</code>, <code>region/na</code>).</p>
       </li>
       <li>
         <p><strong>Alternatives</strong> (same requirement, different content per product) share one
-id in complementary <code>if</code> blocks — e.g. <code>REQ_ENERGY_SOURCE</code>: state of charge
-for battery-electric products, fuel level for diesel.</p>
+id in the branches of a <code>choose</code> — the first <code>when</code> whose condition holds
+is used, else the <code>otherwise</code>. E.g. <code>REQ_ENERGY_SOURCE</code>: state of charge
+for battery-electric products, otherwise fuel level.</p>
       </li>
       <li>
         <p><strong>Imported BMS requirements</strong> are context, never edited or restated; CV needs

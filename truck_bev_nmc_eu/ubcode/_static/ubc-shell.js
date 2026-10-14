@@ -1,7 +1,7 @@
 /*
  * ubc build html — shell client script (always linked, dependency-free).
  *
- * Four always-on jobs, none of which the CSS-only shell needs in order to
+ * Six always-on jobs, none of which the CSS-only shell needs in order to
  * function:
  *
  *  1. Theme toggle. A small icon button (injected here, so a no-JS page carries
@@ -11,7 +11,7 @@
  *     persisted in localStorage
  *     under "ubc-theme", by setting/removing data-theme on <html> ("dark" /
  *     "light"; removed = auto). The base stylesheet's token model and the
- *     mermaid bundle's MutationObserver both react to that attribute. The
+ *     mermaid client's MutationObserver both react to that attribute. The
  *     persisted theme is applied BEFORE first paint by a tiny inline bootstrap
  *     in <head> (emitted by shell.rs); this deferred script only builds the
  *     button and wires the click, so there is no flash of the wrong theme.
@@ -36,9 +36,82 @@
  *     beyond the top 64px — hidden again scrolling down or back near the
  *     very top — plus the mobile header's `ub-scrolled` shadow once the
  *     page leaves the top.
+ *
+ *  5. Loaded marker. Adds `ub-loaded` to <html> two animation frames after
+ *     the page's `load` event — the key of the stylesheet's smooth scrolling,
+ *     so in-page jumps glide while the arrival from another page lands on its
+ *     target without the glide (see markLoaded).
+ *
+ *  6. Sidebar reveal. Scrolls the sidebar (never the page) so the current
+ *     page's entry is in view on arrival (see revealCurrentNavEntry).
  */
 (() => {
   "use strict";
+
+  /**
+   * This page's ANCHOR REDIRECT map (`[build.html.redirects]` entries whose key
+   * names a section of this page): old fragment -> the page-relative href it
+   * moved to.
+   *
+   * Read at EVAL time, not inside a callback: `document.currentScript` is only
+   * set while the script is first executing, which for a deferred classic
+   * script is right here. A page with no anchor redirects carries no attribute
+   * and this is null, so every code path below is a single null check.
+   *
+   * Parsed defensively: a malformed payload leaves the map null and the page
+   * behaves exactly as it did before the feature existed, rather than throwing
+   * during startup and taking the theme toggle and scrollspy down with it.
+   */
+  const ANCHOR_REDIRECTS = (() => {
+    // `script && script.getAttribute(...)`, not `?.`: optional chaining is
+    // ES2020 and a SYNTAX error below it, so on an older engine the whole IIFE
+    // fails to compile and the reader loses the theme toggle, the drawers, the
+    // scrollspy and the back-to-top pill along with the redirect. This file's
+    // prior ceiling was ES2019 and it stays there — the same floor argument
+    // `ubc-search.js`'s `hasOwn` helper makes by name (a built site is opened
+    // from ZIPs and off air-gapped machines), and the shell ships on EVERY page
+    // rather than only where the search box does.
+    const script = document.currentScript;
+    const raw = script && script.getAttribute("data-ubc-redirects");
+    if (!raw) return null;
+    try {
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === "object" ? parsed : null;
+    } catch {
+      return null;
+    }
+  })();
+
+  // `Object.hasOwn` says this in one call, but it is ES2022 — the same reason
+  // and the same spelling `ubc-search.js` settled on.
+  // biome-ignore lint/suspicious/noPrototypeBuiltins: Object.hasOwn is ES2022
+  const hasOwn = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
+
+  /**
+   * A redirect destination with the reader's own `?query` filled in when the
+   * destination names none.
+   *
+   * The SAME component rule the redirect stub's page-level forward uses, and it
+   * has to be the same: a reader's `?highlight=` or `?q=` is theirs whichever
+   * layer forwards them, and without this the query survived a fragment MISS
+   * and vanished on a HIT — one document, one visit, two answers (review A-5,
+   * reproduced in Chrome by review B-1).
+   *
+   * The destination's own query WINS, because a map value can be an external
+   * URL that carries one; appending unconditionally would reproduce upstream's
+   * `?a=1?b=2` on this branch. The FRAGMENT is never filled from the reader
+   * here — theirs is the old anchor, which this hop has just consumed, and a
+   * destination with no fragment means "the section moved to the top of that
+   * page".
+   */
+  const withReaderQuery = (destination) => {
+    const hash = destination.indexOf("#");
+    const fragment = hash >= 0 ? destination.slice(hash) : "";
+    const path = hash >= 0 ? destination.slice(0, hash) : destination;
+    const mark = path.indexOf("?");
+    if (mark >= 0) return destination;
+    return path + (window.location.search || "") + fragment;
+  };
 
   const STORAGE_KEY = "ubc-theme";
   // The order the toggle button advances through on each click.
@@ -261,7 +334,8 @@
    * Inject the back-to-top pill (idempotent; injected here like the theme
    * toggle, so a no-JS page carries no dead control). A plain `href="#"`
    * anchor — the default jump IS the behaviour, smoothed by the stylesheet's
-   * motion-gated `scroll-behavior` — revealed by the scroll pump through the
+   * motion-gated `scroll-behavior`, which is keyed on `ub-loaded` (see
+   * markLoaded) — revealed by the scroll pump through the
    * `ub-show-back-to-top` class on <html>.
    *
    * Placed at the TOP of the main column, not appended to `<body>`: the pill
@@ -644,6 +718,79 @@
     update();
   };
 
+  /**
+   * Bring the current page's sidebar entry into view, once, as the page loads:
+   * every navigation is a fresh document, so the sidebar's own scroll box starts
+   * at the top, and on a long tree the entry for a deep page would otherwise
+   * sit below the fold. An entry already fully in view is left exactly where it
+   * is (no jump between two neighbouring pages); one that is not is CENTRED, so
+   * its siblings show around it.
+   *
+   * Only `scrollTop` on the sidebar is assigned — the same rule as the toc's
+   * `revealInDrawer` — so this can never scroll the page itself. It runs on the
+   * off-canvas drawer too: that is `visibility: hidden`, which keeps its layout,
+   * so the entry is already in view when the reader opens it. A sidebar with no
+   * layout at all (a zero-height box) is left alone.
+   *
+   * "In view" is the part of the box inside the VIEWPORT, not the box itself:
+   * the sticky sidebar is `max-height: 100vh`, so anything above it (an
+   * announcement banner) pushes its bottom edge off-screen on arrival, and an
+   * entry in that band would otherwise pass as visible. An entry taller than
+   * that visible part is aligned to its top rather than centred.
+   */
+  const revealCurrentNavEntry = () => {
+    const link = document.querySelector(".ub-nav .ub-nav-link.ub-current");
+    const sidebar = link ? link.closest(".ub-sidebar") : null;
+    if (!sidebar) {
+      return;
+    }
+    const box = sidebar.getBoundingClientRect();
+    const top = Math.max(box.top, 0);
+    const bottom = Math.min(box.bottom, window.innerHeight);
+    if (box.bottom - box.top <= 0 || bottom <= top) {
+      return;
+    }
+    const item = link.getBoundingClientRect();
+    if (item.top >= top && item.bottom <= bottom) {
+      return;
+    }
+    const slack = Math.max(0, (bottom - top - (item.bottom - item.top)) / 2);
+    sidebar.scrollTop += item.top - top - slack;
+  };
+
+  /**
+   * Run the reveal once every deferred script has run, and not before:
+   * `ubc-search.js` is the NEXT one, and it inserts its box above the nav,
+   * moving every entry down. A deferred script is evaluated before
+   * `DOMContentLoaded` fires, so a listener added here runs after all of them.
+   * Not an animation frame: the engine may render (and run frame callbacks)
+   * while a later deferred script is still downloading, which measured the
+   * tree before the search box existed.
+   *
+   * `load` is the fallback for the two cases where `DOMContentLoaded` has
+   * already gone or is being dispatched right now (`main()` as its listener,
+   * which a listener added mid-dispatch would miss). Both only arise when this
+   * script is NOT loaded deferred, as the shell emits it, and the reveal then
+   * lands later, once images have loaded too. A script evaluated after `load`
+   * reveals at once. `revealed` keeps it to one run: a second one could
+   * undo a scroll the reader has made in between.
+   */
+  const scheduleNavReveal = () => {
+    if (document.readyState === "complete") {
+      revealCurrentNavEntry();
+      return;
+    }
+    let revealed = false;
+    const once = () => {
+      if (!revealed) {
+        revealed = true;
+        revealCurrentNavEntry();
+      }
+    };
+    document.addEventListener("DOMContentLoaded", once, { once: true });
+    window.addEventListener("load", once, { once: true });
+  };
+
   /** Layer Escape-to-close onto the CSS-only drawer toggles. */
   const enhanceDrawers = () => {
     const toggles = Array.from(document.querySelectorAll(".ub-drawer-toggle"));
@@ -698,10 +845,16 @@
    * opens every closed <details> on it, BEFORE scrolling. But the floors are
    * recent — Chrome 97, Firefox 139, Safari 26.2 — so an older engine lands
    * the reader on a collapsed card with no sign that anything is there. This
-   * is the polyfill for those, and it is deliberately a no-op everywhere else:
-   * on a supporting engine every ancestor is already open by the time this
-   * runs, `opened` stays false, and the scroll position the browser chose is
-   * never touched.
+   * is the polyfill for those. On a supporting engine it is usually a no-op —
+   * every ancestor is already open by the time this runs, `opened` stays
+   * false, and the scroll position the browser chose is never touched — but
+   * NOT always: when this deferred script runs before the first rendering
+   * update (where the native reveal happens), the <details> is still closed,
+   * so it opens it and re-scrolls (measured 3/3 on Chromium 141 with a locally
+   * served page). Harmless either way, and never animated: the call from
+   * `main()` comes before `ub-loaded` exists, since `markLoaded()` is called
+   * last and sets the class only two animation frames after `load` — which
+   * holds for a script evaluated after `load` too.
    *
    * Three details that are easy to get wrong, all load-bearing:
    *
@@ -726,7 +879,22 @@
       id = hash;
     }
     const target = document.getElementById(id) || document.getElementsByName(id)[0];
-    if (!target) return;
+    if (!target) {
+      // The fragment resolves to nothing on this page — the one moment an
+      // anchor redirect is allowed to act. An anchor that still EXISTS always
+      // wins, and that rule is this ordering rather than a check: the redirect
+      // is only ever reached after the lookup above failed. `hasOwn` rather
+      // than `map[id]`, so a fragment spelled `toString` or `constructor`
+      // cannot pick up an inherited property and forward the reader to a
+      // function. The reader's `?query` rides along — see `withReaderQuery`.
+      if (ANCHOR_REDIRECTS && hasOwn(ANCHOR_REDIRECTS, id)) {
+        // `replace`, not an assignment: the reader arrived at a URL that no
+        // longer resolves, so it does not deserve a history entry that would
+        // bounce them straight back here on Back.
+        window.location.replace(withReaderQuery(ANCHOR_REDIRECTS[id]));
+      }
+      return;
+    }
     let opened = false;
     for (let node = target.parentElement; node; node = node.parentElement) {
       if (node.tagName === "DETAILS" && !node.open) {
@@ -756,14 +924,59 @@
     });
   };
 
+  /**
+   * Mark the page LOADED: `ub-loaded` on <html>, two animation frames after
+   * `load` (#3618). The stylesheet keys `scroll-behavior: smooth` on it,
+   * because the property also governs NAVIGATION scrolls (CSS Overflow 3):
+   * with the rule in force from the start, a reader following a link from
+   * another page to a `#fragment` watches the page glide down from the top
+   * (measured ≈1 s on Chromium 141, the glide itself capped at 0.7 s) instead
+   * of landing there.
+   *
+   * Not at DOMContentLoaded, and that is measured rather than assumed:
+   * Chromium re-runs the arrival's fragment scroll on its rendering updates
+   * until load completes, so a class set in `main()` still glides the arrival.
+   * Not AT `load` either: in a tab opened in the background Chromium performs
+   * the arrival scroll right AFTER the `load` event rather than before it, as
+   * it does in a foreground tab, so a class set during that event is in place
+   * for the scroll. Measured on Chromium 141 with a link opened in a
+   * background tab, held hidden past `load` and then shown: with the class set
+   * at `load`, or from a microtask queued by the listener, the arrival glided
+   * in every run; with a zero-delay timer, one frame or two frames after
+   * `load` it never did. Two animation frames is the margin: frame callbacks
+   * do not run while a page is hidden and run before their frame's rendering
+   * update, so the class also follows an arrival scroll an engine might defer
+   * to the first visible render. In a foreground tab the arrival is already on
+   * target when `load` fires, and the frames only postpone the first possible
+   * in-page glide, by tens of milliseconds.
+   * From then on every in-page jump (toc and ¶ links, footnotes, back-to-top)
+   * glides.
+   *
+   * The `complete` branch is only for a script evaluated AFTER load — a
+   * deferred one never is — which would otherwise wait for an event that has
+   * already gone; it waits for the two frames alone. Called last from
+   * `main()`, so the re-scrolls `main()` itself performs always come before
+   * the class. Without JavaScript the class never appears and nothing glides,
+   * which is the safe failure.
+   */
+  const markLoaded = () => {
+    const mark = () => document.documentElement.classList.add("ub-loaded");
+    const afterLoad = () =>
+      window.requestAnimationFrame(() => window.requestAnimationFrame(mark));
+    if (document.readyState === "complete") afterLoad();
+    else window.addEventListener("load", afterLoad, { once: true });
+  };
+
   const main = () => {
     injectThemeToggle();
     injectBackToTop();
     setupScrollPump();
     enhanceDrawers();
+    scheduleNavReveal();
     setupScrollSpy();
     watchExternalThemeChanges();
     setupFragmentReveal();
+    markLoaded();
   };
 
   if (document.readyState === "loading") {

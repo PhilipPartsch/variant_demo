@@ -350,8 +350,8 @@ that imported needs keep them.</p>
     <ul>
       <li>
         <p><strong>Schema rules</strong> (<code>metamodel/schemas.json</code>) check id prefixes, the upward
-traces and required fields as <em>violations</em>; reverse coverage (&quot;every req is
-satisfied&quot;) is a <em>warning</em>, because it is owed by a later stage. They apply
+traces and required fields as <em>violations</em>; reverse coverage (“every req is
+satisfied”) is a <em>warning</em>, because it is owed by a later stage. They apply
 to local needs only; imported BMS needs are validated by the BMS.</p>
       </li>
       <li>
@@ -368,7 +368,8 @@ the reqs its parts satisfy (checked per product by the tests).</p>
         <p><strong>Variants:</strong> a need is gated by the same or a stronger condition than its
 parent, so that no link dangles in any product. Conditions use the variant
 data <code>var.*</code> and are spelled out in <code>if</code> blocks; alternatives share one
-id in complementary <code>if</code> blocks (code: <code>#if</code> / <code>#else</code>).</p>
+id in the <code>when</code> / <code>otherwise</code> branches of a <code>choose</code> (code: <code>#if</code> /
+<code>#else</code>).</p>
       </li>
       <li>
         <p><strong>Warning-free:</strong> <code>ubc check</code> passes without warnings for every product.</p>

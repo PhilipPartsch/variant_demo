@@ -83,11 +83,34 @@
   --ubc-link-hover: #17408b;
   --ubc-link-visited: #6f42c1;
 
+  /* The colour a content link's UNDERLINE is drawn in.
+     `currentColor` until a project sets it, which is `text-decoration-color`'s
+     own initial value: the underline is drawn in the link's OWN CURRENT TEXT
+     COLOUR, in every state — at rest, under the cursor (--ubc-link-hover),
+     once visited (--ubc-link-visited), and wherever a rule sets the text
+     colour itself (`color: inherit` in the footer row). A token defined as
+     `var(--ubc-link)` would have pinned the rest-state blue and stopped the
+     underline darkening with the text on hover, which is a rendering change on
+     every site that has set nothing.
+     Set it to decouple the two — an underline-style link treatment, where the
+     text stays in the body colour and the underline carries the accent. One
+     declaration, here: a keyword needs no dark twin. */
+  --ubc-link-underline: currentColor;
+
   /* The "on this page" entry for the section the reader is currently in.
      Defined in terms of the brand, and custom properties substitute at use
      time, so it follows --ubc-brand into the dark palette for free (no dark
      override below); set it to decouple the two. */
   --ubc-toc-active: var(--ubc-brand);
+
+  /* The sidebar nav tree: top-level entries in the body colour and nested ones
+     muted, so the tree reads as a hierarchy (furo's `--top-level` split), and
+     the whole entry row tinted under the cursor. Derived like --ubc-toc-active
+     above, so they follow the palette into dark mode with no override below;
+     set them to decouple. */
+  --ubc-nav-fg-top: var(--ubc-fg);
+  --ubc-nav-fg: var(--ubc-fg-muted);
+  --ubc-nav-hover-bg: var(--ubc-bg-hover);
 
   --ubc-code-bg: #f2f4f7;
   --ubc-code-fg: #1a1c1e;
@@ -151,6 +174,18 @@
   --ubc-need-yellow-line: #ffc048;
   --ubc-need-orange-line: #e67e22;
   --ubc-need-blue-line: #0fbcf9;
+
+  /* The `test-results` status pills (sphinx-test-reports' `common.css`, #3919):
+     the oracle's own inks in the light theme (the error ink, #cc6600, is the
+     oracle's 3.84:1 on white — kept for parity), lifted per theme in both dark
+     blocks below, where the oracle's inks fall to 1.68–3.59:1. `disabled` has
+     no oracle rule (sphinx-test-reports produces the class and styles nothing);
+     a muted ink here. */
+  --ubc-tr-passed: #008000;
+  --ubc-tr-failed: #800000;
+  --ubc-tr-skipped: #555555;
+  --ubc-tr-error: #cc6600;
+  --ubc-tr-disabled: #6b7280;
 
   /* The announcement banner's strip (furo's --color-announcement-* values,
      variables/_colors.scss). THEME-STABLE by design: furo declares the same
@@ -266,6 +301,14 @@
     --ubc-version-removed-bar: #b03b3b;
 
     --ubc-highlight-on-target: #333300;
+
+    /* The `test-results` pills, lifted to >= 4.5:1 on `--ubc-bg: #131416`
+       (measured: 8.13 / 7.31 / 8.08 / 8.63 / 6.98). */
+    --ubc-tr-passed: #4cc35a;
+    --ubc-tr-failed: #ff7b72;
+    --ubc-tr-skipped: #a8acb2;
+    --ubc-tr-error: #f0a04b;
+    --ubc-tr-disabled: #9aa0a6;
   }
   /* Show the dark half of a per-theme logo pair (see the brand header). */
   :root[data-theme="dark"] .ub-brand-logo.ub-logo-light {
@@ -355,6 +398,13 @@
       --ubc-version-removed-bar: #b03b3b;
 
       --ubc-highlight-on-target: #333300;
+
+      /* The `test-results` pills — the `[data-theme="dark"]` block's values. */
+      --ubc-tr-passed: #4cc35a;
+      --ubc-tr-failed: #ff7b72;
+      --ubc-tr-skipped: #a8acb2;
+      --ubc-tr-error: #f0a04b;
+      --ubc-tr-disabled: #9aa0a6;
     }
     :root:not([data-theme="light"]) .ub-brand-logo.ub-logo-light {
       display: none;
@@ -370,9 +420,22 @@ html {
   font-size: 100%;
 }
 /* In-page jumps (toc links, the skip link, back-to-top) glide instead of
- * teleporting — motion-gated, unlike furo's unconditional rule. */
+ * teleporting — motion-gated, unlike furo's unconditional rule — but only once
+ * the page has LOADED and been drawn (#3618). The property also governs
+ * NAVIGATION scrolls (CSS Overflow 3), so an unconditional rule glides a
+ * reader arriving from another page down from the top (measured ≈1 s on
+ * Chromium 141, the glide itself capped at 0.7 s). The shell sets `ub-loaded`
+ * two animation frames after `load`: Chromium re-runs the fragment scroll
+ * until load completes (DOMContentLoaded is too early, measured: it still
+ * glides), and in a tab opened in the background performs it right after
+ * the `load` event, so a class set during that event glides the arrival too
+ * (measured); two frames later the class is past both, and frame callbacks
+ * wait for a hidden tab to be shown. `:where()` keeps the selector at
+ * (0,0,1), so an `extra_css` rule
+ * `html { scroll-behavior: auto }` still wins by source order, which is the
+ * documented opt-out. A no-JS page never glides. */
 @media (prefers-reduced-motion: no-preference) {
-  html {
+  html:where(.ub-loaded) {
     scroll-behavior: smooth;
   }
 }
@@ -684,9 +747,23 @@ footer.ub-footer {
 .ub-brand-logo.ub-logo-dark {
   display: none;
 }
+/* The `0.5rem` under the logo is the gap before the brand TEXT, which follows
+ * the image as a bare text node; with no text (`hide_title`, or no site name)
+ * the shell marks the block logo-only and the gap goes, leaving the image
+ * framed by the block's own padding alone, as furo's logo-only brand is. */
+.ub-brand-logo-only .ub-brand-logo {
+  margin-bottom: 0;
+}
 
 /* ── Sidebar nav tree ─────────────────────────────────────────────────── */
+/* `--ub-nav-entry-fg` is the entry colour for the CURRENT DEPTH: the tree sets
+ * it once for the top level and `.ub-nav-children` resets it for everything
+ * nested, so the link rules below read one variable and every selector in their
+ * LVHA chain keeps its (0,2,0) shape. A depth-keyed selector for the top level
+ * (`.ub-nav > .ub-nav-list > .ub-nav-item > .ub-nav-link`) would have been
+ * (0,4,0) and out-specified `:hover` and `.ub-current` alike. */
 .ub-nav {
+  --ub-nav-entry-fg: var(--ubc-nav-fg-top);
   padding: 0.75rem 1.25rem 1.5rem;
   font-size: 0.9em;
 }
@@ -707,21 +784,29 @@ footer.ub-footer {
   padding-left: 0;
 }
 .ub-nav-children {
+  --ub-nav-entry-fg: var(--ubc-nav-fg);
   padding-left: 0.85rem;
 }
 .ub-nav-item {
   position: relative;
-  margin: 0.1rem 0;
 }
+/* The entry is the whole ROW, not just its text: a block box bled 0.5rem into
+ * the nav's side padding, so the hover tint reaches past the text on both sides
+ * and the gap between a title and its expander is clickable too. The vertical
+ * rhythm is the one the inline-block entry had (0.1rem padding inside a 0.1rem
+ * `<li>` margin), folded into the padding so adjacent rows' hover boxes meet
+ * instead of leaving a margin-collapsed gap between them. */
 .ub-nav-link {
-  display: inline-block;
-  padding: 0.1rem 0;
+  display: block;
+  margin: 0 -0.5rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--ubc-radius);
   text-decoration: none;
-  color: var(--ubc-fg-muted);
+  color: var(--ub-nav-entry-fg);
 }
-/* A visited nav link stays MUTED rather than going link-purple — the
- * drawers-arc feature — and the value is deliberately the same as the unvisited
- * default above: this rule is not here to dim a read page further, it is here to
+/* A visited nav link keeps its depth's colour rather than going link-purple —
+ * the drawers-arc feature — and the value is deliberately the same as the
+ * unvisited default above: this rule is not here to dim a read page, it is here to
  * stop the global `a:visited` (0,1,1) reaching in, which out-specifies the plain
  * `.ub-nav-link` (0,1,0) on its type selector.
  *
@@ -741,23 +826,42 @@ footer.ub-footer {
  * The toc's half of the old shared rule stays where it is: it already sits
  * correctly relative to `.ub-active` and `:hover`, and is pinned that way. */
 .ub-nav-link:visited {
-  color: var(--ubc-fg-muted);
+  color: var(--ub-nav-entry-fg);
 }
 .ub-nav-link:hover {
   color: var(--ubc-link);
+  background: var(--ubc-nav-hover-bg);
+}
+/* The expander paints over the row (it is positioned, the link is not), so the
+ * pointer on it leaves the link's own `:hover`; keep the ROW tinted while it is
+ * there, since the row is what the expander acts on. Background only: this is
+ * (0,3,0), and a colour here would out-specify `.ub-current` below. */
+.ub-nav-toggle-label:hover ~ .ub-nav-link {
+  background: var(--ubc-nav-hover-bg);
 }
 /* The current page and its ancestors must read as marked whether or not the
  * reader has been there. Two mechanisms carry that, deliberately: `.ub-current`
  * ties with `:visited` at (0,2,0) and wins on the source order established
  * above, while the ancestor rule's (0,3,0) beats `:visited` on specificity
  * alone. The order half is pinned in `assets.rs` — a tidy-up moving either rule
- * would otherwise restore the bug silently. */
+ * would otherwise restore the bug silently.
+ *
+ * The ancestor marking is the WEIGHT as well as the colour: a top-level entry
+ * is already `--ubc-nav-fg-top` (the body colour by default), so colour alone
+ * would leave a top-level ancestor indistinguishable from its siblings. */
 .ub-nav-link.ub-current {
   font-weight: 600;
   color: var(--ubc-brand);
 }
 .ub-nav-item.ub-current-ancestor > .ub-nav-link {
+  font-weight: 600;
   color: var(--ubc-fg);
+}
+/* Inset, so the ring follows the row's rounded box and never reaches the
+ * sidebar's scrollport edge (which would clip an outset one). */
+.ub-nav-link:focus-visible {
+  outline: 2px solid var(--ubc-brand);
+  outline-offset: -2px;
 }
 .ub-nav-external::after {
   content: " \2197"; /* ↗ */
@@ -774,19 +878,25 @@ footer.ub-footer {
  * checkbox and its label are absolutely positioned against the `<li>`
  * (`.ub-nav-item` is the positioned ancestor), so they do not participate in
  * the row's inline flow and a wrapping title reflows underneath them. */
+/* `top` centres the 1.2rem control on the entry's FIRST line: the link box
+ * starts at the `<li>` top, and its first line's middle sits half a line
+ * (1.5 line-height, so 0.75em) plus the 0.15rem top padding below that. Both
+ * boxes take the nav's font size (the checkbox explicitly, as a form control
+ * does not inherit it), so `em` here is the link's own. */
 .ub-nav-toggle {
   position: absolute;
-  top: 0.15rem;
+  top: calc(0.75em - 0.45rem);
   right: 0;
   width: 1.2rem;
   height: 1.2rem;
   margin: 0;
+  font-size: inherit;
   opacity: 0;
   cursor: pointer;
 }
 .ub-nav-toggle-label {
   position: absolute;
-  top: 0.15rem;
+  top: calc(0.75em - 0.45rem);
   right: 0;
   display: flex;
   align-items: center;
@@ -801,20 +911,40 @@ footer.ub-footer {
     background 0.15s ease,
     color 0.15s ease;
 }
-/* ONE chevron glyph that ROTATES (motion = affordance) rather than swapping to
- * a second character — so it reads as a control, not a static list bullet. */
+/* ONE chevron that ROTATES (motion = affordance) rather than swapping to a
+ * second shape — so it reads as a control, not a static list bullet.
+ *
+ * Drawn as a MASKED SVG in `currentColor`, not a text glyph: the `❯` character
+ * it replaces rendered at whatever weight and size the reader's fonts gave it
+ * (thin and small against the entry text on macOS). The shape is furo's own
+ * expander, feather-icons' `chevron-right` (MIT) at furo's stroke width and
+ * 1rem icon box; the data URI is inline for the reason the admonition icons'
+ * are (a shipped stylesheet cannot reference shipped files, #2654). The same
+ * browser floor applies too: without `mask-image` the control is an empty
+ * square, and the checkbox under it still toggles. */
 .ub-nav-toggle-label::before {
-  content: "\276F"; /* ❯ — chevron, furo-style (not a solid triangle) */
-  font-size: 0.72em;
-  line-height: 1;
+  --ub-nav-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'/%3E%3C/svg%3E");
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  background-color: currentColor;
+  -webkit-mask-image: var(--ub-nav-chevron);
+  mask-image: var(--ub-nav-chevron);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
   transition: transform 0.15s ease;
 }
 .ub-nav-toggle:checked ~ .ub-nav-toggle-label::before {
   transform: rotate(90deg); /* points down when the entry is expanded */
 }
+/* `--ubc-border`, one step past the row's own hover tint: the expander is only
+ * ever hovered on a tinted row (the sibling rule above), so the row's
+ * `--ubc-bg-hover` would leave the control no box of its own. */
 .ub-nav-toggle-label:hover {
   color: var(--ubc-fg);
-  background: var(--ubc-bg-hover);
+  background: var(--ubc-border);
 }
 /* Keyboard focus lands on the visually-hidden checkbox; surface it on the
  * paired label so the control is clearly focusable (no JS). */
@@ -830,9 +960,11 @@ footer.ub-footer {
    every deeper level again and again, narrowing the tree at each depth. Padding
    the link keeps the reservation on exactly the text that could collide, so a
    long title wraps before the chevron while every level's expander stays in one
-   column. Slightly wider than the 1.2rem control, for a visual gap. */
+   column. The link bleeds 0.5rem past the `<li>` the control is positioned
+   against, so the reservation is that bleed plus the 1.2rem control plus a
+   0.25rem visual gap. */
 .ub-has-children > .ub-nav-link {
-  padding-right: 1.45rem;
+  padding-right: 1.95rem;
 }
 
 /* ── Footer (prev/next relations + the bottom copyright row) ──────────── */
@@ -951,10 +1083,18 @@ footer.ub-footer {
   font-size: 0.875em;
 }
 /* Muted-link treatment: the attribution link reads as part of the muted row
- * (and never as a visited link), colouring up only on hover. */
+ * (and never as a visited link), colouring up only on hover — and its UNDERLINE
+ * stays in the row's own ink whatever a project sets --ubc-link-underline to.
+ * The token's own default is `currentColor`, so this changes nothing on a stock
+ * site; what it keeps out is a THEMED underline colour, which would otherwise
+ * paint a branded rule under the muted row's grey text. This is one of the two
+ * underlined links on the site whose text is deliberately NOT the link colour,
+ * and `.ub-announcement a` above is the other — the same answer, for the same
+ * reason. Both are pinned in `ubc_build_pdf/tests/style_parity.rs`. */
 .ub-footer-bottom a,
 .ub-footer-bottom a:visited {
   color: inherit;
+  text-decoration-color: currentColor;
 }
 .ub-footer-bottom a:hover {
   color: var(--ubc-link);
@@ -2206,6 +2346,7 @@ p {
 a {
   color: var(--ubc-link);
   text-decoration: underline;
+  text-decoration-color: var(--ubc-link-underline);
   text-underline-offset: 0.15em;
 }
 a:hover {
@@ -2243,8 +2384,15 @@ img {
 }
 
 /* ── Cross-references / targets ───────────────────────────────────────── */
+/* `text-decoration-line` and NOT the `text-decoration` shorthand: the
+   shorthand also resets `text-decoration-color` to `currentColor`, and this
+   rule out-ranks the bare `a` rule above (0,1,1 against 0,0,1) — so the
+   shorthand here would silently take every cross-reference off
+   `--ubc-link-underline` while leaving every other link on it. Measured on the
+   docs site: 34 cross-references on the index page; 10 and 25 on the other
+   two pages measured. */
 a.ub-xref {
-  text-decoration: underline;
+  text-decoration-line: underline;
 }
 
 /* Invisible anchor spans placed by PropagateTargets and standalone internal
@@ -3582,6 +3730,28 @@ table.ub-need-meta td {
   padding-left: 0;
 }
 
+/* ── Test-report card fills (sphinx-test-reports' `div.tr_*`) ──────────── */
+/* A test-report need's `style` is `tr_<result>` (S3a), so its card carries
+ * `ub-need-style-tr_<result>`: these are sphinx-test-reports' `div.tr_*` row
+ * fills, which colour the card as they colour a row of the `test-results`
+ * table. `skipped` and `disabled` have no oracle card rule; muted fills here.
+ * The TWIN of the block in `vscode/media/preview.css`. */
+.ub-need-style-tr_passed {
+  --ubc-need-fill: rgba(0, 250, 0, 0.2);
+}
+.ub-need-style-tr_failed {
+  --ubc-need-fill: rgba(250, 0, 0, 0.2);
+}
+.ub-need-style-tr_error {
+  --ubc-need-fill: rgba(255, 165, 0, 0.2);
+}
+.ub-need-style-tr_skipped {
+  --ubc-need-fill: rgba(128, 137, 148, 0.2);
+}
+.ub-need-style-tr_disabled {
+  --ubc-need-fill: rgba(128, 137, 148, 0.08);
+}
+
 /* ── Need-card layouts (`:layout:`) ───────────────────────────────────── */
 /* An OPEN set: ten built-in designs, plus any a project defines for itself with
  * `[needs.card_layouts]`. `clean` has NO class and therefore NO rules here — it
@@ -4479,6 +4649,67 @@ table.ub-chart-legend:not(.ub-chart-legend-shown) {
   margin: 0 0 1rem;
 }
 
+/* ── test-results / test-env tables (sphinx-test-reports, #3919) ──────── */
+/* The `test-results` table carries sphinx-test-reports' own vocabulary, so its
+ * `common.css` keeps working and a project's stylesheet can override any of
+ * it: `tr_<result>` on every body row, cell and cell paragraph, the column's
+ * name (`class` / `name` / `status` / `reason`) on every body cell, and
+ * `ub-test-results` / `ub-test-env` on the table. The row fills are the
+ * oracle's, verbatim (`!important` included — it is what lets them beat a
+ * theme's own row striping); `tr_failure` is kept, inert, for a project's own
+ * markup that still uses the old spelling; `tr_disabled` (which the reader
+ * produces and the oracle does not style) is a muted fill. The status pill's
+ * ink is a theme token (`--ubc-tr-*`, lifted for the dark theme). The TWIN of
+ * the block in `vscode/media/preview.css`. */
+tr.tr_passed {
+  background-color: rgba(0, 250, 0, 0.2) !important;
+}
+tr.tr_failed,
+tr.tr_failure {
+  background-color: rgba(250, 0, 0, 0.2) !important;
+}
+tr.tr_skipped {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+tr.tr_error {
+  background-color: rgba(255, 165, 0, 0.2) !important;
+}
+tr.tr_disabled {
+  background-color: rgba(128, 137, 148, 0.12) !important;
+}
+td.status p {
+  padding: 3px 5px;
+  text-align: center;
+  border-radius: 10px;
+}
+td.status p.tr_passed {
+  border: 1px solid var(--ubc-tr-passed);
+  color: var(--ubc-tr-passed);
+}
+td.status p.tr_failed,
+td.status p.tr_failure {
+  border: 1px solid var(--ubc-tr-failed);
+  color: var(--ubc-tr-failed);
+}
+td.status p.tr_skipped {
+  border: 1px solid var(--ubc-tr-skipped);
+  color: var(--ubc-tr-skipped);
+}
+td.status p.tr_error {
+  border: 1px solid var(--ubc-tr-error);
+  color: var(--ubc-tr-error);
+}
+td.status p.tr_disabled {
+  border: 1px solid var(--ubc-tr-disabled);
+  color: var(--ubc-tr-disabled);
+}
+/* A reason cell's text (a traceback) is a literal block; keep it inside the
+ * cell rather than stretching the table. */
+table.ub-test-results td.reason pre {
+  margin: 0.25rem 0 0;
+  white-space: pre-wrap;
+}
+
 /* ── needsequence view directive ──────────────────────────────────────── */
 /* The diagram itself uses the shared `.directive.directive-mermaid` +
    `<pre class="mermaid">` shape (styled under Diagrams above), drawn client-side
@@ -4540,12 +4771,21 @@ pre.ub-needsequence-debug {
 svg.ub-gantt {
   max-width: 46rem;
 }
-/* The neutral fill a bar takes when it has no colour of its own — `:no_color:`,
-   or a need type with none configured. A palette class overrides it (both are
-   one class, and the palette rules are declared earlier, so the LAST matching
-   declaration wins — which is why this rule must stay after them). */
+/* A task bar's fill. `--ubc-slot` is the palette colour each `ub-chart-cN`
+   class exports ON THE SAME ELEMENT alongside its `fill`, so a bar carrying a
+   palette class is painted that slot's colour and the fallback covers the bar
+   with no colour of its own — `:no_color:`, or a need type with none
+   configured. An AUTHORED colour arrives as an inline `style="fill: …"` and
+   beats this rule outright.
+
+   Reading the custom property is what makes the palette win, NOT the source
+   order: a palette class and `.ub-gantt-bar` are each one class, so this rule —
+   declared after them — wins the `fill` tie and a plain `var(--ubc-fg-muted)`
+   here painted every palette-slot bar grey. `.ub-gantt-track` beside it has
+   always read the property for exactly this reason; measured in Chromium and
+   fixed in S4-B. */
 .ub-gantt-bar {
-  fill: var(--ubc-fg-muted);
+  fill: var(--ubc-slot, var(--ubc-fg-muted));
   stroke: var(--ubc-bg);
   stroke-width: 1;
   rx: 2;
@@ -4562,7 +4802,7 @@ svg.ub-gantt {
    `:no_color:` and a type with none configured.
 
    Declared AFTER the palette classes so its `fill` wins over theirs (equal
-   specificity, last one wins) — the same ordering `.ub-gantt-bar` relies on. */
+   specificity, last one wins). */
 .ub-gantt-track {
   fill: var(--ubc-bg);
   stroke: var(--ubc-slot, var(--ubc-fg-muted));
@@ -4574,8 +4814,14 @@ svg.ub-gantt {
   fill: var(--ubc-slot, var(--ubc-fg-muted));
   rx: 2;
 }
+/* A milestone diamond, painted by the same rule its bars are: the slot's own
+   colour where the palette gave it one, body ink otherwise. An authored colour
+   beats this as an inline `style`, which is why reading `--ubc-slot` here is
+   what stops one shape keeping its colour by one route and losing it by the
+   other — and what keeps the task table's swatch naming the colour the plot
+   draws. */
 .ub-gantt-milestone {
-  fill: var(--ubc-fg);
+  fill: var(--ubc-slot, var(--ubc-fg));
   stroke: var(--ubc-bg);
   stroke-width: 1;
 }
@@ -5100,5 +5346,60 @@ ul.contains-task-list {
   figcaption {
     page-break-inside: avoid;
     page-break-after: avoid;
+  }
+}
+
+/* ── Print: the page breaks an author wrote ───────────────────────────────
+ *
+ * The page-layout tokens `ubc build pdf` honours (its register item 161), so
+ * the same source prints its breaks from a browser as it does from the PDF
+ * builder. The writer already emits the tokens as classes on the element each
+ * lands on — `<p>`, `<section>`, a container's `<div>`, `<table>`, `<pre>`,
+ * an admonition's `<aside>` — so the rules are the tokens' own CSS meanings:
+ * `break-before` and `break-after` are the property names, `keep-together`
+ * is `break-inside: avoid`, and `dont-break` is sphinx-simplepdf's spelling
+ * of it. The bare `break` is honoured on a table (a `list-table`, a
+ * `csv-table`, a `needtable`), as the PDF builder honours it there.
+ *
+ * NOT on a need card, by choice: its `:style: break` reaches this page as
+ * `ub-need-style-break`, and every `ub-need-style-*` selector in this sheet is
+ * a PAINT of the `:style:` palette, mirrored in the editor preview's sheet and
+ * listed in the documentation — the palette `tests/style_palette_parity.rs`
+ * keeps to the documented paint names. A page break is no paint, so the
+ * palette is kept paint-only and the card prints unbroken here; a `container`
+ * classed `break-before` around the need breaks both routes. */
+@media print {
+  .break-before,
+  table.break {
+    break-before: page;
+  }
+  .break-after {
+    break-after: page;
+  }
+  .keep-together,
+  .dont-break {
+    break-inside: avoid;
+  }
+}
+
+/* ── Print: the pages an author turned ─────────────────────────────────────
+ *
+ * The `landscape` token `ubc build pdf` honours (its register item 163), and
+ * sphinx-simplepdf's `ssp-landscape` spelling of it, as a NAMED PAGE whose size
+ * is `landscape`: the paper the print dialog chose, turned (a site has no
+ * configured sheet) — so a browser's print of the site puts the classed table
+ * or section on landscape pages, as the PDF builder does. A named
+ * page lasts exactly as long as the element carrying it: CSS Paged Media forces
+ * a page break wherever the page name changes, before the element and after
+ * it, so the pages after it are portrait again. (weasyprint 70 keeps the
+ * landscape page going after the element until a page fills; the extent here is
+ * the specification's, and the PDF builder's.) */
+@media print {
+  .landscape,
+  .ssp-landscape {
+    page: landscape;
+  }
+  @page landscape {
+    size: landscape;
   }
 }

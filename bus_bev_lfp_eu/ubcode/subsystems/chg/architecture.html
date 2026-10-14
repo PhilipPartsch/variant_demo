@@ -140,51 +140,51 @@
   <p>Architecture elements (<code>arch</code>) of the Charging Controller (CHG), each
 satisfying vehicle requirements. Workflow stage <code>archs</code>, stream <code>chg</code>.
 The whole folder exists only in battery-electric products.</p>
-    <div class="ub-need" id="ARCH_CHG_INLET" data-need-type="arch" data-need-id="ARCH_CHG_INLET" style="--ub-need-accent: #818CF8">
-      <div class="ub-need-header">
-        <span class="ub-need-type">arch</span>
-        <span class="ub-need-title">High-power charging interface</span>
-        <span class="ub-need-id">ARCH_CHG_INLET</span>
-        <a class="headerlink" href="#ARCH_CHG_INLET" title="Link to this need">¶</a>
-      </div>
-      <details class="ub-need-meta-details" open="open">
-        <summary class="ub-need-meta-summary">Details</summary>
-        <table class="ub-need-meta">
-          <tr><th>status</th><td>draft</td></tr>
-          <tr><th>part_of</th><td><a class="ub-xref" href="../../system/overview.html#SUB_CHG">SUB_CHG</a></td></tr>
-          <tr><th>satisfies</th><td><a class="ub-xref" href="../../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a>, <a class="ub-xref" href="../../vehicle/requirements.html#REQ_PANTOGRAPH_CHARGING">REQ_PANTOGRAPH_CHARGING</a></td></tr>
-          <tr class="ub-need-links-back"><th>affected_by</th><td><a class="ub-xref" href="../../_global/decisions.html#DEC_CHARGING_INLET_PRIORITY">DEC_CHARGING_INLET_PRIORITY</a></td></tr>
-          <tr class="ub-need-links-back"><th>refined_by</th><td><a class="ub-xref" href="software_requirements.html#SWREQ_CHG_INTERFACE_DERATING">SWREQ_CHG_INTERFACE_DERATING</a>, <a class="ub-xref" href="software_requirements.html#SWREQ_CHG_PANTOGRAPH_SEQUENCE">SWREQ_CHG_PANTOGRAPH_SEQUENCE</a></td></tr>
-        </table>
-      </details>
-      <div class="ub-need-content">
-        <p>The high-power charging interface is a vehicle-mounted roof pantograph
+      <div class="ub-need" id="ARCH_CHG_INLET" data-need-type="arch" data-need-id="ARCH_CHG_INLET" style="--ub-need-accent: #818CF8">
+        <div class="ub-need-header">
+          <span class="ub-need-type">arch</span>
+          <span class="ub-need-title">High-power charging interface</span>
+          <span class="ub-need-id">ARCH_CHG_INLET</span>
+          <a class="headerlink" href="#ARCH_CHG_INLET" title="Link to this need">¶</a>
+        </div>
+        <details class="ub-need-meta-details" open="open">
+          <summary class="ub-need-meta-summary">Details</summary>
+          <table class="ub-need-meta">
+            <tr><th>status</th><td>draft</td></tr>
+            <tr><th>part_of</th><td><a class="ub-xref" href="../../system/overview.html#SUB_CHG">SUB_CHG</a></td></tr>
+            <tr><th>satisfies</th><td><a class="ub-xref" href="../../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a>, <a class="ub-xref" href="../../vehicle/requirements.html#REQ_PANTOGRAPH_CHARGING">REQ_PANTOGRAPH_CHARGING</a></td></tr>
+            <tr class="ub-need-links-back"><th>affected_by</th><td><a class="ub-xref" href="../../_global/decisions.html#DEC_CHARGING_INLET_PRIORITY">DEC_CHARGING_INLET_PRIORITY</a></td></tr>
+            <tr class="ub-need-links-back"><th>refined_by</th><td><a class="ub-xref" href="software_requirements.html#SWREQ_CHG_INTERFACE_DERATING">SWREQ_CHG_INTERFACE_DERATING</a>, <a class="ub-xref" href="software_requirements.html#SWREQ_CHG_PANTOGRAPH_SEQUENCE">SWREQ_CHG_PANTOGRAPH_SEQUENCE</a></td></tr>
+          </table>
+        </details>
+        <div class="ub-need-content">
+          <p>The high-power charging interface is a vehicle-mounted roof pantograph
 (SAE J3105-2) that is raised at the charging stop, rated for the charging
 power of REQ_MAX_CHARGE_POWER.</p>
+        </div>
       </div>
-    </div>
-    <div class="ub-need" id="ARCH_CHG_SESSION_CONTROL" data-need-type="arch" data-need-id="ARCH_CHG_SESSION_CONTROL" style="--ub-need-accent: #818CF8">
-      <div class="ub-need-header">
-        <span class="ub-need-type">arch</span>
-        <span class="ub-need-title">CCS inlet and charging session</span>
-        <span class="ub-need-id">ARCH_CHG_SESSION_CONTROL</span>
-        <a class="headerlink" href="#ARCH_CHG_SESSION_CONTROL" title="Link to this need">¶</a>
-      </div>
-      <details class="ub-need-meta-details" open="open">
-        <summary class="ub-need-meta-summary">Details</summary>
-        <table class="ub-need-meta">
-          <tr><th>status</th><td>draft</td></tr>
-          <tr><th>part_of</th><td><a class="ub-xref" href="../../system/overview.html#SUB_CHG">SUB_CHG</a></td></tr>
-          <tr><th>satisfies</th><td><a class="ub-xref" href="../../region/eu/annex.html#REQ_EU_CHARGING_STANDARD">REQ_EU_CHARGING_STANDARD</a></td></tr>
-          <tr class="ub-need-links-back"><th>refined_by</th><td><a class="ub-xref" href="software_requirements.html#SWREQ_CHG_CURRENT_LIMIT">SWREQ_CHG_CURRENT_LIMIT</a>, <a class="ub-xref" href="software_requirements.html#SWREQ_CHG_SESSION_START">SWREQ_CHG_SESSION_START</a></td></tr>
-        </table>
-      </details>
-      <div class="ub-need-content">
-        <p>The CCS inlet is a CCS2 vehicle inlet (IEC 62196-3). The charging session
+      <div class="ub-need" id="ARCH_CHG_SESSION_CONTROL" data-need-type="arch" data-need-id="ARCH_CHG_SESSION_CONTROL" style="--ub-need-accent: #818CF8">
+        <div class="ub-need-header">
+          <span class="ub-need-type">arch</span>
+          <span class="ub-need-title">CCS inlet and charging session</span>
+          <span class="ub-need-id">ARCH_CHG_SESSION_CONTROL</span>
+          <a class="headerlink" href="#ARCH_CHG_SESSION_CONTROL" title="Link to this need">¶</a>
+        </div>
+        <details class="ub-need-meta-details" open="open">
+          <summary class="ub-need-meta-summary">Details</summary>
+          <table class="ub-need-meta">
+            <tr><th>status</th><td>draft</td></tr>
+            <tr><th>part_of</th><td><a class="ub-xref" href="../../system/overview.html#SUB_CHG">SUB_CHG</a></td></tr>
+            <tr><th>satisfies</th><td><a class="ub-xref" href="../../region/eu/annex.html#REQ_EU_CHARGING_STANDARD">REQ_EU_CHARGING_STANDARD</a></td></tr>
+            <tr class="ub-need-links-back"><th>refined_by</th><td><a class="ub-xref" href="software_requirements.html#SWREQ_CHG_CURRENT_LIMIT">SWREQ_CHG_CURRENT_LIMIT</a>, <a class="ub-xref" href="software_requirements.html#SWREQ_CHG_SESSION_START">SWREQ_CHG_SESSION_START</a></td></tr>
+          </table>
+        </details>
+        <div class="ub-need-content">
+          <p>The CCS inlet is a CCS2 vehicle inlet (IEC 62196-3). The charging session
 control runs the session with the charger over ISO 15118-2 and sets the
 charging current limit from the BMS cell limits.</p>
+        </div>
       </div>
-    </div>
 </section>
 </main>
 <footer class="ub-footer">

@@ -29,8 +29,9 @@ Writing rules
   variant data (e.g. ``.. if:: var.vehicle.type == 'bus'``) or live in a
   variant folder (``region/eu``, ``region/na``).
 - **Alternatives** (same requirement, different content per product) share one
-  id in complementary ``if`` blocks — e.g. ``REQ_ENERGY_SOURCE``: state of charge
-  for battery-electric products, fuel level for diesel.
+  id in the branches of a ``choose`` — the first ``when`` whose condition holds
+  is used, else the ``otherwise``. E.g. ``REQ_ENERGY_SOURCE``: state of charge
+  for battery-electric products, otherwise fuel level.
 - **Imported BMS requirements** are context, never edited or restated; CV needs
   reference them and link only to BMS interface needs.
 
