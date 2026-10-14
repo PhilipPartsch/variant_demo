@@ -93,8 +93,7 @@ Settings:
   deploying to `gh-pages` cannot loop.
 - The product matrix is generated from `configs/*_defconfig` (small setup job
   that emits JSON), so a new product needs no workflow change.
-- Release-gated tests (T§ DOC-06) are skipped automatically while the pinned
-  sphinx-needs has no `choose`.
+- T§ DOC-06 (`choose`) runs since the pin is Sphinx-Needs 9.0.0 (plan 20).
 
 ### 2.2 `nightly.yml` — scheduled
 

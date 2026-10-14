@@ -208,12 +208,16 @@ BMS version and chemistry (`<{ var.bms.chemistry }>`).
 | Named variants | `bev`, `bus`, `mcs` (B§2.3) in `<<name: a, b>>` variant functions; `if` needs the spelled-out condition (`if bev` in the tables = `.. if:: var.powertrain.type == 'bev'`, M§5) |
 | Link variant | `ARCH_VCU_POWER_MGMT` `allocates` `BMS_REQ_POWER_DERATING` only if BEV |
 | `if` | BEV / bus / MCS / pantograph needs (§2.1–§2.5) |
-| Alternatives — `choose` (**not released yet**; interim complementary `if` blocks, M§5.1) | showcases A and B (§4.1) |
+| Alternatives — `choose` (since plan 20; before: complementary `if` blocks, M§5.1) | showcases A and B (§4.1) |
 | `variant_sources` | `subsystems/chg|bms/**` BEV-only, `subsystems/eng/**` diesel-only, `region/{eu,na}/**` |
 | Code: component selection + `#if CONFIG_*` | §5 |
 | Mount | not used (B§5.1); later option (§10) |
 
 ### 4.1 Demo showcases for alternatives (`choose`)
+
+**Update 2026-10-14:** `choose` is released (Sphinx-Needs 9.0.0, ubCode
+0.37.0); both showcases and the market alternative are migrated (plan 20).
+The text below is the state of plan 4.
 
 `choose` / `when` / `otherwise` is documented in sphinx-needs `latest` but **not
 in a release yet** (stable 8.5.0 has only `if`). Until it is released, the CV
@@ -433,8 +437,8 @@ verdicts land in `.pharaoh/verdicts/`.
    no ad-hoc conditions.
 3. **Child gating ⊇ parent gating** (`variant_consistency`): a child is gated by
    the same or a stronger condition than its parent.
-4. **Alternatives** are complementary `if` blocks with one shared ID until
-   `choose` is released (M§5.1).
+4. **Alternatives** are one `choose` whose branches share one ID (plan 20;
+   before: complementary `if` blocks, M§5.1).
 5. **Imported BMS needs are context, not work items:** read them (via MCP) to
    write allocations; never edit or review them; never copy their values.
 6. **No build-type or kit conditions** anywhere (K§0 P3).
@@ -478,6 +482,8 @@ follow the same switch.
 
 ### 8.2 Demo readiness (release gate for `choose`)
 
+Done 2026-10-14 in plan 20 (pins, migration, unchanged `needs.json`).
+
 1. Track the sphinx-needs release that contains `choose`; pin it
    (`sphinx-needs>=<that version>`).
 2. Confirm ubc / the ubCode extension evaluate `choose` identically
@@ -515,9 +521,8 @@ follow the same switch.
 
 ## 11. Open points and risks
 
-- **`choose` release:** not in stable sphinx-needs (8.5.0). The demo depends on
-  it; interim complementary `if` blocks and the fallback of §8.2 cover a slip.
-  **Verify** the release version and ubc support.
+- **`choose` release:** resolved — Sphinx-Needs 9.0.0 and ubCode 0.37.0
+  (2026-10-14), migrated in plan 20.
 - **Link variant syntax** for `allocates`: answered — per item,
   `<<bev: BMS_REQ_POWER_DERATING>>` (E-R B1).
 - **BMS variant axis mismatch:** CV has `HV__VOLTAGE`, the BMS does not; until the

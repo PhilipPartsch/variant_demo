@@ -84,5 +84,6 @@ Rules
 - **Variants:** a need is gated by the same or a stronger condition than its
   parent, so that no link dangles in any product. Conditions use the variant
   data ``var.*`` and are spelled out in ``if`` blocks; alternatives share one
-  id in complementary ``if`` blocks (code: ``#if`` / ``#else``).
+  id in the ``when`` / ``otherwise`` branches of a ``choose`` (code: ``#if`` /
+  ``#else``).
 - **Warning-free:** ``ubc check`` passes without warnings for every product.

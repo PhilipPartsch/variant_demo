@@ -549,7 +549,7 @@ produces = "req"
 depends_on = ["user_stories"]
 author_skill = "draft-requirement"
 review_skill = "review-requirement"
-authoring = "Decompose the user story into the complete set of vehicle requirements it implies — the happy path, the error and edge cases, and the relevant non-functional constraints. Author in the 150% source: gate variant-specific requirements with the named variants (bev, bus, mcs) or the region folders, at least as strongly as their parent; put product-specific values into the `value` field with variant functions; write alternatives as complementary `if` blocks sharing one id."
+authoring = "Decompose the user story into the complete set of vehicle requirements it implies — the happy path, the error and edge cases, and the relevant non-functional constraints. Author in the 150% source: gate variant-specific requirements with the named variants (bev, bus, mcs) or the region folders, at least as strongly as their parent; put product-specific values into the `value` field with variant functions; write alternatives as one `choose` whose `when` / `otherwise` branches share one id."
 [workflow.stages.route]
 scope = "global"
 granularity = "single"

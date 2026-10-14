@@ -16,14 +16,16 @@ reproduced on a pushed commit).
 
 Checked on [useblocks.com](https://useblocks.com) and the
 [useblocks reference list](https://x-as-code.useblocks.com/reference/index.html), 2026-10-09.
+Versions raised on 2026-10-14 (plan 20). The findings were made with the older
+versions; entries not marked fixed are not re-tested on the new ones yet.
 
 | Tool | Kind | Version here | Used | Section |
 |---|---|---|---|---|
-| ubCode (VS Code extension) + `ubc` CLI | commercial | 0.35.0 | yes | §3 |
-| Pharaoh (agentic engineering, `ubc agent`, `.pharaoh/`) | commercial | in ubc 0.35.0 | yes | §4 |
-| Sphinx-Needs | open source | 8.5.0 | yes | §5 |
-| Sphinx-Codelinks ("Codelinks") | open source | 1.4.0 | yes | §6 |
-| sphinx-mounts (not on the website list; package by "team useblocks", `github.com/useblocks/sphinx-mounts`) | open source | 0.2.0 | yes | §7 |
+| ubCode (VS Code extension) + `ubc` CLI | commercial | 0.37.0 (findings: 0.35.0) | yes | §3 |
+| Pharaoh (agentic engineering, `ubc agent`, `.pharaoh/`) | commercial | in ubc 0.37.0 (findings: 0.35.0) | yes | §4 |
+| Sphinx-Needs | open source | 9.0.0 (findings: 8.5.0) | yes | §5 |
+| Sphinx-Codelinks ("Codelinks") | open source | 2.0.0 (findings: 1.4.0) | yes | §6 |
+| sphinx-mounts (not on the website list; package by "team useblocks", `github.com/useblocks/sphinx-mounts`) | open source | 0.3.0 (findings: 0.2.0) | yes | §7 |
 | useblocks/ubc-action | GitHub Action | — | planned (plan 6) | §8 |
 | Sphinx-Data-Viewer | open source | 0.1.5 | indirectly (sphinx-needs dependency) | no findings |
 | ubTrace | commercial | — | no | — |
@@ -76,7 +78,7 @@ documentation, convenience.
 | CL-03 | Sphinx-Codelinks + ubc | low | `remote-url` / `local-url` mean different things in the two exports (path vs URL, local path) |
 | CL-04 | Sphinx-Codelinks | low | source pages reference `_static/_static/…` (CSS 404): wrong `add_css_file` path |
 | CL-05 | Sphinx-Codelinks | medium | branch ref only in `packed-refs` (after `git gc`): source links to `blob/None`, warnings |
-| CL-06 | Sphinx-Codelinks | medium | duplicate need id in code aborts the build (uncaught `InvalidNeedException`) |
+| CL-06 | Sphinx-Codelinks | medium | duplicate need id in code aborts the build (uncaught `InvalidNeedException`) — **fixed in 2.0.0** |
 | SM-01 | sphinx-mounts + ubc | medium | bare boolean condition: sphinx-mounts aborts the build, ubc warns and drops the rule |
 | UA-01 | ubc-action | low | Linux runners only |
 | UA-02 | ubc-action | medium | uses `actions/cache@v4` by tag: blocked in repositories that require SHA-pinned actions; downloads into the workspace, no checksum |
@@ -744,6 +746,7 @@ warning); the abort comes from Sphinx-Codelinks — see CL-06.
 - **Workaround:** none needed — alternatives in code always use `#if` / `#else` (C§5 rule 6).
 - **Solution A:** wrap `add_need()` in `src_trace.py` with `try / except InvalidNeedException` and log a warning with the marker's file and line.
 - **Solution B:** check marker ids for duplicates in the analysis step (before `add_need`) and report all duplicates of a project at once.
+- **Status:** fixed in Sphinx-Codelinks 2.0.0 (2026-10-14, Solution A): `src/vcu/energy_display.c:15: WARNING: one-line need 'IMPL_VCU_ENERGY_DISPLAY' is already defined in document 'subsystems/vcu/code_trace': not created again … [codelinks.duplicate_need]`, the build continues (fails only with `-W`). Test NEG-16, `feat/choose@f9a2deb`.
 
 ## 7. sphinx-mounts
 

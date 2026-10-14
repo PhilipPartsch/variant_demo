@@ -91,7 +91,7 @@ Each test runs for D, N, B, A, with ubc **and** Sphinx.
 | DOC-03 | `<{ }>` text | product name, powertrain, chemistry rendered | M§3 |
 | DOC-04 | link variant | `ARCH_VCU_POWER_MGMT` → `BMS_REQ_POWER_DERATING` only in N, B, A | M§4 |
 | DOC-05 | alternatives | `REQ_ENERGY_SOURCE` and `ARCH_CHG_INLET` branch per C§8.1; exactly one per product | M§5.1 |
-| DOC-06 | `choose` (**release-gated**) | same as DOC-05 after migration; skipped until the pin has `choose` | M§5.2 |
+| DOC-06 | `choose` | the alternatives are `choose` branches and give DOC-05's result; skipped only with Sphinx-Needs < 9.0.0 | M§5.2 |
 | DOC-07 | file variants | `subsystems/chg|bms` absent in D, `eng` only in D, region annex per market; `-W` passes | M§6 |
 | DOC-08 | BMS import | `BMS_*` needs only in N, B, A, with the chemistry's values | B§5 |
 | DOC-09 | code needs | `impl` / `test` per C§5 and C§8.1 (preprocessor + component) | B§6.2 |
@@ -125,8 +125,8 @@ Each test runs for D, N, B, A, with ubc **and** Sphinx.
 | NEG-06 | `BUILD__DEBUG` symbol / `var.build.*` | build-configuration check fails |
 | NEG-07 | symbol without `help` / `tristate` / no prefix | Kconfig hygiene fails |
 | NEG-08 | hand-edited generated file | drift check fails |
-| NEG-09 | overlapping alternative conditions | duplicate-ID build error |
-| NEG-10 | gap in alternative conditions | alternatives check fails |
+| NEG-09 | overlapping alternative conditions (`otherwise` → a second true `when`) | passes: the first true branch wins, no duplicate (was a duplicate-ID error with `if` blocks) |
+| NEG-10 | gap in alternative conditions (`otherwise` → a `when` true nowhere) | branch coverage (`check_variants`) and `ubc check` fail |
 | NEG-11 | allocation to a non-interface BMS need | schema (or CI script) fails |
 | NEG-12 | BMS pin points to a version without an allocated ID | dangling external link fails |
 | NEG-13 | missing `variant_data_file` | sanity check fails (no silent empty values) |
@@ -139,6 +139,8 @@ Each test runs for D, N, B, A, with ubc **and** Sphinx.
 | NEG-20 | part satisfies a req its subsystem does not cover | CNT-07 check reports it |
 | NEG-21 | a second system | CNT-08 check reports it |
 | NEG-22 | subsystem gated more weakly than its folder (`SUB_ENG` in a BEV product) | `ubc check` fails on `SUB_ENG` |
+| NEG-23 | `when` without a condition | ubc `choose.when_without_condition`, Sphinx `needs.choose`; the whole `choose` is dropped |
+| NEG-24 | `choose` without `otherwise` and without a branch for a product (new market value) | branch coverage fails; the id is missing in that product (`ubc check`, Sphinx `-W`) |
 
 ## 8. L6 — C code
 
@@ -166,8 +168,7 @@ reviewed (M-03, [08-manual-steps.md](08-manual-steps.md)).
 - Every NEG test fails as expected (a check that never fails is not a check).
 - L7 green on `eval/mechanisms` rebased on the current `main`.
 - L8 checklist passed on at least one OS ([08-manual-steps.md](08-manual-steps.md) M-05).
-- Release-gated tests (DOC-06) skipped only while the pinned sphinx-needs has
-  no `choose`; mandatory after the pin is raised.
+- DOC-06 is mandatory since the pin was raised to Sphinx-Needs 9.0.0 (plan 20).
 - Every test that fails because of a useblocks tool (not our content or
   tooling) has an entry in [99-tool-bugs.md](99-tool-bugs.md), and the test
   references its id (e.g. `xfail` reason "PH-01").
