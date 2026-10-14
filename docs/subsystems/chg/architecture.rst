@@ -47,16 +47,16 @@ The whole folder exists only in battery-electric products.
          the power of REQ_MAX_CHARGE_POWER through the CCS inlet, which is locked
          during the session.
 
-.. Alternatives per market: the CCS inlet type follows the market. No
-   otherwise: a new market needs its own branch, else the id is missing and
-   the alternatives check fails (no silent CCS1 default).
+.. One element per market: the CCS inlet type follows the market. Two
+   independent needs (own ids), one choose branch each. No otherwise: a new
+   market needs its own branch, else the checks fail (no silent CCS1 default).
 
 .. choose::
 
    .. when:: var.market.region == 'eu'
 
-      .. arch:: CCS inlet and charging session
-         :id: ARCH_CHG_SESSION_CONTROL
+      .. arch:: CCS2 inlet and charging session
+         :id: ARCH_CHG_SESSION_CONTROL_CCS2
          :status: draft
          :part_of: SUB_CHG
          :satisfies: REQ_EU_CHARGING_STANDARD
@@ -67,8 +67,8 @@ The whole folder exists only in battery-electric products.
 
    .. when:: var.market.region == 'na'
 
-      .. arch:: CCS inlet and charging session
-         :id: ARCH_CHG_SESSION_CONTROL
+      .. arch:: CCS1 inlet and charging session
+         :id: ARCH_CHG_SESSION_CONTROL_CCS1
          :status: draft
          :part_of: SUB_CHG
          :satisfies: REQ_NA_CHARGING_STANDARD

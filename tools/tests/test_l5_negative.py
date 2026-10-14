@@ -196,13 +196,14 @@ def test_neg23_when_without_condition(repo):
 
 
 def test_neg24_choose_without_branch_for_a_product(repo):
-    # a new market value without its branch: no otherwise, so the id is missing
-    repo.edit("docs/subsystems/chg/architecture.rst", "   .. when:: var.market.region == 'na'", "   .. when:: var.market.region == 'us'")
+    # the otherwise of ARCH_CHG_INLET replaced by a branch no product takes:
+    # the CCS-only truck matches no branch, so the id is missing there
+    repo.edit("docs/subsystems/chg/architecture.rst", "   .. otherwise::", "   .. when:: var.market.region == 'us'")
     fails_with(repo.tool("tools/check_variants.py", "--needs-dir", "/nonexistent"),
                "branch when \"var.market.region == 'us'\" is the first true branch in no product")
     repo.configure(A)
-    fails_with(repo.ubc_check(), "ARCH_CHG_SESSION_CONTROL")
-    fails_with(repo.sphinx(), "ARCH_CHG_SESSION_CONTROL")
+    fails_with(repo.ubc_check(), "ARCH_CHG_INLET")
+    fails_with(repo.sphinx(), "ARCH_CHG_INLET")
 
 
 @pytest.mark.parametrize("product", (D, N))

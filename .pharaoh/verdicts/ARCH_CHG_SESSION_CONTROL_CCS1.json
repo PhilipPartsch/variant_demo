@@ -1,0 +1,50 @@
+{
+  "agent": "claude-code",
+  "axes": {
+    "allocation_complete": {
+      "reason": "No allocates link.",
+      "score": 2
+    },
+    "completeness": {
+      "reason": "The parent's only externally visible obligation (CCS1 inlet per SAE J1772) is covered.",
+      "score": 2
+    },
+    "consistency": {
+      "reason": "No other element satisfies REQ_NA_CHARGING_STANDARD; the EU twin CCS2 is mutually exclusive by region gating.",
+      "score": 2
+    },
+    "design_clarity": {
+      "reason": "Inlet type, standard and session protocol (ISO 15118-2) are concrete, but 'sets the charging current limit from the BMS cell limits' names no derivation or which BMS limits are used.",
+      "score": 1,
+      "suggestion": "State how the current limit is derived (e.g. which BMS limit signals, min() with the power/voltage bound used by SWREQ_CHG_CURRENT_LIMIT)."
+    },
+    "implementability": {
+      "reason": "Realisable, but bundles inlet hardware with session software and leaves the current-limit source loose; its child SWREQ_CHG_CURRENT_LIMIT derives the limit from power/pack voltage instead of BMS cell limits, so the implementer must reconcile.",
+      "score": 1,
+      "suggestion": "Align the current-limit statement with SWREQ_CHG_CURRENT_LIMIT or name both bounds explicitly."
+    },
+    "interface_only": {
+      "reason": "No allocates link.",
+      "score": 2
+    },
+    "no_value_copy": {
+      "reason": "Names no BMS limit, threshold or timing value; only refers to 'BMS cell limits' generically.",
+      "score": 2
+    },
+    "parent_fit": {
+      "reason": "REQ_NA_CHARGING_STANDARD asks for a CCS1 inlet per SAE J1772; the element chooses exactly a CCS1 inlet (SAE J1772).",
+      "score": 2
+    },
+    "variant_consistency": {
+      "reason": "Gated by `if var.market.region == 'na'` inside the bev-only subsystems/chg folder; parent lives in region/na, so the gating is equal (na) plus stronger (bev), in variant vocabulary.",
+      "score": 2
+    }
+  },
+  "criteria": "arch",
+  "criteria_fingerprint": "20c578d5e58741c788d51aec97f6c9034aeeaf0e9520fefefa823c4add90cf3c",
+  "model": "claude-opus-5-5",
+  "need": "ARCH_CHG_SESSION_CONTROL_CCS1",
+  "reviewed_fingerprint": "444bf4edeaa824d8b159446133bf1a96b4127dc1a721f4eeb5d6492b64e55586",
+  "schema": 2,
+  "summary": "CCS1 element satisfies the NA inlet requirement and is correctly gated (na + bev folder); the current-limit derivation is left loose."
+}

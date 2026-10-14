@@ -12,9 +12,9 @@
   "title": "High-power charging interface",
   "type": "arch"
  },
- "ARCH_CHG_SESSION_CONTROL": {
+ "ARCH_CHG_SESSION_CONTROL_CCS1": {
   "content": "The CCS inlet is a CCS1 vehicle inlet (SAE J1772). The charging session\ncontrol runs the session with the charger over ISO 15118-2 and sets the\ncharging current limit from the BMS cell limits.",
-  "id": "ARCH_CHG_SESSION_CONTROL",
+  "id": "ARCH_CHG_SESSION_CONTROL_CCS1",
   "part_of": [
    "SUB_CHG"
   ],
@@ -22,7 +22,7 @@
    "REQ_NA_CHARGING_STANDARD"
   ],
   "status": "draft",
-  "title": "CCS inlet and charging session",
+  "title": "CCS1 inlet and charging session",
   "type": "arch"
  },
  "ARCH_VCU_ENERGY_DISPLAY": {
@@ -327,7 +327,7 @@
   "content": "The CHG software shall request a charging current of at most the maximum\ncharging power divided by the nominal pack voltage of the product.",
   "id": "SWREQ_CHG_CURRENT_LIMIT",
   "refines": [
-   "ARCH_CHG_SESSION_CONTROL"
+   "ARCH_CHG_SESSION_CONTROL_CCS1"
   ],
   "status": "draft",
   "title": "Limit charging current",
@@ -347,7 +347,7 @@
   "content": "The CHG software shall start a charging session only while the CCS inlet is\nreported as locked.",
   "id": "SWREQ_CHG_SESSION_START",
   "refines": [
-   "ARCH_CHG_SESSION_CONTROL"
+   "ARCH_CHG_SESSION_CONTROL_CCS1"
   ],
   "status": "draft",
   "title": "Start session only with locked inlet",
