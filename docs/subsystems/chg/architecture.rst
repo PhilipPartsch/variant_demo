@@ -48,8 +48,8 @@ The whole folder exists only in battery-electric products.
          during the session.
 
 .. One element per market: the CCS inlet type follows the market. Two
-   independent needs (own ids), one choose branch each. No otherwise: a new
-   market needs its own branch, else the checks fail (no silent CCS1 default).
+   independent needs (own ids): CCS2 for the EU, otherwise CCS1 (NA, the
+   default case).
 
 .. choose::
 
@@ -65,7 +65,7 @@ The whole folder exists only in battery-electric products.
          control runs the session with the charger over ISO 15118-2 and sets the
          charging current limit from the BMS cell limits.
 
-   .. when:: var.market.region == 'na'
+   .. otherwise::
 
       .. arch:: CCS1 inlet and charging session
          :id: ARCH_CHG_SESSION_CONTROL_CCS1
