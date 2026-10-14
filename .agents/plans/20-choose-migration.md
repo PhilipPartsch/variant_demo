@@ -56,7 +56,7 @@ variants are not resolved, plan 99 UB-12); mistakes are reported as
 |---|---|---|---|---|
 | Sphinx-Needs | release with `choose` | **no** — latest release 8.5.0 (2026-09-03); `choose` documented for 8.6.0 | **yes** — 9.0.0 (2026-10-14) | PyPI `sphinx-needs`; the probe (§3 step 1) builds with `-W` |
 | ubc (CLI) | parses `choose`, same result as Sphinx | **no** — 0.35.0: `Unknown directive: 'choose'`, the alternative need is dropped (probe on `test/cv-platform@23d74b4`, reverted) | **yes** — 0.37.0: probe with showcase A, all four products: `needs.json` per product and tool = the `if` form (line numbers aside), no `Unknown directive`, no `needs.choose` | probe: `ubc check` without `Unknown directive`, `ubc build needs` per product = Sphinx |
-| ubCode (VS Code) | editor support: branches not taken shown inactive, Needs Index follows the product | **no** (same engine as ubc 0.35.0) | 0.37.0 released (same engine); IDE check open (step 9) | IDE check (§3 step 9, plan 8) |
+| ubCode (VS Code) | editor support: branches not taken shown inactive, Needs Index follows the product | **no** (same engine as ubc 0.35.0) | **yes** — 0.37.0, IDE check OK (step 9) | IDE check (§3 step 9, plan 8) |
 | Pharaoh (`ubc agent`) | stages, gaps and reviews see the chosen branch | open | **yes** — gaps and verdicts per product unchanged, except the decision whose text changed (step 6) | `ubc agent gaps` per product unchanged by the migration |
 | sphinx-mounts, Sphinx-Codelinks | not involved (`choose` is inside a document; code alternatives stay `#if` / `#else`) | — | upgraded with the pin (0.3.0, 2.0.0): Codelinks 2.0.0 requires Sphinx-Needs 9 | — |
 
@@ -107,6 +107,7 @@ Branch `feat/choose`, one commit per step.
 | 4 | `check_variants`: `when` conditions in the registry / bare-boolean check, first-match branch coverage per `choose`; L1 CHK-05 / CHK-06 |
 | 5–7 | migrated; golden files unchanged except the decision text of step 6 |
 | 8 | DOC-06, NEG-09 / NEG-10 rewritten, NEG-23 / NEG-24 new |
+| 9 | IDE check with ubCode 0.37.0, all four products: branches not taken inactive, each alternative id once in the Needs Index with the active branch, no `choose` / duplicate problems — OK (user, 2026-10-14) |
 | 10 | method (M§5, §8, §9, §11), plans 03 / 04 / 05 / 06 / 30, method pages, `reqs` authoring text. **Not changed:** the `variant_consistency` criterion — its text (spelled-out conditions on `var.*`) is still right for `when`, and any change to it makes every verdict of its need type outdated |
 
 ## 4. Exit criteria
