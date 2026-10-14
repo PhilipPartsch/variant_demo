@@ -133,7 +133,8 @@ def test_neg16_same_id_without_if_else(repo):
     repo.edit("src/vcu/energy_display.c", "int vcu_energy_percent(int fuel_dl, int tank_dl)", "int vcu_energy_percent_fuel(int fuel_dl, int tank_dl)")
     repo.configure(N)
     fails_with(repo.ubc_check(), "IMPL_VCU_ENERGY_DISPLAY")
-    fails_with(repo.sphinx(), "already exists")  # Sphinx aborts (plan 99 CL-06)
+    # Sphinx-Codelinks 2.0.0 warns with the marker's file and line (aborted in 1.4.0, plan 99 CL-06)
+    fails_with(repo.sphinx(), "energy_display.c", "codelinks.duplicate_need")
 
 
 def ubc_needs(repo):
