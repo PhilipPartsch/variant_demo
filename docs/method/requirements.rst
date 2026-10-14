@@ -39,8 +39,9 @@ Workflow and review
 -------------------
 
 The stages are configured in ``[workflow]`` of ``ubproject.toml``:
-``user_stories`` → ``reqs`` → ``archs`` / ``bms_allocation`` → ``swreqs`` →
-``code`` → ``tests``, plus ``risks`` and ``decisions``.
+``user_stories`` → ``reqs`` → ``subsystems`` → ``archs`` / ``bms_allocation``
+→ ``swreqs`` → ``code`` → ``tests`` → ``test_results``, plus ``risks`` and
+``decisions``.
 
 - ``ubc agent next`` names the next stage; ``ubc agent gaps`` lists what is
   missing per product.

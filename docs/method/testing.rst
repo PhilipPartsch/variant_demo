@@ -44,8 +44,9 @@ Test evidence in the documentation
 
 - Each C test prints ``PASS`` / ``FAIL`` with its test id; the CTest JUnit
   report of every product is imported as ``test_result`` needs with the
-  ``product`` field (``tools/import_test_results.py``) and linked to the test
-  (``results_for``) and the vehicle requirements it is evidence for.
+  ``product`` field (``tools/import_test_results.py``), linked to the test
+  (``results_for``) and naming the vehicle requirements it is evidence for
+  (field ``chain_reqs``).
 - The workflow gaps of every product are imported as ``gap`` needs
   (``tools/import_gaps.py``).
 - Both are shown per product: the results of other products are gated out.

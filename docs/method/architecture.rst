@@ -3,8 +3,8 @@ Architecture modelling
 
 The architecture describes **what each element is and owns**, in present
 tense, and satisfies the vehicle requirements. One element per distinct
-responsibility; every vehicle requirement is satisfied by at least one CV
-architecture element.
+responsibility; every vehicle requirement is satisfied by at least one
+architecture element or BMS black box.
 
 Elements
 --------
@@ -40,8 +40,9 @@ Variants in the architecture
 - **Variant-specific elements** sit in the folder of their subsystem or in an
   ``if`` block (e.g. the door interlock for buses).
 - **Alternatives** — the same element with a different design per product —
-  share one id, e.g. ``ARCH_CHG_INLET``: MCS inlet, roof pantograph or no
-  additional interface. The order of the alternatives is a recorded decision.
+  share one id in the branches of a ``choose``, e.g. ``ARCH_CHG_INLET``: MCS
+  inlet, roof pantograph or no additional interface. The first true ``when``
+  wins, so the order of the branches is a recorded decision.
 - **Link variants**: a link that exists only in some products is written with
   a variant function, e.g. ``:allocates: <<bev: BMS_REQ_POWER_DERATING>>``.
 - In code, alternatives are ``#if`` / ``#else`` with the same need id; the
