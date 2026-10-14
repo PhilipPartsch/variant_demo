@@ -288,9 +288,9 @@ and D5 can pass before content exists:
 
 ### 3.4 GitHub repository setup
 
-The repository stays **clean**: only `main` and `gh-pages` live on `origin`.
-Work branches are pushed only for their pull request and deleted on merge;
-evaluation branches (`eval/*`) stay **local** and are never pushed.
+On `origin` live `main`, `gh-pages` and the work branches of the pull
+requests; **work branches are kept after the merge** (roadmap, decision
+2026-10-14). Evaluation branches (`eval/*`) stay **local** and are never pushed.
 
 State read with `gh api` on 2026-10-08, target, and how to get there:
 
@@ -827,7 +827,7 @@ folder layout of the `gh-pages` branch, one folder per variant (A§3.1).
       `git push -u origin setup/cv-platform`.
    4. Open a pull request to `main` of `PhilipPartsch/variant_demo`; merge when
       `tools/build_all.sh` passes for all four products (CI follows with A§).
-   5. Merged work branches are not deleted automatically (R11 off); delete them manually when no longer needed.
+   5. Merged work branches are kept (R11 off; roadmap decision 2026-10-14).
    6. Optionally tag the merge commit (`setup-done`) as the starting point of
       the content plan.
 11. Handover: start [03-mechanism-evaluation.md](03-mechanism-evaluation.md) (side branch) and [04-content.md](04-content.md).

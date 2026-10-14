@@ -111,8 +111,10 @@ Outside this order: plan 20 (`choose` migration) ✓ 2026-10-14, PR #4 merged
 | `setup/*`, `content/*`, `test/*`, `ci/*`, `model/*`, `fix/*` | work branches | via pull request, CI green |
 | `gh-pages` | published site: one folder per product variant (`<product>/sphinx`, `<product>/ubcode`, …); written **only by CI** (A§3.1) | never (orphan branch) |
 
-On `origin` there are only `main`, `gh-pages` and short-lived work branches
-during their pull request (deleted on merge). GitHub settings: B§3.4.
+On `origin` there are `main`, `gh-pages` and the feature / work branches of the
+pull requests. **Feature branches are kept after the merge** (decision
+2026-10-14; R11 "delete head branches on merge" stays off) — never delete them.
+`eval/*` branches stay local. GitHub settings: B§3.4.
 
 Tag `pre-cv-platform` on `main` before the first restructuring commit (B§3.2).
 
