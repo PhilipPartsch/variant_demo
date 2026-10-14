@@ -1,6 +1,6 @@
 {
-  "commit": "674c419aac4374604e4e5181ade8043ca675d439",
-  "built": "2026-10-14 12:27 UTC",
+  "commit": "dbc87ddc9e7f9af401a21d312791b0c0b76577ed",
+  "built": "2026-10-14 12:31 UTC",
   "bms": "0.1.0",
   "tools": {
     "sphinx": "8.2.3",
