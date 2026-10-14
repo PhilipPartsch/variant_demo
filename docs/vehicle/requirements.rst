@@ -7,29 +7,31 @@ Product-specific values are held in the ``value`` field. Workflow stage ``reqs``
 Energy and range
 ----------------
 
-.. Showcase A: alternatives with one id. Exactly one block is active per
-   product; with the sphinx-needs `choose` directive this becomes when/otherwise.
+.. Showcase A: alternatives with one id. The choose includes exactly one
+   branch per product: the BEV text, otherwise the fuel text.
 
-.. if:: var.powertrain.type == 'bev'
+.. choose::
 
-   .. req:: Remaining energy display
-      :id: REQ_ENERGY_SOURCE
-      :status: draft
-      :traces_to: US_RANGE_AWARENESS
+   .. when:: var.powertrain.type == 'bev'
 
-      The vehicle shall display the remaining energy as the state of charge
-      reported by the battery management system, in percent with a resolution
-      of 1 %.
+      .. req:: Remaining energy display
+         :id: REQ_ENERGY_SOURCE
+         :status: draft
+         :traces_to: US_RANGE_AWARENESS
 
-.. if:: not (var.powertrain.type == 'bev')
+         The vehicle shall display the remaining energy as the state of charge
+         reported by the battery management system, in percent with a resolution
+         of 1 %.
 
-   .. req:: Remaining energy display
-      :id: REQ_ENERGY_SOURCE
-      :status: draft
-      :traces_to: US_RANGE_AWARENESS
+   .. otherwise::
 
-      The vehicle shall display the remaining energy as the fuel tank level, in
-      percent of the tank capacity with a resolution of 1 %.
+      .. req:: Remaining energy display
+         :id: REQ_ENERGY_SOURCE
+         :status: draft
+         :traces_to: US_RANGE_AWARENESS
+
+         The vehicle shall display the remaining energy as the fuel tank level, in
+         percent of the tank capacity with a resolution of 1 %.
 
 .. req:: Range estimate
    :id: REQ_RANGE_ESTIMATE

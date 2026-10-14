@@ -73,15 +73,20 @@ def test_neg08_hand_edited_generated_file(repo):
 
 
 def test_neg09_overlapping_alternative_conditions(repo):
-    repo.edit("docs/vehicle/requirements.rst", ".. if:: not (var.powertrain.type == 'bev')", ".. if:: var.vehicle.type == 'truck'")
-    repo.configure(N)  # truck and battery-electric: both blocks active
-    fails_with(repo.ubc_check(), "REQ_ENERGY_SOURCE")
-    fails_with(repo.sphinx(), "REQ_ENERGY_SOURCE")
+    # with choose, overlapping conditions are allowed: the first true branch wins, no duplicate id
+    repo.edit("docs/vehicle/requirements.rst", "   .. otherwise::", "   .. when:: var.vehicle.type == 'truck'")
+    repo.configure(N)  # truck and battery-electric: both conditions true
+    assert repo.ubc_check().returncode == 0
+    assert repo.sphinx().returncode == 0
+    content = ubc_needs(repo)["REQ_ENERGY_SOURCE"]["content"]
+    assert "state of charge" in content and "fuel tank" not in content
 
 
 def test_neg10_gap_in_alternative_conditions(repo):
-    repo.edit("docs/vehicle/requirements.rst", ".. if:: not (var.powertrain.type == 'bev')", ".. if:: var.powertrain.type == 'hydrogen'")
-    repo.configure(D)
+    repo.edit("docs/vehicle/requirements.rst", "   .. otherwise::", "   .. when:: var.powertrain.type == 'hydrogen'")
+    fails_with(repo.tool("tools/check_variants.py", "--needs-dir", "/nonexistent"),
+               "branch when \"var.powertrain.type == 'hydrogen'\" is the first true branch in no product")
+    repo.configure(D)  # no branch is taken: the id is missing
     fails_with(repo.ubc_check(), "REQ_ENERGY_SOURCE")
 
 
