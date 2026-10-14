@@ -27,10 +27,6 @@ result importer by Sphinx-Test-Reports once ubCode supports it. **Triggered
 Demo (not a step): [30-demo.md](30-demo.md) — demo script: preparation, eight acts
 (10-minute and 30-minute version), likely questions, fallbacks.
 
-Webinar (not a step): [120-webinar-episode-7.md](120-webinar-episode-7.md) — AI plan to
-turn the episode 7 skeleton ("Variants-as-Code, Part 2") into the final deck,
-including the demo preparation in this repository.
-
 Bug list (not a step): [99-tool-bugs.md](99-tool-bugs.md) — bugs and gaps in
 the **useblocks tools** (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks,
 sphinx-mounts, ubc-action), each with a `branch@commit` marker, input, wrong
