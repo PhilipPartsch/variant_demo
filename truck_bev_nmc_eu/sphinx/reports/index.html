@@ -85,8 +85,8 @@ black boxes (<code class="docutils literal notranslate"><span class="pre">bms_bl
 <td class="needs_type"><p>arch</p></td>
 <td class="needs_satisfies"><p><a class="reference internal" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_MCS_CHARGING">REQ_MCS_CHARGING</a></p></td>
 </tr>
-<tr class="need row-odd" data-need-id="ARCH_CHG_SESSION_CONTROL"><td class="needs_id"><p><a class="reference internal" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL">ARCH_CHG_SESSION_CONTROL</a></p></td>
-<td class="needs_title"><p>CCS inlet and charging session</p></td>
+<tr class="need row-odd" data-need-id="ARCH_CHG_SESSION_CONTROL_CCS2"><td class="needs_id"><p><a class="reference internal" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL_CCS2">ARCH_CHG_SESSION_CONTROL_CCS2</a></p></td>
+<td class="needs_title"><p>CCS2 inlet and charging session</p></td>
 <td class="needs_type"><p>arch</p></td>
 <td class="needs_satisfies"><p><a class="reference internal" href="../region/eu/annex.html#REQ_EU_CHARGING_STANDARD">REQ_EU_CHARGING_STANDARD</a></p></td>
 </tr>
@@ -157,7 +157,7 @@ requirements each covers and its architecture elements.</p>
 <tr class="need row-odd" data-need-id="SUB_CHG"><td class="needs_id"><p><a class="reference internal" href="../system/overview.html#SUB_CHG">SUB_CHG</a></p></td>
 <td class="needs_title"><p>Charging Controller (CHG)</p></td>
 <td class="needs_covers"><p><a class="reference internal" href="../region/eu/annex.html#REQ_EU_CHARGING_STANDARD">REQ_EU_CHARGING_STANDARD</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a><em>; </em><a class="reference internal" href="../vehicle/requirements.html#REQ_MCS_CHARGING">REQ_MCS_CHARGING</a></p></td>
-<td class="needs_part_of_back"><p><a class="reference internal" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET">ARCH_CHG_INLET</a><em>; </em><a class="reference internal" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL">ARCH_CHG_SESSION_CONTROL</a></p></td>
+<td class="needs_part_of_back"><p><a class="reference internal" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET">ARCH_CHG_INLET</a><em>; </em><a class="reference internal" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL_CCS2">ARCH_CHG_SESSION_CONTROL_CCS2</a></p></td>
 </tr>
 <tr class="need row-even" data-need-id="SUB_VCU"><td class="needs_id"><p><a class="reference internal" href="../system/overview.html#SUB_VCU">SUB_VCU</a></p></td>
 <td class="needs_title"><p>Vehicle Control Unit (VCU)</p></td>
@@ -317,7 +317,7 @@ resolved for.</p>
 <section id="needflow-user-story-to-bms">
 <h2>Needflow: user story to BMS<a class="headerlink" href="#needflow-user-story-to-bms" title="Link to this heading">¶</a></h2>
 <figure class="align-center" id="needflow-reports/index-0">
-<div class="graphviz"><img src="../_images/needflow-6311e9d1c2ba3f28cd9a4c58955ba13eb3e46b45.png" alt="needflow graphviz diagram" usemap="#needflow" class="graphviz" /></div>
+<div class="graphviz"><img src="../_images/needflow-7e2a88ecbad2ff5e58ce1f4f069eb9c682e6673c.png" alt="needflow graphviz diagram" usemap="#needflow" class="graphviz" /></div>
 <map id="needflow" name="needflow">
 <area shape="rect" id="node1" href="https://bms-docs.invalid/0.1.0/specs/cell-protection/requirements.html#REQ_CELL_VOLTAGE_LIMITS" target="_top" title="BMS_REQ_CELL_VOLTAGE_LIMITS" alt="" coords="5,240,295,496"/>
 <area shape="rect" id="node2" href="https://bms-docs.invalid/0.1.0/specs/thermal-management/requirements.html#REQ_COOLING_REQUEST" target="_top" title="BMS_REQ_COOLING_REQUEST" alt="" coords="319,268,584,468"/>
@@ -340,7 +340,7 @@ resolved for.</p>
 <area shape="rect" id="node23" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER" target="_top" title="REQ_MAX_CHARGE_POWER" alt="" coords="897,324,1139,412"/>
 <area shape="rect" id="node15" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET" target="_top" title="ARCH_CHG_INLET" alt="" coords="1052,5,1227,112"/>
 <area shape="rect" id="node25" href="../vehicle/requirements.html#REQ_MCS_CHARGING" target="_top" title="REQ_MCS_CHARGING" alt="" coords="1163,324,1363,412"/>
-<area shape="rect" id="node16" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL" target="_top" title="ARCH_CHG_SESSION_CONTROL" alt="" coords="4327,5,4600,112"/>
+<area shape="rect" id="node16" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL_CCS2" target="_top" title="ARCH_CHG_SESSION_CONTROL_CCS2" alt="" coords="4305,5,4622,112"/>
 <area shape="rect" id="node17" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY" target="_top" title="ARCH_VCU_ENERGY_DISPLAY" alt="" coords="3885,15,4143,103"/>
 <area shape="rect" id="node21" href="../vehicle/requirements.html#REQ_RANGE_ESTIMATE" target="_top" title="REQ_RANGE_ESTIMATE" alt="" coords="4025,333,4238,403"/>
 <area shape="rect" id="node18" href="../subsystems/vcu/architecture.html#ARCH_VCU_POWER_MGMT" target="_top" title="ARCH_VCU_POWER_MGMT" alt="" coords="2910,15,3147,103"/>

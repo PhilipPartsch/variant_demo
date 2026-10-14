@@ -166,7 +166,7 @@ black boxes (<code>bms_block</code>) that satisfy it.</p>
           <thead><tr><th scope="col" class="needs_col_id" data-col="id">ID</th><th scope="col" class="needs_col_title" data-col="title">Title</th><th scope="col" class="needs_col_type" data-col="type">Type</th><th scope="col" class="needs_col_satisfies" data-col="satisfies">Satisfies</th></tr></thead>
           <tbody>
             <tr class="need" data-need-id="ARCH_CHG_INLET"><td><a class="ub-xref" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET">ARCH_CHG_INLET</a></td><td>High-power charging interface</td><td>arch</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_MCS_CHARGING">REQ_MCS_CHARGING</a></td></tr>
-            <tr class="need" data-need-id="ARCH_CHG_SESSION_CONTROL"><td><a class="ub-xref" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL">ARCH_CHG_SESSION_CONTROL</a></td><td>CCS inlet and charging session</td><td>arch</td><td><a class="ub-xref" href="../region/eu/annex.html#REQ_EU_CHARGING_STANDARD">REQ_EU_CHARGING_STANDARD</a></td></tr>
+            <tr class="need" data-need-id="ARCH_CHG_SESSION_CONTROL_CCS2"><td><a class="ub-xref" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL_CCS2">ARCH_CHG_SESSION_CONTROL_CCS2</a></td><td>CCS2 inlet and charging session</td><td>arch</td><td><a class="ub-xref" href="../region/eu/annex.html#REQ_EU_CHARGING_STANDARD">REQ_EU_CHARGING_STANDARD</a></td></tr>
             <tr class="need" data-need-id="ARCH_VCU_ENERGY_DISPLAY"><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY">ARCH_VCU_ENERGY_DISPLAY</a></td><td>Energy display manager</td><td>arch</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE">REQ_ENERGY_SOURCE</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_RANGE_ESTIMATE">REQ_RANGE_ESTIMATE</a></td></tr>
             <tr class="need" data-need-id="ARCH_VCU_HV_SHUTDOWN"><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_HV_SHUTDOWN">ARCH_VCU_HV_SHUTDOWN</a></td><td>High-voltage shutdown coordinator</td><td>arch</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a></td></tr>
             <tr class="need" data-need-id="ARCH_VCU_POWER_MGMT"><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_POWER_MGMT">ARCH_VCU_POWER_MGMT</a></td><td>Traction power manager</td><td>arch</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT">REQ_TRACTION_POWER_LIMIT</a></td></tr>
@@ -189,7 +189,7 @@ requirements each covers and its architecture elements.</p>
           <thead><tr><th scope="col" class="needs_col_id" data-col="id">ID</th><th scope="col" class="needs_col_title" data-col="title">Title</th><th scope="col" class="needs_col_covers" data-col="covers">Covers</th><th scope="col" class="needs_col_has_part" data-col="has_part">Has Part</th></tr></thead>
           <tbody>
             <tr class="need" data-need-id="SUB_BMS"><td><a class="ub-xref" href="../system/overview.html#SUB_BMS">SUB_BMS</a></td><td>Battery Management System (BMS)</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE">REQ_ENERGY_SOURCE</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT">REQ_TRACTION_POWER_LIMIT</a></td><td><a class="ub-xref" href="../subsystems/bms/architecture.html#BB_CHARGE_LIMITS">BB_CHARGE_LIMITS</a>; <a class="ub-xref" href="../subsystems/bms/architecture.html#BB_ENERGY_STATE">BB_ENERGY_STATE</a>; <a class="ub-xref" href="../subsystems/bms/architecture.html#BB_HV_PROTECTION">BB_HV_PROTECTION</a>; <a class="ub-xref" href="../subsystems/bms/architecture.html#BB_POWER_LIMITS">BB_POWER_LIMITS</a></td></tr>
-            <tr class="need" data-need-id="SUB_CHG"><td><a class="ub-xref" href="../system/overview.html#SUB_CHG">SUB_CHG</a></td><td>Charging Controller (CHG)</td><td><a class="ub-xref" href="../region/eu/annex.html#REQ_EU_CHARGING_STANDARD">REQ_EU_CHARGING_STANDARD</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_MCS_CHARGING">REQ_MCS_CHARGING</a></td><td><a class="ub-xref" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET">ARCH_CHG_INLET</a>; <a class="ub-xref" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL">ARCH_CHG_SESSION_CONTROL</a></td></tr>
+            <tr class="need" data-need-id="SUB_CHG"><td><a class="ub-xref" href="../system/overview.html#SUB_CHG">SUB_CHG</a></td><td>Charging Controller (CHG)</td><td><a class="ub-xref" href="../region/eu/annex.html#REQ_EU_CHARGING_STANDARD">REQ_EU_CHARGING_STANDARD</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER">REQ_MAX_CHARGE_POWER</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_MCS_CHARGING">REQ_MCS_CHARGING</a></td><td><a class="ub-xref" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET">ARCH_CHG_INLET</a>; <a class="ub-xref" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL_CCS2">ARCH_CHG_SESSION_CONTROL_CCS2</a></td></tr>
             <tr class="need" data-need-id="SUB_VCU"><td><a class="ub-xref" href="../system/overview.html#SUB_VCU">SUB_VCU</a></td><td>Vehicle Control Unit (VCU)</td><td><a class="ub-xref" href="../vehicle/requirements.html#REQ_ENERGY_SOURCE">REQ_ENERGY_SOURCE</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT">REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_RANGE_ESTIMATE">REQ_RANGE_ESTIMATE</a>; <a class="ub-xref" href="../vehicle/requirements.html#REQ_TRACTION_POWER_LIMIT">REQ_TRACTION_POWER_LIMIT</a></td><td><a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY">ARCH_VCU_ENERGY_DISPLAY</a>; <a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_HV_SHUTDOWN">ARCH_VCU_HV_SHUTDOWN</a>; <a class="ub-xref" href="../subsystems/vcu/architecture.html#ARCH_VCU_POWER_MGMT">ARCH_VCU_POWER_MGMT</a></td></tr>
           </tbody>
         </table>
@@ -246,7 +246,7 @@ resolved for.</p>
       <pre class="mermaid">
 flowchart TD
     ARCH_CHG_INLET[&quot;Architecture&lt;br/&gt;High-power&lt;br/&gt;charging&lt;br/&gt;interface&lt;br/&gt;ARCH_CHG_INLET&quot;]
-    ARCH_CHG_SESSION_CONTROL[&quot;Architecture&lt;br/&gt;CCS inlet and&lt;br/&gt;charging&lt;br/&gt;session&lt;br/&gt;ARCH_CHG_SESSION_CONTROL&quot;]
+    ARCH_CHG_SESSION_CONTROL_CCS2[&quot;Architecture&lt;br/&gt;CCS2 inlet and&lt;br/&gt;charging&lt;br/&gt;session&lt;br/&gt;ARCH_CHG_SESSION_CONTROL_CCS2&quot;]
     ARCH_VCU_ENERGY_DISPLAY[&quot;Architecture&lt;br/&gt;Energy display&lt;br/&gt;manager&lt;br/&gt;ARCH_VCU_ENERGY_DISPLAY&quot;]
     ARCH_VCU_HV_SHUTDOWN[&quot;Architecture&lt;br/&gt;High-voltage&lt;br/&gt;shutdown&lt;br/&gt;coordinator&lt;br/&gt;ARCH_VCU_HV_SHUTDOWN&quot;]
     ARCH_VCU_POWER_MGMT[&quot;Architecture&lt;br/&gt;Traction power&lt;br/&gt;manager&lt;br/&gt;ARCH_VCU_POWER_MGMT&quot;]
@@ -277,7 +277,7 @@ flowchart TD
     US_RANGE_AWARENESS([&quot;User Story&lt;br/&gt;Range awareness&lt;br/&gt;US_RANGE_AWARENESS&quot;])
     ARCH_CHG_INLET --&gt;|&quot;satisfies&quot;| REQ_MAX_CHARGE_POWER
     ARCH_CHG_INLET --&gt;|&quot;satisfies&quot;| REQ_MCS_CHARGING
-    ARCH_CHG_SESSION_CONTROL --&gt;|&quot;satisfies&quot;| REQ_EU_CHARGING_STANDARD
+    ARCH_CHG_SESSION_CONTROL_CCS2 --&gt;|&quot;satisfies&quot;| REQ_EU_CHARGING_STANDARD
     ARCH_VCU_ENERGY_DISPLAY --&gt;|&quot;satisfies&quot;| REQ_ENERGY_SOURCE
     ARCH_VCU_ENERGY_DISPLAY --&gt;|&quot;satisfies&quot;| REQ_RANGE_ESTIMATE
     ARCH_VCU_HV_SHUTDOWN --&gt;|&quot;satisfies&quot;| REQ_HV_SHUTDOWN_ON_ISOLATION_FAULT
@@ -304,7 +304,7 @@ flowchart TD
     REQ_RANGE_ESTIMATE --&gt;|&quot;traces_to&quot;| US_RANGE_AWARENESS
     REQ_TRACTION_POWER_LIMIT --&gt;|&quot;traces_to&quot;| US_PREDICTABLE_POWER
     style ARCH_CHG_INLET fill:#818CF8,color:#1a1c1e
-    style ARCH_CHG_SESSION_CONTROL fill:#818CF8,color:#1a1c1e
+    style ARCH_CHG_SESSION_CONTROL_CCS2 fill:#818CF8,color:#1a1c1e
     style ARCH_VCU_ENERGY_DISPLAY fill:#818CF8,color:#1a1c1e
     style ARCH_VCU_HV_SHUTDOWN fill:#818CF8,color:#1a1c1e
     style ARCH_VCU_POWER_MGMT fill:#818CF8,color:#1a1c1e

@@ -8,7 +8,7 @@ The whole folder exists only in battery-electric products.
 .. swreq:: Start session only with locked inlet
    :id: SWREQ_CHG_SESSION_START
    :status: draft
-   :refines: ARCH_CHG_SESSION_CONTROL
+   :refines: <<eu: ARCH_CHG_SESSION_CONTROL_CCS2, ARCH_CHG_SESSION_CONTROL_CCS1>>
 
    The CHG software shall start a charging session only while the CCS inlet is
    reported as locked.
@@ -16,7 +16,7 @@ The whole folder exists only in battery-electric products.
 .. swreq:: Limit charging current
    :id: SWREQ_CHG_CURRENT_LIMIT
    :status: draft
-   :refines: ARCH_CHG_SESSION_CONTROL
+   :refines: <<eu: ARCH_CHG_SESSION_CONTROL_CCS2, ARCH_CHG_SESSION_CONTROL_CCS1>>
 
    The CHG software shall request a charging current of at most the maximum
    charging power divided by the nominal pack voltage of the product.

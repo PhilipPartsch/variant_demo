@@ -20,7 +20,7 @@
 <area shape="rect" id="node24" href="../vehicle/requirements.html#REQ_MAX_CHARGE_POWER" target="_top" title="REQ_MAX_CHARGE_POWER" alt="" coords="897,324,1139,412"/>
 <area shape="rect" id="node15" href="../subsystems/chg/architecture.html#ARCH_CHG_INLET" target="_top" title="ARCH_CHG_INLET" alt="" coords="1071,5,1245,112"/>
 <area shape="rect" id="node26" href="../vehicle/requirements.html#REQ_PANTOGRAPH_CHARGING" target="_top" title="REQ_PANTOGRAPH_CHARGING" alt="" coords="1215,324,1485,412"/>
-<area shape="rect" id="node16" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL" target="_top" title="ARCH_CHG_SESSION_CONTROL" alt="" coords="4385,5,4659,112"/>
+<area shape="rect" id="node16" href="../subsystems/chg/architecture.html#ARCH_CHG_SESSION_CONTROL_CCS2" target="_top" title="ARCH_CHG_SESSION_CONTROL_CCS2" alt="" coords="4363,5,4681,112"/>
 <area shape="rect" id="node17" href="../subsystems/vcu/architecture.html#ARCH_VCU_ENERGY_DISPLAY" target="_top" title="ARCH_VCU_ENERGY_DISPLAY" alt="" coords="4000,15,4257,103"/>
 <area shape="rect" id="node22" href="../vehicle/requirements.html#REQ_RANGE_ESTIMATE" target="_top" title="REQ_RANGE_ESTIMATE" alt="" coords="4146,333,4359,403"/>
 <area shape="rect" id="node18" href="../subsystems/vcu/architecture.html#ARCH_VCU_POWER_MGMT" target="_top" title="ARCH_VCU_POWER_MGMT" alt="" coords="3033,15,3270,103"/>
