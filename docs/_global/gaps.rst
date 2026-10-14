@@ -12,18 +12,6 @@ build's product (:variant:`meta.product`) are shown.
 
 .. if:: var.meta.product == 'bus_bev_lfp_eu'
 
-   .. gap:: DEC_CHARGING_INLET_PRIORITY: review review
-      :id: GAP_DEC_CHARGING_INLET_PRIORITY_REVIEW__BUS_BEV_LFP_EU
-      :gap_for: DEC_CHARGING_INLET_PRIORITY
-      :gap_category: review
-      :gap_link: 
-      :gap_shortfall: 0 of 1
-      :gap_need_id: DEC_CHARGING_INLET_PRIORITY
-      :gap_need_type: decision
-      :product: bus_bev_lfp_eu
-
-      ``ubc agent gaps`` reports DEC_CHARGING_INLET_PRIORITY (decision) in bus_bev_lfp_eu.
-
    .. gap:: REQ_ENERGY_SOURCE: review review
       :id: GAP_REQ_ENERGY_SOURCE_REVIEW__BUS_BEV_LFP_EU
       :gap_for: REQ_ENERGY_SOURCE
@@ -86,17 +74,17 @@ build's product (:variant:`meta.product`) are shown.
 
       ``ubc agent gaps`` reports ARCH_CHG_INLET (arch) in truck_bev_lfp_na.
 
-   .. gap:: ARCH_CHG_SESSION_CONTROL: review review
-      :id: GAP_ARCH_CHG_SESSION_CONTROL_REVIEW__TRUCK_BEV_LFP_NA
-      :gap_for: ARCH_CHG_SESSION_CONTROL
+   .. gap:: DEC_CHARGING_INLET_PRIORITY: review review
+      :id: GAP_DEC_CHARGING_INLET_PRIORITY_REVIEW__TRUCK_BEV_LFP_NA
+      :gap_for: DEC_CHARGING_INLET_PRIORITY
       :gap_category: review
       :gap_link: 
       :gap_shortfall: 0 of 1
-      :gap_need_id: ARCH_CHG_SESSION_CONTROL
-      :gap_need_type: arch
+      :gap_need_id: DEC_CHARGING_INLET_PRIORITY
+      :gap_need_type: decision
       :product: truck_bev_lfp_na
 
-      ``ubc agent gaps`` reports ARCH_CHG_SESSION_CONTROL (arch) in truck_bev_lfp_na.
+      ``ubc agent gaps`` reports DEC_CHARGING_INLET_PRIORITY (decision) in truck_bev_lfp_na.
 
    .. gap:: REQ_ENERGY_SOURCE: review review
       :id: GAP_REQ_ENERGY_SOURCE_REVIEW__TRUCK_BEV_LFP_NA

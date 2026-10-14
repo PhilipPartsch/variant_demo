@@ -20,7 +20,8 @@ PRESENT = {
     "REQ_EU_CHARGING_STANDARD": {N, B}, "REQ_NA_CHARGING_STANDARD": {A},
     # architecture and black boxes
     "ARCH_VCU_ENERGY_DISPLAY": ALL, "ARCH_VCU_POWER_MGMT": ALL, "ARCH_VCU_HV_SHUTDOWN": BEVS,
-    "ARCH_VCU_DOOR_INTERLOCK": {B}, "ARCH_CHG_INLET": BEVS, "ARCH_CHG_SESSION_CONTROL": BEVS,
+    "ARCH_VCU_DOOR_INTERLOCK": {B}, "ARCH_CHG_INLET": BEVS,
+    "ARCH_CHG_SESSION_CONTROL_CCS2": {N, B}, "ARCH_CHG_SESSION_CONTROL_CCS1": {A},
     "ARCH_ENG_FUEL_LEVEL": {D}, "ARCH_ENG_TORQUE_INTERFACE": {D},
     "BB_ENERGY_STATE": BEVS, "BB_POWER_LIMITS": BEVS, "BB_HV_PROTECTION": BEVS, "BB_CHARGE_LIMITS": BEVS,
     # risks and decisions
@@ -48,7 +49,6 @@ ALLOCATES = {"ARCH_VCU_POWER_MGMT": {D: [], N: POWER_DERATING, B: POWER_DERATING
 ALTERNATIVE = {
     "REQ_ENERGY_SOURCE": {D: "fuel tank level", N: "state of charge", B: "state of charge", A: "state of charge"},
     "ARCH_CHG_INLET": {N: "MCS vehicle inlet", B: "roof pantograph", A: "no additional high-power interface"},
-    "ARCH_CHG_SESSION_CONTROL": {N: "CCS2", B: "CCS2", A: "CCS1"},
 }
 ENERGY_IMPL_TITLE = {D: "Show remaining energy (fuel level)", N: "Show remaining energy (state of charge)",
                      B: "Show remaining energy (state of charge)", A: "Show remaining energy (state of charge)"}

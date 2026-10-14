@@ -64,12 +64,11 @@ def test_cnt04_allocations_target_interfaces(site, tool):
 PH01_EXCLUDED = {
     "REQ_ENERGY_SOURCE": "alternative (BEV / diesel)",
     "ARCH_CHG_INLET": "alternative (MCS / pantograph / none)",
-    "ARCH_CHG_SESSION_CONTROL": "alternative (EU / NA)",
     "ARCH_VCU_ENERGY_DISPLAY": "satisfies REQ_ENERGY_SOURCE",
     "DEC_CHARGING_INLET_PRIORITY": "affects ARCH_CHG_INLET",
     "SWREQ_CHG_INTERFACE_DERATING": "refines ARCH_CHG_INLET",
-    "SWREQ_CHG_SESSION_START": "refines ARCH_CHG_SESSION_CONTROL",
-    "SWREQ_CHG_CURRENT_LIMIT": "refines ARCH_CHG_SESSION_CONTROL",
+    "SWREQ_CHG_SESSION_START": "refines the CCS2 or CCS1 element per market (link variant)",
+    "SWREQ_CHG_CURRENT_LIMIT": "refines the CCS2 or CCS1 element per market (link variant)",
     "SUB_VCU": "covers differs per product (variant functions)",
     "SUB_CHG": "covers differs per product (variant functions)",
 }

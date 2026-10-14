@@ -187,6 +187,7 @@ outgoing = "satisfies"
 [needs.links.refines]
 incoming = "refined_by"
 outgoing = "refines"
+parse_variants = true
 
 [needs.links.implements]
 incoming = "implements_back"
