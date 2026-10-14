@@ -2,7 +2,7 @@
 it exists for. Every test injects one defect into a copy of the repository."""
 import pytest
 
-from conftest import B, D, N, UBC, load_needs, run
+from conftest import A, B, D, N, UBC, load_needs, run
 from system_model import covers_mismatch, system_tree
 
 BEV_ONLY_REQ = "REQ_MAX_CHARGE_POWER"
@@ -186,6 +186,23 @@ def test_neg22_subsystem_gated_wrongly(repo):
     repo.edit("docs/system/overview.rst", ".. if:: var.powertrain.type == 'diesel'\n", ".. if:: True\n")
     repo.configure(N)
     fails_with(repo.ubc_check(), "SUB_ENG")
+
+
+def test_neg23_when_without_condition(repo):
+    repo.edit("docs/subsystems/chg/architecture.rst", "   .. when:: var.charging.pantograph == True", "   .. when::")
+    repo.configure(B)  # the whole choose is dropped: ARCH_CHG_INLET is missing
+    fails_with(repo.ubc_check(), "choose.when_without_condition", "ARCH_CHG_INLET")
+    fails_with(repo.sphinx(), "needs.choose", "ARCH_CHG_INLET")
+
+
+def test_neg24_choose_without_branch_for_a_product(repo):
+    # a new market value without its branch: no otherwise, so the id is missing
+    repo.edit("docs/subsystems/chg/architecture.rst", "   .. when:: var.market.region == 'na'", "   .. when:: var.market.region == 'us'")
+    fails_with(repo.tool("tools/check_variants.py", "--needs-dir", "/nonexistent"),
+               "branch when \"var.market.region == 'us'\" is the first true branch in no product")
+    repo.configure(A)
+    fails_with(repo.ubc_check(), "ARCH_CHG_SESSION_CONTROL")
+    fails_with(repo.sphinx(), "ARCH_CHG_SESSION_CONTROL")
 
 
 @pytest.mark.parametrize("product", (D, N))

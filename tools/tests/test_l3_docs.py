@@ -1,5 +1,6 @@
 """L3 — documentation per product (T§5), every check for ubc and Sphinx."""
 import json
+from importlib.metadata import version
 
 import pytest
 
@@ -51,8 +52,29 @@ def test_doc05_alternatives(site, tool):
             assert phrase in site[product][tool][nid]["content"], (nid, product)
 
 
-def test_doc06_choose():
-    pytest.skip("release-gated: sphinx-needs 8.5.0 has no `choose` (migration: plan 20)")
+def defining_directive(nid: str) -> list[str]:
+    """For every definition of nid in docs/: the nearest enclosing variant
+    directive above it (`choose` branch or `if`)."""
+    found = []
+    for f in sorted((ROOT / "docs").rglob("*.rst")):
+        lines = f.read_text().splitlines()
+        for i, line in enumerate(lines):
+            if line.strip() == f":id: {nid}":
+                above = (l.strip() for l in reversed(lines[:i]))
+                found.append(next((l.split("::")[0] for l in above if l.startswith((".. when::", ".. otherwise::", ".. if::"))), ""))
+    return found
+
+
+@pytest.mark.parametrize("tool", TOOLS)
+def test_doc06_choose(site, tool):
+    """The alternatives are choose branches (plan 20) and give DOC-05's result."""
+    if int(version("sphinx-needs").split(".")[0]) < 9:
+        pytest.skip("release-gated: choose needs Sphinx-Needs >= 9.0.0")
+    for nid, per in ALTERNATIVE.items():
+        branches = defining_directive(nid)
+        assert len(branches) > 1 and set(branches) <= {".. when", ".. otherwise"}, (nid, branches)
+        for product, phrase in per.items():
+            assert phrase in site[product][tool][nid]["content"], (nid, product)
 
 
 @pytest.mark.parametrize("product", PRODUCTS)
