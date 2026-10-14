@@ -5,6 +5,9 @@ Triggered plan (not part of the numbered execution order): starts as soon as
 then the alternatives stay as complementary `if` blocks with one shared id
 (M§5.1) — the released fallback required by global rule 1 of the roadmap.
 
+**Status: done 2026-10-14** — gate open (Sphinx-Needs 9.0.0, ubCode / ubc
+0.37.0), all steps run (§3.1), IDE check OK, PR #4 merged (`main@eb1c29a`).
+
 Referenced: [variant-mechanisms.md](variant-mechanisms.md) (`M§5`, §5.1, §5.2),
 [04-content.md](04-content.md) (`C§4.1`, §8.2), [05-test.md](05-test.md)
 (`T§` DOC-06, NEG-09), [03-mechanism-evaluation.md](03-mechanism-evaluation.md)

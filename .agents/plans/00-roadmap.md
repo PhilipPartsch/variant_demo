@@ -17,11 +17,19 @@ diesel / battery-electric, using the BMS from `rollout-demo-bms`) is built in
 
 Triggered plan (not in the execution order): [20-choose-migration.md](20-choose-migration.md)
 — migrate the alternatives from complementary `if` blocks to `choose` / `when`
-/ `otherwise` as soon as Sphinx-Needs (≥ 8.6.0) **and** ubc / ubCode support it
-(gate checked 2026-10-10: neither does yet).
+/ `otherwise`. **Done 2026-10-14** (PR #4): Sphinx-Needs 9.0.0, sphinx-mounts
+0.3.0, Sphinx-Codelinks 2.0.0, ubc / ubCode 0.37.0.
+
+Triggered plan: [110-test-reports.md](110-test-reports.md) — replace the own test
+result importer by Sphinx-Test-Reports once ubCode supports it. **Triggered
+2026-10-14** (T1, T4): ubCode 0.37.0 reads the STR directives; re-run open.
 
 Demo (not a step): [30-demo.md](30-demo.md) — demo script: preparation, eight acts
 (10-minute and 30-minute version), likely questions, fallbacks.
+
+Webinar (not a step): [120-webinar-episode-7.md](120-webinar-episode-7.md) — AI plan to
+turn the episode 7 skeleton ("Variants-as-Code, Part 2") into the final deck,
+including the demo preparation in this repository.
 
 Bug list (not a step): [99-tool-bugs.md](99-tool-bugs.md) — bugs and gaps in
 the **useblocks tools** (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks,
@@ -72,15 +80,18 @@ Execution order (decision 2026-10-10, "way A"):
 | 6 | **plan 8 reviews** M-01, M-03, M-04 | — | ✓ 2026-10-10 |
 | 7 | merge `test/cv-platform` (content + tests) into `main`, push | `main` | ✓ 2026-10-10 |
 | 8 | plan 6 automation | `ci/*` from `main`, pull request | ✓ 2026-10-10: PR #1 merged, site live (nightly open) |
-| 9 | plan 7 phase 1: system and subsystems | `model/system` → PR | CI green, merged; site shows `SYS_VEHICLE` / `SUB_*` |
+| 9 | plan 7 phase 1: system and subsystems | `model/system` → PR | ✓ 2026-10-13: PR #3 merged; M-14, IDE-08 done |
 | 10 | plan 7 phase 2: missing BMS capabilities as requirements | `model/bms-requirements` → PR | CI green, merged |
 | 11 | plan 7 phase 3: interfaces and external systems | `model/interfaces` → PR | CI green, merged |
 | 12 | plan 8 after the deploy: M-07, M-08, M-09 | — | |
 
 Plan 7 comes before the open manual steps of plan 8 (decision 2026-10-12);
 its own manual items (golden reviews, IDE check) are added to plan 8. The
-remaining manual steps of plan 8 (M-05 IDE session, M-02, M-06, M-10 …
+remaining manual steps of plan 8 (M-05 IDE session, M-02, M-06, M-11 …
 M-13) do not block this order.
+
+Outside this order: plan 20 (`choose` migration) ✓ 2026-10-14, PR #4 merged
+(M-10 done).
 
 - Step 1 decides **how** things are configured; nothing of it lands on `main`
   directly — working snippets are copied into step 2.
@@ -110,8 +121,9 @@ Plans live in `.agents/plans/` — local only, gitignored, kept for now.
 ## Global rules
 
 1. Only released, ubCode-supported directives — no invented directives,
-   markers or comment conventions. Unreleased features (e.g. sphinx-needs
-   `choose`) get a fallback from released features.
+   markers or comment conventions. Unreleased features get a fallback from
+   released features (as `choose` had until Sphinx-Needs 9.0.0 / ubCode
+   0.37.0: complementary `if` blocks, M§5.1).
 2. Build kit / build type are never part of the variant model (K§0 P3); the
    build type is always `Debug` and not offered as a choice.
 3. Every product is built with **both** ubc and Sphinx; their results must

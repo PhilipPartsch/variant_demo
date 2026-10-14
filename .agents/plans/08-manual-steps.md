@@ -27,11 +27,11 @@ that owns the step.
 | M-07 | browser | side-by-side compare page per product (includes V22 deferred from plan 3) | A§1.1 G5, V§ V22 | first CI deploy ✓ (2026-10-10) | **possible now** |
 | M-08 | browser | published site: variant folders, `_static/` served, no local paths | A§1.1 G4, UB-14 | first CI deploy ✓ (HTTP checks and path check done by the agent) | **possible now** (visual) |
 | M-09 | settings | branch rulesets R9 (`main`) and R10 (`gh-pages`) | B§3.4, A§5 step 2a | CI checks exist ✓ | **possible now** |
-| M-10 | decision | `choose` supported by all useblocks tools: start [plan 20](20-choose-migration.md) (incl. its IDE check, step 9) | C§8.2, plan 20 | gate of plan 20 §1 | waiting |
+| M-10 | decision | `choose` supported by all useblocks tools: start [plan 20](20-choose-migration.md) (incl. its IDE check, step 9) | C§8.2, plan 20 | gate of plan 20 §1 | **done 2026-10-14:** gate open (Sphinx-Needs 9.0.0, ubCode 0.37.0), plan 20 run, IDE check OK, PR #4 |
 | M-11 | decision | demo dry run of the walk-through C§8.1 | C§8.1 | M-01, ideally M-10 | open |
 | M-12 | decision | hand plan 99 to the useblocks teams (which entries, which channel) | plan 99 | — | open |
 | M-13 | decision | BMS repository topics: interface tags and per-chemistry release artifacts (the missing BMS capabilities are requirements in this repo, plan 7 phase 2) | C§3, B§5.2 | — | open |
-| M-14 | review | approve the golden-file diff of plan 7 phase 1 (system and subsystems) | S§3 step 6, DOC-11 | plan 7 phase 1 PR | open |
+| M-14 | review | approve the golden-file diff of plan 7 phase 1 (system and subsystems) | S§3 step 6, DOC-11 | plan 7 phase 1 PR | **done 2026-10-13:** approved |
 
 Order (roadmap, way A): **M-01, M-03, M-04 block the merge of
 `test/cv-platform` into `main` and therefore plan 6.** Then M-06 and M-05
@@ -117,6 +117,7 @@ the first CI deploy, and M-02, M-11, M-12, M-13 whenever convenient.
   may contain only the new needs `SYS_VEHICLE` and `SUB_*` (per product) and a
   new `part_of` on existing `arch` / `bms_block` needs; nothing else changes.
 - **Choice:** approve / reject (with the deviation).
+- **Result:** approved 2026-10-13.
 
 ## 2. IDE session (M-05)
 
@@ -135,7 +136,7 @@ checks V16 / V17 deferred from plan 3.
 | IDE-05 | task **CV: configure product (menuconfig)** for `truck_bev_lfp_na`, change nothing, save | defconfig unchanged (minimal), `tools/kconfig2variants.py --all --vscode --check` clean | |
 | IDE-06 | add `CONFIG_CHARGING__MCS=y` to `configs/bus_bev_lfp_eu_defconfig`, select B | configure fails with the dependency message; `build/active/` empty; ubCode reports missing variant data (no stale product); revert the line afterwards | |
 | IDE-07 | build the targets `docs` and `docs_ubc` from CMake Tools (product A) | `build/site/truck_bev_lfp_na/{sphinx,ubcode}/index.html` exist and show `truck_bev_lfp_na` | |
-| IDE-08 | plan 7: select products D and B; open `docs/system/overview.rst` and the Needs Index | `SYS_VEHICLE` and the product's `SUB_*` listed (D: VCU, ENG; B: VCU, CHG, BMS); `covers` of `SUB_CHG` follows the product; `part_of` on an arch element navigates to its subsystem | |
+| IDE-08 | plan 7: select products D and B; open `docs/system/overview.rst` and the Needs Index | `SYS_VEHICLE` and the product's `SUB_*` listed (D: VCU, ENG; B: VCU, CHG, BMS); `covers` of `SUB_CHG` follows the product; `part_of` on an arch element navigates to its subsystem | ✓ 2026-10-13 |
 
 **Result:** tick the rows, note deviations (with a screenshot if useful). The
 agent records them in the result of plan 5 (and V16 / V17 in plan 3's result);

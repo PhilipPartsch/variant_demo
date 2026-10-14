@@ -5,6 +5,12 @@ CV platform can replace its own importer `tools/import_test_results.py` with the
 useblocks tool [Sphinx-Test-Reports](https://sphinx-test-reports.readthedocs.io/en/latest/index.html)
 ("STR"). Plan 99 §1 lists STR as "candidate to replace `tools/import_test_results.py`".
 
+**Trigger 2026-10-14 (T1, T4): re-run open.** ubCode / ubc 0.37.0 reads the STR
+directives (`test-file`, `test-suite`, `test-case`, `:auto_suites:` /
+`:auto_cases:`) with a `[test_reports]` table and reports mistakes as
+`needs.test_report_*` (ubCode changelog 0.37); the pin is now Sphinx-Needs
+9.0.0 (plan 20). The baseline below is the state before.
+
 **Status (baseline 2026-10-12): not possible.** ubCode / ubc 0.35.0 does not know
 the STR directives, and the STR command-line converter has bugs that block the
 only other route that works in both toolchains (§3). This plan is therefore a

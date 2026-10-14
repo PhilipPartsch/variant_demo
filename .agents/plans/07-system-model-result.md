@@ -4,7 +4,7 @@ Outcome of [07-system-model.md](07-system-model.md) (`S§`).
 
 | Phase | Branch | Status |
 |---|---|---|
-| 1 system and subsystems | `model/system` | implemented 2026-10-12, PR open |
+| 1 system and subsystems | `model/system` | **done**: PR #3 merged 2026-10-13 |
 | 2 missing BMS capabilities as requirements | `model/bms-requirements` | not started |
 | 3 interfaces and external systems | `model/interfaces` | not started |
 
@@ -94,5 +94,5 @@ existing needs (M-14).
 
 ## 7. Open
 
-- Manual: M-14 (golden diff), IDE-08 (plan 8).
-- PR and merge of `model/system` (CI green required).
+- Manual: M-14 (golden diff) approved and IDE-08 passed, 2026-10-13 (plan 8).
+- ~~PR and merge of `model/system`~~ done (PR #3, CI green).
