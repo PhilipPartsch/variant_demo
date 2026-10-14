@@ -2,7 +2,7 @@
 it exists for. Every test injects one defect into a copy of the repository."""
 import pytest
 
-from conftest import B, D, N, UBC, load_needs, run
+from conftest import A, B, D, N, UBC, load_needs, run
 from system_model import covers_mismatch, system_tree
 
 BEV_ONLY_REQ = "REQ_MAX_CHARGE_POWER"
@@ -73,15 +73,20 @@ def test_neg08_hand_edited_generated_file(repo):
 
 
 def test_neg09_overlapping_alternative_conditions(repo):
-    repo.edit("docs/vehicle/requirements.rst", ".. if:: not (var.powertrain.type == 'bev')", ".. if:: var.vehicle.type == 'truck'")
-    repo.configure(N)  # truck and battery-electric: both blocks active
-    fails_with(repo.ubc_check(), "REQ_ENERGY_SOURCE")
-    fails_with(repo.sphinx(), "REQ_ENERGY_SOURCE")
+    # with choose, overlapping conditions are allowed: the first true branch wins, no duplicate id
+    repo.edit("docs/vehicle/requirements.rst", "   .. otherwise::", "   .. when:: var.vehicle.type == 'truck'")
+    repo.configure(N)  # truck and battery-electric: both conditions true
+    assert repo.ubc_check().returncode == 0
+    assert repo.sphinx().returncode == 0
+    content = ubc_needs(repo)["REQ_ENERGY_SOURCE"]["content"]
+    assert "state of charge" in content and "fuel tank" not in content
 
 
 def test_neg10_gap_in_alternative_conditions(repo):
-    repo.edit("docs/vehicle/requirements.rst", ".. if:: not (var.powertrain.type == 'bev')", ".. if:: var.powertrain.type == 'hydrogen'")
-    repo.configure(D)
+    repo.edit("docs/vehicle/requirements.rst", "   .. otherwise::", "   .. when:: var.powertrain.type == 'hydrogen'")
+    fails_with(repo.tool("tools/check_variants.py", "--needs-dir", "/nonexistent"),
+               "branch when \"var.powertrain.type == 'hydrogen'\" is the first true branch in no product")
+    repo.configure(D)  # no branch is taken: the id is missing
     fails_with(repo.ubc_check(), "REQ_ENERGY_SOURCE")
 
 
@@ -133,7 +138,8 @@ def test_neg16_same_id_without_if_else(repo):
     repo.edit("src/vcu/energy_display.c", "int vcu_energy_percent(int fuel_dl, int tank_dl)", "int vcu_energy_percent_fuel(int fuel_dl, int tank_dl)")
     repo.configure(N)
     fails_with(repo.ubc_check(), "IMPL_VCU_ENERGY_DISPLAY")
-    fails_with(repo.sphinx(), "already exists")  # Sphinx aborts (plan 99 CL-06)
+    # Sphinx-Codelinks 2.0.0 warns with the marker's file and line (aborted in 1.4.0, plan 99 CL-06)
+    fails_with(repo.sphinx(), "energy_display.c", "codelinks.duplicate_need")
 
 
 def ubc_needs(repo):
@@ -180,6 +186,23 @@ def test_neg22_subsystem_gated_wrongly(repo):
     repo.edit("docs/system/overview.rst", ".. if:: var.powertrain.type == 'diesel'\n", ".. if:: True\n")
     repo.configure(N)
     fails_with(repo.ubc_check(), "SUB_ENG")
+
+
+def test_neg23_when_without_condition(repo):
+    repo.edit("docs/subsystems/chg/architecture.rst", "   .. when:: var.charging.pantograph == True", "   .. when::")
+    repo.configure(B)  # the whole choose is dropped: ARCH_CHG_INLET is missing
+    fails_with(repo.ubc_check(), "choose.when_without_condition", "ARCH_CHG_INLET")
+    fails_with(repo.sphinx(), "needs.choose", "ARCH_CHG_INLET")
+
+
+def test_neg24_choose_without_branch_for_a_product(repo):
+    # a new market value without its branch: no otherwise, so the id is missing
+    repo.edit("docs/subsystems/chg/architecture.rst", "   .. when:: var.market.region == 'na'", "   .. when:: var.market.region == 'us'")
+    fails_with(repo.tool("tools/check_variants.py", "--needs-dir", "/nonexistent"),
+               "branch when \"var.market.region == 'us'\" is the first true branch in no product")
+    repo.configure(A)
+    fails_with(repo.ubc_check(), "ARCH_CHG_SESSION_CONTROL")
+    fails_with(repo.sphinx(), "ARCH_CHG_SESSION_CONTROL")
 
 
 @pytest.mark.parametrize("product", (D, N))

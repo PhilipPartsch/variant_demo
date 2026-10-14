@@ -165,7 +165,7 @@
   "affects": [
    "ARCH_CHG_INLET"
   ],
-  "content": "**Context:** The Kconfig model allows a product with both megawatt\ncharging (MCS) and a roof pantograph, but the vehicle has room for one\nhigh-power charging interface.\n\n**Alternatives:** (1) MCS first. (2) Pantograph first. (3) Forbid the\ncombination in Kconfig.\n\n**Consequences:** The high-power charging interface is selected in the\norder MCS, pantograph, none; a product with both features gets the MCS\ninterface and no pantograph requirement is satisfied.\n\n**Rationale:** MCS serves long-haul trucks, the main BEV use case; the\norder keeps the Kconfig model open for a future pantograph truck.",
+  "content": "**Context:** The Kconfig model allows a product with both megawatt\ncharging (MCS) and a roof pantograph, but the vehicle has room for one\nhigh-power charging interface.\n\n**Alternatives:** (1) MCS first. (2) Pantograph first. (3) Forbid the\ncombination in Kconfig.\n\n**Consequences:** The high-power charging interface is selected in the\norder MCS, pantograph, none: the order of the ``when`` branches of\nARCH_CHG_INLET, where the first true branch wins. A product with both\nfeatures gets the MCS interface and no pantograph requirement is\nsatisfied.\n\n**Rationale:** MCS serves long-haul trucks, the main BEV use case; the\norder keeps the Kconfig model open for a future pantograph truck.",
   "id": "DEC_CHARGING_INLET_PRIORITY",
   "status": "draft",
   "title": "MCS takes priority over the pantograph",

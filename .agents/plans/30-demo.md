@@ -208,5 +208,5 @@ setup step). Each entry has a marker on a pushed commit.
 
 - Dry run (M-11) and IDE checklist (M-05) on the demo machine.
 - Decide whether to show the open review points (plan 4 result §6) or not.
-- If sphinx-needs 8.6.0 and a ubc with `choose` are released: plan 20 first,
-  then show `choose` in act 4.
+- `choose` is released and migrated (plan 20, 2026-10-14): act 4 shows the
+  `choose` form.

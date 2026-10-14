@@ -91,7 +91,7 @@ Products (B§2.2): **D** = `truck_diesel_eu`, **N** = `truck_bev_nmc_eu`
 | V03 | Data reference `<{ }>` | `REQ_EVAL_DATA` text: `<{ var.meta.product }>`, `<{ var.bms.chemistry }>` | product name each; chemistry "" / nmc / lfp / lfp | M§3 |
 | V04 | `if` | `REQ_EVAL_IF` inside `.. if:: var.charging.mcs == True` (named variants are not resolved by `if`, §5 #1) | – / ✓ / – / – | M§5 |
 | V05 | Alternatives (complementary `if`, same ID) | `REQ_EVAL_ALT` in three blocks: MCS / pantograph / otherwise | otherwise / MCS / pantograph / otherwise | M§5.1 |
-| V06 | `choose` (**release-gated**) | `REQ_EVAL_CHOOSE`, same three branches as V05 | same as V05 — skipped until the pinned sphinx-needs has `choose` | M§5, M§5.2 |
+| V06 | `choose` | `REQ_EVAL_CHOOSE`, same three branches as V05 | same as V05 — green 2026-10-14 (Sphinx-Needs 9.0.0, ubc 0.37.0; plan 20 step 3) | M§5, M§5.2 |
 | V07 | Link variant | `ARCH_EVAL_LINK` `allocates: <<bev: BMS_REQ_POWER_DERATING>>` | no link / link / link / link | M§4 |
 | V08 | File variant (`variant_sources`) | `docs/eval/bev_only/page.rst` with `REQ_EVAL_BEV_FILE` | – / ✓ / ✓ / ✓; toctree entry INFO, `-W` passes | M§6 |
 | V09 | Mount with `if` | `eval/bundle/` mounted at `_mounted/eval`, `if = "var.vehicle.type == 'bus'"` | – / – / ✓ / – | M§7 |

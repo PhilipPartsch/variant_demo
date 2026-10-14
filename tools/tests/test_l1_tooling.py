@@ -167,6 +167,47 @@ def test_chk02_condition_registry_unknown_key(repo):
     assert p.returncode != 0 and "unknown key var.vehicle.kind" in p.out
 
 
+CHOOSE = """
+.. choose::
+
+   .. when:: {first}
+
+      Text.
+
+   .. when:: {second}
+
+      Text.
+
+   .. otherwise::
+
+      Text.
+"""
+
+
+def choose_check(repo, first, second):
+    repo.append("docs/vehicle/requirements.rst", CHOOSE.format(first=first, second=second))
+    return repo.tool("tools/check_variants.py", "--needs-dir", "/nonexistent")
+
+
+def test_chk05_choose_branch_coverage(repo):
+    p = choose_check(repo, "var.charging.mcs == True", "var.charging.pantograph == True")
+    assert p.returncode == 0, p.out
+
+
+@pytest.mark.parametrize("first, second, message", [
+    # bev covers every product with pantograph: the second branch is never the first true one
+    ("var.powertrain.type == 'bev'", "var.charging.pantograph == True",
+     "branch when 'var.charging.pantograph == True' is the first true branch in no product"),
+    ("var.vehicle.type == 'bus'", "var.vehicle.type == 'truck'",
+     "branch otherwise is the first true branch in no product"),
+    ("var.charging.mcs == True", "var.charging.kind == 'mcs'", "unknown key var.charging.kind"),
+    ("var.charging.mcs", "var.charging.pantograph == True", "bare boolean var.charging.mcs"),
+])
+def test_chk06_choose_errors(repo, first, second, message):
+    p = choose_check(repo, first, second)
+    assert p.returncode != 0 and message in p.out, p.out
+
+
 def test_chk03_bms_pin_mismatch(repo):
     assert repo.tool("tools/pin_bms.py", "--check").returncode == 0
     repo.edit("cmake/bms.cmake", 'set(CV_BMS_VERSION "0.1.0")', 'set(CV_BMS_VERSION "0.2.0")')

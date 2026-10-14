@@ -19,7 +19,7 @@ Each set of complementary `if` blocks that defines one need id becomes one
 `needs.json` (ubc and Sphinx) and the golden files stay identical; only the
 source gets simpler (no repeated negations).
 
-Syntax (Sphinx-Needs `latest`, "Added in version 8.6.0"):
+Syntax (released in Sphinx-Needs 9.0.0 and ubCode / ubc 0.37.0, 2026-10-14):
 
 ```rst
 .. choose::
@@ -52,13 +52,13 @@ variants are not resolved, plan 99 UB-12); mistakes are reported as
 
 ## 1. Gate — all useblocks tools support `choose`
 
-| Tool | Needed | Status 2026-10-10 | How to check |
-|---|---|---|---|
-| Sphinx-Needs | release with `choose` | **no** — latest release 8.5.0 (2026-09-03); `choose` documented for 8.6.0 | PyPI `sphinx-needs` ≥ 8.6.0; the probe (§3 step 1) builds with `-W` |
-| ubc (CLI) | parses `choose`, same result as Sphinx | **no** — 0.35.0: `Unknown directive: 'choose'`, the alternative need is dropped (probe on `test/cv-platform@23d74b4`, reverted) | probe: `ubc check` without `Unknown directive`, `ubc build needs` per product = Sphinx |
-| ubCode (VS Code) | editor support: branches not taken shown inactive, Needs Index follows the product | **no** (same engine as ubc 0.35.0) | IDE check (§3 step 9, plan 8) |
-| Pharaoh (`ubc agent`) | stages, gaps and reviews see the chosen branch | open | `ubc agent gaps` per product unchanged by the migration |
-| sphinx-mounts, Sphinx-Codelinks | not involved (`choose` is inside a document; code alternatives stay `#if` / `#else`) | — | — |
+| Tool | Needed | Status 2026-10-10 | Status 2026-10-14 | How to check |
+|---|---|---|---|---|
+| Sphinx-Needs | release with `choose` | **no** — latest release 8.5.0 (2026-09-03); `choose` documented for 8.6.0 | **yes** — 9.0.0 (2026-10-14) | PyPI `sphinx-needs`; the probe (§3 step 1) builds with `-W` |
+| ubc (CLI) | parses `choose`, same result as Sphinx | **no** — 0.35.0: `Unknown directive: 'choose'`, the alternative need is dropped (probe on `test/cv-platform@23d74b4`, reverted) | **yes** — 0.37.0: probe with showcase A, all four products: `needs.json` per product and tool = the `if` form (line numbers aside), no `Unknown directive`, no `needs.choose` | probe: `ubc check` without `Unknown directive`, `ubc build needs` per product = Sphinx |
+| ubCode (VS Code) | editor support: branches not taken shown inactive, Needs Index follows the product | **no** (same engine as ubc 0.35.0) | **yes** — 0.37.0, IDE check OK (step 9) | IDE check (§3 step 9, plan 8) |
+| Pharaoh (`ubc agent`) | stages, gaps and reviews see the chosen branch | open | **yes** — gaps and verdicts per product unchanged, except the decision whose text changed (step 6) | `ubc agent gaps` per product unchanged by the migration |
+| sphinx-mounts, Sphinx-Codelinks | not involved (`choose` is inside a document; code alternatives stay `#if` / `#else`) | — | upgraded with the pin (0.3.0, 2.0.0): Codelinks 2.0.0 requires Sphinx-Needs 9 | — |
 
 Check the gate whenever a new Sphinx-Needs or ubCode release appears. Record
 the result in this table; a failing check of a released version goes into
@@ -83,17 +83,32 @@ Work on a branch `feat/choose` from `main`; one commit per step.
 | # | Step | Done when |
 |---|---|---|
 | 1 | **Probe** in a copy (pattern of T§ L5): showcase A as `choose`, all four products, ubc + Sphinx | same `needs.json` per product as the `if` form; no `Unknown directive`, no `needs.choose` warning |
-| 2 | **Pin** the versions: `requirements.txt` (`sphinx-needs==8.6.x`), ubc / ubCode version in `tools/env.sh` hint, A§1 `UBC_VERSION`, README | `tools/test_all.sh` green with the new versions *before* any content change |
+| 2 | **Pin** the versions: `requirements.txt` (`sphinx-needs==9.0.0`, with sphinx-mounts 0.3.0 and Codelinks 2.0.0), ubc / ubCode version in `tools/env.sh` hint, A§1 `UBC_VERSION`, README | `tools/test_all.sh` green with the new versions *before* any content change |
 | 3 | **Mechanism evaluation** on `eval/mechanisms` (local): add V06 (`REQ_EVAL_CHOOSE`, three branches) to `docs/eval/mechanisms.rst` and to `tools/eval_expect.py` | V06 otherwise / mcs / pantograph / otherwise in both tools (V§3.1) |
 | 4 | **Tooling:** `tools/check_variants.py` reads `.. when::` conditions (registry, bare booleans) and checks branch coverage per `choose` (every branch, including `otherwise`, is taken in ≥ 1 product; first-match semantics); alternatives check unchanged (an id defined in several branches exists in every product that has the file) | unit tests for the new parsing (L1) green |
 | 5 | **Migrate showcase A** (`REQ_ENERGY_SOURCE`) | golden files unchanged, `tools/test_all.sh` green |
 | 6 | **Migrate showcase B** (`ARCH_CHG_INLET`) and update `DEC_CHARGING_INLET_PRIORITY` (the order of the `when` branches is the decision) | golden files unchanged except the decision text |
 | 7 | **Migrate the market alternative** (`ARCH_CHG_SESSION_CONTROL`) | golden files unchanged |
-| 8 | **Tests:** DOC-06 active (skip only if the installed Sphinx-Needs < 8.6.0); NEG-09 becomes "overlapping `when` conditions → first branch wins, no duplicate" (expectation changes); new NEG-17 `when` without condition → `needs.choose`; new NEG-18 `choose` without matching branch and without `otherwise` → alternatives check fails | `tools/test_all.sh` green |
+| 8 | **Tests:** DOC-06 active (skip only if the installed Sphinx-Needs < 9.0.0); NEG-09 becomes "overlapping `when` conditions → first branch wins, no duplicate" (expectation changes); new NEG-23 `when` without condition → `needs.choose`; new NEG-24 `choose` without matching branch and without `otherwise` → alternatives check fails (NEG-17 … NEG-22 were taken by plan 7) | `tools/test_all.sh` green |
 | 9 | **IDE check** (plan 8, as an addition to M-05): ubCode shows the branches not taken as inactive and the Needs Index follows the product for the three alternatives | your OK |
 | 10 | **Rules and texts:** M§5.1 / §5.2 (interim pattern → history), C§6.2 rule 4, the authoring texts of `[workflow]` (stage `reqs`: "alternatives as `choose`"), criterion `variant_consistency` (mentions `choose` / `when`), the RST comments "With the sphinx-needs `choose` directive this becomes …" removed | review of the diff |
 | 11 | **Reviews:** the changed needs get new fingerprints → one review round (independent context) for the migrated ids | verdicts submitted; PH-01 (one verdict per id) still applies — `choose` does not change it |
 | 12 | Pull request to `main`; plan 8 M-10 closed; C§8.2 demo readiness done | merged |
+
+## 3.1 Execution 2026-10-14
+
+Branch `feat/choose`, one commit per step.
+
+| # | Result |
+|---|---|
+| 1 | probe in a copy: the unchanged project builds on the new versions after removing `get_rst` (Codelinks 2.0.0); showcase A as `choose`: per product and tool the same needs (line numbers aside) |
+| 2 | pins + CI ubc 0.37.0 (SHA-256 of the Linux binary); NEG-16 expects `codelinks.duplicate_need` (plan 99 CL-06 fixed in Codelinks 2.0.0) |
+| 3 | V06 green in both tools; V01–V20 unchanged (local `eval/mechanisms`) |
+| 4 | `check_variants`: `when` conditions in the registry / bare-boolean check, first-match branch coverage per `choose`; L1 CHK-05 / CHK-06 |
+| 5–7 | migrated; golden files unchanged except the decision text of step 6 |
+| 8 | DOC-06, NEG-09 / NEG-10 rewritten, NEG-23 / NEG-24 new |
+| 9 | IDE check with ubCode 0.37.0, all four products: branches not taken inactive, each alternative id once in the Needs Index with the active branch, no `choose` / duplicate problems — OK (user, 2026-10-14) |
+| 10 | method (M§5, §8, §9, §11), plans 03 / 04 / 05 / 06 / 30, method pages, `reqs` authoring text. **Not changed:** the `variant_consistency` criterion — its text (spelled-out conditions on `var.*`) is still right for `when`, and any change to it makes every verdict of its need type outdated |
 
 ## 4. Exit criteria
 
@@ -113,8 +128,7 @@ pinned versions of step 2 until the tool is fixed.
 
 ## 6. Open points
 
-- **ubc / ubCode version** with `choose`: unknown; check the release notes of
-  every ubCode release (gate §1).
+- **ubc / ubCode version** with `choose`: 0.37.0 (gate §1, 2026-10-14).
 - **Named variants in `when`:** same grammar as `if` → not resolved (UB-12);
   spelled-out conditions as today.
 - **Verdicts:** `choose` keeps one id per alternative, so PH-01 (verdict per id)
