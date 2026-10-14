@@ -47,28 +47,32 @@ The whole folder exists only in battery-electric products.
          the power of REQ_MAX_CHARGE_POWER through the CCS inlet, which is locked
          during the session.
 
-.. Alternatives per market: the CCS inlet type follows the market.
+.. Alternatives per market: the CCS inlet type follows the market. No
+   otherwise: a new market needs its own branch, else the id is missing and
+   the alternatives check fails (no silent CCS1 default).
 
-.. if:: var.market.region == 'eu'
+.. choose::
 
-   .. arch:: CCS inlet and charging session
-      :id: ARCH_CHG_SESSION_CONTROL
-      :status: draft
-      :part_of: SUB_CHG
-      :satisfies: REQ_EU_CHARGING_STANDARD
+   .. when:: var.market.region == 'eu'
 
-      The CCS inlet is a CCS2 vehicle inlet (IEC 62196-3). The charging session
-      control runs the session with the charger over ISO 15118-2 and sets the
-      charging current limit from the BMS cell limits.
+      .. arch:: CCS inlet and charging session
+         :id: ARCH_CHG_SESSION_CONTROL
+         :status: draft
+         :part_of: SUB_CHG
+         :satisfies: REQ_EU_CHARGING_STANDARD
 
-.. if:: var.market.region == 'na'
+         The CCS inlet is a CCS2 vehicle inlet (IEC 62196-3). The charging session
+         control runs the session with the charger over ISO 15118-2 and sets the
+         charging current limit from the BMS cell limits.
 
-   .. arch:: CCS inlet and charging session
-      :id: ARCH_CHG_SESSION_CONTROL
-      :status: draft
-      :part_of: SUB_CHG
-      :satisfies: REQ_NA_CHARGING_STANDARD
+   .. when:: var.market.region == 'na'
 
-      The CCS inlet is a CCS1 vehicle inlet (SAE J1772). The charging session
-      control runs the session with the charger over ISO 15118-2 and sets the
-      charging current limit from the BMS cell limits.
+      .. arch:: CCS inlet and charging session
+         :id: ARCH_CHG_SESSION_CONTROL
+         :status: draft
+         :part_of: SUB_CHG
+         :satisfies: REQ_NA_CHARGING_STANDARD
+
+         The CCS inlet is a CCS1 vehicle inlet (SAE J1772). The charging session
+         control runs the session with the charger over ISO 15118-2 and sets the
+         charging current limit from the BMS cell limits.
