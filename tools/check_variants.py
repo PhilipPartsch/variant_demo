@@ -3,16 +3,17 @@
 Usage: check_variants.py [--needs-dir build/site]
 
 1. Condition registry: every `var.*` key used in a condition (named variants,
-   `variant_sources` / mount `if`, `.. if::` blocks, `<<[...]: ...>>` variant
-   functions) exists in the generated variant data of every product; no
+   `variant_sources` / mount `if`, `.. if::` blocks, `.. when::` branches,
+   `<<[...]: ...>>` variant functions) exists in the generated variant data of every product; no
    `var.build.*` keys (build settings are not variant data, K§0 P3).
 2. No bare booleans: a boolean key is compared explicitly (`== True`).
 3. Branch coverage: every condition is true in at least one product and false
-   in at least one (M§0.4).
+   in at least one (M§0.4); in a `.. choose::` every branch, `otherwise`
+   included, is the first true one in at least one product.
 4. Code conditions: every `CONFIG_*` used in `#if` in src/ and tests/ is a
    Kconfig symbol (or choice option).
 5. Alternatives complete (M§8 rule 5): a need ID defined more than once in the
-   sources (complementary `if` blocks, `#if` / `#else` markers) exists in the
+   sources (`when` / `otherwise` branches, `#if` / `#else` markers) exists in the
    needs.json of every product that contains the defining file. Needs the
    per-product exports `<needs-dir>/<product>/ubc.needs.json`; skipped for
    products not built yet.
@@ -33,6 +34,7 @@ ROOT = Path(__file__).resolve().parent.parent
 VAR_KEY = re.compile(r"\bvar((?:\.[a-z_][a-z0-9_]*)+)")
 ID_OPT = re.compile(r"^\s*:id:\s*(\S+)", re.M)
 IF_DIRECTIVE = re.compile(r"^\s*\.\.\s+if::\s*(.+)$", re.M)
+DIRECTIVE = re.compile(r"^(\s*)\.\.\s+(choose|when|otherwise)::\s*(.*)$")
 INLINE_COND = re.compile(r"<<\[([^\]]+)\]")
 MARKER = re.compile(r"//\s*@need:\s*[^,]*,\s*([A-Z]+_[A-Z][A-Z0-9_]*)")
 CODE_IF = re.compile(r"^\s*#\s*(?:el)?if\b(.*)$", re.M)
@@ -53,6 +55,23 @@ def lookup(data: dict, dotted: str):
     return cur
 
 
+def choose_blocks(text: str) -> list[list[str | None]]:
+    """The branches of every `.. choose::` in order: a `when` condition, or None
+    for `otherwise`."""
+    blocks: list[list[str | None]] = []
+    indent = None
+    for line in text.splitlines():
+        m = DIRECTIVE.match(line)
+        if m and m.group(2) == "choose":
+            indent = len(m.group(1))
+            blocks.append([])
+        elif indent is not None and line.strip() and len(line) - len(line.lstrip()) <= indent:
+            indent = None
+        elif indent is not None and m:
+            blocks[-1].append(m.group(3).strip() if m.group(2) == "when" else None)
+    return blocks
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--needs-dir", type=Path, default=ROOT / "build/site")
@@ -63,6 +82,7 @@ def main() -> int:
     named = cfg.get("needs", {}).get("variants", {})
     docs_dir = ROOT / cfg.get("source", {}).get("dir", ".")
     errors: list[str] = []
+    chooses: list[tuple[str, list[str | None]]] = []
 
     # --- collect conditions ------------------------------------------------------
     conditions: list[tuple[str, str]] = [(f"[needs.variants] {k}", v) for k, v in named.items()]
@@ -75,6 +95,12 @@ def main() -> int:
         rel = f.relative_to(ROOT)
         conditions += [(f"{rel} .. if::", c.strip()) for c in IF_DIRECTIVE.findall(text)]
         conditions += [(f"{rel} <<[...]>>", c.strip()) for c in INLINE_COND.findall(text)]
+        for i, branches in enumerate(choose_blocks(text), 1):
+            chooses.append((f"{rel} choose #{i}", branches))
+            conditions += [(f"{rel} choose #{i} .. when::", c) for c in branches if c is not None]
+
+    def evaluate(expr: str, data: dict) -> bool:
+        return bool(eval(expr, {"__builtins__": {}}, {"var": ns(data), "True": True, "False": False}))
 
     def resolve(cond: str) -> str:
         """Expand a bare named variant (`.. if:: bev`) to its condition."""
@@ -99,13 +125,29 @@ def main() -> int:
         results = {}
         for prod, data in products.items():
             try:
-                results[prod] = bool(eval(expr, {"__builtins__": {}}, {"var": ns(data), "True": True, "False": False}))
+                results[prod] = evaluate(expr, data)
             except Exception as exc:  # noqa: BLE001 - report any unevaluable condition
                 errors.append(f"{where}: cannot evaluate {cond!r}: {exc}")
                 break
         else:
-            if len(set(results.values())) < 2:
+            # a `when` is covered by its choose (first true branch wins), below
+            if ".. when::" not in where and len(set(results.values())) < 2:
                 errors.append(f"{where}: {cond!r} is {next(iter(results.values()))} in every product (no branch coverage)")
+
+    for where, branches in chooses:
+        taken = set()
+        try:
+            for data in products.values():
+                for i, cond in enumerate(branches):
+                    if cond is None or evaluate(resolve(cond), data):
+                        taken.add(i)
+                        break
+        except Exception:  # noqa: BLE001 - already reported above
+            continue
+        for i, cond in enumerate(branches):
+            if i not in taken:
+                label = "otherwise" if cond is None else f"when {cond!r}"
+                errors.append(f"{where}: branch {label} is the first true branch in no product (no branch coverage)")
 
     # --- 4: CONFIG_* in code are Kconfig symbols ---------------------------------------
     kconf = kconfiglib.Kconfig(str(ROOT / "Kconfig"), warn_to_stderr=False)
