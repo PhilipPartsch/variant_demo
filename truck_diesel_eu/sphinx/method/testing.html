@@ -123,8 +123,9 @@ normalised before comparing (<code class="docutils literal notranslate"><span cl
 <ul class="simple">
 <li><p>Each C test prints <code class="docutils literal notranslate"><span class="pre">PASS</span></code> / <code class="docutils literal notranslate"><span class="pre">FAIL</span></code> with its test id; the CTest JUnit
 report of every product is imported as <code class="docutils literal notranslate"><span class="pre">test_result</span></code> needs with the
-<code class="docutils literal notranslate"><span class="pre">product</span></code> field (<code class="docutils literal notranslate"><span class="pre">tools/import_test_results.py</span></code>) and linked to the test
-(<code class="docutils literal notranslate"><span class="pre">results_for</span></code>) and the vehicle requirements it is evidence for.</p></li>
+<code class="docutils literal notranslate"><span class="pre">product</span></code> field (<code class="docutils literal notranslate"><span class="pre">tools/import_test_results.py</span></code>), linked to the test
+(<code class="docutils literal notranslate"><span class="pre">results_for</span></code>) and naming the vehicle requirements it is evidence for
+(field <code class="docutils literal notranslate"><span class="pre">chain_reqs</span></code>).</p></li>
 <li><p>The workflow gaps of every product are imported as <code class="docutils literal notranslate"><span class="pre">gap</span></code> needs
 (<code class="docutils literal notranslate"><span class="pre">tools/import_gaps.py</span></code>).</p></li>
 <li><p>Both are shown per product: the results of other products are gated out.</p></li>

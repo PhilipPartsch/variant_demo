@@ -50,8 +50,8 @@
 <h1>Architecture modelling<a class="headerlink" href="#architecture-modelling" title="Link to this heading">¶</a></h1>
 <p>The architecture describes <strong>what each element is and owns</strong>, in present
 tense, and satisfies the vehicle requirements. One element per distinct
-responsibility; every vehicle requirement is satisfied by at least one CV
-architecture element.</p>
+responsibility; every vehicle requirement is satisfied by at least one
+architecture element or BMS black box.</p>
 <section id="elements">
 <h2>Elements<a class="headerlink" href="#elements" title="Link to this heading">¶</a></h2>
 <ul class="simple">
@@ -84,8 +84,9 @@ tests implement and verify them with one-line markers.</p></li>
 <li><p><strong>Variant-specific elements</strong> sit in the folder of their subsystem or in an
 <code class="docutils literal notranslate"><span class="pre">if</span></code> block (e.g. the door interlock for buses).</p></li>
 <li><p><strong>Alternatives</strong> — the same element with a different design per product —
-share one id, e.g. <code class="docutils literal notranslate"><span class="pre">ARCH_CHG_INLET</span></code>: MCS inlet, roof pantograph or no
-additional interface. The order of the alternatives is a recorded decision.</p></li>
+share one id in the branches of a <code class="docutils literal notranslate"><span class="pre">choose</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">ARCH_CHG_INLET</span></code>: MCS
+inlet, roof pantograph or no additional interface. The first true <code class="docutils literal notranslate"><span class="pre">when</span></code>
+wins, so the order of the branches is a recorded decision.</p></li>
 <li><p><strong>Link variants</strong>: a link that exists only in some products is written with
 a variant function, e.g. <code class="docutils literal notranslate"><span class="pre">:allocates:</span> <span class="pre">&lt;&lt;bev:</span> <span class="pre">BMS_REQ_POWER_DERATING&gt;&gt;</span></code>.</p></li>
 <li><p>In code, alternatives are <code class="docutils literal notranslate"><span class="pre">#if</span></code> / <code class="docutils literal notranslate"><span class="pre">#else</span></code> with the same need id; the

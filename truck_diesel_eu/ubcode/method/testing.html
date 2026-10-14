@@ -249,8 +249,9 @@ normalised before comparing (<code>tools/tests/normalize.py</code>).</p>
       <li>
         <p>Each C test prints <code>PASS</code> / <code>FAIL</code> with its test id; the CTest JUnit
 report of every product is imported as <code>test_result</code> needs with the
-<code>product</code> field (<code>tools/import_test_results.py</code>) and linked to the test
-(<code>results_for</code>) and the vehicle requirements it is evidence for.</p>
+<code>product</code> field (<code>tools/import_test_results.py</code>), linked to the test
+(<code>results_for</code>) and naming the vehicle requirements it is evidence for
+(field <code>chain_reqs</code>).</p>
       </li>
       <li>
         <p>The workflow gaps of every product are imported as <code>gap</code> needs

@@ -218,8 +218,9 @@ reference them and link only to BMS interface needs.</p>
   <section id="workflow-and-review">
     <h2>Workflow and review<a class="headerlink" href="#workflow-and-review" title="Link to this heading">¶</a></h2>
     <p>The stages are configured in <code>[workflow]</code> of <code>ubproject.toml</code>:
-<code>user_stories</code> → <code>reqs</code> → <code>archs</code> / <code>bms_allocation</code> → <code>swreqs</code> →
-<code>code</code> → <code>tests</code>, plus <code>risks</code> and <code>decisions</code>.</p>
+<code>user_stories</code> → <code>reqs</code> → <code>subsystems</code> → <code>archs</code> / <code>bms_allocation</code>
+→ <code>swreqs</code> → <code>code</code> → <code>tests</code> → <code>test_results</code>, plus <code>risks</code> and
+<code>decisions</code>.</p>
     <ul>
       <li>
         <p><code>ubc agent next</code> names the next stage; <code>ubc agent gaps</code> lists what is

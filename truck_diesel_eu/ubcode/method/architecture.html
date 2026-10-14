@@ -126,8 +126,8 @@
   <h1>Architecture modelling<a class="headerlink" href="#architecture-modelling" title="Link to this heading">¶</a></h1>
   <p>The architecture describes <strong>what each element is and owns</strong>, in present
 tense, and satisfies the vehicle requirements. One element per distinct
-responsibility; every vehicle requirement is satisfied by at least one CV
-architecture element.</p>
+responsibility; every vehicle requirement is satisfied by at least one
+architecture element or BMS black box.</p>
   <section id="elements">
     <h2>Elements<a class="headerlink" href="#elements" title="Link to this heading">¶</a></h2>
     <ul>
@@ -171,8 +171,9 @@ tests implement and verify them with one-line markers.</p>
       </li>
       <li>
         <p><strong>Alternatives</strong> — the same element with a different design per product —
-share one id, e.g. <code>ARCH_CHG_INLET</code>: MCS inlet, roof pantograph or no
-additional interface. The order of the alternatives is a recorded decision.</p>
+share one id in the branches of a <code>choose</code>, e.g. <code>ARCH_CHG_INLET</code>: MCS
+inlet, roof pantograph or no additional interface. The first true <code>when</code>
+wins, so the order of the branches is a recorded decision.</p>
       </li>
       <li>
         <p><strong>Link variants</strong>: a link that exists only in some products is written with

@@ -65,8 +65,8 @@ Links and fields
 - ``value``: the product-specific value of a vehicle requirement, written with
   a variant function, e.g. ``<<bus: 250 kW, 450 kW>>``.
 - ``product``: the product a test result or gap belongs to.
-- The BMS fields (``chemistry``, test-result and gap fields) are declared so
-  that imported needs keep them.
+- The BMS fields (``chemistry``, test-result and gap fields) and ``code_url``
+  (nullable) are declared so that imported needs keep them.
 
 Rules
 -----
