@@ -28,7 +28,7 @@ Points that could not be confirmed in the docs are marked **Verify**.
 | 1.1 | List the variation dimensions (e.g. `edition`, `platform`, `features[]`, `safety_level`). Give each a type and its allowed values. |
 | 1.2 | Write the base data to `variants.json`: nested dicts, leaves are str/bool/int/float or uniform lists. |
 | 1.3 | Write one file per shipped configuration, e.g. `variants/<config>.json`, layered on the base. |
-| 1.4 | Use **`[needs] variant_data_file`**: it is the only location sphinx-needs 8.5.0, ubc 0.35.0 and sphinx-mounts 0.2.0 all read; `[variants] data_file` is read by none of them (evaluated in [01-evaluation-result.md](01-evaluation-result.md), A1). |
+| 1.4 | Use **`[variants] data_file`**: read by ubc / ubCode 0.37.0, sphinx-needs 9.0.0 and sphinx-mounts 0.3.0 (re-checked 2026-10-17, plan 998 run 1, UB-04). Until then `[needs] variant_data_file` was the only location all three read (sphinx-needs 8.5.0, ubc 0.35.0, sphinx-mounts 0.2.0; [01-evaluation-result.md](01-evaluation-result.md), A1); sphinx-needs 9.0.0 now calls it the legacy location and warns if both are set. |
 | 1.5 | Write the condition rules: always use the `var.` prefix, no bare booleans (`var.debug == True`), and match types strictly (`var.debug == 0` is *false* for a bool). Use only grammar that both parsers accept: `== != < > in not in and or not`, `.startswith/.endswith`, `is None`. |
 | 1.6 | Optionally define named variants (`needs_variants = {"pro": "var.edition == 'pro'"}`) so frequently used conditions have one name and one definition. |
 
@@ -267,7 +267,7 @@ step starts.
 ## 11. Open points and risks
 
 - **Link syntax:** confirm the exact variant syntax for multi-ID link fields (§4).
-- **Shared config location:** answered — `[needs] variant_data_file` (§1.4).
+- **Shared config location:** answered — `[variants] data_file` (§1.4).
 - **Version requirements:** `var.*` needs an unreleased sphinx-needs build or
   ubc (see `conf.py`), and `if`/`choose`/`variant_sources` have minimum
   versions. Pin the versions.

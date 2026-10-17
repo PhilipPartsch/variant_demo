@@ -25,6 +25,12 @@ needs = "ubc build needs -o build/ubc/needs.json"
 html = "ubc build html -o build/ubc/html"
 report = "ubc report needs_overview.html.j2 -o build/ubc/needs_overview.html"
 
+# --- VARIANTS: active product data ---------------------------------------------
+# Written at CMake configure. Read by ubc / ubCode 0.37.0, sphinx-needs 9.0.0 and
+# sphinx-mounts alike (before: `[needs] variant_data_file`, plan 999 UB-04).
+[variants]
+data_file = "build/active/variants.json"
+
 # --- NEEDS: global settings (as in the BMS) ------------------------------------
 [needs]
 id_required = true
@@ -32,9 +38,6 @@ id_required = true
 id_regex = "^[A-Z]+_[A-Z][A-Z0-9_]*$"
 flow_engine = "graphviz"
 schema_definitions_from_json = "metamodel/schemas.json"
-# Active product (written at CMake configure). Only `[needs] variant_data_file`
-# is read by ubc, the ubCode extension and sphinx-needs alike.
-variant_data_file = "build/active/variants.json"
 # Export imported needs too, so the Sphinx needs.json matches the ubc export
 # (sphinx-needs' default "is_external==False" drops them; ubc keeps them).
 builder_filter = ""

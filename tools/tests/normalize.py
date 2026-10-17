@@ -3,7 +3,8 @@
 Known export differences that are not variant behaviour are removed:
 - fields only one toolchain writes (Sphinx internals, ubc `__source__`);
 - empty values: ubc omits empty links, Sphinx writes [] (plan 999 UB-06);
-- `remote-url` / `local-url` have different meanings (CL-03) and contain the commit / local path;
+- `remote-url` contains the commit (DOC-10 compares it: same URL in both since Sphinx-Codelinks
+  2.0.0, CL-03); `local-url` differs (ubc: absolute path, Sphinx: relative link);
 - `doctype`, `section_name`, `sections`, `docname`, `lineno`: location details, not content;
 - imported (`BMS_*`) needs: `content` (Sphinx rewrites ids in the text, SN-06) and
   `style` (Sphinx drops it, SN-07).
@@ -23,8 +24,8 @@ def norm_value(v):
 EXTERNAL_DIFF = {"content", "style"}
 
 
-def normalize(need: dict, keys=None) -> dict:
+def normalize(need: dict, keys=None, compare=frozenset()) -> dict:
     keys = keys if keys is not None else need.keys()
-    skip = VOLATILE | (EXTERNAL_DIFF if str(need.get("id", "")).startswith("BMS_") else set())
+    skip = (VOLATILE - compare) | (EXTERNAL_DIFF if str(need.get("id", "")).startswith("BMS_") else set())
     out = {k: norm_value(need.get(k)) for k in keys if k not in skip}
     return {k: v for k, v in out.items() if v is not None}

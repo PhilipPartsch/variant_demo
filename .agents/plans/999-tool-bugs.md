@@ -17,7 +17,8 @@ reproduced on a pushed commit).
 Checked on [useblocks.com](https://useblocks.com) and the
 [useblocks reference list](https://x-as-code.useblocks.com/reference/index.html), 2026-10-09.
 Versions raised on 2026-10-14 (plan 20). The findings were made with the older
-versions; entries not marked fixed are not re-tested on the new ones yet.
+versions. All entries were re-tested on the versions below on 2026-10-17
+(plan 998 run 1); each entry has a **Status** line with the result.
 Re-tests on new releases follow [998-tool-bug-recheck.md](998-tool-bug-recheck.md).
 
 | Tool | Kind | Version here | Used | Section |
@@ -45,15 +46,15 @@ documentation, convenience.
 | UB-01 | ubc | medium | export has no `docname`, but absolute local paths (`__source__`, codelinks `local-url`) |
 | UB-02 | ubc | high | one `null` in a declared non-nullable field drops the whole external-needs source |
 | UB-03 | ubc | medium | Python keyword in a `var.*` key accepted; Sphinx cannot evaluate it |
-| UB-04 | ubc | medium | `[variants] data_file` is silently ignored |
+| UB-04 | ubc | medium | `[variants] data_file` is silently ignored — **fixed in 0.37.0** (with Sphinx-Needs 9.0.0) |
 | UB-05 | ubc | medium | `-c` override of a nested table replaces the whole table |
 | UB-06 | ubc | low | empty link lists omitted from `needs.json` (Sphinx writes `[]`) |
-| UB-07 | ubc | medium | backlinks on external needs not filled (`allocated_from`) |
+| UB-07 | ubc | medium | backlinks on external needs not filled (`allocated_from`) — HTML not reproducible on 0.37.0; JSON part = UB-15 |
 | UB-08 | ubc | low | `needs.builder_filter` ignored |
 | UB-09 | ubc | medium | `:variant:` role text stays unresolved in the exported `content` |
 | UB-10 | ubc | low | info `variant_sources_sphinx_unsupported` is outdated / misleading |
 | UB-12 | ubc + Sphinx-Needs | medium | `if` does not resolve named variants (`[needs.variants]`) |
-| UB-13 | ubc + Sphinx-Needs | medium | imported needs of an undeclared type dropped, undeclared fields stripped, silently |
+| UB-13 | ubc + Sphinx-Needs | medium | imported needs of an undeclared type dropped, undeclared fields stripped, silently — not reproducible on 0.37.0 / 9.0.0 (diagnostics exist) |
 | UB-14 | ubc | medium | ubCode HTML: source links as plain text, absolute local path published |
 | UB-15 | ubc | low | `ubc build needs` exports no backlinks (`<link>_back`); Sphinx does |
 | UB-16 | ubc | medium | external source dropped when its `needs_schema` has `default: null` for a field declared non-nullable |
@@ -78,21 +79,23 @@ documentation, convenience.
 | SN-03 | Sphinx-Needs | low | `needs.json` drops external needs by default (`builder_filter`), unlike ubc |
 | SN-04 | — | — | moved to CL-06 |
 | SN-05 | Sphinx-Needs | low | schema `contains` on a list field rejected without `items` (ubc accepts) |
-| SN-06 | Sphinx-Needs | medium | `id_prefix` rewrites ids inside the text of imported needs (plain `str.replace`): literals changed (in this repo), ids corrupted (`BMS_SWBMS_…`, synthetic) |
+| SN-06 | Sphinx-Needs | medium | `id_prefix` rewrites ids inside the text of imported needs (plain `str.replace`): literals changed (in this repo), ids corrupted (`BMS_SWBMS_…`, synthetic) — **changed** in 9.0.0: corruption fixed, literals still prefixed |
 | SN-07 | ubc + Sphinx-Needs | low | imported needs: `style` kept by ubc, dropped by Sphinx-Needs (intent undocumented) |
-| CL-01 | Sphinx-Codelinks | medium | fails in a git worktree (`.git` must be a directory) |
+| CL-01 | Sphinx-Codelinks | medium | fails in a git worktree (`.git` must be a directory) — **fixed in 2.0.0** |
 | CL-02 | Sphinx-Codelinks | medium | `.c` file without compile-database entry silently skipped |
-| CL-03 | Sphinx-Codelinks + ubc | low | `remote-url` / `local-url` mean different things in the two exports (path vs URL, local path) |
+| CL-03 | Sphinx-Codelinks + ubc | low | `remote-url` / `local-url` mean different things in the two exports (path vs URL, local path) — **changed** in 2.0.0: `remote-url` same, `local-url` differs |
 | CL-04 | Sphinx-Codelinks | low | source pages reference `_static/_static/…` (CSS 404): wrong `add_css_file` path |
-| CL-05 | Sphinx-Codelinks | medium | branch ref only in `packed-refs` (after `git gc`): source links to `blob/None`, warnings |
+| CL-05 | Sphinx-Codelinks | medium | branch ref only in `packed-refs` (after `git gc`): source links to `blob/None`, warnings — **fixed in 2.0.0** |
 | CL-06 | Sphinx-Codelinks | medium | duplicate need id in code aborts the build (uncaught `InvalidNeedException`) — **fixed in 2.0.0** |
-| SM-01 | sphinx-mounts + ubc | medium | bare boolean condition: sphinx-mounts aborts the build, ubc warns and drops the rule |
+| CL-07 | Sphinx-Codelinks | low | `Unsupported Git host` warning for every marker when `origin` is not a known host, although `remote_url_pattern` is set |
+| SM-01 | sphinx-mounts + ubc | medium | bare boolean condition: sphinx-mounts aborts the build, ubc warns and drops the rule — **changed** in 0.3.0: same message, severity differs |
 | UA-01 | ubc-action | low | Linux runners only |
 | UA-02 | ubc-action | medium | uses `actions/cache@v4` by tag: blocked in repositories that require SHA-pinned actions; downloads into the workspace, no checksum |
 | STR-01 | Sphinx-Test-Reports | medium | CTest `status="disabled"` reported as `passed` |
 | STR-02 | Sphinx-Test-Reports | medium | converter ignores the configured case prefix; lower-case hash IDs fail a strict `id_regex` |
 | STR-03 | Sphinx-Test-Reports | high | type declared in `[[needs.types]]` and `[test_reports.case]` aborts the Sphinx build |
 | STR-04 | Sphinx-Test-Reports + ubc | low | `test-results` summary `Errors: -1` in Sphinx, `0` in ubc, when the JUnit file has no `errors` attribute |
+| STR-05 | Sphinx-Test-Reports + ubc | low | renamed case directive (`[test_reports.case] directive`): ubc ignores the rename, Sphinx accepts it |
 
 ## 3. ubc / ubCode
 
@@ -121,6 +124,7 @@ documentation, convenience.
   `__source__` only with an explicit `--source-maps`, with paths relative to the project root.
 - **Solution B:** an export option `--portable` (default for `ubc build needs`)
   that strips machine-specific fields and makes paths relative.
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `ubc build needs` with and without `--source-maps` still writes no `docname` and absolute `__source__.path` / `local-url` (rollout-demo-bms@38c9f30; on `main@36f44a4` all 269 needs); no portable option in `--help`.
 
 ### UB-02 One `null` value drops the whole external-needs source
 
@@ -142,6 +146,7 @@ documentation, convenience.
 - **Workaround:** `code_url` declared without `nullable = false`.
 - **Solution A:** coerce `null` to the field default for external needs and report one `info` per field.
 - **Solution B:** validate per need: skip / report only the offending need, never the whole source.
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `nullable = false` on `code_url` (`main@36f44a4`) gives the same `needs.external … could not be read: … null; the source contributed no needs`; 64 needs, 0 BMS.
 
 ### UB-03 Python keyword in a `var.*` key accepted
 
@@ -157,6 +162,7 @@ documentation, convenience.
 - **Workaround:** symbol renamed (`HV__VOLTAGE`, fix `07806d7`); the generator rejects keywords.
 - **Solution A:** ubc warns on Python keywords (and other non-identifiers) in `var.*` paths, matching the Sphinx grammar.
 - **Solution B:** both tools accept item access (`var.hv["class"]`) and document it as the escape for such keys.
+- **Status:** open on ubc 0.37.0 / Sphinx-Needs 9.0.0 (2026-10-17, plan 998 run 1): `var.hv.class` on `main@36f44a4` resolves in ubc (`800`) without a diagnostic; Sphinx `invalid syntax … [needs.dynamic_function]`, value empty.
 
 ### UB-04 `[variants] data_file` silently ignored
 
@@ -174,6 +180,7 @@ documentation, convenience.
 - **Workaround:** `[needs] variant_data_file` only.
 - **Solution A:** report unknown top-level / table keys of `ubproject.toml` against the published schema.
 - **Solution B:** accept `[variants] data_file` as an alias of `[needs] variant_data_file` in all three tools.
+- **Status:** **fixed in ubc 0.37.0 / Sphinx-Needs 9.0.0** (2026-10-17, plan 998 run 1): `[variants] data_file` replacing `[needs] variant_data_file` on `main@36f44a4` gives exports identical to the baseline in both tools (ubc 0.35.0 / 0.36.0 still ignore it). Unknown `[variants]` keys are now reported by both (`variants.datafile` / `needs.variants_unknown_key`); Sphinx-Needs 9.0.0 calls the `[needs]` keys the legacy location and warns `variant_data_location` if both are set. The workaround is removed on `fix/tool-workarounds`: `ubproject.toml` uses `[variants] data_file`.
 
 ### UB-05 `-c` override replaces the whole nested table
 
@@ -187,6 +194,7 @@ documentation, convenience.
 - **Workaround:** gates run after configuring the product (active copies), no `-c` for codelinks.
 - **Solution A:** deep-merge dotted-key overrides into the loaded config.
 - **Solution B:** a separate `--set key=value` (merge) next to `-c <toml>` (replace), clearly documented.
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `-c "codelinks.projects.vcu.analyse.preprocessor.compile_commands = '…'"` on `main@36f44a4` replaces the whole `codelinks.projects` table, not only `vcu`: `Unknown codelinks project: "chg"` (also `chg_tests`, `vcu_tests`), 255 needs, `IMPL_VCU_*` gone.
 
 ### UB-06 Empty link lists omitted from `needs.json`
 
@@ -198,6 +206,7 @@ documentation, convenience.
 - **Workaround:** comparisons treat absent = `[]` (`tools/eval_expect.py`).
 - **Solution A:** ubc writes every declared link with `[]` (as Sphinx).
 - **Solution B:** both tools honour one `needs_json_remove_defaults`-style switch and document the format.
+- **Status:** open on ubc 0.37.0 / Sphinx-Needs 9.0.0 (2026-10-17, plan 998 run 1): `truck_diesel_eu` on `main@36f44a4`: `ARCH_VCU_POWER_MGMT.allocates` absent in ubc, `[]` in Sphinx; 447 empty list fields differ. Same class: 77 imported BMS needs without `content` (52 test, 25 impl) have no `content` key in ubc, `""` in Sphinx.
 
 ### UB-07 Backlinks on external needs not filled
 
@@ -209,6 +218,7 @@ documentation, convenience.
 - **Workaround:** the BMS usage report relies on the Sphinx output.
 - **Solution A:** compute backlinks for external needs like for local ones.
 - **Solution B:** if intentional, document it and offer a filter (`allocated_from` via a query function) usable in needtables.
+- **Status:** not reproducible (HTML part) on ubc 0.37.0 and 0.35.0 (2026-10-17, plan 998 run 1): `ubc build html` `subsystems/bms/integration.html` shows `allocated_from` of `BMS_REQ_POWER_DERATING` (`ARCH_VCU_POWER_MGMT ; BB_POWER_LIMITS`) at `25b77bd` and `main@36f44a4`, as Sphinx. The input is in doubt. Still open: ubc's `needs.json` has no back key for it (Sphinx `allocates_back`) — that is UB-15.
 
 ### UB-08 `needs.builder_filter` ignored
 
@@ -220,6 +230,7 @@ documentation, convenience.
 - **Workaround:** `builder_filter = ""` so that Sphinx matches ubc (SN-03).
 - **Solution A:** honour `builder_filter` in `ubc build needs`.
 - **Solution B:** report it as unsupported (`info`) so the difference is visible.
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `-c 'needs.builder_filter = "is_external==False"'` and removing `builder_filter = ""` both export 269 needs, 205 BMS, no diagnostic.
 
 ### UB-09 `:variant:` role text unresolved in the exported `content`
 
@@ -231,6 +242,7 @@ documentation, convenience.
 - **Workaround:** none; values must be exposed as fields by the producing project.
 - **Solution A:** resolve roles in `content` when exporting a concrete variant (option `--resolve-variants`).
 - **Solution B:** export `content` raw plus `content_resolved`.
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `REQ_CELL_VOLTAGE_LIMITS.content` still contains `:variant:\`pack.cell_v_min\``; no option to resolve it.
 
 ### UB-10 Outdated info `variant_sources_sphinx_unsupported`
 
@@ -242,6 +254,7 @@ documentation, convenience.
 - **Workaround:** ignored.
 - **Solution A:** detect `sphinx_mounts` (version) in `conf.py` and drop the info.
 - **Solution B:** word it as "requires sphinx-mounts ≥ 0.2.0" and show it once (`ubc check --explain`), not on every run.
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): every `ubc check` on `main@36f44a4` prints the same `info[config.variant_sources_sphinx_unsupported] … do not run sphinx-build -W`, although sphinx-mounts 0.3.0 and `-W` pass.
 
 ### UB-12 `if` does not resolve named variants
 
@@ -253,6 +266,7 @@ documentation, convenience.
 - **Workaround:** spelled-out conditions in every `if`.
 - **Solution A:** resolve bare names in `if` (and `variant_sources` / mount `if`) against `[needs.variants]` first.
 - **Solution B:** explicit syntax, e.g. `.. if:: variant('mcs')`, in both tools.
+- **Status:** open on ubc 0.37.0 / Sphinx-Needs 9.0.0 (2026-10-17, plan 998 run 1): `.. if:: mcs` (`docs/vehicle/requirements.rst:82`, `main@36f44a4`): ubc `if.invalid_expression … Unknown variant key: var.mcs`, Sphinx `name 'mcs' is not defined [needs.if]`; `REQ_MCS_CHARGING` missing in both.
 
 ### UB-13 Imported needs of undeclared types / fields silently lost
 
@@ -264,7 +278,7 @@ documentation, convenience.
 - **Workaround:** the CV metamodel declares the full BMS vocabulary.
 - **Solution A:** warn per external source with counts of dropped needs / stripped fields.
 - **Solution B:** keep unknown types / fields read-only (as "external type") instead of dropping them.
-
+- **Status:** not reproducible on ubc 0.37.0 / Sphinx-Needs 9.0.0, and also not on ubc 0.35.0 / Sphinx-Needs 8.5.0 (2026-10-17, plan 998 run 1): at `main@e744d72` and `main@36f44a4`, removing type `test_result` gives one diagnostic per need in both tools (ubc `needs.external Invalid need type: test_result`, Sphinx `[needs.load_external_need]`), removing field `chemistry` one per source (ubc `unknown keys … dropped`, Sphinx `[needs.unknown_external_keys]`). The needs are still lost, but not silently; the original input is in doubt. Workaround stays (the needs are wanted).
 
 ### UB-14 ubCode HTML: source links as plain text, with the local path
 
@@ -287,6 +301,7 @@ documentation, convenience.
 - **Workaround:** none yet; to be handled before publishing (plan 6, e.g. `set_local_url = false` for the CI build).
 - **Solution A:** render URL fields (`remote-url`, `local-url`, fields with `needs_string_links`) as links, and map `local-url` to a generated source page as Sphinx does.
 - **Solution B:** an option for `ubc build html` to drop / rewrite machine-specific fields (`local-url`) for published builds.
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `ubcode/subsystems/vcu/code_trace.html` (`main@36f44a4`) shows `local-url` (`file:///…`) and `remote-url` as plain text in `<td>`; also in `chg`.
 
 ### UB-15 `ubc build needs` exports no backlinks
 
@@ -298,6 +313,7 @@ documentation, convenience.
 - **Workaround:** the tests compute backlinks from the outgoing links (`tools/tests/system_model.py`, `has_part` from `part_of`); the parity check compares ids only.
 - **Solution A:** export backlinks like Sphinx-Needs (`<link>_back`).
 - **Solution B:** an option of `ubc build needs` to include backlinks, documented as a known difference otherwise.
+- **Status:** open on ubc 0.37.0 / Sphinx-Needs 9.0.0 (2026-10-17, plan 998 run 1): `REQ_MAX_CHARGE_POWER` (`main@36f44a4`, truck_bev_nmc_eu): no `*_back` keys in ubc; Sphinx `satisfies_back`, `covers_back`.
 
 ### UB-16 External source dropped: `needs_schema` `default: null` vs non-nullable field
 
@@ -317,6 +333,7 @@ documentation, convenience.
   default (both tools import everything, ubc warning-free), or strip `needs_schema`.
 - **Solution A:** read `default: null` as "no default"; the declared field wins.
 - **Solution B:** on a schema mismatch keep the needs, ignore the block, and warn once.
+- **Status:** open on ubc 0.37.0 / Sphinx-Needs 9.0.0 with sphinx-test-reports 3.0.0 / ub-test-reports 1.1.0 (2026-10-17, plan 998 run 1): converter output as external source with 13 fields `nullable = false`: 13 × `needs.external … default could not be read: … null; the source contributed no needs`, 0 needs in ubc, 3 in Sphinx. Workaround still works.
 
 ### UB-17 `needimport`: `id_regex` checked by Sphinx only (resolved)
 
@@ -333,6 +350,7 @@ documentation, convenience.
 - **Workaround:** none needed now; a schema rule on the id can replace the regex if wanted.
 - **Solution A:** (resolved.) If an id check for imports is wanted again: an opt-in option in both tools.
 - **Solution B:** a schema rule on `id` that selects imported needs.
+- **Re-check:** still resolved on ubc 0.37.0 / Sphinx-Needs 9.0.0 (2026-10-17, plan 998 run 1): `needimport` with `:id_prefix: TRES_` and a strict `id_regex`: 6 needs in both tools.
 
 ### UB-18 Sphinx-Test-Reports directives unknown to ubc (fixed in 0.37.0)
 
@@ -346,6 +364,7 @@ documentation, convenience.
 - **Workaround:** keep `tools/import_test_results.py`.
 - **Solution A:** ubc supports the STR directives (done in 0.37.0).
 - **Solution B:** ubc runs the STR conversion for an external source that is a JUnit file.
+- **Re-check:** still fixed on ubc 0.37.0 (2026-10-17, plan 998 run 1): `test-file` / `test-results` without `block.directive_unknown`; the same 8 needs in ubc and Sphinx.
 
 ### UB-19 Local need outside `id_regex`: ubc keeps it, Sphinx drops it
 
@@ -359,6 +378,7 @@ documentation, convenience.
 - **Workaround:** none needed; the parity check and `-W` / `--deny warning` catch it.
 - **Solution A:** ubc drops the need too, like Sphinx.
 - **Solution B:** document the difference; same diagnostic in both.
+- **Status:** open on ubc 0.37.0 / Sphinx-Needs 9.0.0 (2026-10-17, plan 998 run 1): `TEST_bad` on `main@36f44a4`: ubc `needs.id_regex` warning and 270 needs, Sphinx `[needs.create_need]` and 269 needs.
 
 ## 4. Pharaoh (`ubc agent`)
 
@@ -377,6 +397,7 @@ documentation, convenience.
 - **Workaround:** none; gaps imported honestly (`docs/_global/gaps.rst`).
 - **Solution A:** key verdicts by id + reviewed fingerprint (several verdicts per file, `verdict-check` picks the one matching the current fingerprint).
 - **Solution B:** key by id + variant (e.g. hash of the active variant data or `meta.product`), `<ID>@<variant>.json`.
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `verdict-submit REQ_ENERGY_SOURCE` under truck_bev_nmc_eu then truck_diesel_eu (`25b77bd`): one `REQ_ENERGY_SOURCE.json`, the other product is `outdated` again.
 
 ### PH-02 Review fingerprint ignores resolved values and link variants
 
@@ -392,6 +413,7 @@ documentation, convenience.
 - **Workaround:** none.
 - **Solution A:** fingerprint the resolved need (fields after variant functions, links after link variants) — together with PH-01 A.
 - **Solution B:** fingerprint raw source + the values of all `var.*` keys the need references.
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `REQ_MAX_CHARGE_POWER` has fingerprint `f2b2b642` in truck_bev_nmc_eu and bus_bev_lfp_eu (value 1000 kW / 350 kW); ubc 0.35.0 gives the same hash today, so the changed hash comes from the content.
 
 ### PH-03 Fingerprint follows parents only one level
 
@@ -408,6 +430,7 @@ documentation, convenience.
 - **Workaround:** none.
 - **Solution A:** fingerprint only the need itself; signal parent changes separately (`parent_changed`).
 - **Solution B:** include the full upstream chain, consistently, and combine with PH-01 so variants do not collide.
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `ARCH_VCU_ENERGY_DISPLAY` and `DEC_CHARGING_INLET_PRIORITY` flip per product, the grandchild `SWREQ_VCU_ENERGY_DISPLAY` stays `20b5c8b7` in all three.
 
 ### PH-04 Backward trace attributed to one of two stages
 
@@ -421,6 +444,7 @@ documentation, convenience.
 - **Workaround:** `bms_allocation` trace `direction = "outgoing"`.
 - **Solution A:** evaluate backward obligations per stage (count only the producing type of that stage) and report the stage in the gap.
 - **Solution B:** `config-validate` warns when two stages declare the same (link, up, direction both).
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `satisfies` trace `direction = "both"` in `bms_allocation` (`25b77bd`, bus_bev_lfp_eu): `agent gaps` reports `REQ_DOOR_DRIVE_INTERLOCK … trace_backward`.
 
 ### PH-05 Workflow traces apply per need type
 
@@ -485,6 +509,7 @@ documentation, convenience.
 - **Solution B:** attribute needs to the stage whose route they live in;
   traces apply per stage, not per type. Supplement for both: `config-validate`
   warns when two stages declare the same `produces`.
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): the snippets on `main@37257e1` give `ARCH_BMS_PROBE … refines … trace_backward`; `config-validate` still accepts two stages producing `arch` without a warning.
 
 ### PH-06 Stage counts include imported needs
 
@@ -497,6 +522,7 @@ documentation, convenience.
 - **Workaround:** check with `-c 'needs.external_needs = []'` or in the diesel product.
 - **Solution A:** apply `exempt_status` to stage counts and `next`.
 - **Solution B:** exclude `is_external` needs from all workflow counts by default.
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `main@e744d72`, truck_bev_nmc_eu: `agent status` `user_stories=done/5 …`, `agent next` → `bms_allocation`; with `-c 'needs.external_needs = []'` → `user_stories`.
 
 ### PH-07 `review-brief` lists exempt needs
 
@@ -507,6 +533,7 @@ documentation, convenience.
 - **Workaround:** reviewer instruction "skip `BMS_*`".
 - **Solution A:** apply `exempt_status` in `review-brief`.
 - **Solution B:** list them separately as `exempt` for transparency.
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `review-brief arch` (`25b77bd`, truck_bev_nmc_eu) lists 18 needs, 15 of them `BMS_ARCH_*`.
 
 ### PH-08 `agent audit` omits fields and links
 
@@ -516,6 +543,7 @@ documentation, convenience.
 - **Wrong output:** reviewers had to use `ubc query filter … --field value` and read `build/active/bms.needs.json`.
 - **Solution A:** include all declared fields (resolved) and all links in `trace`.
 - **Solution B:** `--fields all` / `--links all` options, documented in the review skills.
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `agent audit --id SWREQ_CHG_SESSION_START` has `trace.outgoing: {}` (`refines` only under `links`); `--id REQ_MAX_CHARGE_POWER` has no `value` / `tags`.
 
 ### PH-09 `doctor` checks only the `.claude` copy of project skills
 
@@ -526,6 +554,7 @@ documentation, convenience.
 - **Workaround:** `tools/check_skill_mirrors.py`.
 - **Solution A:** mirror check for every skill found in any host location.
 - **Solution B:** `ubc agent skill add <path>` registering project skills in the manifest (then the existing mirror check applies).
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): changing or deleting the `.agents` copy of `draft-allocation` → `doctor` `ok: true`; only deleting the `.claude` copy is an error.
 
 ### PH-05 addendum: membership links (plan 7)
 
@@ -537,6 +566,8 @@ are `bms_block`s of stage `bms_allocation`. Workaround: `direction =
 "outgoing"` in both stages, "every subsystem has a part" as the schema rule
 `coverage-subsystem-part_of-back` (counts both types).
 
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): marker now `main@36f44a4` `ubproject.toml:606` (`model/system` is merged): `part_of` trace `both` gives `SUB_BMS … part_of … trace_backward`.
+
 ### PH-10 Brief and skill documentation gaps
 
 - **Tool:** ubc 0.35.0 + installed `review-*` skills (vmodel v9)
@@ -544,6 +575,7 @@ are `bms_block`s of stage `bms_allocation`. Workaround: `direction =
 - **Summary:** `submit_command` omits `-p <project>` although the skills require it; `verdict-check` returns a `stale` bucket (verdict of a need absent in the product) not described in the skills; exit code 1 whenever `ok` is false.
 - **Solution A:** include `-p` in `submit_command`; document `stale` (useful for product lines).
 - **Solution B:** `verdict-check --variant-aware` treating `stale` explicitly as "not applicable".
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `submit_command` still without `-p`; `stale` documented only in the CLI `--help`, not in the review skills of preset v21.
 
 ### PH-11 `review-brief --ids` comma list rejected
 
@@ -555,6 +587,7 @@ are `bms_block`s of stage `bms_allocation`. Workaround: `direction =
 - **Workaround:** space-separated ids without a type.
 - **Solution A:** accept comma-separated ids (and a type as a filter together with `--ids`).
 - **Solution B:** correct the skills (`--ids <ID> <ID> …`, no type).
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `--ids A,B` → `unknown_need` with the joined id; `arch --ids A` → `ambiguous_selection`; the v21 `review-arch/SKILL.md:49` still documents `--ids <ID,...>`.
 
 ### PH-12 `config-validate`: a type declared by `[test_reports]` counts as undeclared
 
@@ -576,6 +609,7 @@ are `bms_block`s of stage `bms_allocation`. Workaround: `direction =
   twice is no workaround: it aborts Sphinx (STR-03).
 - **Solution A:** `config-validate` accepts the types `[test_reports]` declares (file, suite, case), as ubc's build does.
 - **Solution B:** fix STR-03, so the type can stay in `[[needs.types]]`.
+- **Status:** open on ubc 0.37.0 with sphinx-test-reports 3.0.0 / ub-test-reports 1.1.0 (2026-10-17, plan 998 run 1): `config-validate` exits 1 with `undeclared_type … test_result`; `doctor` `config-validity` error. Workaround (`-c 'needs.types = […]'`) still works.
 
 ### PH-13 Outgoing trace obligation met by any link
 
@@ -593,6 +627,7 @@ are `bms_block`s of stage `bms_allocation`. Workaround: `direction =
 - **Workaround:** the schema rule `trace-test_result-results_for` (min 1) catches it in `ubc check` and Sphinx.
 - **Solution A:** check the declared trace link per need of the produced type, not "has any link".
 - **Solution B:** report `trace_forward` gaps for needs that lack the declared outgoing link.
+- **Status:** open on ubc 0.37.0 (2026-10-17, plan 998 run 1): `TRES_MANUAL` with only `:links:` meets the `results_for` obligation: `agent gaps` `[]`, stage `test_results` done; without `:links:` it is an orphan.
 
 ## 5. Sphinx-Needs
 
@@ -606,6 +641,7 @@ are `bms_block`s of stage `bms_allocation`. Workaround: `direction =
 - **Workaround:** `suppress_warnings = ["sn_schema_warning.network_contains_too_few"]` (as the BMS).
 - **Solution A:** map severities: `violation` → warning (fails `-W`), `warning` / `info` → log only; configurable `needs_schema_warn_level`.
 - **Solution B:** a per-rule `fail_build` flag.
+- **Status:** open on Sphinx-Needs 9.0.0 (2026-10-17, plan 998 run 1): without `suppress_warnings` and with a req lacking an arch (`25b77bd`), `-W` fails on `[sn_schema_warning.network_contains_too_few]`. `warning` and `info` are still logged as Sphinx warnings; `violation` is now an error.
 
 ### SN-02 `needs_from_toml` overrides `needs_external_needs` in `conf.py`
 
@@ -617,6 +653,7 @@ are `bms_block`s of stage `bms_allocation`. Workaround: `direction =
 - **Workaround:** one `base_url` per BMS version.
 - **Solution A:** let `conf.py` override TOML (documented precedence).
 - **Solution B:** variant functions in `base_url` (`<<[var.bms.chemistry == 'lfp']: …/lfp, …/nmc>>`), supported by ubc as well.
+- **Status:** open on Sphinx-Needs 9.0.0 (2026-10-17, plan 998 run 1): a `needs_external_needs` `base_url` in `conf.py` (`main@e744d72`) is never used; `external_url` comes from the TOML.
 
 ### SN-03 `needs.json` drops external needs by default
 
@@ -626,6 +663,7 @@ are `bms_block`s of stage `bms_allocation`. Workaround: `direction =
 - **Workaround:** `builder_filter = ""`.
 - **Solution A:** align the default with ubc (or ubc with Sphinx) and document it.
 - **Solution B:** see UB-08 — both tools honour the same option.
+- **Status:** open on Sphinx-Needs 9.0.0 (2026-10-17, plan 998 run 1): without `builder_filter = ""` (`main@e744d72`) Sphinx `needs.json` has 0 BMS needs, ubc 205; the default is still `is_external==False`.
 
 ### SN-04 Moved to CL-06
 
@@ -640,6 +678,7 @@ warning); the abort comes from Sphinx-Codelinks — see CL-06.
 - **Wrong output:** sphinx-needs rejects the schema; ubc validates it. Expected: same acceptance (valid JSON Schema).
 - **Solution A:** accept `contains` without `items`.
 - **Solution B:** ubc applies the same restriction and reports it.
+- **Status:** open on Sphinx-Needs 9.0.0 (2026-10-17, plan 998 run 1): without `items` in `alloc-target-interface` (`main@e744d72`): `NeedsConfigException … not valid under any of the schemas listed in the 'anyOf' keyword`; `ubc check` accepts it.
 
 ### SN-06 `id_prefix` rewrites ids inside the text of imported needs
 
@@ -690,6 +729,7 @@ warning); the abort comes from Sphinx-Codelinks — see CL-06.
   (longest match first) and skip literals / roles; same rule in ubc.
 - **Solution B:** leave `content` untouched and rewrite only `:need:` references
   (and links); document the behaviour of both tools.
+- **Status:** changed in Sphinx-Needs 9.0.0 (2026-10-17, plan 998 run 1): the corruption is fixed — `import_prefix_link_edit()` now replaces whole ids, longest first, in one pass (synthetic case: `BMS_SWBMS_…` no longer produced). Still open: ids inside literals are prefixed (``ubc agent next --id BMS_REQ_CELL_BALANCING_WINDOW`` at `25b77bd` and `main@36f44a4`); ubc keeps the text. DOC-10 keeps ignoring `content`.
 
 ### SN-07 Imported needs: `style` kept by ubc, dropped by Sphinx-Needs
 
@@ -709,6 +749,7 @@ warning); the abort comes from Sphinx-Codelinks — see CL-06.
   in ubc too) and document the list of fields that are not imported.
 - **Solution B:** a per-source option in `[[needs.external_needs]]` (e.g.
   `keep_fields = ["style"]`), honoured by both tools.
+- **Status:** open on ubc 0.37.0 / Sphinx-Needs 9.0.0 (2026-10-17, plan 998 run 1): `BMS_GAP_REQ_CELL_BALANCING_WINDOW_NO_SATISFIES_BACK` `style` `red_bar` in ubc, `None` in Sphinx (`main@36f44a4`).
 
 ## 6. Sphinx-Codelinks
 
@@ -729,15 +770,17 @@ warning); the abort comes from Sphinx-Codelinks — see CL-06.
 - **Workaround:** build in the main checkout.
 - **Solution A:** ask git (`git rev-parse --show-toplevel`, `git rev-parse HEAD`, `git remote get-url origin`) instead of reading `.git` by hand — covers worktrees, submodules, packed refs (CL-05).
 - **Solution B:** accept a `.git` file and follow its `gitdir:` (plus `commondir` for config and refs); offer config options for repository root / commit / remote URL (useful in CI without `.git`).
+- **Status:** **fixed in Sphinx-Codelinks 2.0.0** (2026-10-17, plan 998 run 1): `git worktree add --detach` and `tools/build_product.sh truck_diesel_eu` on `main@36f44a4`: all steps ok, 0 warnings, links `blob/36f44a4…`; also on a worktree branch with its own commit. `analyse/utils.py` follows the `.git` file to `gitdir` / `commondir`.
 
 ### CL-02 `.c` file without compile-database entry skipped silently
 
 - **Tool:** Sphinx-Codelinks 1.4.0 and ubc 0.35.0 (preprocessor with explicit `compile_commands`)
-- **Marker:** `main@e744d72` `tests/CMakeLists.txt` — remove `add_executable(test_vcu …)`.
+- **Marker:** `main@36f44a4` `tests/CMakeLists.txt` — `foreach(component IN ITEMS vcu chg eng)` → `IN ITEMS chg eng` (old marker `main@e744d72` no longer reproduces, plan 998 run 1).
 - **Wrong output:** markers of `tests/vcu/test_vcu.c` disappear without a message. Expected: a warning "file not in compile database".
 - **Workaround:** every traced `.c` file is built by CMake.
 - **Solution A:** warn per skipped file.
 - **Solution B:** fall back to `includes` / `defines` (as for headers) with an info.
+- **Status:** open on Sphinx-Codelinks 2.0.0 / ubc 0.37.0 (2026-10-17, plan 998 run 1): the marker `main@e744d72` no longer reproduces (its `tests/vcu/test_vcu.c` has no markers). New marker `main@36f44a4` `tests/CMakeLists.txt`: `foreach(component IN ITEMS vcu chg eng)` → `IN ITEMS chg eng`; all `TEST_VCU_*` disappear in both tools without a message about `test_vcu.c`.
 
 ### CL-03 `remote-url` / `local-url`: different meaning in the two exports
 
@@ -769,6 +812,7 @@ warning); the abort comes from Sphinx-Codelinks — see CL-06.
   project-relative `local-url`; the HTML builders derive their links from these.
 - **Solution B:** keep the raw `path#Lline` in one field (`source_path`) and the
   resolved URL in another (`remote-url`), in both tools; never export `file://` paths.
+- **Status:** changed in Sphinx-Codelinks 2.0.0 (2026-10-17, plan 998 run 1): `remote-url` is now the same full GitHub URL in both exports (`blob/<commit>/src/vcu/energy_display.c#L8`). Still open: `local-url` is `file:///<absolute path>` in ubc and `../../vcu/energy_display.c#L8` in Sphinx. DOC-10 compares `remote-url` now (`fix/tool-workarounds`, `PARITY` in `tools/tests/test_l3_docs.py`); `local-url` stays ignored.
 
 ### CL-04 Broken CSS path on generated source pages
 
@@ -794,6 +838,7 @@ warning); the abort comes from Sphinx-Codelinks — see CL-06.
 - **Solution A:** `app.add_css_file("source_tracing/ub_sct.css")` (one-line fix).
 - **Solution B:** register the CSS once in `setup()` / `builder_inited` for all
   pages (it is tiny) instead of per page in `html-page-context`.
+- **Status:** open on Sphinx-Codelinks 2.0.0 (2026-10-17, plan 998 run 1): all 8 source pages reference `../_static/_static/source_tracing/ub_sct.css` (`source_tracing.py:171`).
 
 ### CL-05 Packed refs: warnings and links to `blob/None`
 
@@ -823,7 +868,7 @@ warning); the abort comes from Sphinx-Codelinks — see CL-06.
 - **Solution A:** as CL-01 A — let git resolve the revision (`git rev-parse HEAD`).
 - **Solution B:** fall back to `.git/packed-refs` when the loose ref is missing,
   and never format the pattern with `None` (omit the remote link and warn once).
-
+- **Status:** **fixed in Sphinx-Codelinks 2.0.0** (2026-10-17, plan 998 run 1): with the branch only in `packed-refs` (`git pack-refs --all` at `25b77bd`, `git gc` on `main@36f44a4`) `sphinx-build -W` passes, links `blob/<commit>`; `get_current_rev()` falls back to `_packed_ref()`. The `blob/None` note of WEB-03 is removed (`fix/tool-workarounds`).
 
 ### CL-06 Duplicate need id in code aborts the build
 
@@ -857,6 +902,28 @@ warning); the abort comes from Sphinx-Codelinks — see CL-06.
 - **Solution A:** wrap `add_need()` in `src_trace.py` with `try / except InvalidNeedException` and log a warning with the marker's file and line.
 - **Solution B:** check marker ids for duplicates in the analysis step (before `add_need`) and report all duplicates of a project at once.
 - **Status:** fixed in Sphinx-Codelinks 2.0.0 (2026-10-14, Solution A): `src/vcu/energy_display.c:15: WARNING: one-line need 'IMPL_VCU_ENERGY_DISPLAY' is already defined in document 'subsystems/vcu/code_trace': not created again … [codelinks.duplicate_need]`, the build continues (fails only with `-W`). Test NEG-16, `feat/choose@f9a2deb`.
+- **Re-check:** still fixed on Sphinx-Codelinks 2.0.0 (2026-10-17, plan 998 run 1): NEG-16 (`tools/tests/test_l5_negative.py:134`) passes in the full run.
+
+### CL-07 `Unsupported Git host` warning although `remote_url_pattern` is set
+
+- **Tool:** Sphinx-Codelinks 2.0.0 (same code in 1.4.0, not run); ubc 0.37.0 is not affected
+- **Marker:** `main@36f44a4`, any product with code markers, e.g. `truck_bev_nmc_eu`;
+  `git remote set-url origin <local path>` (as after `git clone --no-local`, or with
+  a self-hosted host). Found 2026-10-17 in plan 998 run 1 (full build in a shadow clone).
+- **Summary:** `analyse/utils.py` `form_https_url()` parses the host of `origin`
+  for every marker, also when the project sets `remote_url_pattern`. An unknown
+  host gives a warning per marker without a location; the links themselves are
+  correct, because the configured pattern is used.
+- **Input:** `git remote set-url origin /path/to/variant_demo`, then
+  `tools/build_product.sh truck_bev_nmc_eu` (Sphinx with `-W`).
+- **Wrong output:** 14 × `WARNING: Unsupported Git host: None [codelinks.git_host]`
+  (50 over four products), `build finished with problems … (with warnings treated as errors)`;
+  `remote-url` is `https://github.com/PhilipPartsch/variant_demo/blob/36f44a4…/src/vcu/energy_display.c#L8`
+  anyway. ubc gives no warning and the same URL. Expected: no warning when
+  `remote_url_pattern` is set.
+- **Workaround:** keep `origin` on the GitHub URL (plan 998 §4.1 sets it in the shadow clone).
+- **Solution A:** skip the host lookup when `remote_url_pattern` is set.
+- **Solution B:** warn once per project, with the configuration as location.
 
 ## 7. sphinx-mounts
 
@@ -868,6 +935,7 @@ warning); the abort comes from Sphinx-Codelinks — see CL-06.
 - **Workaround:** always `== True` (enforced by `tools/check_variants.py`).
 - **Solution A:** accept bare booleans in both.
 - **Solution B:** same diagnostic code and severity in both (error), pointing to `== True`.
+- **Status:** changed in sphinx-mounts 0.3.0 / ubc 0.37.0 (2026-10-17, plan 998 run 1): both tools now give the same message (`var.charging.mcs` is used as a condition on its own … compare it, e.g. `== True`), but sphinx-mounts still aborts (`VariantRuleError`, exit 2) while ubc warns `config.variant_source_invalid_condition` and excludes the rule. `tools/check_variants.py` stays.
 
 ## 8. useblocks/ubc-action
 
@@ -878,6 +946,7 @@ warning); the abort comes from Sphinx-Codelinks — see CL-06.
 - **Summary:** the action installs ubc only on Linux runners; macOS / Windows jobs cannot run `ubc`.
 - **Solution A:** support macOS / Windows (the extension already ships ubc for them).
 - **Solution B:** document a manual install route (download URL per platform, checksum).
+- **Status:** open (2026-10-17, plan 998 run 1): `useblocks/ubc-action` main is still `393f60b` (tag 0.1); `action.yml` fails on non-Linux runners.
 
 ### UA-02 Unpinned nested action, binary in the workspace
 
@@ -896,6 +965,7 @@ warning); the abort comes from Sphinx-Codelinks — see CL-06.
 - **Workaround:** download `ubc` directly from the same URL into `$RUNNER_TEMP`, check a pinned SHA-256 (`ci/pages`, `.github/actions/setup/action.yml`).
 - **Solution A:** pin `actions/cache` (and every nested action) to a commit SHA inside ubc-action.
 - **Solution B:** publish checksums next to the binaries and let the action verify them and install outside the workspace (`$RUNNER_TOOL_CACHE`).
+- **Status:** open (2026-10-17, plan 998 run 1): unchanged `393f60b`; `actions/cache@v4` by tag, download into the workspace, no checksum.
 
 ## 9. Sphinx-Test-Reports
 
@@ -914,6 +984,7 @@ inputs named.
 - **Workaround:** none needed yet (no disabled tests).
 - **Solution A:** treat every `status` other than `run` (`disabled`, `notrun`) as not passed.
 - **Solution B:** a CTest dialect (as for googletest), detected by `cmake_labels` / `<testsuite name="(empty)">`.
+- **Status:** open on sphinx-test-reports 3.0.0 / ub-test-reports 1.1.0 / ubc 0.37.0 (2026-10-17, plan 998 run 1): CTest `status="disabled"` → `passed` in the converter and in the `test-file` directive (ubc and Sphinx); `junitparser.py` unchanged.
 
 ### STR-02 Converter ignores the configured prefix; IDs fail a strict `id_regex`
 
@@ -925,6 +996,7 @@ inputs named.
 - **Workaround:** `[[needs.external_needs]] id_prefix`; neither tool checks imported ids (UB-17).
 - **Solution A:** the converter uses `[test_reports.case].prefix` and the directives' id scheme.
 - **Solution B:** an id template option (e.g. `{prefix}{name}`) for cases whose name is already unique.
+- **Status:** open on sphinx-test-reports 3.0.0 / ub-test-reports 1.1.0 (2026-10-17, plan 998 run 1): with `[test_reports.case] prefix = "TRES_"` the converter writes `test_result__TEST_A__TEST_A_isagy`.
 
 ### STR-03 Type declared in `[[needs.types]]` and `[test_reports.case]` aborts Sphinx
 
@@ -936,6 +1008,7 @@ inputs named.
 - **Workaround:** declare the type only in `[test_reports.case]` (costs PH-12).
 - **Solution A:** skip `add_need_type` when the type already exists with compatible settings.
 - **Solution B:** `[test_reports.case]` references an existing `[[needs.types]]` entry.
+- **Status:** open on sphinx-test-reports 3.0.0 / ub-test-reports 1.1.0 / Sphinx-Needs 9.0.0 (2026-10-17, plan 998 run 1): `test_result` in `[[needs.types]]` and `[test_reports.case]`: `NeedsApiConfigException: test_result already exists as need type`, exit 2; ubc accepts it.
 
 ### STR-04 `test-results` summary: `Errors: -1` in Sphinx, `0` in ubc
 
@@ -947,3 +1020,25 @@ inputs named.
 - **Workaround:** use a `needtable` instead of `test-results`.
 - **Solution A:** count `<error>` children when the attribute is missing (as ubc does).
 - **Solution B:** show "n/a" for a missing attribute in both tools.
+- **Status:** open on sphinx-test-reports 3.0.0 / ub-test-reports 1.1.0 / ubc 0.37.0 (2026-10-17, plan 998 run 1): `test-results` shows `Errors: -1` in Sphinx, `Errors: 0` in ubc; `Skips: 0` in both although the file has `disabled="1"` (STR-01).
+
+
+### STR-05 Renamed case directive: ubc ignores the rename, Sphinx accepts it
+
+- **Tool:** sphinx-test-reports 3.0.0 with Sphinx-Needs 9.0.0, ubc 0.37.0
+- **Marker:** scratch copy based on `main@36f44a4` (plan 110 §4.3 `dir` project).
+  Found 2026-10-17 in plan 998 run 1.
+- **Summary:** `[test_reports.case] directive` renames the case directive in
+  Sphinx; ubc keeps `test-case` and does not know the new name, so needs written
+  with the new directive exist only in Sphinx. ubc warns, so it is a declared
+  limitation, but it breaks parity silently on the Sphinx side.
+- **Input:** `[test_reports.case] directive = "tcase"` (other keys as in `dir`), and
+  `.. tcase:: Case A by hand` with `:id: TRES_HAND`, `:file: p1/junit.xml`, `:case: TEST_A`.
+- **Wrong output:** ubc `warning[config.test_reports_rename_unsupported] … the directive
+  keeps its name 'test-case'` and `warning[block.directive_unknown] … 'tcase'`, 8 needs;
+  Sphinx no warning, 9 needs (with `TRES_HAND`). Expected: both accept the rename,
+  or both reject it. Pitfall nearby: `directive = "test_result"` (the type name)
+  makes Sphinx warn `directive 'test_result' is already registered`.
+- **Workaround:** keep the default directive name `test-case`.
+- **Solution A:** ubc supports the rename.
+- **Solution B:** STR warns that the rename is not supported by ubc (same code as ubc).

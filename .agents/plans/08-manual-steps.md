@@ -148,7 +148,7 @@ a deviation caused by a useblocks tool goes into plan 999.
 |---|---|---|---|
 | WEB-01 | open `https://philippartsch.github.io/variant_demo/` | landing page lists the four products with links to sphinx-needs, ubCode, side by side, needs diff, tests | |
 | WEB-02 | per product open `…/<product>/compare.html` | both panes load; same pages left (sphinx-needs) and right (ubCode); spot check of showcases A / B, values and BMS page (V22) | |
-| WEB-03 | open a source link of `IMPL_VCU_ENERGY_DISPLAY` in both panes | Sphinx: GitHub link with a commit (not `blob/None`, plan 999 CL-05); ubCode: no local machine path visible (UB-14) | |
+| WEB-03 | open a source link of `IMPL_VCU_ENERGY_DISPLAY` in both panes | Sphinx: GitHub link with a commit; ubCode: no local machine path visible (UB-14) | |
 | WEB-04 | open `…/<product>/sphinx/_static/` resources (styles load, search works) | `.nojekyll` effective, no 404 for `_static/` | |
 
 ## 4. Repository settings (M-09)

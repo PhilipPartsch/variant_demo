@@ -111,6 +111,10 @@ def test_doc09b_same_id_two_implementations(site, tool):
         assert need["implements"] == ["SWREQ_VCU_ENERGY_DISPLAY"]
 
 
+# Volatile in the golden files (commit), but the same in both toolchains (CL-03).
+PARITY = frozenset({"remote-url"})
+
+
 @pytest.mark.parametrize("product", PRODUCTS)
 def test_doc10_parity(site, product):
     u, s = site[product]["ubc"], site[product]["sphinx"]
@@ -118,8 +122,8 @@ def test_doc10_parity(site, product):
     diff = []
     for nid in u:
         keys = set(u[nid]) & set(s[nid])
-        if normalize(u[nid], keys) != normalize(s[nid], keys):
-            a, b = normalize(u[nid], keys), normalize(s[nid], keys)
+        a, b = normalize(u[nid], keys, PARITY), normalize(s[nid], keys, PARITY)
+        if a != b:
             diff.append((nid, {k: (a.get(k), b.get(k)) for k in set(a) | set(b) if a.get(k) != b.get(k)}))
     assert not diff, diff[:5]
 
