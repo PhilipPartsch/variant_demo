@@ -48,9 +48,9 @@ deploy; all third-party actions pinned to commit SHAs (R7).
 
 | # | Finding | Handling |
 |---|---|---|
-| 1 | `useblocks/ubc-action` uses `actions/cache@v4` by tag → blocked by the SHA-pinning policy; also downloads into the workspace, no checksum | plan 99 **UA-02**; ubc downloaded directly (`setup` action) |
+| 1 | `useblocks/ubc-action` uses `actions/cache@v4` by tag → blocked by the SHA-pinning policy; also downloads into the workspace, no checksum | plan 999 **UA-02**; ubc downloaded directly (`setup` action) |
 | 2 | `tools/env.sh` aborted silently (`set -euo pipefail` + failing `ls`) when the ubCode extension is missing | fixed (`706bcc9`) |
-| 3 | `ubc build needs` writes absolute `__source__` paths also without `--source-maps` | plan 99 **UB-01** sharpened; `make_site.py` makes them relative |
+| 3 | `ubc build needs` writes absolute `__source__` paths also without `--source-maps` | plan 999 **UB-01** sharpened; `make_site.py` makes them relative |
 | 4 | `gh run watch` returned before the run finished | polled with `gh run view` instead (local tooling only) |
 
 ## 5. Deviations from the plan

@@ -2,7 +2,7 @@
 
 Known export differences that are not variant behaviour are removed:
 - fields only one toolchain writes (Sphinx internals, ubc `__source__`);
-- empty values: ubc omits empty links, Sphinx writes [] (plan 99 UB-06);
+- empty values: ubc omits empty links, Sphinx writes [] (plan 999 UB-06);
 - `remote-url` / `local-url` have different meanings (CL-03) and contain the commit / local path;
 - `doctype`, `section_name`, `sections`, `docname`, `lineno`: location details, not content;
 - imported (`BMS_*`) needs: `content` (Sphinx rewrites ids in the text, SN-06) and

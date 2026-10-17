@@ -6,7 +6,7 @@ it works. Both use the same story and the same setup.
 
 Referenced: [04-content-result.md](04-content-result.md) (content per product),
 [08-manual-steps.md](08-manual-steps.md) (M-05 IDE session, M-11 dry run),
-[20-choose-migration.md](20-choose-migration.md), [99-tool-bugs.md](99-tool-bugs.md).
+[20-choose-migration.md](20-choose-migration.md), [999-tool-bugs.md](999-tool-bugs.md).
 
 ## 0. Message
 
@@ -131,7 +131,7 @@ Show one example per mechanism, in the editor (source, 150 %) and the preview:
 - **Do:** switch to `truck_bev_lfp_na` → the imported BMS needs are now the
   **LFP** release (`chemistry` column); the CV content did not change.
 - **Do not promise** visible cell-voltage values: the BMS writes them as
-  `:variant:` roles in the text, which the export keeps unresolved (plan 99
+  `:variant:` roles in the text, which the export keeps unresolved (plan 999
   UB-09) — only fields such as `chemistry` change.
 - **Say:** "The BMS is developed and released separately. We import its
   released needs per chemistry and link only to its interface. The vehicle
@@ -182,12 +182,12 @@ Show one example per mechanism, in the editor (source, 150 %) and the preview:
 | How do you avoid dangling links? | gating rule + per-product warning-free build + negative tests | Method → Metamodel page |
 | What if a variant combination is invalid? | Kconfig dependencies; the generator fails, the IDE shows the error | e.g. MCS on a 400 V bus |
 | Debug / release builds? | not part of the variant model; always Debug | Method → Test strategy |
-| Does the review work per product? | yes, but one verdict per id — alternatives need care (known limitation) | plan 99 PH-01 |
+| Does the review work per product? | yes, but one verdict per id — alternatives need care (known limitation) | plan 999 PH-01 |
 | Can I see the BMS docs? | linked out; mounting is a later option | integration page |
 
 ## 5. For a useblocks audience: tool findings
 
-Optional 5–10 minutes with [99-tool-bugs.md](99-tool-bugs.md): pick three
+Optional 5–10 minutes with [999-tool-bugs.md](999-tool-bugs.md): pick three
 entries with a live reproduction, e.g. **PH-01** (verdicts per id; show
 `ubc agent verdict-check` in two products), **SN-06** (`id_prefix` rewrites
 ids in text; show the BMS gap need in ubc vs Sphinx in the needs diff

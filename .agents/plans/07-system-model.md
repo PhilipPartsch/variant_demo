@@ -23,7 +23,7 @@ Existing reports and tables stay untouched: every phase only adds sections.
 Open decisions are in §6.
 
 Referenced: [04-content.md](04-content.md) (`C§`), [05-test.md](05-test.md) (`T§`),
-[08-manual-steps.md](08-manual-steps.md), [99-tool-bugs.md](99-tool-bugs.md),
+[08-manual-steps.md](08-manual-steps.md), [999-tool-bugs.md](999-tool-bugs.md),
 [variant-mechanisms.md](variant-mechanisms.md) (`M§`),
 [20-choose-migration.md](20-choose-migration.md).
 
@@ -39,7 +39,7 @@ Global rules that apply here:
   `.github/agents`). Project-specific authoring rules go into the stage
   `authoring` text in `ubproject.toml`, not into the installed skills, so that
   a Pharaoh reinstall does not overwrite them.
-- Every useblocks tool bug found on the way goes into plan 99, with a
+- Every useblocks tool bug found on the way goes into plan 999, with a
   `branch@commit` marker.
 
 ## 1. Analysis: what is already a need, what is not
@@ -200,7 +200,7 @@ link needs the stricter condition.
 Transitive consistency is **not expressible in the schema** (it would mean "the
 reqs of SUB_X = the union of the reqs of its parts"). It is checked by a
 pytest per product instead (step 6). If ubc / Sphinx-Needs offer a released
-mechanism for it, record that in plan 99 as a feature gap, not as a bug.
+mechanism for it, record that in plan 999 as a feature gap, not as a bug.
 
 ### 2.4 Workflow
 
@@ -243,7 +243,7 @@ min = 1
   to the subsystem of the folder."
 - Probe first (step 1): does ubc 0.35 accept two `trace` entries with
   different `up` types in one stage, and `direction = "both"` on `part_of`?
-  If not, put it in plan 99 and fall back to `outgoing`.
+  If not, put it in plan 999 and fall back to `outgoing`.
 
 ## 3. Phase 1 steps
 
@@ -252,7 +252,7 @@ Branch `model/system` from `main`, PR to `main`. Each step ends with
 
 | # | Step | Files | Done when |
 |---|---|---|---|
-| 1 | **Probe** on a throw-away commit: types `system` / `subsystem` + links `covers` (`parse_variants`) / `part_of` + new named variants + one `SUB_` with `<<mcs: …>>` in `covers`; second `trace` in the `archs` stage. Build one MCS and one non-MCS product with ubc and Sphinx. Also check whether the new backlinks (`covered_by` on a req, `has_part` on a subsystem) change the Pharaoh review fingerprint of the **target** need: run `ubc agent verdict-check` before and after | `ubproject.toml`, `docs/system/overview.rst` | both toolchains give the same `covers` per product; fingerprint behaviour known; findings → plan 99; design adjusted |
+| 1 | **Probe** on a throw-away commit: types `system` / `subsystem` + links `covers` (`parse_variants`) / `part_of` + new named variants + one `SUB_` with `<<mcs: …>>` in `covers`; second `trace` in the `archs` stage. Build one MCS and one non-MCS product with ubc and Sphinx. Also check whether the new backlinks (`covered_by` on a req, `has_part` on a subsystem) change the Pharaoh review fingerprint of the **target** need: run `ubc agent verdict-check` before and after | `ubproject.toml`, `docs/system/overview.rst` | both toolchains give the same `covers` per product; fingerprint behaviour known; findings → plan 999; design adjusted |
 | 2 | **Metamodel**: types `system` / `subsystem`, links `covers` / `part_of`, named variants, enums, `orphan_exempt_types`, quality config | `ubproject.toml` | `ubc check` clean on all 4 products (no needs yet → no new rule fires) |
 | 3 | **Schema rules** §2.3 | `metamodel/schemas.json` | rules load in ubc and Sphinx; before step 4 the `trace-arch-part_of` violations are **expected** (local check only, not committed separately; steps 3 + 4 in one commit) |
 | 4 | **Content**: `SYS_VEHICLE` and four `SUB_*` (each `:part_of: SYS_VEHICLE`) in `overview.rst` (needtables of the vehicle-level needs and of the subsystems replace the prose table); `:part_of:` on all 8 `arch` blocks (incl. all alternatives of `ARCH_CHG_INLET` / `ARCH_CHG_SESSION_CONTROL`) and all 4 `bms_block` | `docs/system/overview.rst`, `docs/subsystems/*/architecture.rst` | `ubc check` warning-free on all 4 products; no dangling link |
@@ -310,7 +310,7 @@ exception to the warning-free rule.
 
 | # | Step | Done when |
 |---|---|---|
-| 1 | Probe: one unsatisfied req; check the ubc check output, the Sphinx `-W` build, `ubc agent gaps`, and the `len(satisfied_by) == 0` filter in both toolchains | behaviour known; D4 confirmed or revised; findings → plan 99 |
+| 1 | Probe: one unsatisfied req; check the ubc check output, the Sphinx `-W` build, `ubc agent gaps`, and the `len(satisfied_by) == 0` filter in both toolchains | behaviour known; D4 confirmed or revised; findings → plan 999 |
 | 2 | Content: two reqs, `SUB_BMS :covers:`, remove the sentences from both black boxes | builds per D4 |
 | 3 | Docs: report section; `method/requirements.rst` paragraph "Not implemented requirements"; `method/metamodel.rst` warning-free rule per D4 | Sphinx `-W` and ubc HTML clean |
 | 4 | Tests: L4 consistency check with the named not-implemented list; CNT-02 per D4; L5: an unlisted unsatisfied req fails; golden files | `tools/test_all.sh` green |
@@ -429,7 +429,7 @@ The pytest checks that the provider is not also a user.
 
 | # | Step | Done when |
 |---|---|---|
-| 1 | Probe: both types, both links, one IF with `used_by` variant function, stage trace with mixed endpoint types | behaviour known; findings → plan 99 |
+| 1 | Probe: both types, both links, one IF with `used_by` variant function, stage trace with mixed endpoint types | behaviour known; findings → plan 999 |
 | 2 | Metamodel + rules (§5.1, §5.3) | ubc check clean |
 | 3 | Content: 5 `EXT_*` in `overview.rst`, 12 `IF_*` in `interfaces.rst` | warning-free on all 4 products, no dangling link |
 | 4 | Docs: `interfaces.rst` with a `needflow` (subsystems, external systems, interfaces of this product); the `subsystems/<x>/index.rst` pages list `provides` / `uses`; `method/architecture.rst` and `method/metamodel.rst` updated; new report section "Interfaces" (the existing sections stay) | Sphinx `-W` and ubc HTML clean |

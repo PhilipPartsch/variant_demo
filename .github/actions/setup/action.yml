@@ -15,7 +15,7 @@ runs:
         uv pip install --python .venv/bin/python -r requirements.txt
     # ubc is downloaded directly instead of with useblocks/ubc-action: the action
     # uses actions/cache@v4 by tag, which this repository's SHA-pinning policy
-    # blocks (plan 99 UA-02). Same URL as the action, plus a checksum.
+    # blocks (plan 999 UA-02). Same URL as the action, plus a checksum.
     - name: ubc
       shell: bash
       env:

@@ -12,7 +12,7 @@ Referenced: [variant-mechanisms.md](variant-mechanisms.md) (`M§5`, §5.1, §5.2
 [04-content.md](04-content.md) (`C§4.1`, §8.2), [05-test.md](05-test.md)
 (`T§` DOC-06, NEG-09), [03-mechanism-evaluation.md](03-mechanism-evaluation.md)
 (`V§` V06), [08-manual-steps.md](08-manual-steps.md) (M-10),
-[99-tool-bugs.md](99-tool-bugs.md).
+[999-tool-bugs.md](999-tool-bugs.md).
 
 ## 0. Goal
 
@@ -50,7 +50,7 @@ Rules (Sphinx-Needs documentation): conditions in order, first true `when`
 wins; `otherwise` optional and last; a `choose` contains only `when`,
 `otherwise` and comments, all in the same file; branches not taken are never
 parsed; conditions use the `var` namespace only (same grammar as `if` — named
-variants are not resolved, plan 99 UB-12); mistakes are reported as
+variants are not resolved, plan 999 UB-12); mistakes are reported as
 `needs.choose`.
 
 ## 1. Gate — all useblocks tools support `choose`
@@ -65,7 +65,7 @@ variants are not resolved, plan 99 UB-12); mistakes are reported as
 
 Check the gate whenever a new Sphinx-Needs or ubCode release appears. Record
 the result in this table; a failing check of a released version goes into
-plan 99.
+plan 999.
 
 ## 2. Scope
 
@@ -105,7 +105,7 @@ Branch `feat/choose`, one commit per step.
 | # | Result |
 |---|---|
 | 1 | probe in a copy: the unchanged project builds on the new versions after removing `get_rst` (Codelinks 2.0.0); showcase A as `choose`: per product and tool the same needs (line numbers aside) |
-| 2 | pins + CI ubc 0.37.0 (SHA-256 of the Linux binary); NEG-16 expects `codelinks.duplicate_need` (plan 99 CL-06 fixed in Codelinks 2.0.0) |
+| 2 | pins + CI ubc 0.37.0 (SHA-256 of the Linux binary); NEG-16 expects `codelinks.duplicate_need` (plan 999 CL-06 fixed in Codelinks 2.0.0) |
 | 3 | V06 green in both tools; V01–V20 unchanged (local `eval/mechanisms`) |
 | 4 | `check_variants`: `when` conditions in the registry / bare-boolean check, first-match branch coverage per `choose`; L1 CHK-05 / CHK-06 |
 | 5–7 | migrated; golden files unchanged except the decision text of step 6 |
@@ -121,7 +121,7 @@ Branch `feat/choose`, one commit per step.
   `sphinx-build -W`, `tools/test_all.sh` green including DOC-06.
 - V06 green on `eval/mechanisms` (L7).
 - IDE check of step 9 passed.
-- Every problem found in a useblocks tool is in [99-tool-bugs.md](99-tool-bugs.md).
+- Every problem found in a useblocks tool is in [999-tool-bugs.md](999-tool-bugs.md).
 
 ## 5. Rollback
 

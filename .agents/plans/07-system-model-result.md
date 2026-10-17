@@ -42,11 +42,11 @@ Outcome of [07-system-model.md](07-system-model.md) (`S§`).
 |---|---|
 | `covers` with variant functions: ubc = Sphinx? | yes, in MCS/EU and non-MCS/NA products |
 | tables with incoming-link columns (`has_part`, `covered_by`) | render identically in ubCode and Sphinx HTML |
-| backlinks in `needs.json` | Sphinx exports `*_back`, ubc none → plan 99 **UB-15**; tests compute `has_part` from `part_of` |
+| backlinks in `needs.json` | Sphinx exports `*_back`, ubc none → plan 999 **UB-15**; tests compute `has_part` from `part_of` |
 | two `trace` entries in one stage, different `up` types | accepted |
-| `part_of` `direction = "both"` in stage `archs` | `SUB_BMS` owes an `arch` part (traces count per type) → `outgoing` in both stages, the "every subsystem has a part" duty is the schema warning → plan 99 **PH-05 addendum** |
+| `part_of` `direction = "both"` in stage `archs` | `SUB_BMS` owes an `arch` part (traces count per type) → `outgoing` in both stages, the "every subsystem has a part" duty is the schema warning → plan 999 **PH-05 addendum** |
 | does `part_of` / `covered_by` outdate verdicts? | not by itself; **once the stage traces `part_of`**, every `arch` / `bms_block` verdict is outdated, and rewording a subsystem outdates its parts again (fingerprint includes the parent's content, PH-03). Per-product `covers` of a parent does not change a child's fingerprint (PH-02) |
-| `review-brief --ids` | comma list rejected, type + ids refused → plan 99 **PH-11** |
+| `review-brief --ids` | comma list rejected, type + ids refused → plan 999 **PH-11** |
 
 ## 3. Deviations from the plan
 
@@ -77,7 +77,7 @@ score below a floor.
 ## 5. Notes for the next phases
 
 - **Phase 2 (D4):** Sphinx already suppresses
-  `sn_schema_warning.network_contains_too_few` (plan 99 SN-01), so an
+  `sn_schema_warning.network_contains_too_few` (plan 999 SN-01), so an
   unsatisfied req does not fail `sphinx-build -W`; the probe must still check
   `ubc check` and CNT-02.
 - **Phase 3:** `SUB_VCU` design_clarity asks for the interfaces;

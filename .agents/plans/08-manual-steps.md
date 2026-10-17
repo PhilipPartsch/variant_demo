@@ -21,7 +21,7 @@ that owns the step.
 | M-01 | review + decision | review `content/cv-platform`, merge into `main` | plan 5 entry (T§10) | — | **done 2026-10-10:** all 8 chunks accepted as they are; merge approved |
 | M-02 | decision | apply the open review points of plan 4 (C-R §6) now or later | plan 4 close-out | M-01 | **decided 2026-10-10: later** — points stay in `04-content-result.md` §6 |
 | M-03 | review | approve the golden files | T§2, DOC-11 | T§11 step 3 | **done 2026-10-10:** approved; authored content only (no test results / gaps): D 21, N 45, B 53, A 41 needs |
-| M-04 | decision | CNT-05 and PH-01 (plan 99) | T§6 CNT-05 | — | **done 2026-10-10: option b** — affected ids excluded by name (`PH01_EXCLUDED` in `tools/tests/test_l4_content.py`), each must be fresh in ≥ 1 product |
+| M-04 | decision | CNT-05 and PH-01 (plan 999) | T§6 CNT-05 | — | **done 2026-10-10: option b** — affected ids excluded by name (`PH01_EXCLUDED` in `tools/tests/test_l4_content.py`), each must be fresh in ≥ 1 product |
 | M-05 | IDE | IDE checklist IDE-01 … IDE-07 (includes V16 / V17 deferred from plan 3) | T§ L8, V§ V16 / V17 | M-01 | open |
 | M-06 | decision | Windows in L9 (platform tests) or not | T§ L9 | — | open |
 | M-07 | browser | side-by-side compare page per product (includes V22 deferred from plan 3) | A§1.1 G5, V§ V22 | first CI deploy ✓ (2026-10-10) | **possible now** |
@@ -29,7 +29,7 @@ that owns the step.
 | M-09 | settings | branch rulesets R9 (`main`) and R10 (`gh-pages`) | B§3.4, A§5 step 2a | CI checks exist ✓ | **possible now** |
 | M-10 | decision | `choose` supported by all useblocks tools: start [plan 20](20-choose-migration.md) (incl. its IDE check, step 9) | C§8.2, plan 20 | gate of plan 20 §1 | **done 2026-10-14:** gate open (Sphinx-Needs 9.0.0, ubCode 0.37.0), plan 20 run, IDE check OK, PR #4 |
 | M-11 | decision | demo dry run of the walk-through C§8.1 | C§8.1 | M-01, ideally M-10 | open |
-| M-12 | decision | hand plan 99 to the useblocks teams (which entries, which channel) | plan 99 | — | open |
+| M-12 | decision | hand plan 999 to the useblocks teams (which entries, which channel) | plan 999 | — | open |
 | M-13 | decision | BMS repository topics: interface tags and per-chemistry release artifacts (the missing BMS capabilities are requirements in this repo, plan 7 phase 2) | C§3, B§5.2 | — | open |
 | M-14 | review | approve the golden-file diff of plan 7 phase 1 (system and subsystems) | S§3 step 6, DOC-11 | plan 7 phase 1 PR | **done 2026-10-13:** approved |
 
@@ -49,7 +49,7 @@ the first CI deploy, and M-02, M-11, M-12, M-13 whenever convenient.
   pages per product (`tools/build_all.sh`, open `build/site/<product>/sphinx/index.html`)
   or the diff `git diff main...content/cv-platform -- docs src tests`.
 - **Result:** OK → the agent merges into `main` (rebase on `main` first; the
-  marker `content/cv-platform@25b77bd` in plan 99 stays valid as long as the branch exists).
+  marker `content/cv-platform@25b77bd` in plan 999 stays valid as long as the branch exists).
 
 ### M-02 Open review points of plan 4
 
@@ -70,7 +70,7 @@ the first CI deploy, and M-02, M-11, M-12, M-13 whenever convenient.
 ### M-04 CNT-05 as `xfail` (plan 5)
 
 - **What:** CNT-05 requires a fresh verdict for every authored need in every
-  product. Alternatives with one id cannot have that (plan 99 PH-01; today 8
+  product. Alternatives with one id cannot have that (plan 999 PH-01; today 8
   outdated in N / B, 2 in A, 0 in D).
 - **Choice:** `xfail` with reason "PH-01" (proposal, as T§10 requires for tool
   bugs) / exclude the alternative ids explicitly / drop CNT-05.
@@ -78,7 +78,7 @@ the first CI deploy, and M-02, M-11, M-12, M-13 whenever convenient.
 ### M-06 Windows in L9 (plan 5)
 
 - **What:** L9 runs L1–L3 on Linux (CI) and macOS (local); Windows is optional.
-- **Choice:** leave Windows out (proposal) / add a Windows job (needs another ubc install route, plan 99 UA-01).
+- **Choice:** leave Windows out (proposal) / add a Windows job (needs another ubc install route, plan 999 UA-01).
 
 ### M-10 `choose` migration (plan 4)
 
@@ -93,9 +93,9 @@ the first CI deploy, and M-02, M-11, M-12, M-13 whenever convenient.
   Tools status bar and show showcase A / B, BMS values and code needs.
 - **Result:** note what did not show as expected (feeds M-05 deviations).
 
-### M-12 Plan 99 to useblocks
+### M-12 Plan 999 to useblocks
 
-- **What:** [99-tool-bugs.md](99-tool-bugs.md) — which entries go to which team
+- **What:** [999-tool-bugs.md](999-tool-bugs.md) — which entries go to which team
   (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks, sphinx-mounts), and how
   (issues on GitHub for the open-source tools, internal channel for the others).
 - **Result:** per entry: reported (link) / not reported.
@@ -140,7 +140,7 @@ checks V16 / V17 deferred from plan 3.
 
 **Result:** tick the rows, note deviations (with a screenshot if useful). The
 agent records them in the result of plan 5 (and V16 / V17 in plan 3's result);
-a deviation caused by a useblocks tool goes into plan 99.
+a deviation caused by a useblocks tool goes into plan 999.
 
 ## 3. Browser checks after the first CI deploy (M-07, M-08)
 
@@ -148,7 +148,7 @@ a deviation caused by a useblocks tool goes into plan 99.
 |---|---|---|---|
 | WEB-01 | open `https://philippartsch.github.io/variant_demo/` | landing page lists the four products with links to sphinx-needs, ubCode, side by side, needs diff, tests | |
 | WEB-02 | per product open `…/<product>/compare.html` | both panes load; same pages left (sphinx-needs) and right (ubCode); spot check of showcases A / B, values and BMS page (V22) | |
-| WEB-03 | open a source link of `IMPL_VCU_ENERGY_DISPLAY` in both panes | Sphinx: GitHub link with a commit (not `blob/None`, plan 99 CL-05); ubCode: no local machine path visible (UB-14) | |
+| WEB-03 | open a source link of `IMPL_VCU_ENERGY_DISPLAY` in both panes | Sphinx: GitHub link with a commit (not `blob/None`, plan 999 CL-05); ubCode: no local machine path visible (UB-14) | |
 | WEB-04 | open `…/<product>/sphinx/_static/` resources (styles load, search works) | `.nojekyll` effective, no 404 for `_static/` | |
 
 ## 4. Repository settings (M-09)

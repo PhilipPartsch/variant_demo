@@ -14,7 +14,7 @@ is published on the gh-pages branch:
 With --out different from --src (CI: the gh-pages working copy), every variant
 folder is replaced completely and folders of products without a defconfig are
 removed. Build-local files (.doctrees, logs, gaps.json, junit.xml) are not
-published. Absolute local paths (ubc `__source__`, codelinks `local-url`; plan 99
+published. Absolute local paths (ubc `__source__`, codelinks `local-url`; plan 999
 UB-01, UB-14, CL-03) are rewritten to repository-relative paths; the run fails
 if a `file://` path or the repository path is left.
 """
@@ -84,7 +84,7 @@ def copy_product(src: Path, dst: Path):
 
 def strip_local_paths(folder: Path, repo_roots: list[str]) -> int:
     """Make paths of the build machine repository-relative: `file:///<repo>/x#Lnn`
-    and `<repo>/x` become `x` (plan 99 UB-01 `__source__`, UB-14, CL-03)."""
+    and `<repo>/x` become `x` (plan 999 UB-01 `__source__`, UB-14, CL-03)."""
     pattern = re.compile(r"(?:file://)?(?:" + "|".join(re.escape(r.rstrip("/")) for r in repo_roots) + r")/")
     changed = 0
     for f in list(folder.rglob("*.html")) + list(folder.glob("needs.*.json")):

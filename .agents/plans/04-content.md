@@ -506,7 +506,7 @@ Done 2026-10-14 in plan 20 (pins, migration, unchanged `needs.json`).
 9. Demo readiness: `choose` pin and migration (§8.2 → [20-choose-migration.md](20-choose-migration.md)), dry run of §8.1 — manual, [08-manual-steps.md](08-manual-steps.md) M-10, M-11.
 10. Afterwards: [05-test.md](05-test.md) and [06-automation.md](06-automation.md).
 
-**Tool findings → plan 99:** every bug or gap found in a useblocks tool (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks, sphinx-mounts, ubc-action, ubTrace, ubConnect, Sphinx-Test-Reports) is added to [99-tool-bugs.md](99-tool-bugs.md) in the same session: summary, marker `branch@commit` + file:line on a pushed branch, input, wrong output, workaround, two solutions.
+**Tool findings → plan 999:** every bug or gap found in a useblocks tool (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks, sphinx-mounts, ubc-action, ubTrace, ubConnect, Sphinx-Test-Reports) is added to [999-tool-bugs.md](999-tool-bugs.md) in the same session: summary, marker `branch@commit` + file:line on a pushed branch, input, wrong output, workaround, two solutions.
 
 ## 10. Later options
 

@@ -57,7 +57,7 @@ def test_cnt04_allocations_target_interfaces(site, tool):
                 assert t.startswith("BMS_REQ_") and "interface" in needs[t].get("tags", []), (p, i, t)
 
 
-# Needs whose verdict can be fresh in one product only (plan 99 PH-01: one
+# Needs whose verdict can be fresh in one product only (plan 999 PH-01: one
 # verdict per id). The alternatives with one id, and the needs whose review
 # fingerprint follows such a parent (PH-03). Excluded from the per-product
 # freshness check by name (decision 2026-10-10).

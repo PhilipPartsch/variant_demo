@@ -189,7 +189,7 @@ field / link values — from the two `needs.json` files. Empty diff = parity
 7. (no eval job: `eval/*` branches stay local, T§ L7 runs locally.)
 8. `nightly.yml`.
 
-**Tool findings → plan 99:** every bug or gap found in a useblocks tool (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks, sphinx-mounts, ubc-action, ubTrace, ubConnect, Sphinx-Test-Reports) is added to [99-tool-bugs.md](99-tool-bugs.md) in the same session: summary, marker `branch@commit` + file:line on a pushed branch, input, wrong output, workaround, two solutions. CI-specific findings (e.g. ubc-action, Linux libclang, Pages) use a marker to the workflow file and the run URL.
+**Tool findings → plan 999:** every bug or gap found in a useblocks tool (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks, sphinx-mounts, ubc-action, ubTrace, ubConnect, Sphinx-Test-Reports) is added to [999-tool-bugs.md](999-tool-bugs.md) in the same session: summary, marker `branch@commit` + file:line on a pushed branch, input, wrong output, workaround, two solutions. CI-specific findings (e.g. ubc-action, Linux libclang, Pages) use a marker to the workflow file and the run URL.
 
 ## 6. Open points and risks
 
@@ -202,7 +202,7 @@ field / link values — from the two `needs.json` files. Empty diff = parity
 - **Branch growth:** every deploy adds HTML for four variants × two
   toolchains; squash job if needed (§3.1).
 - **Jekyll:** without `.nojekyll`, Sphinx assets under `_static/` are not served.
-- **Local paths in the published site** (plan 99 UB-14, CL-03): ubCode HTML
+- **Local paths in the published site** (plan 999 UB-14, CL-03): ubCode HTML
   renders the codelinks `local-url` as plain text with the absolute path of
   the build machine (in CI: the runner's path), and ubc's `needs.json` exports
   it. Options: (1) `set_local_url = false` in `ubproject.toml` for everyone —

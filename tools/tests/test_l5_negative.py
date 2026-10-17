@@ -119,7 +119,7 @@ def test_neg14_bare_boolean_condition(repo):
     repo.edit("ubproject.toml", "if = \"var.market.region == 'na'\"", 'if = "var.charging.mcs"')
     fails_with(repo.tool("tools/check_variants.py", "--needs-dir", "/nonexistent"), "bare boolean var.charging.mcs")
     repo.configure(D)
-    assert repo.sphinx().returncode != 0  # sphinx-mounts aborts (plan 99 SM-01)
+    assert repo.sphinx().returncode != 0  # sphinx-mounts aborts (plan 999 SM-01)
 
 
 def test_neg15_marker_gated_weaker_than_its_requirement(repo):
@@ -138,7 +138,7 @@ def test_neg16_same_id_without_if_else(repo):
     repo.edit("src/vcu/energy_display.c", "int vcu_energy_percent(int fuel_dl, int tank_dl)", "int vcu_energy_percent_fuel(int fuel_dl, int tank_dl)")
     repo.configure(N)
     fails_with(repo.ubc_check(), "IMPL_VCU_ENERGY_DISPLAY")
-    # Sphinx-Codelinks 2.0.0 warns with the marker's file and line (aborted in 1.4.0, plan 99 CL-06)
+    # Sphinx-Codelinks 2.0.0 warns with the marker's file and line (aborted in 1.4.0, plan 999 CL-06)
     fails_with(repo.sphinx(), "energy_display.c", "codelinks.duplicate_need")
 
 

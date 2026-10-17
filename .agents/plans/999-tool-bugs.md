@@ -1,4 +1,4 @@
-# Plan 99: Bugs and gaps in the useblocks tools
+# Plan 999: Bugs and gaps in the useblocks tools
 
 Collected while building the CV platform (plans 1–4). Only **useblocks tools**;
 Sphinx, kconfiglib, CMake / CMake Tools and libclang are out of scope. Kept up
@@ -18,6 +18,7 @@ Checked on [useblocks.com](https://useblocks.com) and the
 [useblocks reference list](https://x-as-code.useblocks.com/reference/index.html), 2026-10-09.
 Versions raised on 2026-10-14 (plan 20). The findings were made with the older
 versions; entries not marked fixed are not re-tested on the new ones yet.
+Re-tests on new releases follow [998-tool-bug-recheck.md](998-tool-bug-recheck.md).
 
 | Tool | Kind | Version here | Used | Section |
 |---|---|---|---|---|

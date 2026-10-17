@@ -27,10 +27,14 @@ result importer by Sphinx-Test-Reports once ubCode supports it. **Triggered
 Demo (not a step): [30-demo.md](30-demo.md) — demo script: preparation, eight acts
 (10-minute and 30-minute version), likely questions, fallbacks.
 
-Bug list (not a step): [99-tool-bugs.md](99-tool-bugs.md) — bugs and gaps in
+Bug list (not a step): [999-tool-bugs.md](999-tool-bugs.md) — bugs and gaps in
 the **useblocks tools** (ubc / ubCode, Pharaoh, Sphinx-Needs, Sphinx-Codelinks,
 sphinx-mounts, ubc-action), each with a `branch@commit` marker, input, wrong
 output and two solution options. Every plan adds its new findings there.
+
+Re-check (not a step): [998-tool-bug-recheck.md](998-tool-bug-recheck.md) — on every
+new useblocks tool release, re-test the plan 999 entries, record open / fixed per
+entry, list the workarounds a fix makes removable.
 
 Concept references (not steps):
 
@@ -127,6 +131,6 @@ Plans live in `.agents/plans/` — local only, gitignored, kept for now.
 3. Every product is built with **both** ubc and Sphinx; their results must
    agree.
 4. Every bug or gap found in a **useblocks tool** is recorded in
-   [99-tool-bugs.md](99-tool-bugs.md) (summary, `branch@commit` marker on a
+   [999-tool-bugs.md](999-tool-bugs.md) (summary, `branch@commit` marker on a
    pushed branch, input, wrong output, two solutions) — in every plan, in the
    same session the finding is made.

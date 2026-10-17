@@ -3,7 +3,7 @@
 Triggered plan (not part of the numbered execution order). It decides whether the
 CV platform can replace its own importer `tools/import_test_results.py` with the
 useblocks tool [Sphinx-Test-Reports](https://sphinx-test-reports.readthedocs.io/en/latest/index.html)
-("STR"). Plan 99 §1 lists STR as "candidate to replace `tools/import_test_results.py`".
+("STR"). Plan 999 §1 lists STR as "candidate to replace `tools/import_test_results.py`".
 
 **Trigger 2026-10-14 (T1, T2, T4): re-run open.** ubCode / ubc 0.37.0 reads the STR
 directives (`test-file`, `test-suite`, `test-case`, `:auto_suites:` /
@@ -13,7 +13,7 @@ directives (`test-file`, `test-suite`, `test-case`, `:auto_suites:` /
 released the same day. The baseline below is the state before.
 
 Decided for the re-run: test only the newest STR packages (3.0.0 / 1.1.0),
-transfer every reproduced finding to plan 99, leave plan changes uncommitted.
+transfer every reproduced finding to plan 999, leave plan changes uncommitted.
 
 **Status (re-run 2026-10-14): route B (directives) works in both tools, with
 caveats; decision with the user open.** ubc 0.37.0 supports the STR directives
@@ -38,7 +38,7 @@ outcome table (§5).
 
 Referenced: [02-basic-setup.md](02-basic-setup.md) (`B§4.3`), [05-test.md](05-test.md)
 (`T§` IMP-01, CODE-01…04, CNT-01, CNT-05), [06-automation.md](06-automation.md),
-[99-tool-bugs.md](99-tool-bugs.md) (UB-07, UB-13, PH-06),
+[999-tool-bugs.md](999-tool-bugs.md) (UB-07, UB-13, PH-06),
 [20-choose-migration.md](20-choose-migration.md) (same gate pattern).
 
 Global rules that apply here (roadmap):
@@ -47,9 +47,9 @@ Global rules that apply here (roadmap):
   only once a **released** ubc / ubCode supports them.
 - **Rule 3: ubc and Sphinx give the same result.** Every route must keep the parity
   check of `tools/build_product.sh` green.
-- **Rule 4: tool bugs go into plan 99.** The findings in §7 were transferred to
-  plan 99 on the re-run of 2026-10-14 (§9 Sphinx-Test-Reports, UB-16…19,
-  PH-12, PH-13). Plan 99 is the record from now on; §7 keeps the plan-110 view.
+- **Rule 4: tool bugs go into plan 999.** The findings in §7 were transferred to
+  plan 999 on the re-run of 2026-10-14 (§9 Sphinx-Test-Reports, UB-16…19,
+  PH-12, PH-13). Plan 999 is the record from now on; §7 keeps the plan-110 view.
 - **The analysis does not touch the repository.** Other agents may be working in it
   at the same time. Work only in a shadow folder in the session scratchpad and
   delete it completely at the end (§4.6).
@@ -70,9 +70,9 @@ Re-run §4 when any of these happens:
 
 | # | Trigger | How to notice |
 |---|---|---|
-| T1 | New ubCode extension / ubc release | `ls ~/.vscode/extensions/ \| grep useblocks.ubcode`, `ubc --version`, ubCode changelog; plan 99 version table |
+| T1 | New ubCode extension / ubc release | `ls ~/.vscode/extensions/ \| grep useblocks.ubcode`, `ubc --version`, ubCode changelog; plan 999 version table |
 | T2 | New STR / `ub-test-reports` release (e.g. 3.0.0) | `curl -s https://pypi.org/pypi/sphinx-test-reports/json`, same for `ub-test-reports`; STR changelog |
-| T3 | One of the findings in §7 is reported as fixed | plan 99 entries / useblocks release notes |
+| T3 | One of the findings in §7 is reported as fixed | plan 999 entries / useblocks release notes |
 | T4 | The sphinx-needs pin changes (`requirements.txt`) | STR 3.0.0 requires `sphinx-needs>=9.0.0,<10` |
 
 Before starting, search the ubCode docs (the ubcode MCP server's documentation
@@ -279,7 +279,7 @@ git status --short      # must show no changes made by this analysis (other agen
 |---|---|---|
 | E7 + E11–E15 ✓ (ubc supports the STR directives, parity, product gating, links) | **B: directives** | Write the migration plan (§6.2 B) and start a decision with the user |
 | E7 ✗, but STR-01, STR-02 and UB-16 fixed (E4, E5, E9 ✓ without workarounds) | **D: converter + `[[needs.external_needs]]`** | Write the migration plan (§6.2 D) |
-| E7 ✗ and the D blockers still open | — | Keep the importer; update §3 and plan 99; wait for the next trigger |
+| E7 ✗ and the D blockers still open | — | Keep the importer; update §3 and plan 999; wait for the next trigger |
 | Only UB-17 fixed | C (`needimport`) is still worse than D (it needs a committed file or a docs-time path) | No action |
 
 **2026-10-14:** first row reached (route B), with the caveats in §3 "Re-run
@@ -342,12 +342,12 @@ user, not part of this plan's trigger.
 | D4 | `chain_reqs`: drop and add a view, or keep | drop, add a view |
 | D5 | Package: `sphinx-test-reports` or `ub-test-reports` (3.0 split) | the one the chosen route needs; pin exactly |
 
-## 7. Tool findings (transferred to plan 99 on 2026-10-14)
+## 7. Tool findings (transferred to plan 999 on 2026-10-14)
 
 The full entries (input, wrong output, workaround, two solutions) are in
-[99-tool-bugs.md](99-tool-bugs.md). The provisional plan-110 ids UB-15/16/17 of the
-baseline became UB-16/17/18, because plan 99 already had a UB-15. On every
-re-run, update the status column here and the entry in plan 99.
+[999-tool-bugs.md](999-tool-bugs.md). The provisional plan-110 ids UB-15/16/17 of the
+baseline became UB-16/17/18, because plan 999 already had a UB-15. On every
+re-run, update the status column here and the entry in plan 999.
 
 | ID | Tool | Summary | Baseline 2026-10-12 | Re-run 2026-10-14 |
 |---|---|---|---|---|
