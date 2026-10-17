@@ -110,7 +110,7 @@ def test_neg12_bms_pin_without_allocated_id(repo):
 
 
 def test_neg13_missing_variant_data(repo):
-    repo.edit("ubproject.toml", 'variant_data_file = "build/active/variants.json"\n', "")
+    repo.edit("ubproject.toml", 'data_file = "build/active/variants.json"\n', "")
     repo.configure(N)
     fails_with(repo.ubc_check(), "no variant data")
 
